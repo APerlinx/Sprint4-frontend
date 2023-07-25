@@ -43,6 +43,7 @@ export const boardStore = {
   mutations: {
     setBoards(state, { boards }) {
       state.boards = boards
+      console.log(state.boards);
     },
     addBoard(state, { board }) {
       state.boards.push(board)

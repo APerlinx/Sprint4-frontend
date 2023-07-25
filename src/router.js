@@ -16,14 +16,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/board/:boarId',
-    name: 'BoardDetails',
-    component: BoardDetails
-  },
-  {
     path: '/board',
     name: 'BoardIndex',
-    component: BoardIndex
+    component: BoardIndex,
+  },
+  {
+    path: '/details/:boarId?',
+    name: 'BoardDetails',
+    component: BoardDetails
   },
   {
     path: '/review',
