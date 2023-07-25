@@ -1,0 +1,38 @@
+header {
+    background-color: $clr5;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    .loggedin-user {
+        background-color: $clr1;
+        padding: 2px 8px;
+        border-radius: 1em;
+        align-self: flex-end;
+        color: whitesmoke;
+        span{
+            background-color: $clr2;
+            padding: 4px;
+            margin: 10px;
+            border-radius: 50%;
+        }
+        img {
+            width: 2em;
+            height: 2em;
+            border-radius: 50%;
+        }
+    }
+    nav {
+        background-color: $clr4;
+        padding: 5px 0;
+    }
+    nav a:not(:first-child) {
+        border-top: 1px solid $clr1;
+        padding: 0 5px;
+        margin: 10px;
+    }
+    nav .active {
+        color: $clr1;
+    }
+    
+}
