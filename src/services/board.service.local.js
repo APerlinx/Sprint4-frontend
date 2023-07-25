@@ -71,6 +71,8 @@ function getEmptyBoard() {
     }
 }
 
+
+
 ;(async ()=>{
     await storageService.post(STORAGE_KEY, {title: 'Subali Karov 1'})
     await storageService.post(STORAGE_KEY, {title: 'Subali Rahok 2'})

@@ -40,7 +40,8 @@ export default {
       return this.$store.getters.loggedinUser
     },
     groups() {
-      return this.$store.getters.groups
+      let boardId = this.$route.params.boardId
+      return this.$store.getters.groups(boardId)
     }
   },
   created() {
