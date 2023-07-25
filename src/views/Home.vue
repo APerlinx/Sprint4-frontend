@@ -1,14 +1,12 @@
 <template>
-  <section class="container home text-center">
-    <h1>Home Page</h1>
-    <h5 class="text-center">
-      Powered up Frontend 
-    </h5>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <router-link to='/b'>board</router-link>
+  <section class="board-index-container">
+    <h2>My Boards</h2>
+    <h2>Recently viewed</h2>
+    <h2>Stared</h2>
+    <router-link to='/b'>board1</router-link>
+    <router-link to='/b'>board2</router-link>
+    <router-link to='/b'>board3</router-link>
   </section>
-
-  
 </template>
 
 <script>
