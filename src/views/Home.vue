@@ -5,6 +5,7 @@
       Powered up Frontend 
     </h5>
     <img alt="Vue logo" src="../assets/logo.png">
+    <router-link to='/b'>board</router-link>
   </section>
 
   
