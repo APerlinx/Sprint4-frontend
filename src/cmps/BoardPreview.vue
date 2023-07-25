@@ -1,9 +1,9 @@
 <template>
-  <div class="board">
-    <RouterLink :to="'/details/' + board._id"> 
-      <h2>{{ board.title }}</h2>
-    </RouterLink>
-  </div>
+  <RouterLink :to="'/details/' + board._id">
+    <div class="board">
+      <h2>{{ board.title.toUpperCase() }}</h2>
+    </div>
+  </RouterLink>
 </template>
 
 <script>
@@ -13,7 +13,16 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    imgUrl() {
+      return `url(${this.board?.imgUrl})` || "";
+    },
+  },
 };
 </script>
 
-<style></style>
+<style>
+.board {
+  background-image: v-bind(imgUrl);
+}
+</style>

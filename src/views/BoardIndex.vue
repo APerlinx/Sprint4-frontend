@@ -1,7 +1,22 @@
 <template>
-  <section class="board-index-container">
-    <div class="my-boards">
-      <h2>My Boards</h2>
+  <section class="board-container">
+    <div class="recently">
+      <h2 class="title">Recently viewed</h2>
+      <BoardList
+      :boards="boards"
+      /> 
+    </div>
+
+    <h3>YOUR WORKSPACE</h3>
+    <div class="your">
+      <h2 class="title">Your boards</h2>
+      <BoardList
+      :boards="boards"
+      /> 
+    </div>
+
+    <div class="stared">
+      <h2 class="title">stared</h2>
       <BoardList
       :boards="boards"
       /> 

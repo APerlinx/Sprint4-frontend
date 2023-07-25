@@ -8,6 +8,15 @@
       <RouterLink to="/review">Reviews</RouterLink>
       <RouterLink to="/chat">Chat</RouterLink>
       <RouterLink to="/login">Login / Signup</RouterLink>
+      <RouterLink to="#">Create</RouterLink>
+
+      <div class="create">
+        <form action="">
+          <input type="text">
+        </form>
+        <p>Create board</p>
+      </div>
+
     </nav>
     <section class="loggedin-user" v-if="loggedInUser">
       <RouterLink :to="`/user/${loggedInUser._id}`">
@@ -20,6 +29,11 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      isCreate: false
+    }
+  },
   computed: {
     loggedInUser() {
       return this.$store.getters.loggedinUser;

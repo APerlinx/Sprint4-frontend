@@ -1,8 +1,10 @@
 header {
-    background-color: $clr5;
+    position: relative;
+    background-color: $clr6;
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    border-bottom: 0.3px solid white;
 
     .loggedin-user {
         background-color: $clr1;
@@ -10,8 +12,7 @@ header {
         border-radius: 1em;
         align-self: flex-end;
         color: whitesmoke;
-        span{
-            background-color: $clr2;
+        span {
             padding: 4px;
             margin: 10px;
             border-radius: 50%;
@@ -23,7 +24,6 @@ header {
         }
     }
     nav {
-        background-color: $clr4;
         padding: 5px 0;
     }
     nav a:not(:first-child) {
@@ -34,5 +34,15 @@ header {
     nav .active {
         color: $clr1;
     }
-    
+    .create {
+        position: absolute;
+        background-color: #282e34;
+        width: em(304, 14);
+        height: em(247, 14);
+
+        font-size: 14px;
+        color: $clr2;
+
+        padding: em(6, 14) em(12, 14);
+    }
 }

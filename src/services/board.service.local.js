@@ -74,6 +74,7 @@ function getEmptyBoard() {
 const board = {
     _id: "b101",
     title: "Robot dev proj",
+    imgUrl: "https://images.unsplash.com/photo-1661956601031-4cf09efadfce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2376&q=80",
     isStarred: false,
     archivedAt: 1589983468418,
     createdBy: {
@@ -200,6 +201,7 @@ const board = {
 const board2 = {
     _id: "b102",
     title: "Alon,shay,guy",
+    imgUrl:"https://images.unsplash.com/photo-1660162129606-c12ece87e967?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80",
     isStarred: false,
     archivedAt: 1589983468418,
     createdBy: {
