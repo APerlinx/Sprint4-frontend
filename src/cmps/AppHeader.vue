@@ -2,6 +2,7 @@
   <header>
     <nav>
       <RouterLink to="/">
+        <h1>check</h1>
         <span role="img" aria-label="logo">🙏</span>
       </RouterLink>
       <RouterLink to="/car">Cars</RouterLink>
