@@ -14,7 +14,8 @@
         <form action="">
           <input type="text">
         </form>
-        <p>Create board</p>
+        <p class="title">Create board</p>
+        <p class="body">Create board</p>
       </div>
 
     </nav>
