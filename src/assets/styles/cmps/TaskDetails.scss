@@ -31,6 +31,10 @@
     }
 }
 
+.active {
+    display: none;
+}
+
 // grid
 .task-details-header {
     grid-column: 2/-1;

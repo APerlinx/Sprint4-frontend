@@ -4,14 +4,16 @@
             <input type="text" class="deatils-title" placeholder='v-model="taskToEdit.title"'>
             <!-- v-model="taskToEdit.title" -->
             <!-- {{ taskToEdit.title }} -->
-            <p>In list 'need to add list.name'</p>
+            <p>In list 'need to add list.name' <span class="active" :class="{ active: isWatch }">eye</span></p>
+
 
         </section>
 
         <section class="task-details-main">
             <div>
                 <p class="deatils-notifications">Notifications</p>
-                <button>Watch</button>
+                <button @click="toggleWatch">{{ watch }}</button>
+                {{ isWatch }}
             </div>
 
             <div task-details->
@@ -66,8 +68,19 @@ export default {
     data() {
         return {
             hideBtn: false,
+            isWatch: false,
+            watch: 'Watch'
         }
     },
+    methods: {
+        toggleWatch() {
+            this.isWatch = !this.isWatch
+            this.watch = this.isWatch ? 'Watching' : 'Watch'
+        },
+        closeModal() {
+
+        },
+    }
 }
 
 </script>
