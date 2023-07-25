@@ -2,9 +2,7 @@
   <header>
     <nav>
       <RouterLink to="/">
-        <h1>check</h1>
-        <h1>check2</h1>
-        <span role="img" aria-label="logo">🙏</span>
+        <span role="img" aria-label="logo">Trello</span>
       </RouterLink>
       <RouterLink to="/b">Board</RouterLink>
       <RouterLink to="/review">Reviews</RouterLink>
@@ -24,8 +22,8 @@
 export default {
   computed: {
     loggedInUser() {
-      return this.$store.getters.loggedinUser
+      return this.$store.getters.loggedinUser;
     },
-  }
-}
+  },
+};
 </script>
