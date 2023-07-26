@@ -3,9 +3,9 @@
 
     <section class="task-details">
         <section class="task-details-header">
-            <input type="text" class="deatils-title" placeholder='v-model="taskToEdit.title"'>
+            <input type="text" class="deatils-title" placeholder="COSEMEK">
+            <!-- v-model="taskToEdit.title"> -->
             <!-- v-model="taskToEdit.title" -->
-            <!-- {{ taskToEdit.title }} -->
             <p>In list 'need to add {{}}group.title' <span class="active" :class="{ active: isWatch }">i-eye</span></p>
         </section>
 
@@ -77,11 +77,15 @@ import Checklist from "../cmps/Checklist.vue"
 export default {
     data() {
         return {
+            // taskToEdit: null,
             hideBtn: false,
             isWatch: false,
             watch: 'Watch',
             actionType: null
         }
+    },
+    created() {
+        this.taskToEdit = JSON.parse(JSON.stringify(this.task))
     },
     methods: {
         toggleWatch() {
@@ -96,10 +100,22 @@ export default {
                 (this.actionInfo = { name: "checklist" })
         },
     },
+    computed: {
+        board() {
+            return this.$store.getters.currBoard;
+        },
+        group() {
+            return this.$store.getters.currGroup;
+        },
+        task() {
+            return this.$store.getters.currTask;
+        },
+    },
     components: {
         DynamicModal,
         Checklist,
     },
 }
+
 
 </script>

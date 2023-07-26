@@ -47,8 +47,16 @@ export const boardStore = {
       return board ? board.groups : []
     },
     getCurrenBoard({ currentBoard }) {
+
       const board = currentBoard
-      return board ? board.groups : []  //check this
+      return board ? board.groups : []
+    },
+    getCurrBoard({ currentBoard }) {
+
+      const board = currentBoard
+
+
+      return board //check this
     },
     currTask({ currentTask }) {
       return currentTask;
@@ -60,7 +68,9 @@ export const boardStore = {
       console.log(state.boards);
     },
     setCurrentBoard(state, board) {
+      console.log("🚀 ~ file: board.store.js:63 ~ setCurrentBoard ~ board:", board)
       state.currentBoard = board;
+      console.log("🚀 ~ file: board.store.js:65 ~ setCurrentBoard ~ state.currentBoard:", state.currentBoard)
     },
     addBoard(state, { board }) {
       state.boards.push(board)
@@ -111,7 +121,9 @@ export const boardStore = {
       }
     },
     async loadCurrentBoard({ commit }, { boardId }) {
+      console.log('boardId:', boardId)
       const board = await boardService.getById(boardId);
+      console.log('variboardable:', board)
       commit('setCurrentBoard', board);
     },
     async updateBoard(context, { board }) {

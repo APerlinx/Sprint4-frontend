@@ -1,6 +1,6 @@
 <template>
   <section class="task-preview">
-    <RouterLink :to="'/details/' + bordId + '/task/' + task.id">
+    <RouterLink :to="'/details/' + this.currBoard + '/task/' + task.id">
       <li v-if="task">
         <p>{{ task.title }}</p>
       </li>
@@ -18,13 +18,14 @@ export default {
     },
   },
   created() {
-    console.log('task', this.task)
+    // console.log('task', this.task)
   },
   computed: {
     currBoard() {
-      const boardId = this.$store.getters.getCurrenBoard
+      const boardId = this.$store.getters.getCurrBoard?._id
+      console.log("🚀 ~ file: TaskPreview.vue:26 ~ currBoard ~ this.$store.getters.getCurrenBoard:", this.$store.getters.getCurrenBoard)
       console.log('boardId:', boardId)
-      return this.$store.getters.getCurrenBoard
+      return boardId
     }
   }
 }
