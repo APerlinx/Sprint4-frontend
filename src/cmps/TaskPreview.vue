@@ -16,9 +16,6 @@ export default {
       default: () => ({}),
     },
   },
-  created() {
-    console.log('task', this.task)
-  },
 }
 </script>
 

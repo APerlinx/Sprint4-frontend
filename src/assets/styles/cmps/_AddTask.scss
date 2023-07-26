@@ -1,0 +1,40 @@
+.add-task {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+
+    > form {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box; 
+    }
+
+    > form > .form-input {
+        width: 242px;
+        box-sizing: border-box; 
+        > input:focus {
+            outline: none;
+            border: none;
+        }
+    }
+
+    > form > .form-input > input {
+        box-sizing: border-box; 
+        width: 100%;
+        margin-bottom: 7px;
+        padding: 8px 8px 4px 12px;
+        background: none;
+        border: none;
+        box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+        background-color: $task-bg-clr;
+        cursor: text;
+        height: 70px;
+        border-radius: 12px;
+    }
+
+    > form > .form-btn {
+        display: flex;
+        justify-content: flex-start; // Aligns buttons to the start
+        width: 100%; // Ensures that the .form-btn div takes the full width of its parent
+    }
+}

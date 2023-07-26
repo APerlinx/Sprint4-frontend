@@ -13,10 +13,14 @@
         </button>
       </div>
 
-      <!-- Render each task using the TaskPreview component -->
-      <template v-if="group">
-        <TaskPreview v-for="task in group.tasks" :key="task.id" :task="task" />
-      </template>
+      <Container
+        :get-child-payload="retrieveTaskPayload"
+        @drop="handleTaskDrop"
+      >
+        <Draggable v-for="task in group.tasks" :key="task.id">
+          <TaskPreview :task="task" />
+        </Draggable>
+      </Container>
 
       <slot name="actions"></slot>
     </div>
@@ -25,6 +29,7 @@
 
 <script>
 import TaskPreview from './TaskPreview.vue'
+import { Container, Draggable } from 'vue3-smooth-dnd'
 
 export default {
   props: {
@@ -35,8 +40,23 @@ export default {
   },
   components: {
     TaskPreview,
+    Container,
+    Draggable,
   },
   computed: {},
-  methods: {},
+  methods: {
+    retrieveTaskPayload(index) {
+      return this.group.tasks[index]
+    },
+    handleTaskDrop(dropResult) {
+      if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
+        this.$store.dispatch('moveTask', {
+          sourceGroupId: this.group.id,
+          targetGroupId: this.group.id,
+          dropResult: dropResult,
+        })
+      }
+    },
+  },
 }
 </script>
