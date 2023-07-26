@@ -23,7 +23,6 @@ export default {
   computed: {
     currBoard() {
       const boardId = this.$store.getters.getCurrBoard?._id
-      console.log("🚀 ~ file: TaskPreview.vue:26 ~ currBoard ~ this.$store.getters.getCurrenBoard:", this.$store.getters.getCurrenBoard)
       console.log('boardId:', boardId)
       return boardId
     }

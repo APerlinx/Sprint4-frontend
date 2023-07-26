@@ -58,7 +58,7 @@ export const boardStore = {
 
       return board //check this
     },
-    currTask({ currentTask }) {
+    getCurrTask({ currentTask }) {
       return currentTask;
     },
   },
