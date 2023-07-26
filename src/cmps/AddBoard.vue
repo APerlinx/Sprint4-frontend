@@ -6,9 +6,8 @@
         @input="isTitle = true"
         autofocus
         type="text"
-        v-model="boardToEdit.title"
-      />
-      <p v-if="!boardToEdit.title">Board title is required</p>
+        v-model="boardToEdit.title"/>
+      <!-- <p v-if="!boardToEdit.title">Board title is required</p> -->
       <button>Create</button>
     </form>
   </div>

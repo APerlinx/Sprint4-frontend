@@ -1,6 +1,5 @@
 <template>
-
-<div class="overlay"  v-if="isAddBoard" @click="isAddBoard = false"></div>
+  <div class="overlay" v-if="isAddBoard" @click="isAddBoard = false"></div>
   <section class="board-container">
     <!-- <div class="recently">
       <h2 class="title">Recently viewed</h2>
@@ -9,9 +8,8 @@
       /> 
     </div> -->
 
-    <h3>YOUR WORKSPACE</h3>
+    <h3>Recently viewed</h3>
     <div class="your">
-      <h2 class="title">Your boards</h2>
       <BoardList :boards="boards" @remove="removeBoard" />
     </div>
 
@@ -20,9 +18,7 @@
         Create new board
       </div>
       <div class="index-modal">
-        <AddBoard
-        @save="saveBoard"
-         v-if="isAddBoard" />
+        <AddBoard @save="saveBoard" v-if="isAddBoard" />
       </div>
     </div>
 
@@ -65,14 +61,13 @@ export default {
           type: "addBoard",
           board,
         });
-        this.isAddBoard = false
-        this.$router.push('/details/' + this.savedBoard._id)
+        this.isAddBoard = false;
+        this.$router.push("/details/" + this.savedBoard._id);
       } catch (err) {
         console.log(err);
         showErrorMsg("Cant add board");
       }
     },
-    
   },
 
   computed: {
@@ -80,8 +75,8 @@ export default {
       return this.$store.getters.boards;
     },
     savedBoard() {
-      return this.$store.getters.savedBoard
-    }
+      return this.$store.getters.savedBoard;
+    },
   },
   components: {
     BoardList,
