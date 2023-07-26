@@ -33,6 +33,8 @@ export const boardStore = {
     boards: [],
     currentBoard: null,
     savedBoard: null,
+    currentGroup: null,
+    currentTask: null,
   },
   getters: {
     boards({ boards }) {
@@ -46,8 +48,19 @@ export const boardStore = {
       return board ? board.groups : []
     },
     getCurrenBoard({ currentBoard }) {
+
       const board = currentBoard
       return board ? board.groups : []
+    },
+    getCurrBoard({ currentBoard }) {
+
+      const board = currentBoard
+
+
+      return board //check this
+    },
+    currTask({ currentTask }) {
+      return currentTask;
     },
   },
   mutations: {
@@ -56,7 +69,9 @@ export const boardStore = {
       console.log(state.boards)
     },
     setCurrentBoard(state, board) {
-      state.currentBoard = board
+      console.log("🚀 ~ file: board.store.js:63 ~ setCurrentBoard ~ board:", board)
+      state.currentBoard = board;
+      console.log("🚀 ~ file: board.store.js:65 ~ setCurrentBoard ~ state.currentBoard:", state.currentBoard)
     },
     addBoard(state, { board }) {
       state.boards.push(board)
@@ -97,12 +112,8 @@ export const boardStore = {
         state.currentBoard = newBoard
       }
     },
-    addTaskToGroup(state, { groupId, task }) {
-      const board = state.currentBoard
-      const group = board.groups.find((group) => group.id === groupId)
-      if (!group) throw new Error('Group not found')
-
-      group.tasks = [...group.tasks, task]
+    setCurrTask(state, { task }) {
+      state.currentTask = task;
     },
   },
   actions: {
@@ -117,8 +128,10 @@ export const boardStore = {
       }
     },
     async loadCurrentBoard({ commit }, { boardId }) {
-      const board = await boardService.getById(boardId)
-      commit('setCurrentBoard', board)
+      console.log('boardId:', boardId)
+      const board = await boardService.getById(boardId);
+      console.log('variboardable:', board)
+      commit('setCurrentBoard', board);
     },
     async updateBoard(context, { board }) {
       try {
@@ -201,15 +214,14 @@ export const boardStore = {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
 
-        const updatedBoard = JSON.parse(JSON.stringify(state.currentBoard))
-
-        const group = updatedBoard.groups.find((group) => group.id === groupId)
+        const group = state.currentBoard.groups.find(group => group.id === groupId)
+        console.log('group', group);
         if (!group) throw new Error('Group not found')
 
-        group.tasks = [...group.tasks, task]
+        group.tasks.push(task)
 
-        const savedBoard = await boardService.save(updatedBoard)
-        commit({ type: 'updateBoard', board: savedBoard })
+        const savedBoard = await boardService.save(state.currentBoard)
+        commit('updateBoard', savedBoard)
       } catch (err) {
         console.error('Error in addTask', err)
         throw err

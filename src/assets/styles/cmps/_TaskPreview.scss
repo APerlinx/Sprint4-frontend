@@ -1,5 +1,5 @@
 .task-preview {
-    display:flex;
+    display: flex;
     flex-direction: column;
     width: 100%;
     border-radius: 12px;
@@ -8,8 +8,8 @@
     box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
     background-color: $task-bg-clr;
     cursor: pointer;
-    
-    > li >  p {
+
+    >li>p {
         margin: 4px;
         text-align: start;
     }

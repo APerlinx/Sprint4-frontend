@@ -1,11 +1,13 @@
 .task-details {
+    z-index: 10;
     position: fixed;
     margin-top: 100px;
     left: 50%;
     transform: translate(-50%, 0);
 
     width: 768px;
-    height: 914px;
+    height: min(914px);
+    // height: 70vh;
     border-radius: 10px;
 
     background-color: #F1F2F4;
@@ -14,6 +16,8 @@
     display: grid;
     grid-template-columns: 40px 1fr 200px;
     grid-template-rows: 70px 1fr;
+
+    overflow: scroll;
 
     button {
         height: 32px;
