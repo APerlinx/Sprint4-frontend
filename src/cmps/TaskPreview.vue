@@ -1,8 +1,10 @@
 <template>
   <section class="task-preview">
-    <li v-if="task">
-      <p @click="openTaskDetails(task._id)">{{ task.title }}</p>
-    </li>
+    <RouterLink :to="'/details/task/' + task.id">
+      <li v-if="task">
+        <p>{{ task.title }}</p>
+      </li>
+    </RouterLink>
   </section>
 </template>
 
@@ -19,11 +21,11 @@ export default {
     console.log('task', this.task)
   },
   methods: {
-    openTaskDetails(id) {
-      console.log('id:', id)
-      this.$router.push({ id })
-    },
-  }
+    // openTaskDetails(id) {
+    //   console.log('id:', id)
+    //   // this.$router.push({ id })
+  },
 }
+
 </script>
 
