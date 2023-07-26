@@ -21,9 +21,9 @@
 
                 <section class="todo-container" v-if="isHideChecked ? !todo.isChecked : true">
                     <input type="checkbox" @change="updateTask" v-model="todo.isChecked" />
-                    <textarea :class="{ completed: todo.isChecked }" v-model="todo.title" rows="1"></textarea>
-                    <button class="todo-save">
-                        @clicK="updateTask"
+                    <textarea :class="{ completed: todo.isChecked }" v-model="todo.title"></textarea>
+                    <button class="todo-save" @click="updateTask">
+                        save
                     </button>
                 </section>
             </div>
@@ -65,7 +65,7 @@ export default {
         }
     },
     created() {
-        this.checklistToEdit = JSON.parse(JSON.stringify(this.checklist))
+
     },
     methods: {
         deleteChecklist() {

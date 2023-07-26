@@ -18,7 +18,7 @@
         Create new board
       </div>
       <div class="index-modal">
-        <AddBoard @save="saveBoard" v-if="isAddBoard" />
+        <AddBoard @close="closeModal" @save="saveBoard" v-if="isAddBoard" />
       </div>
     </div>
 
@@ -53,6 +53,9 @@ export default {
         console.log(err);
         showErrorMsg("Cant delete borad");
       }
+    },
+    closeModal() {
+      this.isAddBoard = false;
     },
 
     async saveBoard(board) {

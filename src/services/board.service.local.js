@@ -5,13 +5,13 @@ import { userService } from './user.service.js'
 const STORAGE_KEY = 'board'
 
 export const boardService = {
-    query,
-    getById,
-    save,
-    remove,
-    getEmptyBoard,
-    addBoardMsg,
-    getEmptyGroup,
+  query,
+  getById,
+  save,
+  remove,
+  getEmptyBoard,
+  addBoardMsg,
+  getEmptyGroup,
 }
 window.cs = boardService
 
@@ -29,11 +29,11 @@ async function query(filterBy = { txt: '', price: 0 }) {
 }
 
 function getById(boardId) {
-    return storageService.get(STORAGE_KEY, boardId)
+  return storageService.get(STORAGE_KEY, boardId)
 }
 
 async function remove(boardId) {
-    await storageService.remove(STORAGE_KEY, boardId)
+  await storageService.remove(STORAGE_KEY, boardId)
 }
 
 async function save(board) {
@@ -49,9 +49,9 @@ async function save(board) {
 }
 
 async function addBoardMsg(boardId, txt) {
-    // Later, this is all done by the backend
-    const board = await getById(boardId)
-    if (!board.msgs) board.msgs = []
+  // Later, this is all done by the backend
+  const board = await getById(boardId)
+  if (!board.msgs) board.msgs = []
 
   const msg = {
     id: utilService.makeId(),
@@ -61,7 +61,7 @@ async function addBoardMsg(boardId, txt) {
   board.msgs.push(msg)
   await storageService.put(STORAGE_KEY, board)
 
-    return msg
+  return msg
 }
 
 function getEmptyBoard(title = '', imgUrl = 'https://images.unsplash.com/photo-1600691792883-dc29f53f6b17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80') {

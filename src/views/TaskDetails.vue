@@ -18,6 +18,8 @@
                 {{ isWatch }}
             </div>
 
+            <Checklist />
+
             <div task-details->
                 <h4>Description</h4>
                 <textarea @blur="hideBtn = false" @focus="hideBtn = true" placeholder="Add a more detailed description..."

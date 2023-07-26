@@ -1,6 +1,5 @@
 <template>
-  
-  <div class="overlay"  v-if="isAddBoard" @click="isAddBoard = false"></div>
+  <div class="overlay" v-if="isAddBoard" @click="isAddBoard = false"></div>
 
   <header>
     <nav>
@@ -12,10 +11,8 @@
       <RouterLink to="/review">Reviews</RouterLink>
       <RouterLink to="/chat">Chat</RouterLink>
       <RouterLink to="/login">Login / Signup</RouterLink>
-      <RouterLink @click="isAddBoard=!isAddBoard" to="#">Create</RouterLink>
-      <AddBoard
-       v-if="isAddBoard"
-       @save="saveBoard" />
+      <RouterLink @click="isAddBoard = !isAddBoard" to="#">Create</RouterLink>
+      <AddBoard v-if="isAddBoard" @close="closeModal" @save="saveBoard" />
     </nav>
 
     <section class="loggedin-user" v-if="loggedInUser">
@@ -28,7 +25,6 @@
   </header>
 </template>
 <script>
-
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 import AddBoard from "../cmps/AddBoard.vue";
 
@@ -45,13 +41,15 @@ export default {
           type: "addBoard",
           board,
         });
-        this.isAddBoard = false
-        this.$router.push('/details/' + this.savedBoard._id)
-        
+        this.isAddBoard = false;
+        this.$router.push("/details/" + this.savedBoard._id);
       } catch (err) {
         console.log(err);
         showErrorMsg("Cant add board");
       }
+    },
+    closeModal() {
+      this.isAddBoard = false
     },
   },
   computed: {

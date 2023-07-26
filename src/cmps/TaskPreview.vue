@@ -1,10 +1,12 @@
 <template>
-<section class="task-preview">
-     <li v-if="task">
-    <p>{{ task.title }}</p>
-  </li> 
-</section>
-
+  <section class="task-preview">
+    <RouterLink :to="'/task/' + task.id">
+      <li v-if="task">
+        <p>{{ task.title }}</p>
+      </li>
+      <pre>{{ currBoard }}</pre>
+    </RouterLink>
+  </section>
 </template>
 
 <script>
@@ -15,10 +17,26 @@ export default {
       required: false,
       default: () => ({}),
     },
+
+    data() {
+      return {
+        boardId: null
+      }
+    },
   },
   created() {
-    console.log('task', this.task)
+    const boardId = this.$route.params.boardId;
+    this.boardId = boardId
   },
-}
+  methods: {
+    // openTaskDetails(id) {
+    //   console.log('id:', id)
+    //   // this.$router.push({ id })
+  },
+  computed: {
+    currBoard() {
+      this.$store.getters.getCurrenBoard;
+    },
+  },
+};
 </script>
-

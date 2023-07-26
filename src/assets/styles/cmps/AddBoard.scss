@@ -38,17 +38,39 @@
         align-items: center;
     }
     .add-board-input {
+        span {
+            color: rgb(146, 0, 0);
+        }
         margin: 0;
         h2 {
-            font-size: rem(14px);
+            font-size: rem(13px);
             font-weight: 600;
             color: $lclr1;
             margin: 0;
+            margin-block-end: 0.3em;
         }
         p {
             font-size: rem(12px);
             font-weight: 100;
             color: $lclr1;
+            margin-block-start: 0.5em;
+        }
+
+        form {
+            input {
+                width: 100%;
+            }
+        }
+
+        .create-btn {
+            display: flex;
+            justify-content: center;
+            color: white;
+            background-color: #1266e4;
+            border-radius:0.2em ;
+            font-weight: 200;
+            padding:0.5em ;
+            cursor: pointer;
         }
     }
 }
