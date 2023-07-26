@@ -1,39 +1,47 @@
 <template>
   <section class="board-container">
-    <div class="recently">
+    <!-- <div class="recently">
       <h2 class="title">Recently viewed</h2>
       <BoardList
       :boards="boards"
       /> 
-    </div>
+    </div> -->
 
     <h3>YOUR WORKSPACE</h3>
     <div class="your">
       <h2 class="title">Your boards</h2>
-      <BoardList
-      :boards="boards"
-      /> 
+      <BoardList :boards="boards" @remove="removeBoard" />
     </div>
 
-    <div class="stared">
+    <!-- <div class="stared">
       <h2 class="title">stared</h2>
       <BoardList
       :boards="boards"
       /> 
-    </div>
+    </div> -->
   </section>
 </template>
 
 <script>
-import BoardList from '../cmps/BoardList.vue'
+import BoardList from "../cmps/BoardList.vue";
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
 export default {
   data() {
-    return {
-    }
+    return {};
   },
 
-  created() {
+  created() {},
+
+  methods: {
+    async removeBoard(boardId) {
+      try {
+        await this.$store.dispatch({ type: "removeBoard", boardId });
+      } catch (err) {
+        console.log(err);
+        showErrorMsg("Cant delete borad");
+      }
+    },
   },
 
   computed: {
@@ -41,8 +49,8 @@ export default {
       return this.$store.getters.boards;
     },
   },
-  components:{
-    BoardList
-  }
+  components: {
+    BoardList,
+  },
 };
 </script>

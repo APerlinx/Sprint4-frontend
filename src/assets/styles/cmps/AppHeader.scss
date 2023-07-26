@@ -5,6 +5,7 @@ header {
     display: flex;
     justify-content: space-between;
     border-bottom: 0.3px solid white;
+    color: $clr2;
 
     .loggedin-user {
         background-color: $clr1;
@@ -24,10 +25,12 @@ header {
         }
     }
     nav {
+        position: relative;
         padding: 5px 0;
+        & > *:hover {
+        }
     }
     nav a:not(:first-child) {
-        border-top: 1px solid $clr1;
         padding: 0 5px;
         margin: 10px;
     }
@@ -36,13 +39,13 @@ header {
     }
     .create {
         position: absolute;
+        right: -44%;
         background-color: #282e34;
         width: em(304, 14);
         height: em(247, 14);
-
+        border-radius: em(8, 14);
         font-size: 14px;
         color: $clr2;
-
-        padding: em(6, 14) em(12, 14);
+        padding: em(16, 14) em(12, 14);
     }
 }

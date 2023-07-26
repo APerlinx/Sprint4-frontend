@@ -47,6 +47,7 @@ export const boardStore = {
     },
     addBoard(state, { board }) {
       state.boards.push(board)
+      console.log(state.boards);
     },
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((c) => c._id === board._id)

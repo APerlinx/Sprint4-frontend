@@ -64,10 +64,10 @@ async function addBoardMsg(boardId, txt) {
     return msg
 }
 
-function getEmptyBoard() {
+function getEmptyBoard(title = '', imgUrl = 'https://images.unsplash.com/photo-1600691792883-dc29f53f6b17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80') {
     return {
-        title: 'Susita-' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(1000, 9000),
+        title,
+        imgUrl
     }
 }
 
@@ -134,7 +134,7 @@ const board = {
                     "id": "c104",
                     "title": "Help me",
                     "status": "in-progress", // monday
-                    "priority": "high", 
+                    "priority": "high",
                     "description": "description",
                     "comments": [
                         {
@@ -201,7 +201,7 @@ const board = {
 const board2 = {
     _id: "b102",
     title: "Alon,shay,guy",
-    imgUrl:"https://images.unsplash.com/photo-1660162129606-c12ece87e967?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80",
+    imgUrl: "https://images.unsplash.com/photo-1660162129606-c12ece87e967?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80",
     isStarred: false,
     archivedAt: 1589983468418,
     createdBy: {
@@ -261,7 +261,7 @@ const board2 = {
                     "id": "c104",
                     "title": "Help me",
                     "status": "in-progress", // monday
-                    "priority": "high", 
+                    "priority": "high",
                     "description": "description",
                     "comments": [
                         {
@@ -325,7 +325,7 @@ const board2 = {
     cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
 }
 
-// ;(async ()=>{
-//     await storageService.post(STORAGE_KEY, board)
-//     await storageService.post(STORAGE_KEY, board2)
-// })()
+;(async ()=>{
+    await storageService.post(STORAGE_KEY, board)
+    await storageService.post(STORAGE_KEY, board2)
+})()

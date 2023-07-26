@@ -3,8 +3,10 @@
     <BoardPreview
      v-for="board in boards"
       :key="board._id" 
-      :board="board" />
-  </ul>
+      :board="board" 
+      @remove="$emit('remove', board._id)"
+      />
+    </ul>
 </template>
 
 <script>
@@ -14,6 +16,11 @@ export default {
 
   data() {
     return {};
+  },
+  methods: {
+    // removeBoard(boardId) {
+    //   this.$emit('remove', boardId)
+    // },
   },
   components: {
     BoardPreview,

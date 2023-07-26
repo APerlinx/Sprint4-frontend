@@ -4,6 +4,7 @@
       <h2>{{ board.title.toUpperCase() }}</h2>
     </div>
   </RouterLink>
+  <button @click="removeBoard(board._id)">X</button>
 </template>
 
 <script>
@@ -12,6 +13,11 @@ export default {
 
   data() {
     return {};
+  },
+  methods: {
+    removeBoard(boardId) {
+      this.$emit("remove", boardId);
+    },
   },
   computed: {
     imgUrl() {
