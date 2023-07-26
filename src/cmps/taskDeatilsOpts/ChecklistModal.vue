@@ -22,7 +22,7 @@ export default {
                 title: this.checklistTitle,
                 todos: []
             }
-            this.$emit('addTaskOpt', { type: 'checklist', item: currChecklist });
+            this.$emit('addTaskOpt', { type: 'checklist', info: currChecklist });
         }
     }
 }

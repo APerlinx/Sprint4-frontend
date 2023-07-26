@@ -1,0 +1,14 @@
+.add-modal {
+    position: absolute;
+    right: -44%;
+    background-color: #282e34;
+    width: em(304, 14);
+    height: em(247, 14);
+    border-radius: em(8, 14);
+    font-size: 14px;
+    color: $clr2;
+    padding: em(16, 14) em(12, 14);
+    z-index: 999;
+
+   
+}

@@ -1,4 +1,7 @@
 <template>
+  
+  <div class="overlay"  v-if="isAddBoard" @click="isAddBoard = false"></div>
+
   <header>
     <nav>
       <RouterLink to="/">
@@ -9,29 +12,10 @@
       <RouterLink to="/review">Reviews</RouterLink>
       <RouterLink to="/chat">Chat</RouterLink>
       <RouterLink to="/login">Login / Signup</RouterLink>
-      <RouterLink @click="toggleCreateModal" to="#">Create</RouterLink>
-
-      <div v-if="isCreateMenu" class="create">
-        <p class="title" @click="toggleCreateModal">Create board</p>
-        <p class="body">
-          A board is made up of cards ordered on lists. use it to manage
-          projects, track information, or organize anything.
-        </p>
-      </div>
-
-      <div v-if="isCreateMode" class="create">
-        <p class="title">Board title</p>
-        <form @submit.prevent="saveBoard">
-          <input
-            @input="isTitle = true"
-            autofocus
-            type="text"
-            v-model="boardToEdit.title"
-          />
-          <p v-if="!boardToEdit">Title is Req</p>
-          <button>Create</button>
-        </form>
-      </div>
+      <RouterLink @click="isAddBoard=!isAddBoard" to="#">Create</RouterLink>
+      <AddBoard
+       v-if="isAddBoard"
+       @save="saveBoard" />
     </nav>
 
     <section class="loggedin-user" v-if="loggedInUser">
@@ -44,38 +28,26 @@
   </header>
 </template>
 <script>
-import { boardService } from "../services/board.service.local";
+
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
+import AddBoard from "../cmps/AddBoard.vue";
 
 export default {
   data() {
     return {
-      isCreateMenu: false,
-      isCreateMode: false,
-      isTitle: false,
-      boardToEdit: boardService.getEmptyBoard(),
+      isAddBoard: false,
     };
   },
   methods: {
-    toggleCreateModal() {
-      if (!this.isCreateMenu) {
-        this.isCreateMenu = true;
-      } else if (this.isCreateMenu && !this.isCreateMode) {
-        this.isCreateMode = true;
-      } else {
-        this.isCreateMenu = false;
-        this.isCreateMode = false;
-      }
-    },
-
-    async saveBoard() {
+    async saveBoard(board) {
       try {
         await this.$store.dispatch({
           type: "addBoard",
-          board: this.boardToEdit,
+          board,
         });
-        showSuccessMsg("Board added");
-        this.toggleCreateModal();
+        this.isAddBoard = false
+        this.$router.push('/details/' + this.savedBoard._id)
+        
       } catch (err) {
         console.log(err);
         showErrorMsg("Cant add board");
@@ -86,6 +58,12 @@ export default {
     loggedInUser() {
       return this.$store.getters.loggedinUser;
     },
+    savedBoard() {
+      return this.$store.getters.savedBoard;
+    },
+  },
+  components: {
+    AddBoard,
   },
 };
 </script>
