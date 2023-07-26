@@ -11,12 +11,18 @@ $lclr1: #182b4d;
 
 // Group Colors
 
-$list-background-color: #101204;
-$list-title-color: #B6C2CF;
-$list-text-color: #9FADBC;
-$task-bg-clr: #22272B;
-$button-color: #8C9BAB;
+$list-background-color: #F1F2F4;
+$list-title-color: rgb(23, 43, 77);
+$list-text-color: rgb(23, 43, 77);
+$task-bg-clr: #FFFFFF;
+$button-color: #44546f;
 $dynamic-text: #FFFFFF;
+$dynamic-button: transparent;
+$dynamic-button-hovered: #A6C5E229;
+$dynamic-button-pressed: #BFDBF847;
+$dynamic-button-highlighted: #DFE1E6;
+$dynamic-button-highlighted-text: #172B4D;
+$dynamic-button-highlighted-hovered: #FFFFFF;
 
 // Breakpoints
 $mobile-breakpoint: 460px;

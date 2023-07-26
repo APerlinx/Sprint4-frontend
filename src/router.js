@@ -16,14 +16,14 @@ const routes = [
     component: Home
   },
   {
+    path: '/details/:boardId?',
+    name: 'BoardDetails',
+    component: BoardDetails
+  },
+  {
     path: '/board',
     name: 'BoardIndex',
     component: BoardIndex,
-  },
-  {
-    path: '/details/:boarId?',
-    name: 'BoardDetails',
-    component: BoardDetails
   },
   {
     path: '/review',
@@ -52,4 +52,5 @@ export const router = createRouter({
   history: createWebHashHistory()
   // base: process.env.BASE_URL,
 })
+
 

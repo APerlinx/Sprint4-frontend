@@ -47,6 +47,8 @@ export default {
     return {
       title: '',
       toggleAddForm: false,
+      currentGroupId: null,
+      showTaskForm: false,
     }
   },
   computed: {
@@ -54,8 +56,7 @@ export default {
       return this.$store.getters.loggedinUser
     },
     groups() {
-      // let boardId = this.$route.params.boardId
-      const boardId = '2jBoA'
+      const boardId = this.$route.params.boardId
       const groups = this.$store.getters.getGroupsByBoardId(boardId)
       return groups
     },
@@ -77,6 +78,7 @@ export default {
       }
     },
     async removeGroup(groupId) {
+      console.log('groupId', groupId)
       try {
         await this.$store.dispatch({
           type: 'removeGroup',
@@ -98,11 +100,12 @@ export default {
         showErrorMsg('Cannot update group')
       }
     },
-    async addTask(groupId) {
+    async addTask(groupId, task) {
       try {
         await this.$store.dispatch({
           type: 'addTask',
           groupId,
+          task,
         })
         showSuccessMsg('Task was added')
       } catch (err) {
@@ -110,6 +113,7 @@ export default {
         showErrorMsg('Cannot add task')
       }
     },
+
     printGroupToConsole(group) {
       console.log('Group msgs:', group.msgs)
     },

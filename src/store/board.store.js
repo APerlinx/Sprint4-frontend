@@ -41,11 +41,13 @@ export const boardStore = {
       return savedBoard
     },
     getGroupsByBoardId: (state) => (boardId) => {
-      console.log('state.boards', state.boards)
-      console.log('boardId', boardId)
       const board = state.boards.find((board) => board._id === boardId)
       return board ? board.groups : []
     },
+    getCurrenBoard ( { currentBoard} ) {
+      const board = currentBoard
+      return board ? board.groups : []
+    }
   },
   mutations: {
     setBoards(state, { boards }) {
@@ -66,15 +68,27 @@ export const boardStore = {
     removeBoard(state, { boardId }) {
       state.boards = state.boards.filter((board) => board._id !== boardId)
     },
-    addGroup(state, { group }) {
-      if (!state.currentBoard) return
-      state.currentBoard.groups.push(group)
+    addGroup(state, { boardId, group }) {
+      const boardIndex = state.boards.findIndex((board) => board._id === boardId)
+      if (boardIndex === -1) return
+      const newGroups = [...state.boards[boardIndex].groups, group]
+      const newBoard = { ...state.boards[boardIndex], groups: newGroups }
+      state.boards.splice(boardIndex, 1, newBoard)
+    
+      if (state.currentBoard._id === boardId) {
+        state.currentBoard = newBoard;
+      }
     },
-    removeGroup(state, { groupId }) {
-      if (!state.currentBoard) return
-      const groupIndex = state.currentBoard.groups.findIndex((group) => group.id === groupId)
-      if (groupIndex === -1) return
-      state.currentBoard.groups.splice(groupIndex, 1)
+    removeGroup(state, { boardId, groupId }) {
+      const boardIndex = state.boards.findIndex((board) => board._id === boardId)
+      if (boardIndex === -1) return
+      const newGroups = state.boards[boardIndex].groups.filter(group => group.id !== groupId)
+      const newBoard = { ...state.boards[boardIndex], groups: newGroups }
+      state.boards.splice(boardIndex, 1, newBoard)
+    
+      if (state.currentBoard._id === boardId) {
+        state.currentBoard = newBoard;
+      }
     },
   },
   actions: {
@@ -88,7 +102,7 @@ export const boardStore = {
         throw err
       }
     },
-    async loadCurrentBoard({ commit }, boardId) {
+    async loadCurrentBoard({ commit }, { boardId }) {
       const board = await boardService.getById(boardId);
       commit('setCurrentBoard', board);
     },
@@ -132,22 +146,23 @@ export const boardStore = {
     async addGroup({ commit, state }, { group }) {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
+    
+        const newGroups = [...state.currentBoard.groups, group]
 
-        const updatedBoard = { ...state.currentBoard, groups: [...state.currentBoard.groups, group] }
-
+        const updatedBoard = { ...state.currentBoard, groups: newGroups }
+    
         const savedBoard = await boardService.save(updatedBoard)
-
         commit({ type: 'addGroup', boardId: savedBoard._id, group })
       } catch (err) {
         console.log('boardStore: Error in addGroup', err)
         throw err
       }
     },
-
+    
     async removeGroup({ commit, state }, { groupId }) {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
-
+        console.log('state.currentBoard', state.currentBoard);
         const groupIndex = state.currentBoard.groups.findIndex(
           (group) => group.id === groupId
         )
@@ -170,7 +185,8 @@ export const boardStore = {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
     
-        const group = state.currentBoard.groups.find(group => group._id === groupId)
+        const group = state.currentBoard.groups.find(group => group.id === groupId)
+        console.log('group', group);
         if (!group) throw new Error('Group not found')
     
         group.tasks.push(task)
