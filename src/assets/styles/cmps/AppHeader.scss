@@ -1,41 +1,88 @@
 header {
+    h2 {
+        margin: 0;
+    }
+
     position: relative;
-    background-color: $clr6;
-    padding: 10px;
+    background-color: white;
     display: flex;
     justify-content: space-between;
     border-bottom: 0.3px solid white;
-    color: $clr2;
+    color: #425672;
+    box-shadow: 0 0 2px rgb(143, 143, 143);
 
-    .loggedin-user {
-        background-color: $clr1;
-        padding: 2px 8px;
-        border-radius: 1em;
-        align-self: flex-end;
-        color: whitesmoke;
-        span {
-            padding: 4px;
-            margin: 10px;
-            border-radius: 50%;
-        }
-        img {
-            width: 2em;
-            height: 2em;
-            border-radius: 50%;
-        }
-    }
     nav {
-        position: relative;
-        padding: 5px 0;
-        & > *:hover {
+        padding: 0.34em 1em;
+        display: flex;
+        align-items: center;
+        gap: 2.5em;
+        font-size: 1rem;
+        font-weight: 400;
+
+        & > :first-child :hover {
+            background-color:  darken(rgb(255, 255, 255),8%);
+        }
+
+        .create {
+            position: relative;
+            background-color: $lclr2;
+            color: white;
+            font-size: 0.9em;
+            padding: 0.4em 1em;
+            border-radius: 0.2em;
+        }
+
+        .logo {
+            display: flex;
+            gap: 0.5em;
+            font-size: em(14px, 16px);
+            align-items: center;
+            border-radius: 0.5em;
+            transition: 0.5s;
+
+            h2 {
+                font-weight: 800;
+            }
+
+            & :nth-child(1) {
+                font-size: em(20px, 16px);
+                font-weight: 900;
+                padding: 0.5em;
+            }
         }
     }
-    nav a:not(:first-child) {
-        padding: 0 5px;
-        margin: 10px;
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 5rem;
+        padding-inline-end: 1em;
+
+        .filter-container {
+            position: relative;
+
+            .material-symbols-outlined {
+                position: absolute;
+                left: 2%;
+                top: 26%;
+                color: grey;
+                font-size: 1.3em;
+            }
+            .filter {
+                position: relative;
+                width: 200px;
+                border: 0.5px solid rgba(128, 128, 128, 0.642);
+                padding: 0.35em 2em;
+                border-radius: 0.4em;
+                font-size: 1.2em;
+            }
+        }
     }
-    nav .active {
-        color: $clr1;
+    .loggedin-user {
+        display: flex;
+        align-items: center;
+        background-color: rgb(255, 187, 15);
+        border-radius: 50%;
+        padding: 0.8em;
+        font-size: 0.55em;
     }
-   
 }

@@ -17,14 +17,12 @@
     <div class="add-board-input">
       <h2>Board title <span>*</span></h2>
       <form @submit.prevent="saveBoard">
-        <input
-          autofocus
-          type="text"
-          v-model="boardToEdit.title"
-        />
+        <input autofocus type="text" v-model="boardToEdit.title" />
         <p v-if="!boardToEdit.title">👋 Board title is required</p>
         <button></button>
-        <div @click="saveBoard" class="create-btn">Create</div>
+        <div @click="saveBoard" class="create-btn" :class="{ check: titleLength }">
+          Create
+        </div>
       </form>
     </div>
   </div>
@@ -42,22 +40,17 @@ export default {
   },
   methods: {
     saveBoard() {
+      if(!this.boardToEdit.title) return
       this.$emit("save", this.boardToEdit);
     },
     closeModal() {
       this.$emit("close");
-    }
+    },
   },
-  // watch: {
-  //   'boardToEdit.title'(newTitle) {
-  //     if (newTitle.length > 0) {
-  //       this.isTitle = true
-  //     } else {
-  //       this.isTitle = false
-  //     }
-  //   },
-  // },
+  computed: {
+    titleLength() {
+      return this.boardToEdit.title.length;
+    },
+  },
 };
 </script>
-
-<style></style>

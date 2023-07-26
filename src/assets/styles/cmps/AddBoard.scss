@@ -1,6 +1,6 @@
 .index-modal {
     position: absolute;
-    right: -156%;
+    right: -5%;
     top: 0;
     font-weight: 600;
 }
@@ -9,7 +9,8 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    right: -44%;
+    left: 0;
+    top: 100%;
     width: em(304, 14);
     height: em(247, 14);
     border-radius: em(8, 14);
@@ -65,12 +66,16 @@
         .create-btn {
             display: flex;
             justify-content: center;
-            color: white;
-            background-color: #1266e4;
+            color: #adb4c0;
+            background-color: #f7f8f9;
             border-radius:0.2em ;
             font-weight: 200;
             padding:0.5em ;
             cursor: pointer;
         }
+        .check {
+            background-color: #1266e4;
+            color: white;
+          }
     }
 }
