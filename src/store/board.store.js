@@ -1,5 +1,6 @@
 import { boardService } from '../services/board.service.local'
 // import { boardService } from '../services/board.service'
+import { applyDrag } from '../services/util.service.js'
 
 export function getActionRemoveBoard(boardId) {
   return {
@@ -65,7 +66,7 @@ export const boardStore = {
   mutations: {
     setBoards(state, { boards }) {
       state.boards = boards
-      console.log(state.boards);
+      console.log(state.boards)
     },
     setCurrentBoard(state, board) {
       console.log("🚀 ~ file: board.store.js:63 ~ setCurrentBoard ~ board:", board)
@@ -84,25 +85,31 @@ export const boardStore = {
       state.boards = state.boards.filter((board) => board._id !== boardId)
     },
     addGroup(state, { boardId, group }) {
-      const boardIndex = state.boards.findIndex((board) => board._id === boardId)
+      const boardIndex = state.boards.findIndex(
+        (board) => board._id === boardId
+      )
       if (boardIndex === -1) return
       const newGroups = [...state.boards[boardIndex].groups, group]
       const newBoard = { ...state.boards[boardIndex], groups: newGroups }
       state.boards.splice(boardIndex, 1, newBoard)
 
       if (state.currentBoard._id === boardId) {
-        state.currentBoard = newBoard;
+        state.currentBoard = newBoard
       }
     },
     removeGroup(state, { boardId, groupId }) {
-      const boardIndex = state.boards.findIndex((board) => board._id === boardId)
+      const boardIndex = state.boards.findIndex(
+        (board) => board._id === boardId
+      )
       if (boardIndex === -1) return
-      const newGroups = state.boards[boardIndex].groups.filter(group => group.id !== groupId)
+      const newGroups = state.boards[boardIndex].groups.filter(
+        (group) => group.id !== groupId
+      )
       const newBoard = { ...state.boards[boardIndex], groups: newGroups }
       state.boards.splice(boardIndex, 1, newBoard)
 
       if (state.currentBoard._id === boardId) {
-        state.currentBoard = newBoard;
+        state.currentBoard = newBoard
       }
     },
     setCurrTask(state, { task }) {
@@ -182,7 +189,7 @@ export const boardStore = {
     async removeGroup({ commit, state }, { groupId }) {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
-        console.log('state.currentBoard', state.currentBoard);
+
         const groupIndex = state.currentBoard.groups.findIndex(
           (group) => group.id === groupId
         )
@@ -190,7 +197,9 @@ export const boardStore = {
 
         const updatedBoard = {
           ...state.currentBoard,
-          groups: state.currentBoard.groups.filter((group) => group.id !== groupId),
+          groups: state.currentBoard.groups.filter(
+            (group) => group.id !== groupId
+          ),
         }
 
         const savedBoard = await boardService.save(updatedBoard)
@@ -218,5 +227,39 @@ export const boardStore = {
         throw err
       }
     },
+    async moveGroup({ commit, state }, dropResult) {
+      // Deep clone currentBoard
+      const updatedBoard = JSON.parse(JSON.stringify(state.currentBoard));
+      updatedBoard.groups = applyDrag(updatedBoard.groups, dropResult);
+
+      // Save updated board...
+      const savedBoard = await boardService.save(updatedBoard);
+      commit({ type: 'updateBoard', board: savedBoard });
+    },
+
+
+async moveTask({ commit, state }, { sourceGroupId, dropResult }) {
+  // Deep clone currentBoard
+  console.log(`groupId: ${sourceGroupId}`);
+
+  const updatedBoard = JSON.parse(JSON.stringify(state.currentBoard));
+  // Find the group
+  const group = updatedBoard.groups.find(group => group.id === sourceGroupId);
+  // Apply drag and drop result
+  const { removedIndex, addedIndex } = dropResult;
+  console.log('{ removedIndex, addedIndex }', { removedIndex, addedIndex });
+  if (removedIndex !== null && addedIndex !== null) {
+    const [removedTask] = group.tasks.splice(removedIndex, 1);
+    group.tasks.splice(addedIndex, 0, removedTask);
+  }
+
+  // Save updated board
+  const savedBoard = await boardService.save(updatedBoard);
+  
+  // Commit updated board to store
+  commit({ type: 'updateBoard', board: savedBoard });
+}
+
+
   },
 }

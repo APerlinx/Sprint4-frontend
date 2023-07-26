@@ -1,16 +1,30 @@
 <template>
   <div class="add-modal">
-    <p class="title">Board title</p>
-    <form @submit.prevent="saveBoard">
-      <input
-        @input="isTitle = true"
-        autofocus
-        type="text"
-        v-model="boardToEdit.title"
-      />
-      <p v-if="!boardToEdit.title">Board title is required</p>
-      <button>Create</button>
-    </form>
+    <div class="action">
+      <div class="close"></div>
+      <h3 class="title">Create board</h3>
+      <div @click="closeModal" class="close">x</div>
+    </div>
+
+    <!-- <div class="board-layout">layout exemple</div> -->
+
+    <!-- <div class="bg-picker">
+      <h6 class="title">Background</h6>
+      <div class="bg-img"></div>
+      <div class="bg-color"></div>
+    </div> -->
+
+    <div class="add-board-input">
+      <h2>Board title <span>*</span></h2>
+      <form @submit.prevent="saveBoard">
+        <input autofocus type="text" v-model="boardToEdit.title" />
+        <p v-if="!boardToEdit.title">👋 Board title is required</p>
+        <button></button>
+        <div @click="saveBoard" class="create-btn" :class="{ check: titleLength }">
+          Create
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -26,10 +40,17 @@ export default {
   },
   methods: {
     saveBoard() {
+      if(!this.boardToEdit.title) return
       this.$emit("save", this.boardToEdit);
+    },
+    closeModal() {
+      this.$emit("close");
+    },
+  },
+  computed: {
+    titleLength() {
+      return this.boardToEdit.title.length;
     },
   },
 };
 </script>
-
-<style></style>

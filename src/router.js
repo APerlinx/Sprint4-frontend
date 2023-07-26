@@ -24,7 +24,7 @@ const routes = [
         path: 'task/:taskId',
         component: TaskDetails,
       },
-    ]
+    ],
   },
   {
     path: '/board',

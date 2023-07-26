@@ -8,16 +8,16 @@
   }
 
 .board-container {
-  padding: 2em;
+  padding: 2em 10em;
 
   h3 {
-    color: $clr1;
+    color: $lclr1;
     margin: em(11, 14) 0;
   }
 
   > * .title {
     font-size: 1rem;
-    color: $clr1;
+    color: $lclr1;
     font-weight: 600;
     margin: em(11, 14) 0;
   }
@@ -28,18 +28,12 @@
     justify-content: center;
     align-items: center;
     margin-block-start: 0.7em;
-    background-color: #282d34;
-    cursor: pointer;
+    background-color: #f1f2f4;
 
     .title {
       font-weight: 200;
       font-size: rem(14px);
     }
 
-    .index-modal {
-      position: absolute;
-      right: -156%;
-      top: 0;
-    }
   }
 }

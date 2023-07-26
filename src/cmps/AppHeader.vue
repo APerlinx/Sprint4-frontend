@@ -1,34 +1,43 @@
 <template>
-  
-  <div class="overlay"  v-if="isAddBoard" @click="isAddBoard = false"></div>
+  <div class="overlay" v-if="isAddBoard" @click="isAddBoard = false"></div>
 
   <header>
     <nav>
-      <RouterLink to="/">
-        <i class="fa fa-trello"></i>
+      <RouterLink to="/board">
+        <div class="logo">
+          <i class="fa fa-trello"></i>
+          <h2>Trello</h2>
+        </div>
       </RouterLink>
-      <RouterLink to="/board">Board</RouterLink>
-      <!-- <RouterLink to="/b">Board Details</RouterLink> -->
-      <RouterLink to="/review">Reviews</RouterLink>
-      <RouterLink to="/chat">Chat</RouterLink>
-      <RouterLink to="/login">Login / Signup</RouterLink>
-      <RouterLink @click="isAddBoard=!isAddBoard" to="#">Create</RouterLink>
-      <AddBoard
-       v-if="isAddBoard"
-       @save="saveBoard" />
+
+      <div class="create">
+        <RouterLink @click="isAddBoard = !isAddBoard" to="#">Create</RouterLink>
+        <AddBoard v-if="isAddBoard" @close="closeModal" @save="saveBoard" />
+      </div>
     </nav>
 
-    <section class="loggedin-user" v-if="loggedInUser">
-      <RouterLink :to="`/user/${loggedInUser._id}`">
-        {{ loggedInUser.fullname }}
-      </RouterLink>
-      <span>{{ loggedInUser.score?.toLocaleString() }}</span>
-      <img :src="loggedInUser.imgUrl" />
-    </section>
+    <div class="actions">
+      <div class="filter-container">
+        <input type="text" class="filter" placeholder="search" />
+        <span class="material-symbols-outlined">search</span>
+      </div>
+
+      <div class="loggedin-user">
+        <h2>SZ</h2>
+      </div>
+    </div>
+    
+    <!-- <RouterLink :to="`/user/${loggedInUser._id}`">
+      {{ loggedInUser.fullname }}
+    </RouterLink> -->
+    <!-- <RouterLink to="/login">Login / Signup</RouterLink> -->
+    <!-- <section class="loggedin-user" v-if="loggedInUser"> -->
+    <!-- <span>{{ loggedInUser.score?.toLocaleString() }}</span> -->
+    <!-- <img :src="loggedInUser.imgUrl" /> -->
+    <!-- </section> -->
   </header>
 </template>
 <script>
-
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 import AddBoard from "../cmps/AddBoard.vue";
 
@@ -45,13 +54,15 @@ export default {
           type: "addBoard",
           board,
         });
-        this.isAddBoard = false
-        this.$router.push('/details/' + this.savedBoard._id)
-        
+        this.isAddBoard = false;
+        this.$router.push("/details/" + this.savedBoard._id);
       } catch (err) {
         console.log(err);
         showErrorMsg("Cant add board");
       }
+    },
+    closeModal() {
+      this.isAddBoard = false;
     },
   },
   computed: {

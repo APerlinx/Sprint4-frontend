@@ -1,21 +1,39 @@
 <template>
   <section class="group-list-section">
     <ul class="group-list">
-      <GroupPreview
-        v-for="group in groups"
-        :key="group._id"
-        :group="group"
-        @update-title="updateGroup"
-        @remove="removeGroup"
+      <Container
+        :get-child-payload="getGroupPayload"
+        @drop="onGroupDrop"
+        orientation="horizontal"
+        behaviour="contain"
       >
-        <template #actions>
-          <div class="group-actions">
-            <button @click="addTask(group.id)" class="group-btn">
-              + Add a card
-            </button>
-          </div>
-        </template>
-      </GroupPreview>
+        <Draggable v-for="group in groups" :key="group._id">
+          <GroupPreview
+            :group="group"
+            @update-title="updateGroup"
+            @remove="removeGroup"
+          >
+            <template #actions>
+              <div class="group-actions">
+                <button
+                  v-if="!(showTaskForm && currentGroupId === group.id)"
+                  @click="showAddTaskForm(group.id)"
+                  class="group-btn"
+                >
+                  + Add a card
+                </button>
+
+                <AddTask
+                  v-if="showTaskForm && currentGroupId === group.id"
+                  :groupId="currentGroupId"
+                  @addTask="addTask"
+                  @close="closeTaskForm"
+                />
+              </div>
+            </template>
+          </GroupPreview>
+        </Draggable>
+      </Container>
 
       <li
         class="list-btn-wrapper"
@@ -41,6 +59,8 @@ import { boardService } from '../services/board.service.local.js'
 import { clickOutsideDirective } from '../directives/index.js'
 import GroupPreview from './GroupPreview.vue'
 import AddGroup from './AddGroup.vue'
+import AddTask from './AddTask.vue'
+import { Container, Draggable } from 'vue3-smooth-dnd'
 
 export default {
   data() {
@@ -63,6 +83,12 @@ export default {
   },
   created() {},
   methods: {
+    getGroupPayload(index) {
+      return this.groups[index]
+    },
+    onGroupDrop(dropResult) {
+      this.$store.dispatch('moveGroup', dropResult)
+    },
     async addGroup(title) {
       try {
         const groupToAdd = boardService.getEmptyGroup()
@@ -100,30 +126,40 @@ export default {
         showErrorMsg('Cannot update group')
       }
     },
-    async addTask(groupId, task) {
+    async addTask({ groupId, taskTitle }) {
       try {
         await this.$store.dispatch({
           type: 'addTask',
           groupId,
-          task,
+          task: { title: taskTitle },
         })
+        this.showTaskForm = false
         showSuccessMsg('Task was added')
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot add task')
       }
     },
-
+    closeTaskForm() {
+      this.showTaskForm = false
+    },
     printGroupToConsole(group) {
       console.log('Group msgs:', group.msgs)
     },
     handleCloseComponent() {
       this.toggleAddForm = false
     },
+    showAddTaskForm(groupId) {
+      this.currentGroupId = groupId
+      this.showTaskForm = true
+    },
   },
   components: {
     GroupPreview,
     AddGroup,
+    AddTask,
+    Container,
+    Draggable,
   },
   directives: {
     clickOutside: clickOutsideDirective,
