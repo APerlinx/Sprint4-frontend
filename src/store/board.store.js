@@ -30,19 +30,25 @@ export function getActionAddBoardMsg(boardId) {
 export const boardStore = {
   state: {
     boards: [],
+    currentBoard: null,
   },
   getters: {
     boards({ boards }) {
       return boards
     },
     getGroupsByBoardId: (state) => (boardId) => {
-      const board = state.boards.find((board) => board.id === boardId)
+      console.log('state.boards', state.boards)
+      console.log('boardId', boardId)
+      const board = state.boards.find((board) => board._id === boardId)
       return board ? board.groups : []
     },
   },
   mutations: {
     setBoards(state, { boards }) {
       state.boards = boards
+    },
+    setCurrentBoard(state, board) {
+      state.currentBoard = board;
     },
     addBoard(state, { board }) {
       state.boards.push(board)
@@ -54,10 +60,15 @@ export const boardStore = {
     removeBoard(state, { boardId }) {
       state.boards = state.boards.filter((board) => board._id !== boardId)
     },
-    addBoardMsg(state, { boardId, msg }) {
-      const board = state.boards.find((board) => board._id === boardId)
-      if (!board.msgs) board.msgs = []
-      board.msgs.push(msg)
+    addGroup(state, { group }) {
+      if (!state.currentBoard) return
+      state.currentBoard.groups.push(group)
+    },
+    removeGroup(state, { groupId }) {
+      if (!state.currentBoard) return
+      const groupIndex = state.currentBoard.groups.findIndex((group) => group.id === groupId)
+      if (groupIndex === -1) return
+      state.currentBoard.groups.splice(groupIndex, 1)
     },
   },
   actions: {
@@ -70,6 +81,10 @@ export const boardStore = {
         console.log('boardStore: Error in addBoard', err)
         throw err
       }
+    },
+    async loadCurrentBoard({ commit }, boardId) {
+      const board = await boardService.getById(boardId);
+      commit('setCurrentBoard', board);
     },
     async updateBoard(context, { board }) {
       try {
@@ -108,5 +123,58 @@ export const boardStore = {
         throw err
       }
     },
+    async addGroup({ commit, state }, { group }) {
+      try {
+        if (!state.currentBoard) throw new Error('Current board not found')
+
+        const updatedBoard = { ...state.currentBoard, groups: [...state.currentBoard.groups, group] }
+
+        const savedBoard = await boardService.save(updatedBoard)
+
+        commit({ type: 'addGroup', boardId: savedBoard._id, group })
+      } catch (err) {
+        console.log('boardStore: Error in addGroup', err)
+        throw err
+      }
+    },
+
+    async removeGroup({ commit, state }, { groupId }) {
+      try {
+        if (!state.currentBoard) throw new Error('Current board not found')
+
+        const groupIndex = state.currentBoard.groups.findIndex(
+          (group) => group.id === groupId
+        )
+        if (groupIndex === -1) throw new Error('Group not found')
+
+        const updatedBoard = {
+          ...state.currentBoard,
+          groups: state.currentBoard.groups.filter((group) => group.id !== groupId),
+        }
+
+        const savedBoard = await boardService.save(updatedBoard)
+
+        commit({ type: 'removeGroup', boardId: savedBoard._id, groupId })
+      } catch (err) {
+        console.error(err)
+        throw err
+      }
+    },
+    async addTask({ commit, state }, { groupId, task }) {
+      try {
+        if (!state.currentBoard) throw new Error('Current board not found')
+    
+        const group = state.currentBoard.groups.find(group => group._id === groupId)
+        if (!group) throw new Error('Group not found')
+    
+        group.tasks.push(task)
+    
+        const savedBoard = await boardService.save(state.currentBoard)
+        commit('updateBoard', savedBoard)
+      } catch (err) {
+        console.error('Error in addTask', err)
+        throw err
+      }
+    },      
   },
 }

@@ -10,11 +10,12 @@
 html {
     font-family: montserrat;
     line-height: 1.6;
-    color: $clr2;
+    color: $clr4;
 }
 
-body {
-    font-size: rem(18px);
+body,button,input,select,textarea {
+    font-size: rem(14px);
+    line-height: 20px;
     margin: 0;
 }
 
