@@ -1,38 +1,52 @@
 <template>
-  <div class="container home">
+  <section class="group-list-section">
     <ul class="group-list">
-      <li v-for="group in groups" :key="group._id">
-        <p>
-          {{group.title}}
-        </p>
-        <pre>
-          {{group.tasks}}
-        </pre>
-        <button @click="removeGroup(group._id)">x</button>
-        <button @click="updateGroup(group)">Update</button>
-        <hr />
-        <button @click="addGroupMsg(group._id)">Add group msg</button>
-        <button @click="printGroupToConsole(group)">Print msgs to console</button>
+      <GroupPreview
+        v-for="group in groups"
+        :key="group._id"
+        :group="group"
+        @update-title="updateGroup"
+        @remove="removeGroup"
+      >
+        <template #actions>
+          <div class="group-actions">
+            <button @click="addTask(group.id)" class="group-btn">
+              + Add a card
+            </button>
+          </div>
+        </template>
+      </GroupPreview>
 
+      <li
+        class="list-btn-wrapper"
+        v-if="!toggleAddForm"
+        @click="toggleAddForm = !toggleAddForm"
+      >
+        <button class="list-btn">+ Add another list</button>
+      </li>
+      <li
+        class="open-form-wrapper"
+        v-if="toggleAddForm"
+        v-click-outside="handleCloseComponent"
+      >
+        <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
     </ul>
-    <hr />
-    <form @submit.prevent="addGroup()">
-      <h2>Add group</h2>
-      <input type="text" v-model="groupToAdd.vendor" />
-      <button>Save</button>
-    </form>
-  </div>
+  </section>
 </template>
 
 <script>
-import {showErrorMsg, showSuccessMsg} from '../services/event-bus.service'
-// import {groupService} from '../services/group.service.local'
-// import { getActionRemoveGroup, getActionUpdateGroup, getActionAddGroupMsg } from '../store/group.store'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
+import { boardService } from '../services/board.service.local.js'
+import { clickOutsideDirective } from '../directives/index.js'
+import GroupPreview from './GroupPreview.vue'
+import AddGroup from './AddGroup.vue'
+
 export default {
   data() {
     return {
-      groupToAdd: groupService.getEmptyGroup()
+      title: '',
+      toggleAddForm: false,
     }
   },
   computed: {
@@ -40,60 +54,77 @@ export default {
       return this.$store.getters.loggedinUser
     },
     groups() {
-      let boardId = this.$route.params.boardId
-      return this.$store.getters.groups(boardId)
-    }
+      // let boardId = this.$route.params.boardId
+      const boardId = '2jBoA'
+      const groups = this.$store.getters.getGroupsByBoardId(boardId)
+      return groups
+    },
   },
-  created() {
-    this.$store.dispatch({type: 'loadGroups'})
-  },
+  created() {},
   methods: {
-    async addGroup() {
+    async addGroup(title) {
       try {
-        await this.$store.dispatch({type: 'addGroup', group: this.groupToAdd})
+        const groupToAdd = boardService.getEmptyGroup()
+        groupToAdd.title = title
+        await this.$store.dispatch({
+          type: 'addGroup',
+          group: groupToAdd,
+        })
         showSuccessMsg('Group added')
-        this.groupToAdd = groupService.getEmptyGroup()
-      } catch(err) {
+      } catch (err) {
         console.log(err)
         showErrorMsg('Cannot add group')
       }
     },
     async removeGroup(groupId) {
       try {
-        await this.$store.dispatch(getActionRemoveGroup(groupId))
+        await this.$store.dispatch({
+          type: 'removeGroup',
+          groupId,
+        })
         showSuccessMsg('Group removed')
-
-      } catch(err) {
+      } catch (err) {
         console.log(err)
         showErrorMsg('Cannot remove group')
       }
     },
-    async updateGroup(group) {
+    async updateGroup(group, changes) {
       try {
-        group = {...group}
-        group.price = +prompt('New price?', group.price)
+        group = { ...group, ...changes }
         await this.$store.dispatch(getActionUpdateGroup(group))
         showSuccessMsg('Group updated')
-
-      } catch(err) {
+      } catch (err) {
         console.log(err)
         showErrorMsg('Cannot update group')
       }
     },
-    async addGroupMsg(groupId) {
+    async addTask(groupId) {
       try {
-        await this.$store.dispatch(getActionAddGroupMsg(groupId))
-        showSuccessMsg('Group msg added')
-      } catch(err) {
+        await this.$store.dispatch({
+          type: 'addTask',
+          groupId,
+        })
+        showSuccessMsg('Task was added')
+      } catch (err) {
         console.log(err)
-        showErrorMsg('Cannot add group msg')
+        showErrorMsg('Cannot add task')
       }
     },
     printGroupToConsole(group) {
       console.log('Group msgs:', group.msgs)
-    }
-  }
-
-  
+    },
+    handleCloseComponent() {
+      this.toggleAddForm = false
+    },
+  },
+  components: {
+    GroupPreview,
+    AddGroup,
+  },
+  directives: {
+    clickOutside: clickOutsideDirective,
+  },
 }
 </script>
+
+<style></style>

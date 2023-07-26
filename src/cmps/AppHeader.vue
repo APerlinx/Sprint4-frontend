@@ -4,7 +4,11 @@
 
   <header>
     <nav>
-      <RouterLink  to="/board"><i class="fa fa-trello"></i></RouterLink>
+      <RouterLink to="/">
+        <i class="fa fa-trello"></i>
+      </RouterLink>
+      <RouterLink to="/board">Board</RouterLink>
+      <RouterLink to="/b">Board Details</RouterLink>
       <RouterLink to="/review">Reviews</RouterLink>
       <RouterLink to="/chat">Chat</RouterLink>
       <RouterLink to="/login">Login / Signup</RouterLink>

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Checklist from "./taskDetailsOpt/Checklist.vue"
+// import Checklist from "../cmps/taskDeatilsOpts/CheckList.vue"
 
 export default {
     props: {
@@ -26,7 +26,7 @@ export default {
         },
     },
     components: {
-        Checklist
+        // Checklist,
     }
 }
 </script>

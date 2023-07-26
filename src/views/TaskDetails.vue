@@ -1,4 +1,6 @@
 <template>
+    <div class="task-all-page"></div>
+
     <section class="task-details">
         <section class="task-details-header">
             <input type="text" class="deatils-title" placeholder='v-model="taskToEdit.title"'>
@@ -11,8 +13,8 @@
 
         <section class="task-details-main">
             <div>
-                <p class="deatils-notifications">Notifications</p>
-                <button @click="toggleWatch">{{ watch }}</button>
+                <h5 class="deatils-notifications">Notifications</h5>
+                <button class="btn-watch" @click="toggleWatch">{{ watch }}</button>
                 {{ isWatch }}
             </div>
 
@@ -47,7 +49,7 @@
             <h5>Add To card</h5>
             <button>Members</button>
             <button>Labels</button>
-            <button>Checklist</button>
+            <button @click="setChecklist">Checklist</button>
             <button>Dates</button>
             <button>Attachments</button>
             <button>Cover</button>
@@ -64,12 +66,17 @@
 </template>
 
 <script>
+import DynamicModal from "./DynamicModal.vue"
+
+import Checklist from "../cmps/Checklist.vue"
+
 export default {
     data() {
         return {
             hideBtn: false,
             isWatch: false,
-            watch: 'Watch'
+            watch: 'Watch',
+            actionType: null
         }
     },
     methods: {
@@ -80,7 +87,15 @@ export default {
         closeModal() {
 
         },
-    }
+        setChecklist() {
+            (this.actionType = 'checklist'),
+                (this.actionInfo = { name: "checklist" })
+        },
+    },
+    components: {
+        DynamicModal,
+        Checklist,
+    },
 }
 
 </script>
