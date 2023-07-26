@@ -47,6 +47,8 @@ export default {
     return {
       title: '',
       toggleAddForm: false,
+      currentGroupId: null,
+      showTaskForm: false,
     }
   },
   computed: {
@@ -76,7 +78,7 @@ export default {
       }
     },
     async removeGroup(groupId) {
-      console.log('groupId', groupId);
+      console.log('groupId', groupId)
       try {
         await this.$store.dispatch({
           type: 'removeGroup',

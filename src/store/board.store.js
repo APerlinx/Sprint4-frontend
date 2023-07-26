@@ -74,16 +74,22 @@ export const boardStore = {
       const newGroups = [...state.boards[boardIndex].groups, group]
       const newBoard = { ...state.boards[boardIndex], groups: newGroups }
       state.boards.splice(boardIndex, 1, newBoard)
-    },
     
+      if (state.currentBoard._id === boardId) {
+        state.currentBoard = newBoard;
+      }
+    },
     removeGroup(state, { boardId, groupId }) {
       const boardIndex = state.boards.findIndex((board) => board._id === boardId)
       if (boardIndex === -1) return
       const newGroups = state.boards[boardIndex].groups.filter(group => group.id !== groupId)
       const newBoard = { ...state.boards[boardIndex], groups: newGroups }
       state.boards.splice(boardIndex, 1, newBoard)
-    },
     
+      if (state.currentBoard._id === boardId) {
+        state.currentBoard = newBoard;
+      }
+    },
   },
   actions: {
     async addBoard(context, { board }) {
@@ -179,7 +185,8 @@ export const boardStore = {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
     
-        const group = state.currentBoard.groups.find(group => group._id === groupId)
+        const group = state.currentBoard.groups.find(group => group.id === groupId)
+        console.log('group', group);
         if (!group) throw new Error('Group not found')
     
         group.tasks.push(task)
