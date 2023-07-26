@@ -6,9 +6,7 @@
             <input type="text" class="deatils-title" placeholder='v-model="taskToEdit.title"'>
             <!-- v-model="taskToEdit.title" -->
             <!-- {{ taskToEdit.title }} -->
-            <p>In list 'need to add list.name' <span class="active" :class="{ active: isWatch }">eye</span></p>
-
-
+            <p>In list 'need to add {{}}group.title' <span class="active" :class="{ active: isWatch }">i-eye</span></p>
         </section>
 
         <section class="task-details-main">
@@ -26,8 +24,12 @@
                     class="details-description"></textarea>
                 <div v-if="hideBtn">
                     <div class="btn-save-close">
-                        <button>Save</button>
-                        <button>Close</button>
+                        <button>
+                            <form @submit.prevent="save">
+                                Save
+                            </form>
+                        </button>
+                        <button @click="closeTodoTitle">Cancel</button>
                     </div>
 
                 </div>

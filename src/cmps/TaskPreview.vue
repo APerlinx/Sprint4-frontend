@@ -1,6 +1,6 @@
 <template>
   <section class="task-preview">
-    <RouterLink :to="'/task/' + task.id">
+    <RouterLink :to="'/details/' + bordId + '/task/' + task.id">
       <li v-if="task">
         <p>{{ task.title }}</p>
       </li>
@@ -33,10 +33,6 @@ export default {
     //   console.log('id:', id)
     //   // this.$router.push({ id })
   },
-  computed: {
-    currBoard() {
-      this.$store.getters.getCurrenBoard;
-    },
-  },
-};
+}
+
 </script>
