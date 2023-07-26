@@ -1,12 +1,13 @@
 .task-details {
+    z-index: 10;
     position: fixed;
     margin-top: 100px;
     left: 50%;
     transform: translate(-50%, 0);
 
     width: 768px;
-    // height: min(914px);
-    height: 70vh;
+    height: min(914px);
+    // height: 70vh;
     border-radius: 10px;
 
     background-color: #F1F2F4;

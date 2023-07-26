@@ -39,6 +39,7 @@ async function remove(boardId) {
 async function save(board) {
   var savedBoard
   if (board._id) {
+    console.log('saveboard');
     savedBoard = await storageService.put(STORAGE_KEY, board)
   } else {
     // Later, owner is set by the backend
@@ -334,7 +335,7 @@ const board2 = {
   cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
 }
 
-// ;(async ()=>{
-//     await storageService.post(STORAGE_KEY, board)
-//     await storageService.post(STORAGE_KEY, board2)
-// })()
+  // ; (async () => {
+  //   await storageService.post(STORAGE_KEY, board)
+  //   await storageService.post(STORAGE_KEY, board2)
+  // })()
