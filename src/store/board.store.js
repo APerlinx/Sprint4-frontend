@@ -46,12 +46,14 @@ export const boardStore = {
   mutations: {
     setBoards(state, { boards }) {
       state.boards = boards
+      console.log(state.boards);
     },
     setCurrentBoard(state, board) {
       state.currentBoard = board;
     },
     addBoard(state, { board }) {
       state.boards.push(board)
+      console.log(state.boards);
     },
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((c) => c._id === board._id)

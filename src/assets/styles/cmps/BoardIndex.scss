@@ -1,0 +1,15 @@
+.board-container {
+  padding: 2em;
+
+  h3 {
+    color: $clr1;
+    margin: em(11, 14) 0;
+  }
+
+  > * .title {
+    font-size: 1rem;
+    color: $clr1;
+    font-weight: 600;
+    margin: em(11, 14) 0;
+  }
+}

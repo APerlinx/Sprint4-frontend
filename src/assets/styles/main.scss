@@ -16,6 +16,11 @@
 @import "cmps/UserMsg";
 @import "cmps/ReviewList";
 @import "cmps/CarList";
+
+@import "cmps/BoardIndex";
+@import "cmps/BoardList";
+@import "cmps/BoardPreview";
+
 @import "cmps/Home";
 
 @import "cmps/GroupList";
@@ -32,3 +37,4 @@
 // @import 'tailwindcss/utilities';
 
 
+@import "cmps/TaskDetails";

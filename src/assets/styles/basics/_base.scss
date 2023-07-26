@@ -8,7 +8,7 @@
 }
 
 html {
-    font-family: montserrat;
+    font-family: sans-serif;    
     line-height: 1.6;
     color: $clr4;
 }
@@ -20,7 +20,7 @@ body,button,input,select,textarea {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: caveat;
+    font-family:sans-serif;
     margin: 0 0 0.6em;
     line-height: 1;
 }
@@ -41,8 +41,14 @@ p {
 
 a {
     text-decoration: none;
+    color:inherit
 }
 a:hover {
-    text-decoration: underline;
+    // text-decoration: underline;
+}
+
+body {
+    background-color: #1d2125;
+    color: white;
 }
 

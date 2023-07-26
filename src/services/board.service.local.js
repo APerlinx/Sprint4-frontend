@@ -64,6 +64,7 @@ async function addBoardMsg(boardId, txt) {
   return msg
 }
 
+<<<<<<< HEAD
 function getEmptyBoard() {
   return {
     title: 'Susita-' + (Date.now() % 1000),
@@ -99,6 +100,25 @@ const board = {
       id: 'l101',
       title: 'Done',
       color: '#61bd4f',
+=======
+function getEmptyBoard(title = '', imgUrl = 'https://images.unsplash.com/photo-1600691792883-dc29f53f6b17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80') {
+    return {
+        title,
+        imgUrl
+    }
+}
+
+const board = {
+    _id: "b101",
+    title: "Robot dev proj",
+    imgUrl: "https://images.unsplash.com/photo-1661956601031-4cf09efadfce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2376&q=80",
+    isStarred: false,
+    archivedAt: 1589983468418,
+    createdBy: {
+        "_id": "u101",
+        "fullname": "Abi Abambi",
+        "imgUrl": "http://some-img"
+>>>>>>> 8ea96abfab328afd5312351dea8fb664d9dfa2b1
     },
     {
       id: 'l102',
@@ -140,6 +160,7 @@ const board = {
           archivedAt: 1589983468418,
         },
         {
+<<<<<<< HEAD
           id: 'c104',
           title: 'Help me',
           status: 'in-progress', // monday
@@ -156,6 +177,73 @@ const board = {
                 imgUrl:
                   'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
               },
+=======
+            "id": "g102",
+            "title": "Group 2",
+            "tasks": [
+                {
+                    "id": "c103",
+                    "title": "Do that",
+                    "archivedAt": 1589983468418,
+                },
+                {
+                    "id": "c104",
+                    "title": "Help me",
+                    "status": "in-progress", // monday
+                    "priority": "high",
+                    "description": "description",
+                    "comments": [
+                        {
+                            "id": "ZdPnm",
+                            "txt": "also @yaronb please CR this",
+                            "createdAt": 1590999817436,
+                            "byMember": {
+                                "_id": "u101",
+                                "fullname": "Tal Tarablus",
+                                "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                            }
+                        }
+                    ],
+                    "checklists": [
+                        {
+                            "id": "YEhmF",
+                            "title": "Checklist",
+                            "todos": [
+                                {
+                                    "id": "212jX",
+                                    "title": "To Do 1",
+                                    "isDone": false
+                                }
+                            ]
+                        }
+                    ],
+                    "memberIds": ["u101"],
+                    "labelIds": ["l101", "l102"],
+                    "dueDate": 16156215211,
+                    "byMember": {
+                        "_id": "u101",
+                        "username": "Tal",
+                        "fullname": "Tal Tarablus",
+                        "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                    },
+                    "style": {
+                        "bgColor": "#26de81"
+                    }
+                }
+            ],
+            "style": {}
+        }
+    ],
+    activities: [
+        {
+            "id": "a101",
+            "txt": "Changed Color",
+            "createdAt": 154514,
+            "byMember": {
+                "_id": "u101",
+                "fullname": "Abi Abambi",
+                "imgUrl": "http://some-img"
+>>>>>>> 8ea96abfab328afd5312351dea8fb664d9dfa2b1
             },
           ],
           checklists: [
@@ -210,6 +298,7 @@ const board = {
 }
 
 const board2 = {
+<<<<<<< HEAD
   _id: 'b102',
   title: 'Alon,shay,guy',
   isStarred: false,
@@ -227,6 +316,17 @@ const board2 = {
       id: 'l101',
       title: 'Done',
       color: '#61bd4f',
+=======
+    _id: "b102",
+    title: "Alon,shay,guy",
+    imgUrl: "https://images.unsplash.com/photo-1660162129606-c12ece87e967?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80",
+    isStarred: false,
+    archivedAt: 1589983468418,
+    createdBy: {
+        "_id": "u101",
+        "fullname": "Alon",
+        "imgUrl": "http://some-img"
+>>>>>>> 8ea96abfab328afd5312351dea8fb664d9dfa2b1
     },
     {
       id: 'l102',
@@ -268,6 +368,7 @@ const board2 = {
           archivedAt: 1589983468418,
         },
         {
+<<<<<<< HEAD
           id: 'c104',
           title: 'Help me',
           status: 'in-progress', // monday
@@ -284,6 +385,73 @@ const board2 = {
                 imgUrl:
                   'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
               },
+=======
+            "id": "g102",
+            "title": "Group 2",
+            "tasks": [
+                {
+                    "id": "c103",
+                    "title": "Do that",
+                    "archivedAt": 1589983468418,
+                },
+                {
+                    "id": "c104",
+                    "title": "Help me",
+                    "status": "in-progress", // monday
+                    "priority": "high",
+                    "description": "description",
+                    "comments": [
+                        {
+                            "id": "ZdPnm",
+                            "txt": "also @yaronb please CR this",
+                            "createdAt": 1590999817436,
+                            "byMember": {
+                                "_id": "u101",
+                                "fullname": "Tal Tarablus",
+                                "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                            }
+                        }
+                    ],
+                    "checklists": [
+                        {
+                            "id": "YEhmF",
+                            "title": "Checklist",
+                            "todos": [
+                                {
+                                    "id": "212jX",
+                                    "title": "To Do 1",
+                                    "isDone": false
+                                }
+                            ]
+                        }
+                    ],
+                    "memberIds": ["u101"],
+                    "labelIds": ["l101", "l102"],
+                    "dueDate": 16156215211,
+                    "byMember": {
+                        "_id": "u101",
+                        "username": "Tal",
+                        "fullname": "Tal Tarablus",
+                        "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                    },
+                    "style": {
+                        "bgColor": "#26de81"
+                    }
+                }
+            ],
+            "style": {}
+        }
+    ],
+    activities: [
+        {
+            "id": "a101",
+            "txt": "Changed Color",
+            "createdAt": 154514,
+            "byMember": {
+                "_id": "u101",
+                "fullname": "Abi Abambi",
+                "imgUrl": "http://some-img"
+>>>>>>> 8ea96abfab328afd5312351dea8fb664d9dfa2b1
             },
           ],
           checklists: [
@@ -337,7 +505,14 @@ const board2 = {
   cmpsOrder: ['StatusPicker', 'MemberPicker', 'DatePicker'],
 }
 
+<<<<<<< HEAD
 // ;(async ()=>{
 //     await storageService.post(STORAGE_KEY, board)
 //     await storageService.post(STORAGE_KEY, board2)
 // })()
+=======
+;(async ()=>{
+    await storageService.post(STORAGE_KEY, board)
+    await storageService.post(STORAGE_KEY, board2)
+})()
+>>>>>>> 8ea96abfab328afd5312351dea8fb664d9dfa2b1

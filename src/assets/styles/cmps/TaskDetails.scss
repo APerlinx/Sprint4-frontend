@@ -1,0 +1,120 @@
+.task-details {
+    position: fixed;
+    margin-top: 100px;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    width: 768px;
+    height: 914px;
+    border-radius: 10px;
+
+    background-color: #F1F2F4;
+    color: #172b4d;
+
+    display: grid;
+    grid-template-columns: 60px 1fr 200px;
+    grid-template-rows: 70px 1fr;
+
+    button {
+        height: 32px;
+        border-radius: 5px;
+        margin: 8px 20px 0 0;
+
+        background-color: #E4E6EA;
+        color: #172b4d;
+        text-align: left;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #D0D4DB;
+        }
+    }
+}
+
+// .active {
+//     display: none;
+// }
+
+// grid
+.task-details-header {
+    grid-column: 2/-1;
+    grid-row: 1/2;
+}
+
+.task-details-main {
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+.btns-container {
+    grid-column: 3/4;
+    grid-row: 2/3;
+
+    display: flex;
+    flex-direction: column;
+
+    h5 {
+        margin: 15px 0 0 5px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 20px;
+
+        &:nth-child(1) {
+            margin: 0 0 0 5px;
+        }
+    }
+}
+
+.deatils-title {
+    border: 0;
+    background-color: #F1F2F4;
+    width: 90%;
+    height: 40px;
+    font-size: 1.3rem;
+    padding: 10px;
+
+    &:focus {
+        box-shadow: inset 0 0 0 2px #388bff;
+        background-color: white;
+    }
+}
+
+
+.details-title:hover,
+.details-description:hover {
+    background-color: #D0D4DB;
+}
+
+.details-description {
+    width: 500px;
+    height: 60px;
+    border: none;
+    padding: 10px;
+
+    &:focus {
+        min-height: 100px;
+        background-color: white;
+    }
+}
+
+
+.activity-show-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-activity-comment {
+    width: 500px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+}
+
+.task-detail button {
+    margin: 0;
+}
+
+// --ds-background-neutral: #091E420F;
+// --ds-background-neutral-hovered: #091E4224;
+// --ds-background-neutral-pressed: #091E424F;
