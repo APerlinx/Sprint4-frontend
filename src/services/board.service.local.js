@@ -325,7 +325,7 @@ const board2 = {
     cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
 }
 
-;(async ()=>{
-    await storageService.post(STORAGE_KEY, board)
-    await storageService.post(STORAGE_KEY, board2)
-})()
+// ;(async ()=>{
+//     await storageService.post(STORAGE_KEY, board)
+//     await storageService.post(STORAGE_KEY, board2)
+// })()

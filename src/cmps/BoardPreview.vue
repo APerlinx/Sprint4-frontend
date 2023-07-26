@@ -4,7 +4,7 @@
       <h2>{{ board.title.toUpperCase() }}</h2>
     </div>
   </RouterLink>
-  <button @click="removeBoard(board._id)">X</button>
+  <!-- <button @click="removeBoard(board._id)">X</button> -->
 </template>
 
 <script>

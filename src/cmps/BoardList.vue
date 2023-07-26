@@ -18,9 +18,6 @@ export default {
     return {};
   },
   methods: {
-    // removeBoard(boardId) {
-    //   this.$emit('remove', boardId)
-    // },
   },
   components: {
     BoardPreview,

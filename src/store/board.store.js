@@ -30,10 +30,14 @@ export function getActionAddBoardMsg(boardId) {
 export const boardStore = {
   state: {
     boards: [],
+    savedBoard: null
   },
   getters: {
     boards({ boards }) {
       return boards
+    },
+    savedBoard({ savedBoard }) {
+      return savedBoard
     },
     getGroupsByBoardId: (state) => (boardId) => {
       const board = state.boards.find((board) => board.id === boardId)
@@ -47,7 +51,7 @@ export const boardStore = {
     },
     addBoard(state, { board }) {
       state.boards.push(board)
-      console.log(state.boards);
+      state.savedBoard = board
     },
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((c) => c._id === board._id)
