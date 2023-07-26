@@ -4,7 +4,6 @@
       <li v-if="task">
         <p>{{ task.title }}</p>
       </li>
-      <pre>{{ currBoard }}</pre>
     </RouterLink>
   </section>
 </template>
@@ -17,22 +16,18 @@ export default {
       required: false,
       default: () => ({}),
     },
-
-    data() {
-      return {
-        boardId: null
-      }
-    },
   },
   created() {
-    const boardId = this.$route.params.boardId;
-    this.boardId = boardId
+    console.log('task', this.task)
   },
-  methods: {
-    // openTaskDetails(id) {
-    //   console.log('id:', id)
-    //   // this.$router.push({ id })
-  },
+  computed: {
+    currBoard() {
+      const boardId = this.$store.getters.getCurrenBoard
+      console.log('boardId:', boardId)
+      return this.$store.getters.getCurrenBoard
+    }
+  }
 }
 
 </script>
+
