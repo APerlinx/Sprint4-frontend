@@ -2,6 +2,7 @@
   <section class="board-details">
     <BoardHeader />
     <GroupList />
+    <RouterView />
   </section>
 </template>
 
@@ -12,7 +13,7 @@ export default {
   components: { GroupList, BoardHeader },
   data() {
     return {
-      
+
     }
   },
   async created() {

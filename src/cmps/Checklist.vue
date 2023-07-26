@@ -21,10 +21,13 @@
 
                 <section class="todo-container" v-if="isHideChecked ? !todo.isChecked : true">
                     <input type="checkbox" @change="updateTask" v-model="todo.isChecked" />
-                    <textarea :class="{ completed: todo.isChecked }" v-model="todo.title"></textarea>
-                    <button class="todo-save" @click="updateTask">
-                        save
-                    </button>
+                    <textarea class="todo-title" v-model="todo.title" @blur="hideTodoBtn = false"
+                        @focus="hideTodoBtn = true"></textarea>
+                    <div v-if="hideTodoBtn">
+                        <button class="btn-save-close" @click="updateTask">
+                            save
+                        </button>
+                    </div>
                 </section>
             </div>
 
@@ -40,25 +43,26 @@ export default {
     },
     data() {
         return {
-            checklistToEdit: null,
+            // checklistToEdit: null,
             isHideChecked: false,
+            hideTodoBtn: false,
             checklistToEdit: {
                 title: 'test',
                 todos: [
                     {
-                        "id": "212jX",
-                        "title": "Guy",
-                        "isChecked": true
+                        id: "check101",
+                        title: "Guy",
+                        isChecked: true
                     },
                     {
-                        "id": "212jXx",
-                        "title": "Alon",
-                        "isChecked": false
+                        id: "check102",
+                        title: "Alon",
+                        isChecked: false
                     },
                     {
-                        "id": "212jXx",
-                        "title": "Shay",
-                        "isChecked": false
+                        id: "check103",
+                        title: "Shay",
+                        isChecked: false
                     },
                 ],
             },
@@ -77,18 +81,21 @@ export default {
     },
     computed: {
         isTodoChecked() {
-            return this.checklistToEdit.todos.some(todo => todo.isDone)
+            return this.checklistToEdit.todos.some(todo => todo.isChecked)
         },
         hideCheckedTxt() {
             if (!this.isHideChecked) return 'Hide checked items'
-            const countCheckedTodos = this.checklistToEdit.todos.reduce((acc, todo) => todo.isDone ? acc + 1 : acc, 0)
+            const countCheckedTodos = this.checklistToEdit.todos.reduce((acc, todo) => todo.isChecked ? acc + 1 : acc, 0)
             return `Show checked items (${countCheckedTodos})`
         },
         checkedTodosPercentage() {
-            const numOfTodos = this.checklistToEdit.todos.length
-            if (!numOfTodos) return 0
-            const numOfDoneTodos = this.checklistToEdit.todos.reduce((acc, todo) => todo.isDone ? acc + 1 : acc, 0)
-            return parseInt(numOfDoneTodos / numOfTodos * 100)
+            const countOfTodos = this.checklistToEdit.todos.length
+            if (!countOfTodos) return 0
+            console.log('countOfTodos:', countOfTodos)
+
+            const countOfCheckedTodos = this.checklistToEdit.todos.reduce((acc, todo) => todo.isChecked ? acc + 1 : acc, 0)
+            console.log('countOfCheckedTodos:', countOfCheckedTodos)
+            return parseInt(countOfCheckedTodos / countOfTodos * 100)
         },
     }
 }

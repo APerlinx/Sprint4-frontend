@@ -16,3 +16,13 @@
 //         background-color: white;
 //     }
 // }
+
+.todo-title {
+    height: 30px;
+    width: 100%;
+
+    &:focus {
+        min-height: 60px;
+        background-color: white;
+    }
+}
