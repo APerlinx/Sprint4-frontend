@@ -28,7 +28,7 @@ export default {
 
   data() {
     return {
-      isStarred: false,
+      isStarred: this.board.isStarred,
     };
   },
   methods: {
@@ -39,7 +39,6 @@ export default {
       this.isStarred = !this.isStarred;
       const board = JSON.parse(JSON.stringify(this.board));
       board.isStarred = this.isStarred;
-      console.log(board);
       this.$emit("star", board);
     },
   },
