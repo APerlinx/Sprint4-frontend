@@ -1,33 +1,27 @@
 <template>
   <div class="overlay" v-if="isAddBoard" @click="isAddBoard = false"></div>
   <section class="board-container">
-    <!-- <div class="recently">
-      <h2 class="title">Recently viewed</h2>
-      <BoardList
-      :boards="boards"
-      /> 
-    </div> -->
 
-    <h3>Recently viewed</h3>
-    <div class="your">
-      <BoardList :boards="boards" @remove="removeBoard" />
-    </div>
-
-    <div class="create-board">
-      <div @click="isAddBoard = !isAddBoard" class="title">
-        Create new board
+    <h3>Your workspace</h3>
+    <div class="workspace">
+      <div class="your">
+        <BoardList :boards="filteredBoards" @remove="removeBoard" @star="starBoard" />
       </div>
-      <div class="index-modal">
-        <AddBoard @close="closeModal" @save="saveBoard" v-if="isAddBoard" />
+
+      <div class="create-board">
+        <div @click="isAddBoard = !isAddBoard" class="title">
+          Create new board
+        </div>
+        <div class="index-modal">
+          <AddBoard @close="closeModal" @save="saveBoard" v-if="isAddBoard" />
+        </div>
       </div>
     </div>
 
-    <!-- <div class="stared">
-      <h2 class="title">stared</h2>
-      <BoardList
-      :boards="boards"
-      /> 
-    </div> -->
+    <div v-if="starredBoards.length > 0" class="stared">
+      <h2 class="title">Starred boards</h2>
+      <BoardList :boards="starredBoards" />
+    </div>
   </section>
 </template>
 
@@ -58,6 +52,15 @@ export default {
       this.isAddBoard = false;
     },
 
+    async starBoard(board) {
+      try {
+        await this.$store.dispatch({ type: "updateBoard", board });
+      } catch (err) {
+        console.log(err);
+        showErrorMsg("Cant star board");
+      }
+    },
+
     async saveBoard(board) {
       try {
         await this.$store.dispatch({
@@ -79,6 +82,12 @@ export default {
     },
     savedBoard() {
       return this.$store.getters.savedBoard;
+    },
+    starredBoards() {
+      return this.$store.getters.starredBoards;
+    },
+    filteredBoards() {
+      return this.$store.getters.filteredBoards;
     },
   },
   components: {

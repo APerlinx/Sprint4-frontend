@@ -40,6 +40,12 @@ export const boardStore = {
     boards({ boards }) {
       return boards
     },
+    starredBoards({ boards }) {
+      return boards.filter(board => board.isStarred)
+    },
+    filteredBoards({ boards }) {
+      return boards.filter(board => !board.isStarred)
+    },
     savedBoard({ savedBoard }) {
       return savedBoard
     },
@@ -62,7 +68,7 @@ export const boardStore = {
   mutations: {
     setBoards(state, { boards }) {
       state.boards = boards
-      console.log(state.boards)
+      console.log(state.boards);
     },
     setCurrentBoard(state, board) {
       state.currentBoard = board;
@@ -130,6 +136,7 @@ export const boardStore = {
     },
     async updateBoard(context, { board }) {
       try {
+        // console.log(board);
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))
         return board
@@ -180,7 +187,6 @@ export const boardStore = {
         throw err
       }
     },
-
     async removeGroup({ commit, state }, { groupId }) {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
@@ -231,8 +237,6 @@ export const boardStore = {
       const savedBoard = await boardService.save(updatedBoard);
       commit({ type: 'updateBoard', board: savedBoard });
     },
-
-
     async moveTask({ commit, state }, { sourceGroupId, dropResult }) {
       // Deep clone currentBoard
       console.log(`groupId: ${sourceGroupId}`);
@@ -254,7 +258,6 @@ export const boardStore = {
       // Commit updated board to store
       commit({ type: 'updateBoard', board: savedBoard });
     }
-
-
+    
   },
 }

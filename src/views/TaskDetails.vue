@@ -20,6 +20,7 @@
 
             <div task-details->
                 <h3 class="details-title-big">Description</h3>
+                <pre>{{ task }}</pre>
                 <textarea @blur="hideBtn = false" @focus="hideBtn = true" placeholder="Add a more detailed description..."
                     class="details-description"></textarea>
                 <div v-if="hideBtn">
@@ -68,6 +69,7 @@
             <button>Share</button>
         </section>
     </section>
+
 </template>
 
 <script>

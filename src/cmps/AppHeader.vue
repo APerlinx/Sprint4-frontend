@@ -15,7 +15,6 @@
         <AddBoard v-if="isAddBoard" @close="closeModal" @save="saveBoard" />
       </div>
     </nav>
-
     <div class="actions">
       <div class="filter-container">
         <input type="text" class="filter" placeholder="search" />
