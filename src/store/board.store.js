@@ -117,6 +117,27 @@ export const boardStore = {
     setCurrTask(state, { task }) {
       state.currentTask = task
     },
+    setTask(state, { groupId, task }) {
+      if (state.currentGroup) groupId = state.currentGroup._id;
+      const groupIdx = state.currentBoard.groups.findIndex(
+        group => group._id === groupId
+      );
+      if (task._id) {
+        const taskIdx = state.currentBoard.groups[groupIdx].tasks.findIndex(
+          currTask => currTask._id === task._id
+        );
+        state.currentBoard.groups[groupIdx].tasks.splice(taskIdx, 1, task);
+      } else {
+        task._id = utilService.makeId();
+        state.currentBoard.groups[groupIdx].tasks.push(task);
+      }
+    },
+    removeTask(state, { task }) {
+      const taskIdx = state.currentBoard.groups[task.groupIdx].tasks.findIndex(
+        currTask => currTask._id === task.taskId
+      );
+      state.currentBoard.groups[task.groupIdx].tasks.splice(taskIdx, 1);
+    },
     setFilterBy(state, { filterBy }) {
       state.filterBy = filterBy
     }
@@ -213,13 +234,22 @@ export const boardStore = {
         throw err
       }
     },
+
+    async setTask({ commit, state, dispatch }, { groupId, task }) {
+      try {
+        commit({ type: 'setTask', groupId, task });
+        dispatch({ type: 'saveBoard', board: state.currentBoard });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async addTask({ commit, state }, { groupId, task }) {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
 
-        const group = state.currentBoard.groups.find(
-          (group) => group.id === groupId
-        )
+        const group = state.currentBoard.groups.find(group => group.id === groupId)
+        // console.log('group', group);
         if (!group) throw new Error('Group not found')
 
         const newTask = {

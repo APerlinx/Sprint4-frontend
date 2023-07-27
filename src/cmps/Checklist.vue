@@ -91,10 +91,10 @@ export default {
         checkedTodosPercentage() {
             const countOfTodos = this.checklistToEdit.todos.length
             if (!countOfTodos) return 0
-            console.log('countOfTodos:', countOfTodos)
+            // console.log('countOfTodos:', countOfTodos)
 
             const countOfCheckedTodos = this.checklistToEdit.todos.reduce((acc, todo) => todo.isChecked ? acc + 1 : acc, 0)
-            console.log('countOfCheckedTodos:', countOfCheckedTodos)
+            // console.log('countOfCheckedTodos:', countOfCheckedTodos)
             const percentage = parseInt(countOfCheckedTodos / countOfTodos * 100)
             return percentage
         },

@@ -2,34 +2,18 @@
   <li class="group-preview">
     <div class="group-card">
       <div class="group-header">
-        <input
-          class="group-title"
-          type="text"
-          :value="group.title"
-          @input="updateTitle($event.target.value)"
-        />
+        <input class="group-title" type="text" :value="group.title" @input="updateTitle($event.target.value)" />
         <button class="remove-group-button" @click="$emit('remove', group.id)">
           x
         </button>
       </div>
 
-      <Container
-        groupName="group-tasks"
-        orientation="vertical"
-        dragClass="task-drag"
-        dropClass="task-drop"
-        @drag-start="(e) => handleTaskStart(group.id, e)"
-        @drag-end="handleDragEnd"
-        :get-child-payload="retrieveTaskPayload"
-        @drop="(e) => handleTaskDrop(group.id, e)"
-        :className="`group-${group.id}`"
-      >
-        <Draggable
-          v-for="task in group.tasks"
-          :key="task.id"
-          :groupId="group.id"
-        >
-          <TaskPreview :task="task" />
+      <Container groupName="group-tasks" orientation="vertical" dragClass="task-drag" dropClass="task-drop"
+        @drag-start="(e) => handleTaskStart(group.id, e)" @drag-end="handleDragEnd"
+        :get-child-payload="retrieveTaskPayload" @drop="(e) => handleTaskDrop(group.id, e)"
+        :className="`group-${group.id}`">
+        <Draggable v-for="task in group.tasks" :key="task.id" :groupId="group.id">
+          <TaskPreview :groupId="this.group.id" :task="task" />
         </Draggable>
       </Container>
 
@@ -63,6 +47,12 @@ export default {
   },
   computed: {},
   methods: {
+    openTask(board, group, task) {
+      this.isTaskDetail = true;
+      console.log('isTaskDetail:', this.isTaskDetail)
+      // this.$store.commit({ type: 'setCurrGroup', group })
+      this.$store.commit({ type: 'setCurrTask', task })
+    },
     retrieveTaskPayload(index) {
       return {
         task: { ...this.group.tasks[index] },
