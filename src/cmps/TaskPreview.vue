@@ -15,9 +15,6 @@ export default {
       // default: () => ({}),
     },
   },
-  created() {
-    console.log('task', this.task)
-  },
   computed: {
     currBoard() {
       const boardId = this.$store.getters.getCurrBoard?._id

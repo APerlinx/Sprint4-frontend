@@ -41,10 +41,10 @@ export const boardStore = {
       return boards
     },
     starredBoards({ boards }) {
-      return boards.filter(board => board.isStarred)
+      return boards.filter((board) => board.isStarred)
     },
     filteredBoards({ boards }) {
-      return boards.filter(board => !board.isStarred)
+      return boards.filter((board) => !board.isStarred)
     },
     savedBoard({ savedBoard }) {
       return savedBoard
@@ -62,16 +62,15 @@ export const boardStore = {
       return board //check this
     },
     getCurrTask({ currentTask }) {
-      return currentTask;
+      return currentTask
     },
   },
   mutations: {
     setBoards(state, { boards }) {
       state.boards = boards
-      console.log(state.boards);
     },
     setCurrentBoard(state, board) {
-      state.currentBoard = board;
+      state.currentBoard = board
     },
     addBoard(state, { board }) {
       state.boards.push(board)
@@ -113,7 +112,6 @@ export const boardStore = {
       }
     },
     setCurrTask(state, { task }) {
-      console.log("🚀 ~ file: board.store.js:110 ~ setCurrTask ~ task:", task)
       state.currentTask = task
     },
   },
@@ -211,25 +209,26 @@ export const boardStore = {
     },
     async addTask({ commit, state }, { groupId, task }) {
       try {
-        if (!state.currentBoard) throw new Error('Current board not found');
-    
-        const group = state.currentBoard.groups.find(group => group.id === groupId);
-        if (!group) throw new Error('Group not found');
-    
+        if (!state.currentBoard) throw new Error('Current board not found')
+
+        const group = state.currentBoard.groups.find(
+          (group) => group.id === groupId
+        )
+        if (!group) throw new Error('Group not found')
+
         const newTask = {
           title: task.title,
-        };
-    
-        commit('addTaskToGroup', { groupId, task: newTask });
-    
-        const savedBoard = await boardService.save(state.currentBoard);
-        commit('updateBoard', { board: savedBoard });
+        }
+
+        commit('addTaskToGroup', { groupId, task: newTask })
+
+        const savedBoard = await boardService.save(state.currentBoard)
+        commit('updateBoard', { board: savedBoard })
       } catch (err) {
-        console.error('Error in addTask', err);
-        throw err;
+        console.error('Error in addTask', err)
+        throw err
       }
     },
-    
     async moveGroup({ commit, state }, { dropResult, boardId }) {
       const currentBoard = await boardService.getById(boardId)
 
@@ -239,27 +238,32 @@ export const boardStore = {
 
       commit({ type: 'updateBoard', board: savedBoard })
     },
-    async moveTask({ commit, state }, { sourceGroupId, dropResult }) {
-      // Deep clone currentBoard
-      console.log(`groupId: ${sourceGroupId}`);
+    async moveTask(
+      { commit },
+      { sourceGroupId, targetGroupId, dropResult, boardId }
+    ) {
+      const currentBoard = await boardService.getById(boardId)
 
-      const updatedBoard = JSON.parse(JSON.stringify(state.currentBoard));
-      // Find the group
-      const group = updatedBoard.groups.find(group => group.id === sourceGroupId);
-      // Apply drag and drop result
-      const { removedIndex, addedIndex } = dropResult;
-      console.log('{ removedIndex, addedIndex }', { removedIndex, addedIndex });
-      if (removedIndex !== null && addedIndex !== null) {
-        const [removedTask] = group.tasks.splice(removedIndex, 1);
-        group.tasks.splice(addedIndex, 0, removedTask);
+      const sourceGroup = currentBoard.groups.find(
+        (group) => group.id === sourceGroupId
+      )
+      const targetGroup =
+        sourceGroupId === targetGroupId
+          ? sourceGroup
+          : currentBoard.groups.find((group) => group.id === targetGroupId)
+
+      if (sourceGroupId === targetGroupId) {
+        sourceGroup.tasks = applyDrag(sourceGroup.tasks, dropResult)
+      } else {
+        const [removedTask] = sourceGroup.tasks.splice(
+          dropResult.removedIndex,
+          1
+        )
+        targetGroup.tasks.splice(dropResult.addedIndex, 0, removedTask)
       }
 
-      // Save updated board
-      const savedBoard = await boardService.save(updatedBoard);
-
-      // Commit updated board to store
-      commit({ type: 'updateBoard', board: savedBoard });
-    }
-    
+      const savedBoard = await boardService.save(currentBoard)
+      commit({ type: 'updateBoard', board: savedBoard })
+    },
   },
 }

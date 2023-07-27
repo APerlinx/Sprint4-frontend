@@ -3,6 +3,7 @@
     flex-direction: column;
     color: $list-text-color;
     margin: 6px;
+    cursor: pointer;
 
     .group-card {
         display: flex;
@@ -27,6 +28,7 @@
             margin-inline-start: 0.8em;
             font-weight: bold;
             color: $list-title-color;
+            cursor: pointer;
         }
 
         .remove-group-button {

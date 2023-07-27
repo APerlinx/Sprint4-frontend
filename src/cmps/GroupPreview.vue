@@ -13,16 +13,17 @@
         </button>
       </div>
 
-  <Container
-    groupName="group-tasks"
-    orientation="vertical"
-    dragClass="task-drag"
-    dropClass="task-drop"
-    @drag-end="handleDragEnd"
-    :get-child-payload="retrieveTaskPayload"
-    @drop="(e) => handleTaskDrop(group.id, e)"
-    :className="`group-${group.id}`"
-  >
+      <Container
+        groupName="group-tasks"
+        orientation="vertical"
+        dragClass="task-drag"
+        dropClass="task-drop"
+        @drag-start="(e) => handleTaskStart(group.id, e)"
+        @drag-end="handleDragEnd"
+        :get-child-payload="retrieveTaskPayload"
+        @drop="(e) => handleTaskDrop(group.id, e)"
+        :className="`group-${group.id}`"
+      >
         <Draggable
           v-for="task in group.tasks"
           :key="task.id"
@@ -51,6 +52,8 @@ export default {
   data() {
     return {
       isSourceGroup: false,
+      sourceGroupId: null,
+      targetGroupId: null,
     }
   },
   components: {
@@ -69,6 +72,10 @@ export default {
     handleDragEnd(e) {
       this.isSourceGroup = e.isSource
     },
+    handleTaskStart(groupId) {
+      this.sourceGroupId = groupId
+    },
+
     handleTaskDrop(groupId, dropResult) {
       if (!this.sourceGroupId) {
         this.sourceGroupId = groupId
@@ -103,5 +110,4 @@ export default {
   transform: rotate(5deg);
   /* box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); */
 }
-
 </style>
