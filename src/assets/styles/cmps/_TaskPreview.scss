@@ -15,8 +15,10 @@
     }
   
     > li > p {
-      margin: 4px;
+      margin: 0 0 4px;
+      overflow: hidden;
       text-align: start;
+      font-size: 0.9em;
     }
   
     &:hover {

@@ -71,3 +71,9 @@
     background-color: $dynamic-button-highlighted;
     border-radius: 10px;
 }
+
+@mixin add-group-btn {
+    background-color: $background-Add-btn;
+    border-radius: 3px;
+    color: $dynamic-text;
+}

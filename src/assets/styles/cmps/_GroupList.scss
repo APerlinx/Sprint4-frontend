@@ -15,9 +15,11 @@
     border: none;
     color: $button-color;
     margin: 0;
-    padding: 4px 8px 4px 6px;
+    padding: 7px 8px 4px 6px;
     width: 100%;
     text-align: start;
+    margin-inline-start: 1.1em;
+    // font-size: 0.9em
   }
 
   .group-btn:hover {
