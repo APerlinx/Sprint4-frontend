@@ -98,22 +98,19 @@ function loadFromStorage(key) {
 }
 
 export const applyDrag = (arr, dragResult) => {
-  console.log('drag apllied')
  
   const { removedIndex, addedIndex, payload } = dragResult
+
   if (removedIndex === null && addedIndex === null) return arr
-  console.log('{ removedIndex, addedIndex, payload }', { removedIndex, addedIndex, payload });
   const result = [...arr]
   let itemToAdd = payload
 
   if (removedIndex !== null) {
     itemToAdd = result.splice(removedIndex, 1)[0]
   }
-  console.log('itemToAdd', itemToAdd);
   if (addedIndex !== null) {
     result.splice(addedIndex, 0, itemToAdd)
   }
-  console.log('result', result);
   return result
 }
 
@@ -124,3 +121,24 @@ export const generateItems = (count, creator) => {
   }
   return result
 }
+
+export const applyDragBetweenGroups = (sourceTasks, targetTasks, dragResult) => {
+  const { removedIndex, addedIndex, payload } = dragResult;
+  
+  let itemToAdd = payload;
+  
+  // If a task was removed from a group (source group)
+  if (removedIndex !== null) {
+    itemToAdd = sourceTasks.splice(removedIndex, 1)[0];
+  }
+  
+  // If a task was added to a group (target group)
+  if (addedIndex !== null) {
+    targetTasks.splice(addedIndex, 0, itemToAdd);
+  }
+  
+  return {
+    updatedSource: sourceTasks,
+    updatedTarget: targetTasks
+  };
+};

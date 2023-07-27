@@ -72,10 +72,11 @@
 </template>
 
 <script>
-import DynamicModal from "./DynamicModal.vue"
 
+import DynamicModal from "./DynamicModal.vue"
 import Checklist from "../cmps/Checklist.vue"
 import { boardService } from "../services/board.service.local.js"
+
 
 export default {
     data() {
@@ -114,14 +115,12 @@ export default {
             this.isWatch = !this.isWatch
             this.watch = this.isWatch ? 'Watching' : 'Watch'
         },
-        closeModal() {
-
-        },
         setChecklist() {
             (this.actionType = 'checklist'),
                 (this.actionInfo = { name: "checklist" })
         },
         closeModal() {
+            this.$router.back();
 
         }
     },

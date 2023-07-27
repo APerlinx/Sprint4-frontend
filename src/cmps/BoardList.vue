@@ -5,6 +5,7 @@
       :key="board._id" 
       :board="board" 
       @remove="$emit('remove', board._id)"
+      @star="star"
       />
     </ul>
 </template>
@@ -18,6 +19,9 @@ export default {
     return {};
   },
   methods: {
+    star(board) {
+      this.$emit("star", board)
+    }
   },
   components: {
     BoardPreview,

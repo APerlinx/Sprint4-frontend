@@ -1,13 +1,45 @@
 .board {
+  position: relative;
   height: 100px;
   width: 200px;
   border-radius: em(3, 14);
   padding: 1em;
   background-size: cover;
   text-shadow: 0 0 0.5px rgba(0, 0, 0, 0);
+  border-radius: em(3, 14);
+  overflow: hidden;
+
+  .drop {
+    position: absolute;
+    inset: 0;
+    border-radius: em(3px, 14px);
+    background-color: rgba(0, 0, 0, 0.17);
+    z-index: 0;
+  }
+
+  &:hover .drop {
+    background-color: rgba(0, 0, 0, 0.23);
+  }
+  &:hover .icon {
+    transform: translateX(-50%);
+  }
 
   h2 {
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    padding: 0.6em;
+  }
+  .icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translateX(100%);
+    transition: 0.2s;
+    z-index: 999;
+    cursor: pointer;
+    & :first-child {
+      font-size: 1.4em;
+      color: white;
+    }
   }
 }

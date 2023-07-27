@@ -1,7 +1,8 @@
 <template>
   <section class="group-list-section">
     <ul class="group-list">
-      <Container :get-child-payload="getGroupPayload" @drop="onGroupDrop" orientation="horizontal" behaviour="contain">
+      <Container :get-child-payload="getGroupPayload" @drop="onGroupDrop" orientation="horizontal" behaviour="contain"
+        dragClass="group-drag" dropClass="group-drop">
         <Draggable v-for="group in groups" :key="group._id">
           <GroupPreview :group="group" @update-title="updateGroup" @remove="removeGroup">
             <template #actions>
@@ -63,7 +64,8 @@ export default {
       return this.groups[index]
     },
     onGroupDrop(dropResult) {
-      this.$store.dispatch('moveGroup', dropResult)
+      const boardId = this.$route.params.boardId
+      this.$store.dispatch('moveGroup', { dropResult, boardId })
     },
     async addGroup(title) {
       try {
@@ -143,4 +145,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.group-drag {
+  transform: rotate(3deg);
+  /* box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); */
+}
+</style>

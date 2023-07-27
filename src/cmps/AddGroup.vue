@@ -7,7 +7,7 @@
         placeholder="Enter list title..."
       />
       <div>
-        <button class="form-btn" add-btn>Add list</button>
+        <button class="form-btn add-btn" >Add list</button>
         <button class="form-btn" @click.prevent="closeComponent">X</button>
       </div>
     </form>

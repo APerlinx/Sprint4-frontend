@@ -9,19 +9,22 @@
             color: $list-text-color;
             margin: 0;
             padding: 4px 12px;
+
+            &.add-btn {
+            @include add-group-btn
+            }
         }
 
         > input {
             width: 100%;
-            // background-color: rgb(34, 39, 43);
+            background-color: $group-background-input;
             border: none;
             padding: 8px 12px;
-            box-shadow: rgb(133, 184, 255) 0px 0px 0px 2px inset;
+            box-shadow: $border-focused 0px 0px 0px 2px inset;
+            margin-bottom: 0.572em;
+            &::placeholder {
+                color: $list-text-color;
+            }
         }
     }
 }
-
-.add-group form input::placeholder {
-    color: rgb(182, 194, 207);
-  }
-  
