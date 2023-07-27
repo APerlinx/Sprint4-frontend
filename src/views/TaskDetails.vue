@@ -3,9 +3,11 @@
 
     <section class="task-details">
         <section class="task-details-header">
-            <input type="text" class="deatils-title" placeholder="COSEMEK">
+            <input type="text" class="deatils-title" placeholder="COOSssssEMEK">
+            <!-- placeholder="COSEMEK" -->
             <!-- v-model="taskToEdit.title"> -->
             <!-- v-model="taskToEdit.title" -->
+            <button @click="closeModal">X</button>
             <p>In list 'need to add {{}}group.title' <span class="active" :class="{ active: isWatch }">i-eye</span></p>
         </section>
 
@@ -16,10 +18,9 @@
                 {{ isWatch }}
             </div>
 
-            <Checklist />
-
             <div task-details->
-                <h4>Description</h4>
+                <h3 class="details-title-big">Description</h3>
+                <pre>{{ task }}</pre>
                 <textarea @blur="hideBtn = false" @focus="hideBtn = true" placeholder="Add a more detailed description..."
                     class="details-description"></textarea>
                 <div v-if="hideBtn">
@@ -31,13 +32,14 @@
                         </button>
                         <button @click="closeTodoTitle">Cancel</button>
                     </div>
-
                 </div>
             </div>
 
+            <Checklist />
+
             <div class="details-activity">
                 <div class="activity-show-details">
-                    <h4>Activity</h4>
+                    <h3 class="details-title-big">Activity</h3>
                     <button class="toggle-show-details">Show details</button>
                 </div>
                 <input type="text" class="details-activity-comment" placeholder='Write a comment...'>
@@ -47,10 +49,10 @@
         </section>
 
         <section class="btns-container">
-            <h5>Suggested</h5>
+            <h3 class="details-title-small">Suggested</h3>
             <button>Join</button>
 
-            <h5>Add To card</h5>
+            <h3 class="details-title-small">Add To card</h3>
             <button>Members</button>
             <button>Labels</button>
             <button @click="setChecklist">Checklist</button>
@@ -59,7 +61,7 @@
             <button>Cover</button>
             <button>Custom Fields</button>
 
-            <h5>Actions</h5>
+            <h3 class="details-title-small">Actions</h3>
             <button>Move</button>
             <button>Copy</button>
             <button>Make template</button>
@@ -67,6 +69,7 @@
             <button>Share</button>
         </section>
     </section>
+
 </template>
 
 <script>
@@ -77,7 +80,7 @@ import Checklist from "../cmps/Checklist.vue"
 export default {
     data() {
         return {
-            // taskToEdit: null,
+            taskToEdit: null,
             hideBtn: false,
             isWatch: false,
             watch: 'Watch',
@@ -86,6 +89,7 @@ export default {
     },
     created() {
         this.taskToEdit = JSON.parse(JSON.stringify(this.task))
+        console.log('taskToEdit:', this.task)
     },
     methods: {
         toggleWatch() {
@@ -99,16 +103,14 @@ export default {
             (this.actionType = 'checklist'),
                 (this.actionInfo = { name: "checklist" })
         },
+        closeModal() {
+
+        }
+
     },
     computed: {
-        board() {
-            return this.$store.getters.currBoard;
-        },
-        group() {
-            return this.$store.getters.currGroup;
-        },
         task() {
-            return this.$store.getters.currTask;
+            return this.$store.getters.getCurrTask
         },
     },
     components: {

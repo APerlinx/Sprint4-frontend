@@ -1,11 +1,7 @@
 <template>
-  <section>
     <AppHeader />
-    <div class="main-layout">
       <RouterView />
-    </div>
     <UserMsg />
-  </section>
 </template>
 
 <script>

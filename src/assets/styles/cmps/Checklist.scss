@@ -1,28 +1,92 @@
-// .checklist-title-container {
-
-//     .checklist-title {
-
-//     }
-// }
-
-
-//     width: 100%;
-//     height: 60px;
-//     border: none;
-//     padding: 10px;
-
-//     &:focus {
-//         min-height: 100px;
-//         background-color: white;
-//     }
-// }
-
+.checklist-title,
 .todo-title {
-    height: 30px;
+    // height: 30px;
     width: 100%;
+    border: 0;
+    background-color: #F1F2F4;
 
     &:focus {
         min-height: 60px;
         background-color: white;
     }
 }
+
+.checklist-title,
+.todo-container {
+    textarea {
+        border: 0;
+        background-color: #F1F2F4;
+        width: 100%;
+        height: 40px;
+        // font-size: 1rem;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+        padding: 10px;
+
+        &:focus {
+            box-shadow: inset 0 0 0 2px #388bff;
+            background-color: white;
+        }
+    }
+}
+
+.todo-container {
+    display: flex;
+    flex-direction: row;
+
+    padding: 0;
+    margin: 0;
+
+    input {
+        margin: 5px;
+    }
+
+    &:hover {
+        transition: 0.6s;
+        background-color: #E4E6EA;
+
+        textarea {
+            transition: 0.6s;
+            background-color: #E4E6EA;
+        }
+    }
+}
+
+.percentage-bar {
+    display: flex;
+    flex-direction: row;
+    margin-left: -20px;
+    align-items: center;
+    height: 30px;
+
+    p {
+        padding: 20px;
+    }
+
+    progress {
+        width: 100%;
+        border-radius: 4px;
+        clear: both;
+        height: 8px;
+        overflow: hidden;
+        position: relative;
+
+    }
+
+    progress::-webkit-progress-value {
+        background-color: #579DFF
+    }
+
+    progress::-webkit-progress-bar {
+        background-color: #D0D4DB;
+        width: 100%;
+    }
+
+    // progress::-webkit-progress-value-100 {
+    //     background-color: #1f845a;
+    //     width: 100%;
+    // }
+}
+
+// .btn-checklist-hide-show {
+
+// }

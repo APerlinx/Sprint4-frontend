@@ -2,8 +2,8 @@
     <div class="checklist">
         <section>
             <section class="checklist-title-container">
-                <span>icon</span>
-                <input type="text" class="checklist-title" v-model="checklistToEdit.title" />
+                <span></span>
+                <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title"></textarea>
 
                 <button class="btn-checklist-hide-show" v-if="isTodoChecked" @click="isHideChecked = !isHideChecked">{{
                     hideCheckedTxt }}</button>
@@ -12,7 +12,7 @@
         </section>
 
         <section class="percentage-bar">
-            <p class="percentage-bar-num" v-if='todos'>{{ percentage }}%</p>
+            <p class="percentage-bar-num">{{ checkedTodosPercentage }}%</p>
             <progress :value="checkedTodosPercentage" max="100"></progress>
         </section>
 
@@ -95,7 +95,8 @@ export default {
 
             const countOfCheckedTodos = this.checklistToEdit.todos.reduce((acc, todo) => todo.isChecked ? acc + 1 : acc, 0)
             console.log('countOfCheckedTodos:', countOfCheckedTodos)
-            return parseInt(countOfCheckedTodos / countOfTodos * 100)
+            const percentage = parseInt(countOfCheckedTodos / countOfTodos * 100)
+            return percentage
         },
     }
 }

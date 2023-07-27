@@ -50,7 +50,14 @@ a:hover {
 }
 
 body {
-    background-color: #1d2125;
-    color: white;
+    color: #182b4d;
 }
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48;
+  }
 

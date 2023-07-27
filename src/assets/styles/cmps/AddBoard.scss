@@ -1,14 +1,82 @@
+.index-modal {
+    position: absolute;
+    right: -5%;
+    top: 0;
+    font-weight: 600;
+}
+
 .add-modal {
     position: absolute;
-    right: -44%;
-    background-color: #282e34;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    top: 100%;
     width: em(304, 14);
     height: em(247, 14);
     border-radius: em(8, 14);
-    font-size: 14px;
     color: $clr2;
+    background-color: white;
     padding: em(16, 14) em(12, 14);
     z-index: 999;
+    border: 0.3px solid rgba(128, 128, 128, 0.186);
+    box-shadow: 0 0 10px rgba(128, 128, 128, 0.144);
+    cursor: default;
 
-   
+    .title {
+        font-size: rem(14px);
+        font-weight: 600;
+        color: $lclr1;
+    }
+
+    .action {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .board-layout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .add-board-input {
+        span {
+            color: rgb(146, 0, 0);
+        }
+        margin: 0;
+        h2 {
+            font-size: rem(13px);
+            font-weight: 600;
+            color: $lclr1;
+            margin: 0;
+            margin-block-end: 0.3em;
+        }
+        p {
+            font-size: rem(12px);
+            font-weight: 100;
+            color: $lclr1;
+            margin-block-start: 0.5em;
+        }
+
+        form {
+            input {
+                width: 100%;
+            }
+        }
+
+        .create-btn {
+            display: flex;
+            justify-content: center;
+            color: #adb4c0;
+            background-color: #f7f8f9;
+            border-radius:0.2em ;
+            font-weight: 200;
+            padding:0.5em ;
+            cursor: pointer;
+        }
+        .check {
+            background-color: #1266e4;
+            color: white;
+          }
+    }
 }
