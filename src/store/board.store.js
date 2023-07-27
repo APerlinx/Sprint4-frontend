@@ -35,6 +35,7 @@ export const boardStore = {
     savedBoard: null,
     currentGroup: null,
     currentTask: null,
+    filterBy: ''
   },
   getters: {
     boards({ boards }) {
@@ -43,8 +44,10 @@ export const boardStore = {
     starredBoards({ boards }) {
       return boards.filter(board => board.isStarred)
     },
-    filteredBoards({ boards }) {
-      return boards.filter(board => !board.isStarred)
+    filteredBoards({ boards, filterBy }) {
+      const byName = new RegExp(filterBy, "i")
+      return boards.filter(board => !board.isStarred &&
+        byName.test(board.title))
     },
     savedBoard({ savedBoard }) {
       return savedBoard
@@ -116,6 +119,9 @@ export const boardStore = {
       console.log("🚀 ~ file: board.store.js:110 ~ setCurrTask ~ task:", task)
       state.currentTask = task
     },
+    setFilterBy(state, { filterBy }) {
+      state.filterBy = filterBy
+    }
   },
   actions: {
     async addBoard(context, { board }) {
@@ -258,6 +264,6 @@ export const boardStore = {
       // Commit updated board to store
       commit({ type: 'updateBoard', board: savedBoard });
     }
-    
+
   },
 }

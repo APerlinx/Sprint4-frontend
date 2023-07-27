@@ -16,16 +16,13 @@
       </div>
     </nav>
     <div class="actions">
-      <div class="filter-container">
-        <input type="text" class="filter" placeholder="search" />
-        <span class="material-symbols-outlined">search</span>
-      </div>
+      <BoardFilter @filterByTxt="filterByTxt" />
 
       <div class="loggedin-user">
         <h2>SZ</h2>
       </div>
     </div>
-    
+
     <!-- <RouterLink :to="`/user/${loggedInUser._id}`">
       {{ loggedInUser.fullname }}
     </RouterLink> -->
@@ -39,6 +36,7 @@
 <script>
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 import AddBoard from "../cmps/AddBoard.vue";
+import BoardFilter from "../cmps/BoardFilter.vue";
 
 export default {
   data() {
@@ -60,6 +58,11 @@ export default {
         showErrorMsg("Cant add board");
       }
     },
+
+    filterByTxt(filterBy) {
+      this.$store.commit({ type: "setFilterBy", filterBy });
+    },
+
     closeModal() {
       this.isAddBoard = false;
     },
@@ -74,6 +77,7 @@ export default {
   },
   components: {
     AddBoard,
+    BoardFilter,
   },
 };
 </script>
