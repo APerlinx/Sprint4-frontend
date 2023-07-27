@@ -1,23 +1,22 @@
 .index-modal {
-    position: absolute;
-    right: -5%;
-    top: 0;
+    // position: absolute;
+    // right: -5%;
+    // top: 0;
     font-weight: 600;
 }
 
 .add-modal {
-    position: absolute;
+    // position: absolute;
     display: flex;
     flex-direction: column;
-    left: 0;
-    top: 100%;
+    // left: 0;
+    // top: 100%;
     width: em(304, 14);
-    height: em(247, 14);
     border-radius: em(8, 14);
     color: $clr2;
     background-color: white;
     padding: em(16, 14) em(12, 14);
-    z-index: 999;
+    // z-index: 999;
     border: 0.3px solid rgba(128, 128, 128, 0.186);
     box-shadow: 0 0 10px rgba(128, 128, 128, 0.144);
     cursor: default;

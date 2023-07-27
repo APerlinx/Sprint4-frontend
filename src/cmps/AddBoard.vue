@@ -14,13 +14,19 @@
       <div class="bg-color"></div>
     </div> -->
 
+   
+
     <div class="add-board-input">
       <h2>Board title <span>*</span></h2>
       <form @submit.prevent="saveBoard">
         <input autofocus type="text" v-model="boardToEdit.title" />
         <p v-if="!boardToEdit.title">👋 Board title is required</p>
         <button></button>
-        <div @click="saveBoard" class="create-btn" :class="{ check: titleLength }">
+        <div
+          @click="saveBoard"
+          class="create-btn"
+          :class="{ check: titleLength }"
+        >
           Create
         </div>
       </form>
@@ -31,6 +37,7 @@
 <script>
 import { boardService } from "../services/board.service.local";
 
+
 export default {
   data() {
     return {
@@ -40,7 +47,7 @@ export default {
   },
   methods: {
     saveBoard() {
-      if(!this.boardToEdit.title) return
+      if (!this.boardToEdit.title) return;
       this.$emit("save", this.boardToEdit);
     },
     closeModal() {
@@ -50,6 +57,8 @@ export default {
   computed: {
     titleLength() {
       return this.boardToEdit.title.length;
+    },
+    components: {
     },
   },
 };

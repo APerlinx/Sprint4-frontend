@@ -11,8 +11,12 @@
       </RouterLink>
 
       <div class="create">
-        <RouterLink @click="isAddBoard = !isAddBoard" to="#">Create</RouterLink>
-        <AddBoard v-if="isAddBoard" @close="closeModal" @save="saveBoard" />
+        <Popper arrow placement="right">
+          <RouterLink to="#">Create</RouterLink>
+          <template #content>
+            <AddBoard @close="closeModal" @save="saveBoard" />
+          </template>
+        </Popper>
       </div>
     </nav>
     <div class="actions">
@@ -37,6 +41,9 @@
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 import AddBoard from "../cmps/AddBoard.vue";
 import BoardFilter from "../cmps/BoardFilter.vue";
+
+import { defineComponent } from "vue";
+import Popper from "vue3-popper";
 
 export default {
   data() {
@@ -78,6 +85,8 @@ export default {
   components: {
     AddBoard,
     BoardFilter,
+    Popper,
+    defineComponent,
   },
 };
 </script>

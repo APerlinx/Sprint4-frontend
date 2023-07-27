@@ -1,19 +1,24 @@
 <template>
+  
   <div class="overlay" v-if="isAddBoard" @click="isAddBoard = false"></div>
   <section class="board-container">
     <h3>Your workspace</h3>
     <div class="workspace">
       <div class="your">
-        <BoardList :boards="filteredBoards" @remove="removeBoard" @star="starBoard" />
+        <BoardList
+          :boards="filteredBoards"
+          @remove="removeBoard"
+          @star="starBoard"
+        />
       </div>
 
       <div class="create-board">
-        <div @click="isAddBoard = !isAddBoard" class="title">
-          Create new board
-        </div>
-        <div class="index-modal">
-          <AddBoard @close="closeModal" @save="saveBoard" v-if="isAddBoard" />
-        </div>
+        <Popper arrow placement="right">
+          <div class="title">Create new board</div>
+          <template #content>
+            <AddBoard @close="closeModal" @save="saveBoard" />
+          </template>
+        </Popper>
       </div>
     </div>
 
@@ -27,6 +32,10 @@
 <script>
 import BoardList from "../cmps/BoardList.vue";
 import AddBoard from "../cmps/AddBoard.vue";
+
+import { defineComponent } from "vue";
+import Popper from "vue3-popper";
+
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
 export default {
@@ -92,6 +101,8 @@ export default {
   components: {
     BoardList,
     AddBoard,
+    Popper,
+    defineComponent,
   },
 };
 </script>
