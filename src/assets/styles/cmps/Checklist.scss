@@ -70,16 +70,22 @@
         overflow: hidden;
         position: relative;
 
+        &::-webkit-progress-value {
+            background-color: #579DFF;
+            transition: width .5s ease-in-out;
+        }
+
+        &::-webkit-progress-bar {
+            background-color: #D0D4DB;
+            width: 100%;
+        }
+
+        &[value="100"]::-webkit-progress-value {
+            // happens when progress bar is full
+            background-color: #61bd4f;
+        }
     }
 
-    progress::-webkit-progress-value {
-        background-color: #579DFF
-    }
-
-    progress::-webkit-progress-bar {
-        background-color: #D0D4DB;
-        width: 100%;
-    }
 
     // progress::-webkit-progress-value-100 {
     //     background-color: #1f845a;

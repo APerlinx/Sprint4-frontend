@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     goToTaskDetails() {
-      this.$router.push(`/details/${this.currBoard}/task/${this.task.id}`);
+      this.$router.push(`/details/${this.currBoard}/group/${this.groupId}/task/${this.task.id}`)
     },
   },
 }

@@ -34,7 +34,6 @@
     button {
         height: 32px;
         border-radius: 5px;
-        margin: 8px 20px 0 0;
 
         background-color: #E4E6EA;
         color: #172b4d;
@@ -47,21 +46,65 @@
     }
 }
 
-// .active {
-//     display: none;
-// }
+.active {
+    display: none;
+}
 
 // grid
 .task-details-header {
     grid-column: 1/-1;
     grid-row: 1/2;
     margin-left: 40px;
+
+    .task-in-list {
+        margin: -9px 0 0 10px;
+    }
+
+    .group-ops {
+        text-decoration: underline;
+    }
 }
 
 .task-details-main {
     grid-column: 1/2;
     grid-row: 2/3;
     margin-left: 40px;
+
+    .task-alerts {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 25px 0 0 8px;
+
+        // .details-members {
+        //     display: block;
+        //     float: left;
+        //     margin: 0 20px 4px 0;
+        //     max-width: 100%;
+
+        //     .btn-member {
+        //         width: 32px;
+        //         border-radius: 50%;
+        //         background-color: rgb(79, 138, 228);
+        //         margin: 0px 4px 4px 0;
+        //         padding: 0;
+        //         text-align: center;
+
+        //         .member-img {
+        //             aspect-ratio: auto 30 / 30;
+        //         }
+        //     }
+        // }
+
+        .btn-watch {
+            padding: 6px 12px;
+            transition-duration: 85ms;
+        }
+
+        .toggle-show-details {
+            margin: 0 0 0 8px;
+        }
+    }
 
     .details-title-small {
         margin: 15px 0 0 5px;
@@ -81,16 +124,6 @@
         margin: 0 0 4px 0px;
         min-height: 32px;
         padding: 8px 0;
-    }
-
-    .btn-watch {
-        margin: 0 0 20px 0;
-        padding: 6px 12px;
-        transition-duration: 85ms;
-    }
-
-    .toggle-show-details {
-        margin: 0 0 0 8px;
     }
 }
 
@@ -120,7 +153,7 @@
         box-shadow: none;
         box-sizing: border-box;
         height: 32px;
-        margin-top: 8px;
+        margin: 8px 20px 0 0;
         width: 168px;
         padding: 0 16px 8px 8px;
         max-width: 300px;
@@ -142,6 +175,7 @@
     width: 90%;
     height: 40px;
     font-size: 1.3rem;
+    margin: 8px 0 0 -4px;
     padding: 10px;
 
     &:focus {

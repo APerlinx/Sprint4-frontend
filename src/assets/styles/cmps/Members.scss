@@ -1,0 +1,33 @@
+.task-alerts {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 25px 0 0 8px;
+
+    .details-members {
+        display: flex;
+        flex-direction: column;
+        float: left;
+        margin: 0 20px 4px 0;
+        max-width: 100%;
+
+        .members {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .btn-member {
+            width: 32px;
+            border-radius: 50%;
+            background-color: rgb(79, 138, 228);
+            margin: 0px 4px 4px 0;
+            padding: 0;
+            text-align: center;
+            justify-content: center;
+
+            .member-img {
+                aspect-ratio: auto 30 / 30;
+            }
+        }
+    }
+}

@@ -7,15 +7,26 @@
             <input type="text" class="deatils-title" v-model="taskToEdit.title">
             <!-- placeholder="COOSssssEMEK" -->
             <button @click="closeModal">X</button>
-            <p>In list {{ group.title }} <span class="active" :class="{ active: isWatch }">i-eye</span></p>
+            <p class="task-in-list">in list <span class="group-ops">{{ group.title }}</span><span
+                    :class="{ active: !isWatch }">i-eye</span></p>
         </section>
 
         <section class="task-details-main">
-            <div task-alerts>
-                <div details-notification>
+            <div class="task-alerts">
+
+                <Members />
+
+                <div class="details-notification">
                     <h5>Notifications</h5>
                     <button class="btn-watch" @click="toggleWatch">{{ watch }}</button>
-                    {{ isWatch }}
+                </div>
+
+                <div class="task-due-date">
+                    <h5>Due-date</h5>
+                    <input type="checkbox" @change="updateTask" />
+                    <!-- v-model="dueDate.isChecked" -->
+                    <button class="btn-due-date" @click="openCalender">
+                        need to add date lib</button>
                 </div>
             </div>
 
@@ -75,6 +86,7 @@
 
 import DynamicModal from "./DynamicModal.vue"
 import Checklist from "../cmps/Checklist.vue"
+import Members from "../cmps/Members.vue"
 import { boardService } from "../services/board.service.local.js"
 
 
@@ -113,6 +125,7 @@ export default {
         },
         toggleWatch() {
             this.isWatch = !this.isWatch
+            console.log("🚀 ~ file: TaskDetails.vue:131 ~ toggleWatch ~ this.isWatch:", this.isWatch)
             this.watch = this.isWatch ? 'Watching' : 'Watch'
         },
         setChecklist() {
@@ -132,6 +145,7 @@ export default {
     components: {
         DynamicModal,
         Checklist,
+        Members,
     },
 }
 
