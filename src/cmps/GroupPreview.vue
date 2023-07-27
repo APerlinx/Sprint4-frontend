@@ -14,10 +14,21 @@
       </div>
 
       <Container
+        groupName="group-tasks"
+        orientation="vertical"
+        dragClass="task-drag"
+        dropClass="task-drop"
+        @drag-start="(e) => handleTaskStart(group.id, e)"
+        @drag-end="handleDragEnd"
         :get-child-payload="retrieveTaskPayload"
-        @drop="handleTaskDrop"
+        @drop="(e) => handleTaskDrop(group.id, e)"
+        :className="`group-${group.id}`"
       >
-        <Draggable v-for="task in group.tasks" :key="task.id">
+        <Draggable
+          v-for="task in group.tasks"
+          :key="task.id"
+          :groupId="group.id"
+        >
           <TaskPreview :task="task" />
         </Draggable>
       </Container>
@@ -38,6 +49,13 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      isSourceGroup: false,
+      sourceGroupId: null,
+      targetGroupId: null,
+    }
+  },
   components: {
     TaskPreview,
     Container,
@@ -46,17 +64,50 @@ export default {
   computed: {},
   methods: {
     retrieveTaskPayload(index) {
-      return this.group.tasks[index]
-    },
-    handleTaskDrop(dropResult) {
-      if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-        this.$store.dispatch('moveTask', {
-          sourceGroupId: this.group.id,
-          targetGroupId: this.group.id,
-          dropResult: dropResult,
-        })
+      return {
+        task: { ...this.group.tasks[index] },
+        groupId: this.group.id,
       }
+    },
+    handleDragEnd(e) {
+      this.isSourceGroup = e.isSource
+    },
+    handleTaskStart(groupId) {
+      this.sourceGroupId = groupId
+    },
+
+    handleTaskDrop(groupId, dropResult) {
+      if (!this.sourceGroupId) {
+        this.sourceGroupId = groupId
+      } else if (!this.targetGroupId) {
+        this.targetGroupId = groupId
+      }
+
+      if (this.group.id !== this.targetGroupId) return
+
+      if (dropResult.removedIndex === null && dropResult.addedIndex === null)
+        return
+
+      this.$store.dispatch('moveTask', {
+        sourceGroupId: this.sourceGroupId,
+        targetGroupId: this.targetGroupId,
+        dropResult,
+        boardId: this.$route.params.boardId,
+      })
+      this.sourceGroupId = null
+      this.targetGroupId = null
+    },
+    mounted() {
+      this.isSourceGroup = false
     },
   },
 }
 </script>
+
+<style scoped>
+.task-drag {
+  /* transition: transform 0.2s ease-in-out; */
+  transform: rotate(5deg);
+  /* box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); */
+}
+</style>

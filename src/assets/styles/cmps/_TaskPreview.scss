@@ -8,13 +8,19 @@
     box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
     background-color: $task-bg-clr;
     cursor: pointer;
-
-    >li>p {
-        margin: 4px;
-        text-align: start;
+  
+    /* Set the <li> element to take up the full width of its parent (.task-preview) */
+    > li {
+      width: 100%;
     }
-
+  
+    > li > p {
+      margin: 4px;
+      text-align: start;
+    }
+  
     &:hover {
-        background-color: $dynamic-button-highlighted;
+      background-color: rgba(160, 177, 190, 0.09);
     }
-}
+  }
+  

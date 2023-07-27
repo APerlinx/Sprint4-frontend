@@ -64,3 +64,10 @@
         }
     }
 }
+
+// button
+
+@mixin button-hover-style {
+    background-color: $dynamic-button-highlighted;
+    border-radius: 10px;
+}
