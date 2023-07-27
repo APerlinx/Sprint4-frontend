@@ -24,6 +24,12 @@
 import { focusDirective, clickOutsideDirective } from '../directives/index.js'
 
 export default {
+    props: {
+    groupId: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       taskTitle: '',
@@ -39,12 +45,6 @@ export default {
     },
     closeComponent() {
       this.$emit('close')
-    },
-  },
-  props: {
-    groupId: {
-      type: String,
-      required: true,
     },
   },
   directives: {

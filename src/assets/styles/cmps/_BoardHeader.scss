@@ -1,0 +1,20 @@
+.board-header {
+    background: rgb(23, 43, 77,0.3); 
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border: none;
+    padding: 12px 10px 12px 16px;
+  }
+  
+  .nav-bar > input {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: $dynamic-text; 
+    width: max-content;
+  }
+  
+  .nav-bar > input::placeholder {
+    color: $dynamic-text;
+  }

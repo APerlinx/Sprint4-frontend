@@ -117,7 +117,7 @@ const board = {
   groups: [
     {
       "id": "g101",
-      "title": "Group 1",
+      "title": "Sprint 4",
       "archivedAt": 1589983468418,
       "tasks": [
         {
@@ -133,11 +133,11 @@ const board = {
     },
     {
       "id": "g102",
-      "title": "Group 2",
+      "title": "Team tasks",
       "tasks": [
         {
           "id": "c103",
-          "title": "Do that",
+          "title": "Fix bug",
           "archivedAt": 1589983468418,
         },
         {
