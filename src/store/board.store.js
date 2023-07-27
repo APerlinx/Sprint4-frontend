@@ -48,15 +48,11 @@ export const boardStore = {
       return board ? board.groups : []
     },
     getCurrenBoard({ currentBoard }) {
-
       const board = currentBoard
       return board ? board.groups : []
     },
     getCurrBoard({ currentBoard }) {
-
       const board = currentBoard
-
-
       return board //check this
     },
     getCurrTask({ currentTask }) {
@@ -69,9 +65,7 @@ export const boardStore = {
       console.log(state.boards)
     },
     setCurrentBoard(state, board) {
-      console.log("🚀 ~ file: board.store.js:63 ~ setCurrentBoard ~ board:", board)
       state.currentBoard = board;
-      console.log("🚀 ~ file: board.store.js:65 ~ setCurrentBoard ~ state.currentBoard:", state.currentBoard)
     },
     addBoard(state, { board }) {
       state.boards.push(board)
@@ -113,7 +107,8 @@ export const boardStore = {
       }
     },
     setCurrTask(state, { task }) {
-      state.currentTask = task;
+      console.log("🚀 ~ file: board.store.js:110 ~ setCurrTask ~ task:", task)
+      state.currentTask = task
     },
   },
   actions: {
@@ -238,27 +233,27 @@ export const boardStore = {
     },
 
 
-async moveTask({ commit, state }, { sourceGroupId, dropResult }) {
-  // Deep clone currentBoard
-  console.log(`groupId: ${sourceGroupId}`);
+    async moveTask({ commit, state }, { sourceGroupId, dropResult }) {
+      // Deep clone currentBoard
+      console.log(`groupId: ${sourceGroupId}`);
 
-  const updatedBoard = JSON.parse(JSON.stringify(state.currentBoard));
-  // Find the group
-  const group = updatedBoard.groups.find(group => group.id === sourceGroupId);
-  // Apply drag and drop result
-  const { removedIndex, addedIndex } = dropResult;
-  console.log('{ removedIndex, addedIndex }', { removedIndex, addedIndex });
-  if (removedIndex !== null && addedIndex !== null) {
-    const [removedTask] = group.tasks.splice(removedIndex, 1);
-    group.tasks.splice(addedIndex, 0, removedTask);
-  }
+      const updatedBoard = JSON.parse(JSON.stringify(state.currentBoard));
+      // Find the group
+      const group = updatedBoard.groups.find(group => group.id === sourceGroupId);
+      // Apply drag and drop result
+      const { removedIndex, addedIndex } = dropResult;
+      console.log('{ removedIndex, addedIndex }', { removedIndex, addedIndex });
+      if (removedIndex !== null && addedIndex !== null) {
+        const [removedTask] = group.tasks.splice(removedIndex, 1);
+        group.tasks.splice(addedIndex, 0, removedTask);
+      }
 
-  // Save updated board
-  const savedBoard = await boardService.save(updatedBoard);
-  
-  // Commit updated board to store
-  commit({ type: 'updateBoard', board: savedBoard });
-}
+      // Save updated board
+      const savedBoard = await boardService.save(updatedBoard);
+
+      // Commit updated board to store
+      commit({ type: 'updateBoard', board: savedBoard });
+    }
 
 
   },

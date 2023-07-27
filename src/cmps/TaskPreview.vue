@@ -13,12 +13,12 @@ export default {
   props: {
     task: {
       type: Object,
-      required: false,
-      default: () => ({}),
+      required: true,
+      // default: () => ({}),
     },
   },
   created() {
-    // console.log('task', this.task)
+    console.log('task', this.task)
   },
   computed: {
     currBoard() {
