@@ -1,7 +1,6 @@
 <template>
   <div class="overlay" v-if="isAddBoard" @click="isAddBoard = false"></div>
   <section class="board-container">
-
     <h3>Your workspace</h3>
     <div class="workspace">
       <div class="your">
@@ -20,7 +19,7 @@
 
     <div v-if="starredBoards.length > 0" class="stared">
       <h2 class="title">Starred boards</h2>
-      <BoardList :boards="starredBoards" />
+      <BoardList @star="starBoard" :boards="starredBoards" />
     </div>
   </section>
 </template>
