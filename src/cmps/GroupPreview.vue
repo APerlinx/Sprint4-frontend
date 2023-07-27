@@ -2,23 +2,15 @@
   <li class="group-preview">
     <div class="group-card">
       <div class="group-header">
-        <input
-          class="group-title"
-          type="text"
-          :value="group.title"
-          @input="updateTitle($event.target.value)"
-        />
+        <input class="group-title" type="text" :value="group.title" @input="updateTitle($event.target.value)" />
         <button class="remove-group-button" @click="$emit('remove', group.id)">
           x
         </button>
       </div>
 
-      <Container
-        :get-child-payload="retrieveTaskPayload"
-        @drop="handleTaskDrop"
-      >
+      <Container :get-child-payload="retrieveTaskPayload" @drop="handleTaskDrop">
         <Draggable v-for="task in group.tasks" :key="task.id">
-          <TaskPreview :task="task" />
+          <TaskPreview @click="openTask(board, group, task)" :groupId="this.group.id" :task="task" />
         </Draggable>
       </Container>
 
@@ -45,6 +37,12 @@ export default {
   },
   computed: {},
   methods: {
+    openTask(board, group, task) {
+      this.isTaskDetail = true;
+      console.log('isTaskDetail:', this.isTaskDetail)
+      // this.$store.commit({ type: 'setCurrGroup', group })
+      this.$store.commit({ type: 'setCurrTask', task })
+    },
     retrieveTaskPayload(index) {
       return this.group.tasks[index]
     },

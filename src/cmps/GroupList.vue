@@ -1,52 +1,28 @@
 <template>
   <section class="group-list-section">
     <ul class="group-list">
-      <Container
-        :get-child-payload="getGroupPayload"
-        @drop="onGroupDrop"
-        orientation="horizontal"
-        behaviour="contain"
-      >
+      <Container :get-child-payload="getGroupPayload" @drop="onGroupDrop" orientation="horizontal" behaviour="contain">
         <Draggable v-for="group in groups" :key="group._id">
-          <GroupPreview
-            :group="group"
-            @update-title="updateGroup"
-            @remove="removeGroup"
-          >
+          <GroupPreview :group="group" @update-title="updateGroup" @remove="removeGroup">
             <template #actions>
               <div class="group-actions">
-                <button
-                  v-if="!(showTaskForm && currentGroupId === group.id)"
-                  @click="showAddTaskForm(group.id)"
-                  class="group-btn"
-                >
+                <button v-if="!(showTaskForm && currentGroupId === group.id)" @click="showAddTaskForm(group.id)"
+                  class="group-btn">
                   + Add a card
                 </button>
 
-                <AddTask
-                  v-if="showTaskForm && currentGroupId === group.id"
-                  :groupId="currentGroupId"
-                  @addTask="addTask"
-                  @close="closeTaskForm"
-                />
+                <AddTask v-if="showTaskForm && currentGroupId === group.id" :groupId="currentGroupId" @addTask="addTask"
+                  @close="closeTaskForm" />
               </div>
             </template>
           </GroupPreview>
         </Draggable>
       </Container>
 
-      <li
-        class="list-btn-wrapper"
-        v-if="!toggleAddForm"
-        @click="toggleAddForm = !toggleAddForm"
-      >
+      <li class="list-btn-wrapper" v-if="!toggleAddForm" @click="toggleAddForm = !toggleAddForm">
         <button class="list-btn">+ Add another list</button>
       </li>
-      <li
-        class="open-form-wrapper"
-        v-if="toggleAddForm"
-        v-click-outside="handleCloseComponent"
-      >
+      <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
         <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
     </ul>
@@ -81,7 +57,7 @@ export default {
       return groups
     },
   },
-  created() {},
+  created() { },
   methods: {
     getGroupPayload(index) {
       return this.groups[index]

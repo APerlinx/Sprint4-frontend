@@ -1,27 +1,28 @@
 <template>
     <div class="task-all-page"></div>
 
-    <section class="task-details">
+    <!-- <section class="task-details" v-if="taskToEdit"> -->
+    <section v-if="taskToEdit" class="task-details">
         <section class="task-details-header">
-            <input type="text" class="deatils-title" placeholder="COOSssssEMEK">
-            <!-- placeholder="COSEMEK" -->
-            <!-- v-model="taskToEdit.title"> -->
-            <!-- v-model="taskToEdit.title" -->
+            <input type="text" class="deatils-title" v-model="taskToEdit.title">
+            <!-- placeholder="COOSssssEMEK" -->
             <button @click="closeModal">X</button>
-            <p>In list 'need to add {{}}group.title' <span class="active" :class="{ active: isWatch }">i-eye</span></p>
+            <p>In list {{ group.title }} <span class="active" :class="{ active: isWatch }">i-eye</span></p>
         </section>
 
         <section class="task-details-main">
-            <div>
-                <h5 class="deatils-notifications">Notifications</h5>
-                <button class="btn-watch" @click="toggleWatch">{{ watch }}</button>
-                {{ isWatch }}
+            <div task-alerts>
+                <div details-notification>
+                    <h5>Notifications</h5>
+                    <button class="btn-watch" @click="toggleWatch">{{ watch }}</button>
+                    {{ isWatch }}
+                </div>
             </div>
 
             <div task-details->
                 <h3 class="details-title-big">Description</h3>
-                <textarea @blur="hideBtn = false" @focus="hideBtn = true" placeholder="Add a more detailed description..."
-                    class="details-description"></textarea>
+                <textarea v-model="taskToEdit.description" @blur="hideBtn = false" @focus="hideBtn = true"
+                    placeholder="Add a more detailed description..." class="details-description"></textarea>
                 <div v-if="hideBtn">
                     <div class="btn-save-close">
                         <button>
@@ -74,22 +75,41 @@
 import DynamicModal from "./DynamicModal.vue"
 
 import Checklist from "../cmps/Checklist.vue"
+import { boardService } from "../services/board.service.local.js"
 
 export default {
     data() {
         return {
             taskToEdit: null,
+            group: null,
+            board: null,
             hideBtn: false,
             isWatch: false,
             watch: 'Watch',
-            actionType: null
+            actionType: null,
+
         }
     },
     created() {
-        this.taskToEdit = JSON.parse(JSON.stringify(this.task))
-        console.log('taskToEdit:', this.task)
+        this.setTask()
     },
     methods: {
+        async setTask() {
+            try {
+                const boardId = this.$route.params.boardId
+                const board = await boardService.getById(boardId)
+                const taskId = this.$route.params.taskId
+                const groupId = this.$route.params.groupId
+                console.log('groupId:', groupId)
+
+                this.board = JSON.parse(JSON.stringify(board))
+                this.group = this.board.groups.find(group => group.id === groupId)
+                this.taskToEdit = this.group.tasks.find(task => task.id === taskId)
+                console.log("🚀 ~ file: TaskDetails.vue:116 ~ setTask ~ this.taskToEdit:", this.taskToEdit)
+            } catch (err) {
+                console.log('error:')
+            }
+        },
         toggleWatch() {
             this.isWatch = !this.isWatch
             this.watch = this.isWatch ? 'Watching' : 'Watch'
@@ -104,12 +124,11 @@ export default {
         closeModal() {
 
         }
-
     },
     computed: {
-        task() {
-            return this.$store.getters.getCurrTask
-        },
+    },
+    unmounted() {
+        // this.$store.commit({ type: 'setCurrTask', task: null })
     },
     components: {
         DynamicModal,

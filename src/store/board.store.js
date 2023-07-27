@@ -62,7 +62,7 @@ export const boardStore = {
   mutations: {
     setBoards(state, { boards }) {
       state.boards = boards
-      console.log(state.boards)
+      // console.log(state.boards)
     },
     setCurrentBoard(state, board) {
       state.currentBoard = board;
@@ -107,11 +107,38 @@ export const boardStore = {
       }
     },
     setCurrTask(state, { task }) {
-      console.log("🚀 ~ file: board.store.js:110 ~ setCurrTask ~ task:", task)
       state.currentTask = task
+    },
+    setTask(state, { groupId, task }) {
+      if (state.currentGroup) groupId = state.currentGroup._id;
+      const groupIdx = state.currentBoard.groups.findIndex(
+        group => group._id === groupId
+      );
+      if (task._id) {
+        const taskIdx = state.currentBoard.groups[groupIdx].tasks.findIndex(
+          currTask => currTask._id === task._id
+        );
+        state.currentBoard.groups[groupIdx].tasks.splice(taskIdx, 1, task);
+      } else {
+        task._id = utilService.makeId();
+        state.currentBoard.groups[groupIdx].tasks.push(task);
+      }
+    },
+    removeTask(state, { task }) {
+      const taskIdx = state.currentBoard.groups[task.groupIdx].tasks.findIndex(
+        currTask => currTask._id === task.taskId
+      );
+      state.currentBoard.groups[task.groupIdx].tasks.splice(taskIdx, 1);
     },
   },
   actions: {
+    // async getTaskById(context, { taskID }) {
+    //   const task = context.state.
+    //   // const task = context.state.currentTask
+    //   console.log('task:', task)
+    //   // this.task = this.currGroup.tasks.find(task => task.id === taskId)
+    //   // return task
+    // },
     async addBoard(context, { board }) {
       try {
         board = await boardService.save(board)
@@ -123,9 +150,9 @@ export const boardStore = {
       }
     },
     async loadCurrentBoard({ commit }, { boardId }) {
-      console.log('boardId:', boardId)
+      // console.log('boardId:', boardId)
       const board = await boardService.getById(boardId);
-      console.log('variboardable:', board)
+      // console.log('variboardable:', board)
       commit('setCurrentBoard', board);
     },
     async updateBoard(context, { board }) {
@@ -205,12 +232,22 @@ export const boardStore = {
         throw err
       }
     },
+
+    async setTask({ commit, state, dispatch }, { groupId, task }) {
+      try {
+        commit({ type: 'setTask', groupId, task });
+        dispatch({ type: 'saveBoard', board: state.currentBoard });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async addTask({ commit, state }, { groupId, task }) {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
 
         const group = state.currentBoard.groups.find(group => group.id === groupId)
-        console.log('group', group);
+        // console.log('group', group);
         if (!group) throw new Error('Group not found')
 
         group.tasks.push(task)
@@ -235,7 +272,7 @@ export const boardStore = {
 
     async moveTask({ commit, state }, { sourceGroupId, dropResult }) {
       // Deep clone currentBoard
-      console.log(`groupId: ${sourceGroupId}`);
+      // console.log(`groupId: ${sourceGroupId}`);
 
       const updatedBoard = JSON.parse(JSON.stringify(state.currentBoard));
       // Find the group
