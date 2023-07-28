@@ -2,6 +2,10 @@
     @include modal;
     padding-inline: rem(12px);
 
+    .title {
+        font-weight: 600;
+    }
+
     .background-title {
         margin-block-end: 0.3em;
         font-weight: 900;
@@ -46,7 +50,7 @@
             }
         }
 
-        .create-btn {
+        .save-btn {
             display: flex;
             justify-content: center;
             color: #adb4c0;
