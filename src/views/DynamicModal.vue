@@ -1,8 +1,8 @@
 <template>
     <div class="dynamic-modal-container">
         <section>
-            <h4 class="action-modal-title">one of the btns</h4>
-            <span class="action-modal-close" @click="$emit('onClose')">X</span>
+            <h4 class="dynamic-modal-title">one of the btns</h4>
+            <span class="dynamic-modal-close" @click="$emit('onClose')">X</span>
         </section>
 
         <section>

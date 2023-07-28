@@ -4,9 +4,9 @@
     <!-- <section class="task-details" v-if="taskToEdit"> -->
     <section v-if="taskToEdit" class="task-details">
         <section class="task-details-header">
-            <input type="text" class="deatils-title" v-model="taskToEdit.title" @blur="onTaskEdit">
+            <input type="text" class="deatils-title" v-model="taskToEdit.title">
             <!-- placeholder="COOSssssEMEK" -->
-            <button @click="closeModal">X</button>
+            <button @click="closeModal(); editTask()">X</button>
             <p class="task-in-list">in list <span class="group-ops">{{ group.title }}</span><span
                     :class="{ active: !isWatch }">i-eye</span></p>
         </section>
@@ -101,7 +101,7 @@ export default {
             hideBtn: false,
             isWatch: false,
             watch: 'Watch',
-            actionType: null,
+            // actionType: null,
             isDynamicModalOpen: false,
 
         }
@@ -121,38 +121,40 @@ export default {
                 this.board = JSON.parse(JSON.stringify(board))
                 this.group = this.board.groups.find(group => group.id === groupId)
                 this.taskToEdit = this.group.tasks.find(task => task.id === taskId)
-                console.log("🚀 ~ file: TaskDetails.vue:116 ~ setTask ~ this.taskToEdit:", this.taskToEdit)
             } catch (err) {
                 console.log('error:')
             }
         },
         toggleWatch() {
             this.isWatch = !this.isWatch
-            console.log("🚀 ~ file: TaskDetails.vue:131 ~ toggleWatch ~ this.isWatch:", this.isWatch)
             this.watch = this.isWatch ? 'Watching' : 'Watch'
-            this.onTaskEdit
+            this.taskEdit(this.isWatch)
         },
         toggleOpenModal() {
             // need to check if the specific action-btn that clicked, is the last clicked button. => Y? close modal. N? open the modal with new content from the other action-btn.
-
             this.isDynamicModalOpen = !this.isDynamicModalOpen
 
         },
         closeModal() {
-            this.actionCmpType = null
-            this.actionCmpInfo = null
+            (this.actionCmpType = null),
+                (this.actionCmpInfo = null)
         },
         setChecklist() {
             (this.actionType = 'checklist'),
                 (this.actionInfo = { name: "checklist" })
         },
         closeModal() {
-            this.$router.back();
+            this.$router.back()
 
         },
-        onTaskEdit() {
-            console.log('edit')
-            this.$emit('editedTask', JSON.parse(JSON.stringify(this.taskToEdit)));
+        editTask() {
+            console.log('edit task:')
+            const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
+            console.log('editedTask:', editedTask)
+            const taskIdx = this.group.tasks.findIndex(task => task.id === this.taskToEdit.id)
+            // replace task with editTask
+            this.group.tasks.splice(taskIdx, 1, this.taskToEdit)
+            this.$store.dispatch({ type: 'updateBoard', board: this.board })
         },
     },
     computed: {
