@@ -55,14 +55,22 @@
             cursor: pointer;
         }
 
-        .remove-group-button {
+        .menu-btn {
             background: none;
             border: none;
             margin: 0;
-            color: $button-color;
-            padding: 8px 12px;
-            border-radius: 0;
+            padding: 5px 6px;
+                        border-radius: 3px;
+            > .icon {
+                @include trello-icon($content: "\e952", $type: sm, $color: $list-title-color);
+              }
+
+              &:hover {
+                @include button-hover-style;
+              }
         }
+
+        
 
         // @media (min-width: 1024px) {
         //     max-height: calc(100vh - 156px);

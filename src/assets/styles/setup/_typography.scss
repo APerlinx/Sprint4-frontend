@@ -1,8 +1,33 @@
+$icon-member: '\e946';
+$icon-label: '\e93f';
+$icon-checklist: '\e91a';
+$icon-attachment: '\e908';
+$icon-plus: '\e901';
+$icon-arrow-right: '\e94a';
+$icon-copy: '\e91f';
+$icon-share: '\e963';
+$icon-description: '\e922';
+$icon-activity: '\e900';
+$icon-archive: '\e907';
+$icon-card: '\e912';
+$icon-card-cover: '\e914';
+$icon-gear: '\e932';
+$icon-eye: '\e969';
+$icon-comment: '\e91e';
+$icon-clock: '\e91b';
+$icon-star: '\e966';
+$icon-full-star: '\e967';
+$icon-two-members: '\e951';
+$icon-three-dots: '\e952';
+$icon-lighting-bolt: '\e909';
+$icon-power-up: '\e956';
+$icon-close: '\e91c';
+$con-checked: '\e916';
+$icon-triello: '\e90b';
+$icon-empty-checked: '\e919';
+$icon-full-checked: '\e918';
+
 @font-face {
-    // font-family: caveat;
-    // src: url(../../fonts/Caveat/Caveat-Regular.ttf);
-}
-@font-face {
-    // font-family: montserrat;
-    // src: url(../../fonts/Montserrat/Montserrat-Regular.ttf);
+  font-family: trellicons;
+  src: url(./fonts/trellicons.ttf);
 }

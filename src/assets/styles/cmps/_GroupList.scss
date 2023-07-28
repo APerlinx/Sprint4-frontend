@@ -6,6 +6,7 @@
   overflow-y: hidden;
   margin-bottom: 8px;
   padding-bottom: 8px;
+  margin-inline-start: 1rem;
 
   .group-list {
     display: flex;
@@ -28,12 +29,18 @@
       padding: 7px 8px 4px 6px;
       width: 100%;
       text-align: start;
-      margin-inline-start: 1.1em;
-      // font-size: 0.9em
+      margin-inline-start: 0.2em;
+      display: flex; 
+      align-items: center; 
+      > .icon {
+        @include trello-icon($content: "\e901", $type: sm, $color: $text-subtle);
+        margin-inline-end: 0.5em;
+      }
     }
 
     .group-btn:hover {
       @include button-hover-style;
+      border-radius: 10px;
     }
 
     .list-btn-wrapper {
@@ -66,6 +73,11 @@
       color: $dynamic-text;
       padding: 6px 8px;
       margin: 0;
+
+      > .icon {
+        @include trello-icon($content: "\e901", $type: sm, $color: $dynamic-text);
+      }
+
     }
 
     form {
@@ -76,20 +88,20 @@
   }
 
   &::-webkit-scrollbar {
-    width: 8px; 
+    width: 8px;
   }
 
   &::-webkit-scrollbar-track {
-    background: #00000026; 
+    background: #00000026;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #ffffff4D;
-    border-radius: 4px; 
+    background: #ffffff4d;
+    border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #ffffff6D; 
+    background: #ffffff6d;
   }
 }
 

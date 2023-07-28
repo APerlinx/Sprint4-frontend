@@ -8,9 +8,9 @@
           :value="group.title"
           @input="updateTitle($event.target.value)"
         />
-        <button class="remove-group-button" @click="$emit('remove', group.id)">
-          x
-        </button>
+        <div class="menu-btn" @click="$emit('remove', group.id)">
+          <span class="icon"></span>
+        </div>
       </div>
       <div class="scroll-container">
         <taskList

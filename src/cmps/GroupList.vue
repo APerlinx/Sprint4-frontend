@@ -28,7 +28,7 @@
                   @click="showAddTaskForm(group.id)"
                   class="group-btn"
                 >
-                  + Add a card
+                  <span class="icon"></span> Add a card
                 </button>
 
                 <AddTask
@@ -48,7 +48,7 @@
         v-if="!toggleAddForm"
         @click="toggleAddForm = !toggleAddForm"
       >
-        <button class="list-btn">+ Add another list</button>
+        <button class="list-btn"><span class="icon"></span> Add another list</button>
       </li>
       <li
         class="open-form-wrapper"
