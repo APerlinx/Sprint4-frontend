@@ -5,7 +5,6 @@ header {
         background-color: white;
         display: grid;
         grid-template-columns: minmax(auto, 150px) minmax(auto, 200px) minmax(auto, 1fr) minmax(auto, 100px);
-        height: rem(48px);
         color: #425672;
         border-bottom: 0.5px solid rgba(128, 128, 128, 0.466);
 
@@ -32,95 +31,16 @@ header {
             }
         }
 
-        .create {
+        .create-btn {
+            align-self: center;
             background-color: $lclr2;
             color: white;
-            font-size: 0.9em;
             padding: 0.4em 1em;
             border-radius: 0.2em;
             width: rem(68px);
         }
 
-        .filter {
-            color: #627086;
-            justify-self: end;
-
-            .search-bar {
-                display: flex;
-                align-items: center;
-                width: rem(150px);
-                height: rem(32px);
-                border: 1px solid rgb(198, 198, 198);
-                border-radius: rem(5px);
-                p {
-                    padding-inline-start: 0.4em;
-                }
-                .material-symbols-outlined {
-                    font-size: 1.3em;
-                    padding-inline-start: 0.3em;
-                    color: #627086;
-                }
-            }
-            .open {
-                position: relative;
-                input {
-                    width: 700px;
-                    border-radius: 0.2em;
-                    padding: 0.4em;
-                    border: 0.5px solid rgb(173, 173, 173);
-                    z-index: 999;
-                }
-
-                .search-output {
-                    position: absolute;
-                    z-index: 999;
-                    top: 110%;
-                    background-color: white;
-                    width: 700px;
-                    border-radius: 0.2em;
-                    box-shadow: 0 0 3px lightgray;
-
-                    & > * :hover {
-                        background-color: rgb(244, 244, 244);
-                    }
-
-                    h5 {
-                        font-weight: 600;
-                        font-size: 0.75em;
-                        padding-inline-start: 1em;
-                        padding-block-start: 1em;
-                    }
-
-                    .output-list {
-                        display: flex;
-                        flex-direction: column;
-                        gap: 1em;
-                        list-style: none;
-                        padding: 0;
-
-                        .check {
-                            display: flex;
-                            align-items: center;
-                            gap: 0.5em;
-                            padding-inline-start: 1em;
-                            padding-block: 0.4em;
-
-                            img {
-                                height: rem(25px);
-                                width: rem(25px);
-                                border-radius: 0.2em;
-                            }
-
-                            h2 {
-                                font-weight: 300;
-                                font-size: 1em;
-                                color: #182b4d;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //Filter in diff doc
     }
 }
 

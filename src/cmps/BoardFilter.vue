@@ -1,34 +1,37 @@
 <template>
-  <div v-if="!isSearchMode" @click="isSearchMode = true" class="search-bar">
-    <span class="material-symbols-outlined">search</span>
-    <p>Serach</p>
-  </div>
+  <section class="filter">
 
-  <div v-if="isSearchMode" class="open">
-    <input
-      v-model="filterBy"
-      @input="onSetFilterBy"
-      type="text"
-      placeholder="Search Trello"
-    />
+    <Popper arrow placement="bottom">
+      <input
+        class="search-bar"
+        v-model="filterBy"
+        @input="onSetFilterBy"
+        type="text"
+        placeholder="Search Trello..."
+      />
 
-    <div class="search-output">
-      <h5>RECENT BOARDS</h5>
-      <span @click="isSearchMode=false" >x</span>
+      <template #content>
+        <div class="open">
+          <div class="search-output">
+            <h5>RECENT BOARDS</h5>
 
-      <ul class="output-list">
-        <li v-for="board in filteredBoards">
-          <RouterLink :to="'/details/' + board._id">
-            <div class="check">
-              <img :src="board.imgUrl" />
-              <h2>{{ board.title }}</h2>
-            </div>
-          </RouterLink>
-        </li>
-      </ul>
-    </div>
-  </div>
+            <ul class="output-list">
+              <li v-for="board in filteredBoards">
+                <RouterLink :to="'/details/' + board._id">
+                  <div class="check">
+                    <img :src="board.imgUrl" />
+                    <h2>{{ board.title }}</h2>
+                  </div>
+                </RouterLink>
+              </li>
+            </ul>
 
+          </div>
+        </div>
+      </template>
+    </Popper>
+
+  </section>
 </template>
 
 <script>
@@ -38,7 +41,6 @@ import Popper from "vue3-popper";
 export default {
   data() {
     return {
-      isSearchMode: false,
       filterBy: "",
     };
   },

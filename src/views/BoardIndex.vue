@@ -5,7 +5,6 @@
       <BoardList @star="starBoard" :boards="starredBoards" />
     </div>
 
-
     <div v-if="recentBoards.length > 0" class="recent">
       <h2 class="title">Recently viewed</h2>
       <BoardList @star="starBoard" :boards="recentBoards" />
@@ -19,23 +18,22 @@
 
       <div class="create-board">
         <Popper arrow placement="right">
-          <div class="title">Create new board</div>
+          <div class="board-title">Create new board</div>
           <template #content>
             <AddBoard @save="saveBoard" />
           </template>
         </Popper>
       </div>
-      
     </div>
 
-    <div class="member-icon">
-    </div>
+    <!-- <div class="member-icon">
+    </div> -->
   </section>
 </template>
 
 <script>
 import BoardList from "../cmps/BoardList.vue";
-import AddBoard from "../cmps/Addboard.vue"
+import AddBoard from "../cmps/addboard.vue";
 
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";
@@ -44,8 +42,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
 export default {
   data() {
-    return {
-    };
+    return {};
   },
 
   created() {},

@@ -28,7 +28,7 @@
         <button></button>
         <div
           @click="saveBoard"
-          class="create-btn"
+          class="save-btn"
           :class="{ check: titleLength }"
         >
           Create

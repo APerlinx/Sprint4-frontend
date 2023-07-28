@@ -10,7 +10,7 @@
         </RouterLink>
       </div>
 
-      <div class="create">
+      <div class="create-btn">
         <Popper arrow placement="right">
           <RouterLink to="#">Create</RouterLink>
           <template #content>
@@ -19,16 +19,15 @@
         </Popper>
       </div>
 
-      <div class="filter">
+    
         <BoardFilter @filterByTxt="filterByTxt" />
-      </div>
-      
+
     </nav>
   </header>
 </template>
 <script>
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
-import AddBoard from "../cmps/AddBoard.vue";
+import AddBoard from "../cmps/addboard.vue";
 import BoardFilter from "../cmps/BoardFilter.vue";
 
 import { defineComponent } from "vue";
