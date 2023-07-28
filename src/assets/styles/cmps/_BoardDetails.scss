@@ -1,7 +1,8 @@
 .board-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     background: linear-gradient(to bottom right, hsl(215, 81%, 51%), rgba(22, 22, 22, 0.5));
     background-color: hsl(215, 81%, 51%) ;
-    height: 100vh;
-    text-align: center;
-    overflow: hidden;
+    padding: 0;
 }

@@ -1,6 +1,7 @@
 import { boardService } from '../services/board.service.local'
 // import { boardService } from '../services/board.service'
 import { applyDrag } from '../services/util.service.js'
+import { reactive } from 'vue';
 
 export function getActionRemoveBoard(boardId) {
   return {
@@ -35,7 +36,10 @@ export const boardStore = {
     savedBoard: null,
     currentGroup: null,
     currentTask: null,
-    filterBy: ''
+    filterBy: '',
+    dropResults: [],
+
+
   },
   getters: {
     boards({ boards }) {
@@ -58,7 +62,7 @@ export const boardStore = {
     },
     getCurrenBoard({ currentBoard }) {
       const board = currentBoard
-      return board ? board.groups : []
+      return board 
     },
     getCurrBoard({ currentBoard }) {
       const board = currentBoard
@@ -74,6 +78,10 @@ export const boardStore = {
     },
     setCurrentBoard(state, board) {
       state.currentBoard = board
+    },
+    setCurrBoard(state, { currBoard }) {
+      if(currBoard === undefined) return
+      state.currBoard = currBoard
     },
     addBoard(state, { board }) {
       state.boards.push(board)
@@ -119,7 +127,21 @@ export const boardStore = {
     },
     setFilterBy(state, { filterBy }) {
       state.filterBy = filterBy
-    }
+    },
+    addTaskToGroup(state, { groupId, task }) {
+      const board = state.currentBoard
+      const group = board.groups.find((group) => group.id === groupId)
+      if (!group) throw new Error('Group not found')
+
+      group.tasks = [...group.tasks, task]
+    },
+    removeTask(state, { group, index }) {
+      group.tasks = [...group.tasks.slice(0, index), ...group.tasks.slice(index + 1)]
+    },
+    addTask(state, { group, task, index }) {
+      group.tasks.splice(index, 0, task)
+    },
+
   },
   actions: {
     async addBoard(context, { board }) {
@@ -215,13 +237,6 @@ export const boardStore = {
     },
     async addTask({ commit, state }, { groupId, task }) {
       try {
-        if (!state.currentBoard) throw new Error('Current board not found')
-
-        const group = state.currentBoard.groups.find(
-          (group) => group.id === groupId
-        )
-        if (!group) throw new Error('Group not found')
-
         const newTask = {
           title: task.title,
         }
@@ -235,41 +250,28 @@ export const boardStore = {
         throw err
       }
     },
-    async moveGroup({ commit, state }, { dropResult, boardId }) {
-      const currentBoard = await boardService.getById(boardId)
-
-      currentBoard.groups = applyDrag(currentBoard.groups, dropResult)
-
-      const savedBoard = await boardService.save(currentBoard)
-
-      commit({ type: 'updateBoard', board: savedBoard })
-    },
-    async moveTask(
-      { commit },
-      { sourceGroupId, targetGroupId, dropResult, boardId }
-    ) {
-      const currentBoard = await boardService.getById(boardId)
-
-      const sourceGroup = currentBoard.groups.find(
-        (group) => group.id === sourceGroupId
-      )
-      const targetGroup =
-        sourceGroupId === targetGroupId
-          ? sourceGroup
-          : currentBoard.groups.find((group) => group.id === targetGroupId)
-
-      if (sourceGroupId === targetGroupId) {
-        sourceGroup.tasks = applyDrag(sourceGroup.tasks, dropResult)
-      } else {
-        const [removedTask] = sourceGroup.tasks.splice(
-          dropResult.removedIndex,
-          1
-        )
-        targetGroup.tasks.splice(dropResult.addedIndex, 0, removedTask)
+    async saveGroups({ commit, state, dispatch }, { groups, currBoard }) {
+      try {
+        currBoard = JSON.parse(JSON.stringify(currBoard))
+        currBoard.groups = groups
+        const savedBoard = await boardService.save(currBoard)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: "loadBoards" })
+      } catch (err) {
+        console.log("Cannot save group", err)
+        throw err
       }
+    },
+    async saveBoard({ commit, dispatch }, { board }) {
+      try {
+        const savedBoard = await boardService.save(board)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: "loadBoards" })
 
-      const savedBoard = await boardService.save(currentBoard)
-      commit({ type: 'updateBoard', board: savedBoard })
+      } catch (err) {
+        console.log("Cannot save board", err)
+        throw err
+      }
     },
   },
 }

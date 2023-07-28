@@ -13,6 +13,30 @@
         padding: 0.5rem;
         width: 272px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        // overflow-y: auto;
+        @include responsive-max-height();
+
+        .scroll-container {
+            overflow-y: auto;
+            // max-height: calc(100vh - 42.89px - 64.38px);
+            &::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: rgba(213, 224, 243, 0.4);
+                border-radius: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #00000026;
+                border-radius: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background: #888;
+            }
+        }
 
         .group-header {
             display: flex;
@@ -37,11 +61,15 @@
             margin: 0;
             color: $button-color;
             padding: 8px 12px;
-            border-radius:0;
+            border-radius: 0;
         }
 
-        .remove-group-button:hover {
-            @include button-hover-style;
-        }
+        // @media (min-width: 1024px) {
+        //     max-height: calc(100vh - 156px);
+        // }
+
+        // @media (min-width: 1440px) {
+        //     max-height: calc(100vh - 100px);
+        // }
     }
 }

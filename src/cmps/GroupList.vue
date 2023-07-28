@@ -1,19 +1,25 @@
 <template>
   <section class="group-list-section">
     <ul class="group-list">
-  <Container
-    :get-child-payload="getGroupPayload"
-    @drop="onGroupDrop"
-    orientation="horizontal"
-    behaviour="contain"
-    dragClass="group-drag"
-    dropClass="group-drop"
-  >
-        <Draggable v-for="group in groups" :key="group._id">
+      <Container
+        :get-child-payload="getGroupPayload"
+        @drop="onDrop($event)"
+        orientation="horizontal"
+        :drop-placeholder="dropPlaceholderOptions"
+        dragClass="group-drag"
+        dropClass="group-drop"
+        class="group-container"
+        v-if="groups"
+        group-name="groups"
+      >
+        <Draggable v-for="group in groupList" :key="group._id">
           <GroupPreview
             :group="group"
+            :key="group.id"
+            class="group-preview"
             @update-title="updateGroup"
             @remove="removeGroup"
+            @updateGroup="updateGroups"
           >
             <template #actions>
               <div class="group-actions">
@@ -63,34 +69,70 @@ import GroupPreview from './GroupPreview.vue'
 import AddGroup from './AddGroup.vue'
 import AddTask from './AddTask.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
-
+import { scrollHorizontalDirective } from '../directives/index.js'
+import { applyDrag } from '../services/util.service.js'
 export default {
+  name: 'group-list',
   data() {
     return {
       title: '',
       toggleAddForm: false,
       currentGroupId: null,
       showTaskForm: false,
+      groups: [],
+      currBoard: {},
+      groupsStack: [],
     }
   },
   computed: {
     loggedInUser() {
       return this.$store.getters.loggedinUser
     },
-    groups() {
+    groupList() {
       const boardId = this.$route.params.boardId
-      const groups = this.$store.getters.getGroupsByBoardId(boardId)
-      return groups
+      this.groups = this.$store.getters.getGroupsByBoardId(boardId)
+      this.groups = JSON.parse(JSON.stringify(this.groups))
+      return this.groups
+    },
+    dropPlaceholderOptions() {
+      return {
+        className: 'group-drag',
+        animationDuration: '150',
+        showOnTop: false,
+      }
     },
   },
-  created() {},
+  async created() {
+    this.groups = JSON.parse(JSON.stringify(this.groups))
+    this.currBoard = this.$store.getters.getCurrBoard
+  },
   methods: {
     getGroupPayload(index) {
       return this.groups[index]
     },
-    onGroupDrop(dropResult) {
-      const boardId = this.$route.params.boardId
-      this.$store.dispatch('moveGroup', { dropResult, boardId })
+    onDrop(dropRes) {
+      this.groups = applyDrag(this.groups, dropRes)
+      this.$store.dispatch({
+        type: 'saveGroups',
+        groups: this.groups,
+        currBoard: this.currBoard,
+      })
+    },
+    updateGroups({ info }) {
+      info.group.tasks = info.tasks
+      this.groupsStack.push(info.group)
+
+      if (this.groupsStack.length === this.currBoard.groups.length) {
+        let boardToUpdate = JSON.parse(JSON.stringify(this.currBoard))
+        boardToUpdate.groups = this.groupsStack
+
+        this.$store.dispatch({
+          type: 'saveBoard',
+          board: boardToUpdate,
+        })
+
+        this.groupsStack = []
+      }
     },
     async addGroup(title) {
       try {
@@ -135,6 +177,7 @@ export default {
           type: 'addTask',
           groupId,
           task: { title: taskTitle },
+          board: this.currBoard,
         })
         this.showTaskForm = false
         showSuccessMsg('Task was added')
@@ -145,9 +188,6 @@ export default {
     },
     closeTaskForm() {
       this.showTaskForm = false
-    },
-    printGroupToConsole(group) {
-      console.log('Group msgs:', group.msgs)
     },
     handleCloseComponent() {
       this.toggleAddForm = false
@@ -166,6 +206,7 @@ export default {
   },
   directives: {
     clickOutside: clickOutsideDirective,
+    scrollHorizontal: scrollHorizontalDirective,
   },
 }
 </script>
@@ -175,6 +216,4 @@ export default {
   transform: rotate(3deg);
   /* box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); */
 }
-
-
 </style>

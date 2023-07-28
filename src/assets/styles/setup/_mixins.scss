@@ -77,3 +77,17 @@
     border-radius: 3px;
     color: $dynamic-text;
 }
+
+// scroll-bar mixin
+
+@mixin responsive-max-height($large: 156px, $extra-large: 50px) {
+    max-height: calc(100vh - 156px);
+
+    @media (min-width: 1024px) {
+        max-height: calc(100vh - #{$large});
+    }
+
+    @media (min-width: 1440px) {
+        max-height: calc(100vh - #{$extra-large});
+    }
+}
