@@ -1,215 +1,258 @@
-.task-all-page {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
+.task-back-drop {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
-    // overflow: scroll;
-    background-color: black;
-    opacity: 30%
-}
-
-.task-details {
-    z-index: 25;
-    position: fixed;
-    top: 48px;
-    left: 50%;
-    transform: translate(-50%, 0);
-
-    text-align: left;
-    // height: min(600px);
-    max-height: calc(100vh - 100px);
+    padding-top: 48px;
+    align-items: start;
     overflow-y: auto;
-    border-radius: 8px;
 
-    background-color: #F1F2F4;
-    color: #172b4d;
+    background-color: rgba(0, 0, 0, 0.3);
 
-    display: grid;
-    grid-template-columns: 552px 192px;
-    grid-template-rows: 70px 1fr;
+    .task-details {
+        z-index: 25;
+        position: absolute;
 
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+        width: 768px;
+        border-radius: 8px;
+        margin-bottom: 40px;
+        padding: 0;
 
-    button {
-        height: 32px;
-        border-radius: 5px;
-
-        background-color: #E4E6EA;
+        background-color: #F1F2F4;
         color: #172b4d;
         text-align: left;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+
+        display: grid;
+        grid-template-columns: 580px 188px;
+        grid-template-rows: 2;
+
+        button {
+            height: 32px;
+            border-radius: 5px;
+
+            background-color: #E4E6EA;
+            color: #172b4d;
+            text-align: left;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #D0D4DB;
+            }
+        }
+    }
+
+    .watchActive {
+        display: none;
+    }
+
+    .close-task-details {
+        z-index: 1;
+        position: absolute;
+        right: 20px;
+        top: 15px;
         cursor: pointer;
-
-        &:hover {
-            background-color: #D0D4DB;
-        }
-    }
-}
-
-.active {
-    display: none;
-}
-
-// grid
-.task-details-header {
-    grid-column: 1/-1;
-    grid-row: 1/2;
-    margin-left: 40px;
-
-    .task-in-list {
-        margin: -9px 0 0 10px;
     }
 
-    .group-ops {
-        text-decoration: underline;
-    }
-}
+    // grid
+    .task-details-header {
+        grid-column: 1/-1;
+        grid-row: 1/2;
 
-.task-details-main {
-    grid-column: 1/2;
-    grid-row: 2/3;
-    margin-left: 40px;
-
-    .task-alerts {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin: 25px 0 0 8px;
+        flex-direction: column;
+        padding: 0;
 
-        .btn-watch {
-            padding: 6px 12px;
-            transition-duration: 85ms;
+        .task-details-cover {
+            position: relative;
+            width: 100%;
+            height: 116px;
+            border-radius: 8px 8px 0 0;
+            background-color: green;
+            top: 0;
+            left: 0;
+
+            .span-cover {
+                position: absolute;
+                right: 20px;
+                bottom: 14px;
+                cursor: pointer;
+            }
         }
 
-        .toggle-show-details {
-            margin: 0 0 0 8px;
+        .coverActive {
+            display: none;
+        }
+
+        .task-details-under-cover {
+            position: relative;
+            margin-top: 0;
+
+            .deatils-title {
+                border: 0;
+                background-color: #F1F2F4;
+                width: 90%;
+                height: 40px;
+                font-size: 1.3rem;
+                // margin: 17px 0 0 11px; //with icon
+                margin: 17px 0 0 46px;
+                padding: 10px;
+
+                &:focus {
+                    box-shadow: inset 0 0 0 2px #388bff;
+                    background-color: white;
+                }
+            }
+
+            .task-in-list {
+                margin: -4px 0 0 59px;
+            }
+
+            .group-ops {
+                text-decoration: underline;
+            }
         }
     }
 
-    .details-title-small {
-        margin: 15px 0 0 5px;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 20px;
+    .task-details-main {
+        grid-column: 1/2;
+        grid-row: 2/3;
+        margin-left: 40px;
 
-        &:nth-child(1) {
-            margin: 0 0 0 5px;
+        .task-alerts {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 25px 0 0 8px;
+
+            .btn-watch {
+                padding: 6px 12px;
+                transition-duration: 85ms;
+            }
+
+            .toggle-show-details {
+                margin: 0 0 0 8px;
+            }
+        }
+
+        .details-title-small {
+            margin: 15px 0 0 5px;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 20px;
+
+            &:nth-child(1) {
+                margin: 0 0 0 5px;
+            }
+        }
+
+        .details-title-big {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 20px;
+            // margin: 0 0 4px 0px;
+            margin: 17px 0 -9px 12px;
+            min-height: 32px;
+            padding: 8px 0;
         }
     }
 
-    .details-title-big {
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 20px;
-        margin: 0 0 4px 0px;
-        min-height: 32px;
-        padding: 8px 0;
-    }
-}
+    .action-btns-container {
+        grid-column: 2/3;
+        grid-row: 2/3;
 
-.action-btns-container {
-    grid-column: 2/3;
-    grid-row: 2/3;
-
-    display: flex;
-    flex-direction: column;
-    padding: 0 16px 8px 8px;
-
-    h3.details-title-small {
-        margin: 15px 0 0 5px;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 20px;
-
-        &:nth-child(1) {
-            margin: 0 0 0 5px;
-        }
-    }
-
-    button {
-        border: none;
-        white-space: nowrap;
-        border-radius: 3px;
-        box-shadow: none;
-        box-sizing: border-box;
-        height: 32px;
-        margin: 8px 20px 0 0;
-        width: 168px;
+        display: flex;
+        flex-direction: column;
         padding: 0 16px 8px 8px;
-        max-width: 300px;
-        padding: 6px 12px;
+
+        h3.details-title-small {
+            margin: 15px 0 0 5px;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 20px;
+
+            &:nth-child(1) {
+                margin: 0 0 0 5px;
+            }
+        }
+
+        button {
+            border: none;
+            white-space: nowrap;
+            border-radius: 3px;
+            box-shadow: none;
+            box-sizing: border-box;
+            height: 32px;
+            margin: 8px 20px 0 0;
+            width: 168px;
+            padding: 0 16px 8px 8px;
+            max-width: 300px;
+            padding: 6px 12px;
+            text-decoration: none;
+            text-overflow: ellipsis;
+            transition-duration: 85ms;
+            transition-property: background-color, border-color, box-shadow;
+            transition-timing-function: ease;
+            user-select: none;
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+
+    .details-title:hover,
+    .details-description:hover {
+        background-color: #D0D4DB;
+    }
+
+    .details-description {
+        width: 100%;
+        height: 60px;
+        border: none;
+        border-radius: 3px;
+        margin: 17px 0 4px 12px;
+        padding: 8px 12px;
+        background-color: #E4E6EA;
+        ;
         text-decoration: none;
-        text-overflow: ellipsis;
-        transition-duration: 85ms;
-        transition-property: background-color, border-color, box-shadow;
-        transition-timing-function: ease;
-        user-select: none;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
         font-size: 14px;
         font-weight: 400;
+        text-decoration: none;
+        line-height: 20px;
+
+        &:focus {
+            min-height: 100px;
+            background-color: white;
+        }
     }
-}
 
-.deatils-title {
-    border: 0;
-    background-color: #F1F2F4;
-    width: 90%;
-    height: 40px;
-    font-size: 1.3rem;
-    margin: 8px 0 0 -4px;
-    padding: 10px;
-
-    &:focus {
-        box-shadow: inset 0 0 0 2px #388bff;
-        background-color: white;
+    .activity-show-details {
+        display: flex;
+        justify-content: space-between;
     }
-}
 
-
-.details-title:hover,
-.details-description:hover {
-    background-color: #D0D4DB;
-}
-
-.details-description {
-    width: 100%;
-    height: 60px;
-    border: none;
-    border-radius: 3px;
-    padding: 8px 12px;
-    background-color: #E4E6EA;
-    ;
-    text-decoration: none;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-
-    &:focus {
-        min-height: 100px;
-        background-color: white;
+    .details-activity-comment {
+        outline: none;
+        border: none;
+        width: 100%;
+        height: 40px;
+        border-radius: 8px;
+        box-shadow: 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
+        border: none;
+        font-size: 14px;
+        line-height: 20px;
+        padding: 8px 12px;
     }
-}
 
-.activity-show-details {
-    display: flex;
-    justify-content: space-between;
-}
+    .task-detail button {
+        margin: 0;
+    }
 
-.details-activity-comment {
-    outline: none;
-    border: none;
-    width: 100%;
-    height: 40px;
-    border-radius: 8px;
-    box-shadow: 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
-    border: none;
-    font-size: 14px;
-    line-height: 20px;
-    padding: 8px 12px;
-}
-
-.task-detail button {
-    margin: 0;
 }
 
 // --ds-background-neutral: #091E420F;
