@@ -31,11 +31,12 @@ export function getActionAddBoardMsg(boardId) {
 export const boardStore = {
   state: {
     boards: [],
+    recentBoards: [],
     currentBoard: null,
     savedBoard: null,
     currentGroup: null,
     currentTask: null,
-    filterBy: ''
+    filterBy: '',
   },
   getters: {
     boards({ boards }) {
@@ -46,8 +47,10 @@ export const boardStore = {
     },
     filteredBoards({ boards, filterBy }) {
       const byName = new RegExp(filterBy, "i")
-      return boards.filter(board => !board.isStarred &&
-        byName.test(board.title))
+      return boards.filter(board => byName.test(board.title))
+    },
+    recentBoards({ recentBoards }) {
+      return recentBoards
     },
     savedBoard({ savedBoard }) {
       return savedBoard
@@ -117,6 +120,14 @@ export const boardStore = {
     setCurrTask(state, { task }) {
       state.currentTask = task
     },
+    saveBoardToRecent(state, { board }) {
+      if (state.recentBoards.length >= 3) {
+        state.recentBoards.splice(0, 1, board)
+      } else {
+        state.recentBoards.push(board)
+      }
+    },
+
     // EDIT or ADD task
     setTask(state, { groupId, task }) {
       if (state.currentGroup) groupId = state.currentGroup._id
@@ -235,6 +246,19 @@ export const boardStore = {
         throw err
       }
     },
+    async addBoardToRecent({ commit, state }, { boardId }) {
+      try {
+        const isBoardInRecent = state.recentBoards.some(board => board._id === boardId);
+        if (isBoardInRecent) return
+    
+        const board = await boardService.getById(boardId);
+        commit({ type: 'saveBoardToRecent', board });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    
+
 
     async setTask({ commit, state, dispatch }, { groupId, task }) {
       try {

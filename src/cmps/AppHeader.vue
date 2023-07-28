@@ -1,13 +1,14 @@
 <template>
-
   <header>
     <nav>
-      <RouterLink to="/board">
-        <div class="logo">
-          <i class="fa fa-trello"></i>
-          <h2>Trello</h2>
-        </div>
-      </RouterLink>
+      <div class="logo-container">
+        <RouterLink to="/board">
+          <div class="logo">
+            <i class="fa fa-trello"></i>
+            <h2>Trello</h2>
+          </div>
+        </RouterLink>
+      </div>
 
       <div class="create">
         <Popper arrow placement="right">
@@ -17,23 +18,12 @@
           </template>
         </Popper>
       </div>
-    </nav>
-    <div class="actions">
-      <BoardFilter @filterByTxt="filterByTxt" />
 
-      <div class="loggedin-user">
-        <h2>SZ</h2>
+      <div class="filter">
+        <BoardFilter @filterByTxt="filterByTxt" />
       </div>
-    </div>
-
-    <!-- <RouterLink :to="`/user/${loggedInUser._id}`">
-      {{ loggedInUser.fullname }}
-    </RouterLink> -->
-    <!-- <RouterLink to="/login">Login / Signup</RouterLink> -->
-    <!-- <section class="loggedin-user" v-if="loggedInUser"> -->
-    <!-- <span>{{ loggedInUser.score?.toLocaleString() }}</span> -->
-    <!-- <img :src="loggedInUser.imgUrl" /> -->
-    <!-- </section> -->
+      
+    </nav>
   </header>
 </template>
 <script>
@@ -46,9 +36,7 @@ import Popper from "vue3-popper";
 
 export default {
   data() {
-    return {
-     
-    };
+    return {};
   },
   methods: {
     async saveBoard(board) {

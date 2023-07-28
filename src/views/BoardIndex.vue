@@ -1,13 +1,20 @@
 <template>
   <section class="board-container">
+    <div v-if="starredBoards.length > 0" class="starred">
+      <h2 class="title">Starred boards</h2>
+      <BoardList @star="starBoard" :boards="starredBoards" />
+    </div>
+
+
+    <div v-if="recentBoards.length > 0" class="recent">
+      <h2 class="title">Recently viewed</h2>
+      <BoardList @star="starBoard" :boards="recentBoards" />
+    </div>
+
     <h3>Your workspace</h3>
     <div class="workspace">
-      <div class="your">
-        <BoardList
-          :boards="filteredBoards"
-          @remove="removeBoard"
-          @star="starBoard"
-        />
+      <div>
+        <BoardList :boards="boards" @remove="removeBoard" @star="starBoard" />
       </div>
 
       <div class="create-board">
@@ -18,19 +25,17 @@
           </template>
         </Popper>
       </div>
+      
     </div>
 
-    <div v-if="starredBoards.length > 0" class="stared">
-      <h2 class="title">Starred boards</h2>
-      <BoardList @star="starBoard" :boards="starredBoards" />
+    <div class="member-icon">
     </div>
   </section>
-
 </template>
 
 <script>
 import BoardList from "../cmps/BoardList.vue";
-import AddBoard from "../cmps/AddBoard.vue";
+import AddBoard from "../cmps/Addboard.vue"
 
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";
@@ -39,7 +44,8 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
 export default {
   data() {
-    return {};
+    return {
+    };
   },
 
   created() {},
@@ -93,6 +99,9 @@ export default {
     },
     filteredBoards() {
       return this.$store.getters.filteredBoards;
+    },
+    recentBoards() {
+      return this.$store.getters.recentBoards;
     },
   },
   components: {
