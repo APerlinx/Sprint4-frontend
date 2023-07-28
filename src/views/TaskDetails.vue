@@ -4,7 +4,7 @@
     <!-- <section class="task-details" v-if="taskToEdit"> -->
     <section v-if="taskToEdit" class="task-details">
         <section class="task-details-header">
-            <input type="text" class="deatils-title" v-model="taskToEdit.title">
+            <input type="text" class="deatils-title" v-model="taskToEdit.title" @blur="onTaskEdit">
             <!-- placeholder="COOSssssEMEK" -->
             <button @click="closeModal">X</button>
             <p class="task-in-list">in list <span class="group-ops">{{ group.title }}</span><span
@@ -37,9 +37,9 @@
                 <div v-if="hideBtn">
                     <div class="btn-save-close">
                         <button>
-                            <form @submit.prevent="save">
+                            <button @click.stop="onTaskEdit">
                                 Save
-                            </form>
+                            </button>
                         </button>
                         <button @click="closeTodoTitle">Cancel</button>
                     </div>
@@ -59,25 +59,27 @@
 
         </section>
 
-        <section class="btns-container">
+        <section class="action-btns-container">
+            <DynamicModal v-if="isDynamicModalOpen" />
+
             <h3 class="details-title-small">Suggested</h3>
-            <button>Join</button>
+            <button @click="toggleOpenModal">Join</button>
 
             <h3 class="details-title-small">Add To card</h3>
-            <button>Members</button>
-            <button>Labels</button>
-            <button @click="setChecklist">Checklist</button>
-            <button>Dates</button>
-            <button>Attachments</button>
-            <button>Cover</button>
-            <button>Custom Fields</button>
+            <button @click="toggleOpenModal">Members</button>
+            <button @click="toggleOpenModal">Labels</button>
+            <button @click="toggleOpenModal">Checklist</button>
+            <button @click="toggleOpenModal">Dates</button>
+            <button @click="toggleOpenModal">Attachments</button>
+            <button @click="toggleOpenModal">Cover</button>
+            <button @click="toggleOpenModal">Custom Fields</button>
 
             <h3 class="details-title-small">Actions</h3>
-            <button>Move</button>
-            <button>Copy</button>
-            <button>Make template</button>
-            <button>Archive</button>
-            <button>Share</button>
+            <button @click="toggleOpenModal">Move</button>
+            <button @click="toggleOpenModal">Copy</button>
+            <button @click="toggleOpenModal">Make template</button>
+            <button @click="toggleOpenModal">Archive</button>
+            <button @click="toggleOpenModal">Share</button>
         </section>
     </section>
 </template>
@@ -100,6 +102,7 @@ export default {
             isWatch: false,
             watch: 'Watch',
             actionType: null,
+            isDynamicModalOpen: false,
 
         }
     },
@@ -127,6 +130,17 @@ export default {
             this.isWatch = !this.isWatch
             console.log("🚀 ~ file: TaskDetails.vue:131 ~ toggleWatch ~ this.isWatch:", this.isWatch)
             this.watch = this.isWatch ? 'Watching' : 'Watch'
+            this.onTaskEdit
+        },
+        toggleOpenModal() {
+            // need to check if the specific action-btn that clicked, is the last clicked button. => Y? close modal. N? open the modal with new content from the other action-btn.
+
+            this.isDynamicModalOpen = !this.isDynamicModalOpen
+
+        },
+        closeModal() {
+            this.actionCmpType = null
+            this.actionCmpInfo = null
         },
         setChecklist() {
             (this.actionType = 'checklist'),
@@ -135,7 +149,11 @@ export default {
         closeModal() {
             this.$router.back();
 
-        }
+        },
+        onTaskEdit() {
+            console.log('edit')
+            this.$emit('editedTask', JSON.parse(JSON.stringify(this.taskToEdit)));
+        },
     },
     computed: {
     },

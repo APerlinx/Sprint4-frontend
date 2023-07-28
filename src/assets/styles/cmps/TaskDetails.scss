@@ -76,26 +76,6 @@
         align-items: center;
         margin: 25px 0 0 8px;
 
-        // .details-members {
-        //     display: block;
-        //     float: left;
-        //     margin: 0 20px 4px 0;
-        //     max-width: 100%;
-
-        //     .btn-member {
-        //         width: 32px;
-        //         border-radius: 50%;
-        //         background-color: rgb(79, 138, 228);
-        //         margin: 0px 4px 4px 0;
-        //         padding: 0;
-        //         text-align: center;
-
-        //         .member-img {
-        //             aspect-ratio: auto 30 / 30;
-        //         }
-        //     }
-        // }
-
         .btn-watch {
             padding: 6px 12px;
             transition-duration: 85ms;
@@ -127,7 +107,7 @@
     }
 }
 
-.btns-container {
+.action-btns-container {
     grid-column: 2/3;
     grid-row: 2/3;
 

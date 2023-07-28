@@ -117,19 +117,20 @@ export const boardStore = {
     setCurrTask(state, { task }) {
       state.currentTask = task
     },
+    // EDIT or ADD task
     setTask(state, { groupId, task }) {
-      if (state.currentGroup) groupId = state.currentGroup._id;
+      if (state.currentGroup) groupId = state.currentGroup._id
       const groupIdx = state.currentBoard.groups.findIndex(
         group => group._id === groupId
-      );
+      )
       if (task._id) {
         const taskIdx = state.currentBoard.groups[groupIdx].tasks.findIndex(
           currTask => currTask._id === task._id
-        );
-        state.currentBoard.groups[groupIdx].tasks.splice(taskIdx, 1, task);
+        )
+        state.currentBoard.groups[groupIdx].tasks.splice(taskIdx, 1, task)
       } else {
-        task._id = utilService.makeId();
-        state.currentBoard.groups[groupIdx].tasks.push(task);
+        task._id = utilService.makeId()
+        state.currentBoard.groups[groupIdx].tasks.push(task)
       }
     },
     removeTask(state, { task }) {

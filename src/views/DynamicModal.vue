@@ -1,14 +1,14 @@
 <template>
-    <div class="dynamic-modal">
+    <div class="dynamic-modal-container">
         <section>
-            <h4>one of the btns</h4>
-            <span @click="$emit('closeModal')">X</span>
+            <h4 class="action-modal-title">one of the btns</h4>
+            <span class="action-modal-close" @click="$emit('onClose')">X</span>
         </section>
 
         <section>
-            <component :is="cmp.type" :info="cmp.info" @set-val="setAns($event, idx)">
-                <!-- need to watch day38 recording again -->
-            </component>
+            <!-- <component :is="actionCmp.type" :info="actionCmp.info" @set-val="setAns($event, idx)"> -->
+            <!-- need to watch day38 recording again -->
+            <!-- </component> -->
         </section>
     </div>
 </template>
