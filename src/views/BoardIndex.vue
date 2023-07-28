@@ -1,6 +1,4 @@
 <template>
-  
-  <div class="overlay" v-if="isAddBoard" @click="isAddBoard = false"></div>
   <section class="board-container">
     <h3>Your workspace</h3>
     <div class="workspace">
@@ -16,7 +14,7 @@
         <Popper arrow placement="right">
           <div class="title">Create new board</div>
           <template #content>
-            <AddBoard @close="closeModal" @save="saveBoard" />
+            <AddBoard @save="saveBoard" />
           </template>
         </Popper>
       </div>
@@ -27,6 +25,7 @@
       <BoardList @star="starBoard" :boards="starredBoards" />
     </div>
   </section>
+
 </template>
 
 <script>
@@ -40,9 +39,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
 export default {
   data() {
-    return {
-      isAddBoard: false,
-    };
+    return {};
   },
 
   created() {},
@@ -56,9 +53,9 @@ export default {
         showErrorMsg("Cant delete borad");
       }
     },
-    closeModal() {
-      this.isAddBoard = false;
-    },
+    // closeModal() {
+    //   this.isAddBoard = false;
+    // },
 
     async starBoard(board) {
       try {

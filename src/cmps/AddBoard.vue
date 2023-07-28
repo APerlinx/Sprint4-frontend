@@ -6,15 +6,19 @@
       <div @click="closeModal" class="close">x</div>
     </div>
 
-    <!-- <div class="board-layout">layout exemple</div> -->
+    <div class="board-layout" :style="{ background: preview }">
+      <img
+        src="https://workflow-g0zq.onrender.com/static/media/board-preview-skeleton.14cda5dc635d1f13bc4828f5113d1e86.svg"/>
+    </div>
 
-    <!-- <div class="bg-picker">
-      <h6 class="title">Background</h6>
-      <div class="bg-img"></div>
-      <div class="bg-color"></div>
-    </div> -->
+    <h6 class="background-title">Background</h6>
+    <div class="img-picker">
+      <ImgPicker @setBgImg="setBgImg" />
+    </div>
 
-   
+    <div class="bg-picker">
+      <ColorPicker @setBgColor="setBgColor" />
+    </div>
 
     <div class="add-board-input">
       <h2>Board title <span>*</span></h2>
@@ -36,13 +40,15 @@
 
 <script>
 import { boardService } from "../services/board.service.local";
-
+import ColorPicker from "../cmps/ColorPicker.vue";
+import ImgPicker from "../cmps/ImgPicker.vue";
 
 export default {
   data() {
     return {
       isTitle: false,
       boardToEdit: boardService.getEmptyBoard(),
+      preview: "",
     };
   },
   methods: {
@@ -53,13 +59,33 @@ export default {
     closeModal() {
       this.$emit("close");
     },
+    setBgColor(color) {
+      this.preview = color;
+      this.boardToEdit.bgColor = color;
+    },
+    setBgImg(img) {
+      this.preview = img;
+      this.boardToEdit.imgUrl = img;
+    },
   },
   computed: {
     titleLength() {
       return this.boardToEdit.title.length;
     },
-    components: {
+    imgUrl() {
+      return `url(${this.preview})` || "";
     },
+  },
+  components: {
+    ColorPicker,
+    ImgPicker,
   },
 };
 </script>
+<style>
+.board-layout {
+  background: v-bind(imgUrl);
+  background-position: center;
+  background-size: cover;
+}
+</style>

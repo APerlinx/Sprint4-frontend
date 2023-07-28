@@ -31,6 +31,39 @@
     padding: 1em;
     background-size: cover;
 }
+@mixin modal {
+    display: flex;
+    flex-direction: column;
+    width: em(304, 14);
+    border-radius: em(8, 14);
+    color: $clr2;
+    background-color: white;
+    padding: em(16, 14) em(12, 14);
+    border: 0.3px solid rgba(128, 128, 128, 0.186);
+    box-shadow: 0 0 10px rgba(128, 128, 128, 0.144);
+    cursor: default;
+
+    .title {
+        font-size: rem(14px);
+        font-weight: 600;
+        color: $lclr1;
+    }
+    .action {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+@mixin imgPosition {
+    background-size: cover;
+    background-position: center;
+}
+@mixin pallete {
+    display: flex;
+    justify-content: space-between;
+    height: rem(40px);
+    padding: 0;
+}
 
 /* Media  Mixins */
 @mixin aspect-ratio($width, $height) {

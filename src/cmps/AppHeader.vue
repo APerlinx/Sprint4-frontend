@@ -1,5 +1,4 @@
 <template>
-  <div class="overlay" v-if="isAddBoard" @click="isAddBoard = false"></div>
 
   <header>
     <nav>
@@ -48,7 +47,7 @@ import Popper from "vue3-popper";
 export default {
   data() {
     return {
-      isAddBoard: false,
+     
     };
   },
   methods: {

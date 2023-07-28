@@ -1,0 +1,46 @@
+.color-pallte {
+  display: flex;
+  justify-content: space-between;
+  height: rem(32px);
+  padding: 0;
+
+  & :hover {
+    background-color: 0 0 10px black;
+  }
+
+  & > * {
+    border-radius: rem(3px);
+    width: rem(40px);
+    cursor: pointer;
+  }
+
+  .green {
+    background: linear-gradient(328deg, rgba(9, 55, 118, 1) 0%, rgba(159, 226, 17, 1) 100%);
+  }
+  .blue {
+    background: linear-gradient(328deg, rgba(9, 55, 118, 1) 0%, rgba(17, 107, 226, 1) 100%);
+  }
+  .dark-blue {
+    background: linear-gradient(328deg, rgba(11, 97, 216, 1) 0%, rgba(9, 55, 118, 1) 100%);
+  }
+  .dark-purple {
+    background: linear-gradient(328deg, rgba(121, 96, 196, 1) 0%, rgba(25, 52, 111, 1) 100%);
+  }
+  .purple {
+    background: linear-gradient(328deg, rgba(121, 96, 196, 1) 0%, rgba(219, 115, 189, 1) 100%);
+  }
+  .unique {
+    background: rgb(231, 231, 231);
+    position: relative;
+
+    &::after {
+      content: "•••";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1rem;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
