@@ -1,7 +1,7 @@
 .dynamic-modal-container {
     position: fixed;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     z-index: 99;
     border-radius: 10px;
     -webkit-box-shadow: 0 0 4px lightgrey;
@@ -25,16 +25,22 @@
     font-weight: 400;
     line-height: 20px;
 
-    .dynamic-modal-title {
-        box-shadow: none;
-        height: 30px;
-    }
-
-    .dynamic-modal-close {
+    .dynamic-modal-container {
         display: flex;
-        flex-direction: column;
-        position: relative;
-        // margin-left: 280px;
-        cursor: pointer;
+        flex-direction: row;
+
+        .dynamic-modal-title {
+            box-shadow: none;
+            height: 30px;
+            text-align: center;
+        }
+
+        .dynamic-modal-close {
+            // display: flex;
+            // flex-direction: column;
+            position: relative;
+            // margin-left: 280px;
+            cursor: pointer;
+        }
     }
 }

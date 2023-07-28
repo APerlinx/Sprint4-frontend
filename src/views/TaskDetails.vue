@@ -68,26 +68,29 @@
             </section>
 
             <section class="action-btns-container">
-                <DynamicModal v-if="isDynamicModalOpen" />
+                <!-- <DynamicModal v-if="isDynamicModalOpen" /> -->
+                <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                    :actionCmpName="actionCmpName" @closeDynamicModal="close" @checklist="addChecklist" />
+
 
                 <h3 class="details-title-small">Suggested</h3>
-                <button @click="toggleOpenModal">Join</button>
+                <button>Join</button>
 
                 <h3 class="details-title-small">Add To card</h3>
-                <button @click="toggleOpenModal">Members</button>
-                <button @click="toggleOpenModal">Labels</button>
-                <button @click="toggleOpenModal">Checklist</button>
-                <button @click="toggleOpenModal">Dates</button>
-                <button @click="toggleOpenModal">Attachments</button>
-                <button @click="toggleOpenModal(); togglecover();">Cover</button>
-                <button @click="toggleOpenModal">Custom Fields</button>
+                <button @click="setMembers">Members</button>
+                <button>Labels</button>
+                <button @click="setChecklist">Checklist</button>
+                <button>Dates</button>
+                <button>Attachments</button>
+                <button @click="togglecover">Cover</button>
+                <button>Custom Fields</button>
 
                 <h3 class="details-title-small">Actions</h3>
-                <button @click="toggleOpenModal">Move</button>
-                <button @click="toggleOpenModal">Copy</button>
-                <button @click="toggleOpenModal">Make template</button>
-                <button @click="toggleOpenModal">Archive</button>
-                <button @click="toggleOpenModal">Share</button>
+                <button>Move</button>
+                <button>Copy</button>
+                <button>Make template</button>
+                <button>Archive</button>
+                <button>Share</button>
             </section>
         </section>
     </div>
@@ -97,6 +100,7 @@
 
 import DynamicModal from "./DynamicModal.vue"
 import Checklist from "../cmps/Checklist.vue"
+// import ChecklistModal from "../cmps/taskDeatilsOpts/ChecklistModal.vue"
 import Members from "../cmps/Members.vue"
 import { boardService } from "../services/board.service.local.js"
 
@@ -110,8 +114,9 @@ export default {
             hideBtn: false,
             isWatchActive: false,
             watch: 'Watch',
-            // actionType: null,
-            isDynamicModalOpen: false,
+            // isDynamicModalOpen: true,
+            actionCmpType: null,
+            actionCmpName: null,
             isCoverActive: false,
 
         }
@@ -120,6 +125,24 @@ export default {
         this.setTask()
     },
     methods: {
+        setChecklist() {
+            this.actionCmpType = 'ChecklistModal'
+            this.actionCmpName = 'Add checklist'
+
+            console.log('setChecklist')
+            console.log('actionCmpType:', this.actionCmpType)
+            console.log('actionCmpInfo:', this.actionCmpName)
+        },
+        setMembers() {
+            this.actionCmpType = 'MembersModal'
+            this.actionCmpName = 'Members'
+        },
+        addChecklist() {
+            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
+            this.taskToEdit.checklists.push(item.item)
+            console.log('item.item:', item.item)
+            this.closePopup()
+        },
         async setTask() {
             try {
                 const boardId = this.$route.params.boardId
@@ -139,21 +162,17 @@ export default {
             this.isWatchActive = !this.isWatchActive
             this.watch = this.isWatchActive ? 'Watching' : 'Watch'
         },
-        toggleOpenModal() {
-            // need to check if the specific action-btn that clicked, is the last clicked button. => Y? close modal. N? open the modal with new content from the other action-btn.
-            this.isDynamicModalOpen = !this.isDynamicModalOpen
-        },
+        // toggleOpenModal() {
+        //     // need to check if the specific action-btn that clicked, is the last clicked button. => Y? close modal. N? open the modal with new content from the other action-btn.
+        //     this.isDynamicModalOpen = !this.isDynamicModalOpen
+        // },
         togglecover() {
             this.isCoverActive = !this.isCoverActive
         },
-        closeModal() {
-            (this.actionCmpType = null),
-                (this.actionCmpInfo = null)
-        },
-        setChecklist() {
-            (this.actionType = 'checklist'),
-                (this.actionInfo = { name: "checklist" })
-        },
+        // close() {
+        //     (this.actionCmpType = null),
+        //         (this.actionCmpInfo = null)
+        // },
         closeModal() {
             this.$router.back()
 
@@ -177,6 +196,7 @@ export default {
         DynamicModal,
         Checklist,
         Members,
+        // ChecklistModal,
     },
 }
 

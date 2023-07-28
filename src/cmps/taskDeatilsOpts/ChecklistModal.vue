@@ -1,16 +1,19 @@
 <template>
     <section class="modal-checklist">
-        <label>Title</label>
-        <input type="text" v-model="checkListTitle" placeholder="Checklist" v-focus />
+        <h5></h5>
+        <label for="checklist-input">Title</label>
+        <input type="text" v-model="checklistTitle" placeholder="Checklist" v-focus id="checklist-input" />
         <button class="add-checklist" @click="addCheckList">Add</button>
     </section>
 </template>
 
 <script>
+
+
 export default {
     data() {
         return {
-            checklistTitle: 'Checklist'
+            checklistTitle: ''
         }
     },
     methods: {
@@ -22,7 +25,7 @@ export default {
                 title: this.checklistTitle,
                 todos: []
             }
-            this.$emit('addTaskOpt', { type: 'checklist', info: currChecklist });
+            this.$emit('addChecklist', { type: 'checklist', info: currChecklist });
         }
     }
 }

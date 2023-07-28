@@ -1,32 +1,45 @@
 <template>
     <div class="dynamic-modal-container">
-        <section>
-            <h4 class="dynamic-modal-title">one of the btns</h4>
-            <span class="dynamic-modal-close" @click="$emit('onClose')">X</span>
+        <section class="dynamic-modal-header">
+            <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
+            <span class="dynamic-modal-close" @click="closeModal">X</span>
         </section>
 
         <section>
-            <!-- <component :is="actionCmp.type" :info="actionCmp.info" @set-val="setAns($event, idx)"> -->
-            <!-- need to watch day38 recording again -->
-            <!-- </component> -->
+            <component v-if="actionCmpType" :is="actionCmpType" @member="addMember" @cheklist="addChecklist">
+            </component>
         </section>
     </div>
 </template>
 
 <script>
-// import Checklist from "../cmps/taskDeatilsOpts/CheckList.vue"
+import ChecklistModal from "../cmps/taskDeatilsOpts/ChecklistModal.vue"
+// import MembersModal from "../cmps/taskDeatilsOpts/MembersModal.vue"
 
 export default {
     props: {
-        // need to get same props
+        task: Object,
+        actionCmpType: String,
+        actionCmpName: String,
+    },
+    data() {
+        return {
+        }
     },
     methods: {
         closeModal() {
+            console.log('task:', this.task)
             this.$emit("closeModal")
         },
+        addMember() {
+
+        },
+        addChecklist() {
+            this.$emit('addChecklist', checklist)
+        }
     },
     components: {
-        // Checklist,
+        ChecklistModal,
     }
 }
 </script>
