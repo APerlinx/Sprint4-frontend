@@ -5,15 +5,16 @@
             <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                 @focus="hideBtn = false"></textarea>
 
-            <button class="btn-checklist-hide-show" v-if="isTodoChecked && hideBtn" @click="isHideChecked = !isHideChecked">
+            <button class="btn btn-checklist-hide-show" v-if="isTodoChecked && hideBtn"
+                @click="isHideChecked = !isHideChecked">
                 {{ hideCheckedTxt }}</button>
             <div v-if="!hideBtn" class="btn-save-close">
-                <button @click.stop="onTaskEdit">
+                <button class="btn" @click.stop="onTaskEdit">
                     Save
                 </button>
-                <button @click="closeTodoTitle">Cancel</button>
+                <button class="btn" @click="closeTodoTitle">Cancel</button>
             </div>
-            <button v-if="hideBtn" @click="deleteChecklist">Delete</button>
+            <button class="btn" v-if="hideBtn" @click="deleteChecklist">Delete</button>
         </section>
 
         <section class="percentage-bar">
@@ -29,7 +30,7 @@
                     <textarea class="todo-title" v-model="todo.title" @blur="hideTodoBtn = false"
                         @focus="hideTodoBtn = true"></textarea>
                     <div v-if="hideTodoBtn">
-                        <button class="btn-save-close" @click="updateTask">
+                        <button class="btn btn-save-close" @click="updateTask">
                             save
                         </button>
                     </div>

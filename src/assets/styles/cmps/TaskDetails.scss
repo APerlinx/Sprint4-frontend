@@ -32,7 +32,7 @@
         grid-template-columns: 580px 188px;
         grid-template-rows: 2;
 
-        button {
+        .btn {
             height: 32px;
             border-radius: 5px;
 
@@ -181,7 +181,7 @@
             }
         }
 
-        button {
+        .btn {
             border: none;
             white-space: nowrap;
             border-radius: 3px;

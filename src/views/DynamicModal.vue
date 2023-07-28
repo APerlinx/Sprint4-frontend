@@ -18,7 +18,7 @@ import ChecklistModal from "../cmps/taskDeatilsOpts/ChecklistModal.vue"
 
 export default {
     props: {
-        task: Object,
+        taskToEdit: Object,
         actionCmpType: String,
         actionCmpName: String,
     },
@@ -28,14 +28,14 @@ export default {
     },
     methods: {
         closeModal() {
-            console.log('task:', this.task)
-            this.$emit("closeModal")
+            this.isDynamicModalClose = !this.isDynamicModalClose
         },
         addMember() {
 
         },
         addChecklist() {
-            this.$emit('addChecklist', checklist)
+            this.$emit('addChecklist', newChecklist)
+            console.log('newChecklist:', newChecklist)
         }
     },
     components: {

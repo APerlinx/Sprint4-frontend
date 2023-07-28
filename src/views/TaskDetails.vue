@@ -14,7 +14,6 @@
 
                 <div class="task-details-under-cover">
                     <input type="text" class="deatils-title" v-model="taskToEdit.title">
-                    <!-- placeholder="COOSssssEMEK" -->
                     <p class="task-in-list">in list <span class="group-ops">{{ group.title }}</span><span
                             :class="{ watchActive: !isWatchActive }"> i-eye</span></p>
                 </div>
@@ -27,14 +26,14 @@
 
                     <div class="details-notification">
                         <h5>Notifications</h5>
-                        <button class="btn-watch" @click="toggleWatch">{{ watch }}</button>
+                        <button class="btn btn-watch" @click="toggleWatch">{{ watch }}</button>
                     </div>
 
                     <div class="task-due-date">
                         <h5>Due-date</h5>
                         <input type="checkbox" @change="updateTask" />
                         <!-- v-model="dueDate.isChecked" -->
-                        <button class="btn-due-date" @click="openCalender">
+                        <button class="btn btn-due-date" @click="openCalender">
                             need to add date lib</button>
                     </div>
                 </div>
@@ -45,11 +44,11 @@
                         placeholder="Add a more detailed description..." class="details-description"></textarea>
                     <div v-if="hideBtn">
                         <div class="btn-save-close">
-                            <button>
+                            <button class="btn">
                                 Save
                             </button>
                             <!-- @click.stop="onTaskEdit" -->
-                            <button @click="closeTodoTitle">Cancel</button>
+                            <button class="btn" @click="closeTodoTitle">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -59,7 +58,7 @@
                 <div class="details-activity">
                     <div class="activity-show-details">
                         <h3 class="details-title-big">Activity</h3>
-                        <button class="toggle-show-details">Show details</button>
+                        <button class="btn toggle-show-details">Show details</button>
                     </div>
                     <input type="text" class="details-activity-comment" placeholder='Write a comment...'>
                 </div>
@@ -70,27 +69,27 @@
             <section class="action-btns-container">
                 <!-- <DynamicModal v-if="isDynamicModalOpen" /> -->
                 <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
-                    :actionCmpName="actionCmpName" @closeDynamicModal="close" @checklist="addChecklist" />
+                    :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist" />
 
 
                 <h3 class="details-title-small">Suggested</h3>
-                <button>Join</button>
+                <button class="btn">Join</button>
 
                 <h3 class="details-title-small">Add To card</h3>
-                <button @click="setMembers">Members</button>
-                <button>Labels</button>
-                <button @click="setChecklist">Checklist</button>
-                <button>Dates</button>
-                <button>Attachments</button>
-                <button @click="togglecover">Cover</button>
-                <button>Custom Fields</button>
+                <button class="btn" @click="setMembers">Members</button>
+                <button class="btn">Labels</button>
+                <button class="btn" @click="setChecklist">Checklist</button>
+                <button class="btn">Dates</button>
+                <button class="btn">Attachments</button>
+                <button class="btn" @click="togglecover">Cover</button>
+                <button class="btn">Custom Fields</button>
 
                 <h3 class="details-title-small">Actions</h3>
-                <button>Move</button>
-                <button>Copy</button>
-                <button>Make template</button>
-                <button>Archive</button>
-                <button>Share</button>
+                <button class="btn">Move</button>
+                <button class="btn">Copy</button>
+                <button class="btn">Make template</button>
+                <button class="btn">Archive</button>
+                <button class="btn">Share</button>
             </section>
         </section>
     </div>
@@ -139,9 +138,18 @@ export default {
         },
         addChecklist() {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
-            this.taskToEdit.checklists.push(item.item)
-            console.log('item.item:', item.item)
-            this.closePopup()
+            this.taskToEdit.checklists.push(newChecklist)
+            console.log('addChecklist - newChecklist:', newChecklist)
+            // this.closeDynamicModal()
+        },
+        updateItem({ type, val }) {
+            if (type === 'checklists') {
+                const checklists = this.taskToEdit.checklists;
+                const idx = checklists.findIndex((checklist) => checklist._id === val._id);
+                if (val.title) checklists.splice(idx, 1, val); // edit
+                else checklists.splice(idx, 1); // deletion
+            } else this.taskToEdit[type] = val;
+            this.editTask();
         },
         async setTask() {
             try {
@@ -169,10 +177,10 @@ export default {
         togglecover() {
             this.isCoverActive = !this.isCoverActive
         },
-        // close() {
-        //     (this.actionCmpType = null),
-        //         (this.actionCmpInfo = null)
-        // },
+        closeDynamicModal() {
+            this.actionCmpType = null
+            this.actionCmpName = null
+        },
         closeModal() {
             this.$router.back()
 
