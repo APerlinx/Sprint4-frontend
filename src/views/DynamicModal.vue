@@ -41,7 +41,7 @@ export default {
         },
     },
     components: {
-        ChecklistModal,
+        CheckListPicker,
         LabelsPicker,
         MemberPicker,
     },
