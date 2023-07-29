@@ -2,18 +2,18 @@
   <section class="add-task" v-click-outside="closeComponent">
     <form @submit.prevent="saveTask">
 
-      <div class="form-wrapper">
-        <input
+      <div class="input-wrapper">
+        <textarea
           v-model="taskTitle"
-          type="text"
+          rows="3"
           placeholder="Enter a title for this card..."
           v-focus
-        />
+        ></textarea>
       </div>
 
       <div class="form-btn">
-        <button class="form-btn add-btn" add-btn>Add card</button>
-        <button class="form-btn" @click.prevent="closeComponent">X</button>
+        <button class="form-btn add-btn">Add card</button>
+        <button class="form-btn" @click.prevent="closeComponent"><span class="icon"></span></button>
       </div>
 
     </form>

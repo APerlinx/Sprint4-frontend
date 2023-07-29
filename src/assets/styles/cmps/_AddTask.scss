@@ -9,16 +9,16 @@
         box-sizing: border-box;
     }
 
-    > form > .form-wrapper {
-        width: 242px;
+    > form > .input-wrapper {
+        width: 256px;
         box-sizing: border-box;
 
-        > input:focus {
+        > textarea:focus {
             outline: none;
             border: none;
         }
 
-        > input {
+        > textarea {
             box-sizing: border-box;
             width: 100%;
             margin-bottom: 7px;
@@ -30,6 +30,24 @@
             cursor: text;
             height: 70px;
             border-radius: 12px;
+            font-size: 12px; 
+            word-spacing: -1px; 
+            resize: vertical; 
+            overflow: auto;
+
+            border-bottom: 16px solid transparent;
+            border-right: 16px solid transparent;
+        }
+
+        > textarea::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 8px;
+            height: 8px;
+            background: white;
         }
     }
 
@@ -39,5 +57,9 @@
         > .add-btn {
             @include add-group-btn
         }
+
+        > .icon {
+            @include trello-icon($content: "\e91c", $type: lg, $color: #626F86);
+          }
     }
 }

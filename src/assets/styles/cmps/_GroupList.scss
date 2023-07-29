@@ -1,65 +1,123 @@
-.group-list {
+.group-list-section {
   display: flex;
-  flex-direction: row;
-  align-items: start;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  flex-direction: column;
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  margin-inline-start: 1rem;
 
-  .group-actions {
+  .group-list {
     display: flex;
-  }
-
-  .group-btn {
-    background: none;
-    border: none;
-    color: $button-color;
+    flex-direction: row;
+    flex: 1;
+    align-items: start;
     margin: 0;
-    padding: 7px 8px 4px 6px;
-    width: 100%;
-    text-align: start;
-    margin-inline-start: 1.1em;
-    // font-size: 0.9em
+    padding: 0;
+    list-style: none;
+    .group-actions {
+      display: flex;
+    }
+
+    .group-btn {
+      background: none;
+      border: none;
+      color: $button-color;
+      margin: 0;
+      padding: 7px 8px 4px 6px;
+      width: 100%;
+      text-align: start;
+      margin-inline-start: 0.2em;
+      display: flex;
+      align-items: center;
+      > .icon {
+        @include trello-icon($content: "\e901", $type: sm, $color: $text-subtle);
+        margin-inline-end: 0.5em;
+      }
+    }
+
+    .group-btn:hover {
+      @include button-hover-style;
+      border-radius: 10px;
+    }
+
+    .list-btn-wrapper {
+      margin: 0 4px;
+      padding: 8px;
+      background-color: #ffffff3d;
+      border-radius: 12px;
+      margin-block-start: 0.55em;
+      width: 272px;
+      text-align: start;
+      cursor: pointer;
+      min-width: 272px;
+    }
+
+    .list-btn-wrapper:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .open-form-wrapper {
+      background-color: $list-background-color;
+      margin-block-start: 0.55em;
+
+      border-radius: 12px;
+      min-width: 272px;
+      margin: 0 4px;
+      padding: 8px;
+    }
+
+    .list-btn {
+      color: $dynamic-text;
+      padding: 6px 8px;
+      margin: 0;
+
+      > .icon {
+        @include trello-icon($content: "\e901", $type: sm, $color: $dynamic-text);
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
-  .group-btn:hover {
-    @include button-hover-style;
+  &::-webkit-scrollbar {
+    width: 8px;
   }
 
-  .list-btn-wrapper{
-    margin: 0 4px;
-    padding: 8px;
-    background-color: #FFFFFF3d;
-    border-radius: 12px;
-    margin-block-start: 0.55em;
-    width: 272px;
-    text-align: start;
-    cursor: pointer;
+  &::-webkit-scrollbar-track {
+    background: #00000026;
   }
 
-  .list-btn-wrapper:hover {
-    background-color: rgba(255, 255, 255, 0.1); 
+  &::-webkit-scrollbar-thumb {
+    background: #ffffff4d;
+    border-radius: 4px;
   }
 
-  .open-form-wrapper {
-    background-color: $list-background-color;
-    margin-block-start: 0.55em;
-
-    border-radius: 12px;
-    width: 272px;
-    margin: 0 4px;
-    padding: 8px;
-  }
-
-  .list-btn {
-    color: $dynamic-text;
-    padding: 6px 8px;
-    margin: 0
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  &::-webkit-scrollbar-thumb:hover {
+    background: #ffffff6d;
   }
 }
+
+.group-list-section {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.smooth-dnd-container {
+  min-height: 0;
+}
+
+.smooth-dnd-container.horizontal {
+  .smooth-dnd-draggable-wrapper {
+    transition-duration: 0ms;
+  }
+}
+
+// .smooth-dnd-draggable-wrapper:not(.draggable-item) {
+//   transition-duration: 0ms !important;
+// }

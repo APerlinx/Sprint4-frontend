@@ -52,6 +52,42 @@ export const close = {
   },
 }
 
+export const scrollHorizontalDirective = {
+  mounted(el) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    el.addEventListener('mousedown', (e) => {
+      isDown = true;
+      startX = e.pageX - el.offsetLeft;
+      scrollLeft = el.scrollLeft;
+    });
+
+    el.addEventListener('mouseleave', () => {
+      isDown = false;
+    });
+
+    el.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+
+    el.addEventListener('mousemove', (e) => {
+      if(!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - el.offsetLeft;
+      const walk = (x - startX) * 3; //scroll-fast
+      el.scrollLeft = scrollLeft - walk;
+    });
+  },
+  unmounted(el) {
+    el.removeEventListener('mousedown');
+    el.removeEventListener('mouseleave');
+    el.removeEventListener('mouseup');
+    el.removeEventListener('mousemove');
+  },
+}
+
 function _isDarkColor(c) {
   c = c.substring(1) // strip #
   const rgb = parseInt(c, 16) // convert rrggbb to decimal
@@ -71,3 +107,4 @@ function _getRandomColor() {
   }
   return color
 }
+

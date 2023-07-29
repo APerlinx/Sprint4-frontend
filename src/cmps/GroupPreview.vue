@@ -2,29 +2,55 @@
   <li class="group-preview">
     <div class="group-card">
       <div class="group-header">
-        <input class="group-title" type="text" :value="group.title" @input="updateTitle($event.target.value)" />
-        <button class="remove-group-button" @click="$emit('remove', group.id)">
-          x
-        </button>
+        <input
+          class="group-title"
+          type="text"
+          :value="group.title"
+          @input="updateTitle($event.target.value)"
+        />
+        <div class="menu-btn" ref="menuButton" @click="toggleModal">
+          <span class="icon"></span>
+        </div>
       </div>
-
-      <Container groupName="group-tasks" orientation="vertical" dragClass="task-drag" dropClass="task-drop"
-        @drag-start="(e) => handleTaskStart(group.id, e)" @drag-end="handleDragEnd"
-        :get-child-payload="retrieveTaskPayload" @drop="(e) => handleTaskDrop(group.id, e)"
-        :className="`group-${group.id}`">
-        <Draggable v-for="task in group.tasks" :key="task.id" :groupId="group.id">
-          <TaskPreview :groupId="this.group.id" :task="task" />
-        </Draggable>
-      </Container>
-
+      <div class="scroll-container">
+        <taskList
+          @moveTasks="replaceTasks"
+          :tasks="group.tasks"
+          :groupId="group.id"
+        />
+      </div>
       <slot name="actions"></slot>
+    </div>
+
+    <div
+      v-if="showModal"
+      class="modal"
+      :style="{ top: modalTop + 'px', left: modalLeft + 'px' }"
+      v-click-outside="toggleModal"
+    >
+      <div class="modal-content">
+        <div class="header">
+          <span class="header-title">List actions</span>
+          <button @click="toggleModal"><span class="icon"></span></button>
+        </div>
+        <div class="actions">
+          <button class="action" @click="$emit('remove', group.id)">
+            Remove group...
+          </button>
+          <button class="action">Add card...</button>
+          <button class="action">Duplicate group...</button>
+          <button class="action">Watch</button>
+          <hr>
+        </div>
+      </div>
     </div>
   </li>
 </template>
 
 <script>
-import TaskPreview from './TaskPreview.vue'
+import TaskList from './TaskList.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
+import { clickOutsideDirective } from '../directives/index.js'
 
 export default {
   props: {
@@ -38,66 +64,43 @@ export default {
       isSourceGroup: false,
       sourceGroupId: null,
       targetGroupId: null,
+      containerKey: 0,
+      removedIndex: null,
+      currBoard: {},
+      currTask: {},
+      showModal: false,
+      modalTop: 0,
+      modalLeft: 0,
     }
   },
   components: {
-    TaskPreview,
+    TaskList,
     Container,
     Draggable,
   },
+  created() {
+    this.currBoard = this.$store.getters.getCurrBoard
+  },
   computed: {},
   methods: {
-    openTask(board, group, task) {
-      this.isTaskDetail = true;
-      console.log('isTaskDetail:', this.isTaskDetail)
-      // this.$store.commit({ type: 'setCurrGroup', group })
-      this.$store.commit({ type: 'setCurrTask', task })
+    replaceTasks(tasks) {
+      let group = JSON.parse(JSON.stringify(this.group))
+      this.$emit('updateGroup', { info: { tasks, group } })
     },
-    retrieveTaskPayload(index) {
-      return {
-        task: { ...this.group.tasks[index] },
-        groupId: this.group.id,
+    toggleModal() {
+      this.showModal = !this.showModal
+      if (this.showModal) {
+        this.calculateModalPosition()
       }
     },
-    handleDragEnd(e) {
-      this.isSourceGroup = e.isSource
+    calculateModalPosition() {
+      const rect = this.$refs.menuButton.getBoundingClientRect()
+      this.modalTop = rect.top + rect.height
+      this.modalLeft = rect.left
     },
-    handleTaskStart(groupId) {
-      this.sourceGroupId = groupId
-    },
-
-    handleTaskDrop(groupId, dropResult) {
-      if (!this.sourceGroupId) {
-        this.sourceGroupId = groupId
-      } else if (!this.targetGroupId) {
-        this.targetGroupId = groupId
-      }
-
-      if (this.group.id !== this.targetGroupId) return
-
-      if (dropResult.removedIndex === null && dropResult.addedIndex === null)
-        return
-
-      this.$store.dispatch('moveTask', {
-        sourceGroupId: this.sourceGroupId,
-        targetGroupId: this.targetGroupId,
-        dropResult,
-        boardId: this.$route.params.boardId,
-      })
-      this.sourceGroupId = null
-      this.targetGroupId = null
-    },
-    mounted() {
-      this.isSourceGroup = false
-    },
+  },
+  directives: {
+    clickOutside: clickOutsideDirective,
   },
 }
 </script>
-
-<style scoped>
-.task-drag {
-  /* transition: transform 0.2s ease-in-out; */
-  transform: rotate(5deg);
-  /* box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); */
-}
-</style>

@@ -10,24 +10,30 @@ $clr6: #1d2125;
 $lclr1: #182b4d;
 $lclr2: #1266e4;
 
-// Group Colors
+// Board Details - colors
 
 $list-background-color: #F1F2F4;
 $list-title-color: rgb(23, 43, 77);
 $list-text-color: rgb(23, 43, 77);
+$text-subtle: #44546F;
 $task-bg-clr: #FFFFFF;
 $button-color: #44546f;
 $border-focused: #388BFF;
 $group-background-input: #FFFFFF;
 $background-Add-btn: #0C66E4;
 $dynamic-text: #FFFFFF;
+$icon-subtle: #626F86;
 $dynamic-button: transparent;
 $dynamic-button-hovered: #A6C5E229;
 $dynamic-button-pressed: #BFDBF847;
 $dynamic-button-highlighted: #DFE1E6;
 $dynamic-button-highlighted-text: #172B4D;
 $dynamic-button-highlighted-hovered: #FFFFFF;
-
+$background-success-bold: #1F845A;
+$background-danger: #FFEDEB;
+$ds-text-danger: #AE2A19;
+$ds-icon-danger: #E34935;
+$ds-background-danger-hovered: #FFD2CC;
 // Breakpoints
 $mobile-breakpoint: 460px;
 $narrow-breakpoint: 720px;
