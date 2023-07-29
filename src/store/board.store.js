@@ -37,7 +37,7 @@ export const boardStore = {
     currentGroup: null,
     currentTask: null,
     filterBy: '',
-    cmpsOrder: ["MemberPicker", "LabelsPicker", "ChecklistModal"]
+    cmpsOrder: ["MemberPicker", "LabelsPicker", "ChecklistPicker"]
   },
   getters: {
     boards({ boards }) {

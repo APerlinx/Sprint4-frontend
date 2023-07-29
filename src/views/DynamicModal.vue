@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import CheckListPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
+import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
 import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
 import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
 
@@ -41,7 +41,7 @@ export default {
         },
     },
     components: {
-        ChecklistModal,
+      ChecklistPicker,
         LabelsPicker,
         MemberPicker,
     },

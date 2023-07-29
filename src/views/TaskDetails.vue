@@ -28,17 +28,12 @@
                     <Members />
 
                     <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
-                    <div class="label-wrapper">
-                        <h5>Labels</h5>
-                        <template v-for="label in taskToEdit.labelIds">
-                            <div v-if="label.checked" class="label" :style="{ backgroundColor: label.bgColor }">
-                                <h6>{{ label.txt }}</h6>
-                            </div>
-                        </template>
-                    </div>
+                   <Labels
+                   :task="taskToEdit"
+                   />
 
                     <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
-                    <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
+                    <!-- <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
                         <h5>Labels</h5>
                         <template v-for="label in taskToEdit.labelIds">
 
@@ -46,7 +41,7 @@
                                 <h6>{{ label.txt }}</h6>
                             </div>
                         </template>
-                    </div>
+                    </div> -->
 
                     <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
 
@@ -132,6 +127,7 @@
 import DynamicModal from "./DynamicModal.vue";
 import Checklist from "../cmps/Checklist.vue";
 import Members from "../cmps/Members.vue";
+import Labels from "../cmps/Labels.vue";
 import { boardService } from "../services/board.service.local.js";
 
 import { defineComponent } from "vue";
@@ -251,6 +247,7 @@ export default {
         Members,
         Popper,
         defineComponent,
+        Labels
     },
 };
 </script>

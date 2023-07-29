@@ -22,9 +22,10 @@
 
       <p>edit</p>
     </div>
+
+    <button>Create</button>
   </div>
 
-  <button @click="check">check</button>
 </template>
 
 <script>
@@ -50,9 +51,7 @@ export default {
     };
   },
   methods: {
-    check() {
-      console.log(this.labels);
-    },
+   
     toggleLabel(id) {
       const labelIndex = this.labels.findIndex((label) => label.id === id);
       if (labelIndex !== -1) {
