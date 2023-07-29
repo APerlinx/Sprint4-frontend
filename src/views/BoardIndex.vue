@@ -1,5 +1,4 @@
 <template>
-  <AppHeader />
 
   <section class="board-container">
     <div v-if="starredBoards.length > 0" class="starred">
@@ -34,7 +33,6 @@
 </template>
 
 <script>
-import AppHeader from "../cmps/AppHeader.vue";
 import BoardList from "../cmps/BoardList.vue";
 import AddBoard from "../cmps/addboard.vue";
 
@@ -109,7 +107,6 @@ export default {
     AddBoard,
     Popper,
     defineComponent,
-    AppHeader,
 
   },
 };
