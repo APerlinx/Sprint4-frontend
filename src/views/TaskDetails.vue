@@ -128,12 +128,11 @@ export default {
     },
     methods: {
         setChecklist() {
+            console.log('setChecklist')
             this.actionCmpType = 'ChecklistModal'
             this.actionCmpName = 'Add checklist'
-
-            console.log('setChecklist')
-            console.log('actionCmpType:', this.actionCmpType)
-            console.log('actionCmpInfo:', this.actionCmpName)
+            // console.log('actionCmpType:', this.actionCmpType)
+            // console.log('actionCmpInfo:', this.actionCmpName)
         },
         setMembers() {
             this.actionCmpType = 'MembersModal'
@@ -146,19 +145,17 @@ export default {
             // this.closeDynamicModal()
         },
         addMember(newMember) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
-            this.taskToEdit.checklists.push(newChecklist)
-            console.log('modal3 - newChecklist:', newChecklist)
+            if (!this.taskToEdit.members) this.taskToEdit.members = []
+            this.taskToEdit.members.push(newMember)
+            console.log('modal3 - newMember:', newMember)
             // this.closeDynamicModal()
         },
-        updateItem({ type, val }) {
-            if (type === 'checklists') {
-                const checklists = this.taskToEdit.checklists;
-                const idx = checklists.findIndex((checklist) => checklist._id === val._id);
-                if (val.title) checklists.splice(idx, 1, val); // edit
-                else checklists.splice(idx, 1); // deletion
-            } else this.taskToEdit[type] = val;
-            this.editTask();
+        updateChecklist(checklist) {
+            const checklists = this.taskToEdit.checklists
+            const idx = checklists.findIndex(checklist => checklist._id === checklist._id)
+            if (checklist.title) checklists.splice(idx, 1, checklist)
+            else checklists.splice(idx, 1)
+            this.editTask()
         },
         async setTask() {
             try {
