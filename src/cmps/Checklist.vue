@@ -23,20 +23,31 @@
         </section>
 
         <section class="todos-container">
-            <div v-for=" todo  in  checklistToEdit.todos " :key="todo._id">
+            <div v-for="todo in checklistToEdit.todos" :key="todo._id">
 
                 <section class="todo-container" v-if="isHideChecked ? !todo.isChecked : true">
-                    <input type="checkbox" @change="updateChecklist" v-model="todo.isChecked" />
+                    <input type="checkbox" @change="updateChecklist" />
                     <textarea class="todo-title" v-model="todo.title" @blur="hideTodoBtn = false"
-                        @focus="hideTodoBtn = true"></textarea>
-                    <div v-if="hideTodoBtn">
-                        <button class="btn btn-save-close" @click="updateChecklist">
-                            save
-                        </button>
-                    </div>
+                        @focus="hideTodoBtn = true">
+                </textarea>
                 </section>
             </div>
-            <button class="btn" @click="addTodo">Add an item</button>
+            <div v-if="hideTodoBtn">
+                <button class="btn btn-save-close" @click="updateChecklist">
+                    save
+                </button>
+                <button class="btn btn-save-close" @click="updateChecklist">
+                    x
+                </button>
+            </div>
+
+            <button class="btn is-add-todo" v-if="!isAddTodo" @click="isAddTodo = true">Add an item</button>
+
+            <div class="hide-add-todo-btns" v-else>
+                <textarea v-model="newTodoTitle" placeholder="Add an item" class="new-todo-title"></textarea>
+                <button class="btn-blue add-todo" @click="addTodo">Add</button>
+                <button class="btn cancel-todo">Cancel</button>
+            </div>
 
         </section>
     </div>
@@ -53,8 +64,11 @@ export default {
         return {
             checklistToEdit: null,
             isHideChecked: false,
+            isAddTodo: false,
+            isHideAddAnItem: false,
             hideTodoBtn: false,
             hideBtn: true,
+            newTodoTitle: '',
             // checklistToEdit:
             // {
             //     _id: 'abc123',
@@ -87,22 +101,29 @@ export default {
             this.$emit('updateChecklist', this.checklistToEdit._id)
         },
         addTodo() {
-            if (!this.newTodoTitle) return
+            console.log('adding todo:')
+            // if (this.newTodoTitle) return
             const todo = {
                 _id: utilService.makeId(),
                 title: this.newTodoTitle,
                 isDone: false
             }
+            console.log('todo', todo)
             this.checklistToEdit.todos.push(todo)
             this.newTodoTitle = ''
-            this.addItemMode = false
+            this.isAddTodo = false
             this.updateChecklist()
         },
         updateChecklist() {
+            console.log('this.checklistToEdit:', JSON.parse(JSON.stringify(this.checklistToEdit)))
             this.$emit('updateChecklist', JSON.parse(JSON.stringify(this.checklistToEdit)))
+
         }
     },
     computed: {
+        isTodoAdd() {
+
+        },
         isTodoChecked() {
             return this.checklistToEdit.todos.some(todo => todo.isChecked)
         },

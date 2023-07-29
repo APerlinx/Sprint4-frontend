@@ -17,6 +17,7 @@
         min-height: 60px;
         background-color: white;
         display: flex;
+        box-shadow: inset 0 0 0 2px #388bff;
     }
 }
 
@@ -32,10 +33,19 @@
         padding: 10px;
 
         &:focus {
-            box-shadow: inset 0 0 0 2px #388bff;
             background-color: white;
         }
     }
+}
+
+.new-todo-title {
+    border: 0;
+    width: 100%;
+    height: 40px;
+    // font-size: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+    padding: 10px;
+    background-color: white;
 }
 
 .todo-container {
@@ -56,6 +66,25 @@
         textarea {
             transition: 0.6s;
             background-color: #E4E6EA;
+        }
+    }
+
+    .is-add-todo {
+        border: 0;
+        background-color: #F1F2F4;
+        width: 90%;
+        height: 0px;
+        font-size: 1.3rem;
+        // margin: 17px 0 0 11px; //with icon
+        margin: 17px 0 0 46px;
+        padding: 10px;
+
+        &:focus {
+            border: none;
+            outline: none;
+            box-shadow: inset 0 0 0 2px #388bff;
+            background-color: white;
+            min-height: 40px;
         }
     }
 }
@@ -94,14 +123,4 @@
             background-color: #61bd4f;
         }
     }
-
-
-    // progress::-webkit-progress-value-100 {
-    //     background-color: #1f845a;
-    //     width: 100%;
-    // }
 }
-
-// .btn-checklist-hide-show {
-
-// }

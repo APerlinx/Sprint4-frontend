@@ -154,9 +154,12 @@ export default {
             // this.closeDynamicModal()
         },
         updateChecklist(newChecklist) {
+            console.log('Checklist:', Checklist)
+
             const checklists = this.taskToEdit.checklists;
             const idx = checklists.findIndex(
                 (checklist) => checklist._id === newChecklist._id)
+            console.log('idx:', idx)
             if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
             else checklists.splice(idx, 1)
             this.editTask()
