@@ -1,8 +1,37 @@
-.labels-container {
-    // display: flex;
+.filter-label {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-block-end: 1.3em;
 
+    input {
+        width: 100%;
+        border-radius: 0.3em;
+        border: 2.5px solid lightgray;
+    }
+}
+
+.labels-container {
+    .sub-title {
+        font-size: 0.95em;
+        color: $lclr1;
+        margin-block-end: 1em;
+    }
     .label {
         display: flex;
         justify-content: space-between;
+        height: rem(36px);
+        margin-block-end: rem(5px);
+
+        .label-picker-color {
+            display: flex;
+            align-items: center;
+            width: 80%;
+            border-radius: 0.25em;
+            input {
+                border: none;
+                background-color: transparent;
+            }
+        }
     }
 }

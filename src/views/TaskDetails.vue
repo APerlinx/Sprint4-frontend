@@ -31,7 +31,22 @@
 
       <section class="task-details-main">
         <div class="task-alerts">
+          
           <Members />
+
+          <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
+          <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
+            <h5>Labels</h5>
+            <template v-for="label in taskToEdit.labelIds">
+              
+              <div class="label" :style="{ backgroundColor: label.bgColor }">
+                <h6>{{ label.txt }}</h6>
+              </div>
+            </template>
+          </div>
+
+          <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
+
 
           <div class="details-notification">
             <h5>Notifications</h5>
@@ -87,15 +102,16 @@
       </section>
 
       <section class="action-btns-container">
-     
-
         <h3 class="details-title-small">Suggested</h3>
         <button class="btn">Join</button>
+        <!-- <pre>{{ taskToEdit }}</pre> -->
 
         <h3 class="details-title-small">Add To card</h3>
         <Popper arrow placement="right">
           <div v-for="(cmp, idx) in cmpOrder" :key="idx">
-            <button class="btn" @click="set(cmp, idx)">{{ dynamicNames[idx] }}</button>
+            <button class="btn" @click="set(cmp, idx)">
+              {{ dynamicNames[idx] }}
+            </button>
           </div>
 
           <template #content>
@@ -107,11 +123,11 @@
               @closeDynamicModal="closeDynamicModal"
               @checklist="addChecklist"
               @member="addMember"
+              @setLabel="setLabel"
             />
           </template>
         </Popper>
 
-       
         <!-- <button class="btn">Dates</button>
                 <button class="btn">Attachments</button>
                 <button class="btn" @click="togglecover">Cover</button>
@@ -202,6 +218,13 @@ export default {
     toggleWatch() {
       this.isWatchActive = !this.isWatchActive;
       this.watch = this.isWatchActive ? "Watching" : "Watch";
+    },
+
+    setLabel(labels) {
+      console.log(labels);
+      const task = JSON.parse(JSON.stringify(this.taskToEdit));
+      task.labelIds = labels;
+      this.taskToEdit = task;
     },
     // toggleOpenModal() {
     //     // need to check if the specific action-btn that clicked, is the last clicked button. => Y? close modal. N? open the modal with new content from the other action-btn.
