@@ -1,4 +1,5 @@
 <template>
+
   <section class="board-container">
     <div v-if="starredBoards.length > 0" class="starred">
       <h2 class="title">Starred boards</h2>
@@ -106,6 +107,7 @@ export default {
     AddBoard,
     Popper,
     defineComponent,
+
   },
 };
 </script>

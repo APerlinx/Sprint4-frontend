@@ -106,7 +106,7 @@
                     </template>
                 </Popper>
 
-                <button class="btn">Dates</button>
+                <button class="btn"><span class="icon date"></span>Dates</button>
                 <button class="btn">Attachments</button>
                 <button class="btn" @click="togglecover">Cover</button>
                 <button class="btn">Custom Fields</button>

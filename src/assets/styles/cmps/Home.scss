@@ -1,0 +1,104 @@
+.homepage {
+    .bg-container {
+        background-image: url(//images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266e…/white-wave-bg.svg),
+            linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
+        background-position-x: center, 0px;
+        background-position-y: bottom -0.5px, 0px;
+        background-size: 100% 14%, auto;
+        background-repeat: no-repeat, repeat;
+        background-attachment: scroll, scroll;
+        background-origin: padding-box, padding-box;
+        background-clip: border-box, border-box;
+        background-color: rgb(82, 67, 170);
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 10% 0.8fr 1.2fr 10%;
+            .right-hero-container {
+                padding-block-start: 2.5em;
+                justify-self: end;
+                padding: 2em 0 0 2em;
+                img {
+                    width: 100%;
+                }
+            }
+
+            .demo {
+                padding-block-start: 3em;
+                grid-column: 2;
+                justify-self: start;
+
+                h2 {
+                    color: white;
+                    font-size: rem(50px);
+                    font-weight: 600;
+                    line-height: 1.2em;
+                }
+                h6 {
+                    padding-block-start: 2em;
+                    color: white;
+                    font-size: rem(25px);
+                    font-weight: 200;
+                }
+
+                button {
+                    background-color: #0065ff;
+                    color: white;
+                    padding: 0.5em 2em;
+                    font-size: 1.5em;
+                    border-radius: 0.3em;
+                    margin: 0;
+                    margin-block-start: 1em;
+                    margin-block-end: rem(30px);
+                }
+            }
+        }
+    }
+
+    .bottom-info {
+
+        .sub-header {
+            padding-inline: 8%;
+            margin-block-start: rem(30px);
+
+            h1 {
+                margin-block-end: rem(20px);
+                font-size: 3em;
+            }
+            h5 {
+                margin-block-end: rem(20px);
+                font-size: 1.5em;
+                font-weight: 100;
+            }
+        }
+    }
+
+    .sub-header2 {
+        margin-block-start: 6em;
+        margin-block-end: 6em;
+        display: grid;
+        grid-template-columns: 10% 1fr 1fr 10%;
+
+        .cards-container {
+            grid-column: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 3em;
+            font-size: 1.3em;
+            line-height: 1em;
+            
+            h5 {
+                margin-block-end: 0.4em;
+            }
+        }
+        
+        .img-container {
+            grid-column: 3;
+            width: 100%;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+}

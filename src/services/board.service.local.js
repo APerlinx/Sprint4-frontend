@@ -501,3 +501,85 @@ function _labelOptions() {
     },
   ]
 }
+
+function _membersOptions() {
+  return [
+    {
+      id: "m101",
+      username: "guydahan41",
+      fullname: "Guy Dahan",
+      imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192",
+      backgroundColor: "#e63946",
+    },
+    {
+      id: "m102",
+      username: "shayzigdon1",
+      fullname: "Shay Zigdon",
+      imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U04UNLA704D-abc56285845d-72",
+      backgroundColor: "#2a9d8f",
+    },
+    {
+      id: "m103",
+      username: "alonp11",
+      fullname: "Alon Perlin",
+      imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U053T2NRWQL-ec8cffe84642-192",
+      backgroundColor: "#e9c46a",
+    },
+    {
+      id: "m104",
+      username: "dimapolo1",
+      fullname: "Dima Polo",
+      imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U056VBMJLKG-51a0b5aa8bbe-512",
+      backgroundColor: "#48cae4",
+    },
+    {
+      id: "m105",
+      username: "adambercovich",
+      fullname: "Adam Bercovich",
+      imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U04UB8KDZH6-0fbe87aa89af-72",
+      backgroundColor: "#adc178",
+
+    }
+    // {
+    //   id: "m106",
+    //   username: "guydahan41",
+    //   fullname: "Guy Dahan",
+    //   imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192",
+    //   backgroundColor: "#e63946",
+    //   bgColor: "#9c89b8",
+    // },
+    // {
+    //   id: "m107",
+    //   username: "guydahan41",
+    //   fullname: "Guy Dahan",
+    //   imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192",
+    //   backgroundColor: "#e63946",
+    //   bgColor: "#00a8e8",
+    // },
+    // {
+    //   id: "m108",
+    //   username: "guydahan41",
+    //   fullname: "Guy Dahan",
+    //   imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192",
+    //   backgroundColor: "#e63946",
+    //   bgColor: "#0ead69",
+    // },
+    // {
+    //   id: "m109",
+    //   username: "guydahan41",
+    //   fullname: "Guy Dahan",
+    //   imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192",
+    //   backgroundColor: "#e63946",
+    //   bgColor: "#16697a",
+    // },
+    // {
+    //   id: "m110",
+    //   username: "guydahan41",
+    //   fullname: "Guy Dahan",
+    //   imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192",
+    //   backgroundColor: "#e63946",
+    //   bgColor: "#70e000",
+    // },
+  ]
+}
+

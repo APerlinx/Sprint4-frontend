@@ -1,15 +1,15 @@
 <template>
-    <AppHeader />
-      <RouterView />
-    <UserMsg />
+  <AppHeader />
+  <RouterView />
+  <UserMsg />
 </template>
 
 <script>
 import { userService } from "./services/user.service";
 import { store } from "./store/store";
 
-import AppHeader from "./cmps/AppHeader.vue";
 import UserMsg from "./cmps/UserMsg.vue";
+import AppHeader from "./cmps/AppHeader.vue";
 
 export default {
   created() {
@@ -21,8 +21,8 @@ export default {
     if (user) store.commit({ type: "setLoggedinUser", user });
   },
   components: {
-    AppHeader,
     UserMsg,
+    AppHeader
   },
 };
 </script>
