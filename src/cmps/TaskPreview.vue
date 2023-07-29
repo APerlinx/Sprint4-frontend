@@ -62,6 +62,11 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      done: 0,
+    }
+  },
   computed: {
     board() {
       const boardId = this.$store.getters.getCurrBoard?._id
@@ -75,15 +80,15 @@ export default {
       return total
     },
     doneChecklists() {
-      let done = 0
       this.task.checklists.forEach((checklist) => {
         checklist.todos.forEach((todo) => {
           if (todo.isDone) {
-            done += 1
+            this.done += 1
+            console.log('this.done', this.done);
           }
         })
       })
-      return done
+      return this.done
     },
     checklistCompleted() {
       return this.doneChecklists === this.totalChecklists
@@ -103,7 +108,7 @@ export default {
   },
   methods: {
     goToTaskDetails() {
-      this.$router.push(`/details/${this.currBoard}/group/${this.groupId}/task/${this.task.id}`)
+      this.$router.push(`/details/${this.board}/group/${this.groupId}/task/${this.task.id}`)
     },
     formatDate(timestamp) {
       return format(new Date(timestamp), 'dd MMM')
