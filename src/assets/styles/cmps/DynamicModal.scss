@@ -1,17 +1,15 @@
 .dynamic-modal-container {
     position: absolute;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     z-index: 99;
-    height: 300px;
+    width: 304px;
     border-radius: 10px;
+    padding: 12px;
+
+    background-color: #fff;
     -webkit-box-shadow: 0 0 4px lightgrey;
     box-shadow: 0 0 4px lightgrey;
-    width: 304px;
-    padding: 12px;
-    background-color: rgb(134, 231, 134);
-    margin: 0;
-
     color: #172b4d;
     font-family: -apple-system,
         BlinkMacSystemFont,
@@ -26,16 +24,21 @@
     font-weight: 400;
     line-height: 20px;
 
-    .dynamic-modal-title {
-        box-shadow: none;
-        height: 30px;
-    }
-
-    .dynamic-modal-close {
+    .dynamic-modal-header {
         display: flex;
-        flex-direction: column;
-        position: relative;
-        // margin-left: 280px;
-        cursor: pointer;
+        flex-direction: row;
+        justify-content: center;
+
+        .dynamic-modal-title {
+            box-shadow: none;
+            height: 20px;
+        }
+
+        .dynamic-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
     }
 }

@@ -1,14 +1,20 @@
 <template>
     <div class="checklist">
-        <section>
-            <section class="checklist-title-container">
-                <span></span>
-                <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title"></textarea>
+        <section class="checklist-title-container">
+            <span></span>
+            <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
+                @focus="hideBtn = false"></textarea>
 
-                <button class="btn-checklist-hide-show" v-if="isTodoChecked" @click="isHideChecked = !isHideChecked">{{
-                    hideCheckedTxt }}</button>
-                <button @click="deleteChecklist">Delete</button>
-            </section>
+            <button class="btn btn-checklist-hide-show" v-if="isTodoChecked && hideBtn"
+                @click="isHideChecked = !isHideChecked">
+                {{ hideCheckedTxt }}</button>
+            <div v-if="!hideBtn" class="btn-save-close">
+                <button class="btn" @click.stop="onTaskEdit">
+                    Save
+                </button>
+                <button class="btn" @click="closeTodoTitle">Cancel</button>
+            </div>
+            <button class="btn" v-if="hideBtn" @click="deleteChecklist">Delete</button>
         </section>
 
         <section class="percentage-bar">
@@ -17,19 +23,20 @@
         </section>
 
         <section class="todos-container">
-            <div v-for="todo in checklistToEdit.todos" :key="todo._id">
+            <div v-for=" todo  in  checklistToEdit.todos " :key="todo._id">
 
                 <section class="todo-container" v-if="isHideChecked ? !todo.isChecked : true">
                     <input type="checkbox" @change="updateTask" v-model="todo.isChecked" />
                     <textarea class="todo-title" v-model="todo.title" @blur="hideTodoBtn = false"
                         @focus="hideTodoBtn = true"></textarea>
                     <div v-if="hideTodoBtn">
-                        <button class="btn-save-close" @click="updateTask">
+                        <button class="btn btn-save-close" @click="updateTask">
                             save
                         </button>
                     </div>
                 </section>
             </div>
+            <button class="btn" @click="addTodo">Add an item</button>
 
         </section>
     </div>
@@ -40,13 +47,17 @@ import { utilService } from '../services/util.service.js'
 
 export default {
     props: {
+        checklist: Object
     },
     data() {
         return {
             // checklistToEdit: null,
             isHideChecked: false,
             hideTodoBtn: false,
-            checklistToEdit: {
+            hideBtn: true,
+            checklistToEdit:
+            {
+                _id: 'abc123',
                 title: 'test',
                 todos: [
                     {
@@ -69,11 +80,23 @@ export default {
         }
     },
     created() {
-
+        // this.checklistToEdit = JSON.parse(JSON.stringify(this.checklist))
     },
     methods: {
         deleteChecklist() {
             //need to add
+        },
+        addTodo() {
+            if (!this.newTodoTitle) return
+            const todo = {
+                _id: utilService.makeId(),
+                title: this.newTodoTitle,
+                isDone: false
+            }
+            this.checklistToEdit.todos.push(todo)
+            this.newTodoTitle = ''
+            this.addItemMode = false
+            this.updateTask()
         },
         updateTask() {
             //need to add
