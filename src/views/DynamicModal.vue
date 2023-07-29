@@ -24,10 +24,10 @@ export default {
         actionCmpType: String,
         actionCmpName: String,
     },
-    data() {
-        return {};
-    },
     methods: {
+        setLabel(label) {
+            this.$emit('setLabel', label)
+        },
         closeModal() {
             this.isDynamicModalClose = !this.isDynamicModalClose;
         },

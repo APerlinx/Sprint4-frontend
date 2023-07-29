@@ -25,8 +25,17 @@
 
             <section class="task-details-main">
                 <div class="task-alerts">
-
                     <Members />
+
+                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
+                    <div class="label-wrapper">
+                        <h5>Labels</h5>
+                        <template v-for="label in taskToEdit.labelIds">
+                            <div v-if="label.checked" class="label" :style="{ backgroundColor: label.bgColor }">
+                                <h6>{{ label.txt }}</h6>
+                            </div>
+                        </template>
+                    </div>
 
                     <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
                     <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
@@ -40,7 +49,6 @@
                     </div>
 
                     <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
-
 
                     <div class="details-notification">
                         <h5>Notifications</h5>
@@ -87,24 +95,23 @@
             </section>
 
             <section class="action-btns-container">
-
-
                 <h3 class="details-title-small">Suggested</h3>
                 <button class="btn">Join</button>
 
                 <h3 class="details-title-small">Add To card</h3>
                 <Popper arrow placement="right">
                     <div v-for="(cmp, idx) in cmpOrder" :key="idx">
-                        <button class="btn" @click="set(cmp, idx)">{{ dynamicNames[idx] }}</button>
+                        <button class="btn" @click="set(cmp, idx)">
+                            {{ dynamicNames[idx] }}
+                        </button>
                     </div>
 
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
-                            @member="addMember" />
+                            @member="addMember" @setLabel="setLabel" />
                     </template>
                 </Popper>
-
 
                 <!-- <button class="btn">Dates</button>
                 <button class="btn">Attachments</button>
@@ -122,13 +129,13 @@
 </template>
 
 <script>
-import DynamicModal from "./DynamicModal.vue"
-import Checklist from "../cmps/Checklist.vue"
-import Members from "../cmps/Members.vue"
-import { boardService } from "../services/board.service.local.js"
+import DynamicModal from "./DynamicModal.vue";
+import Checklist from "../cmps/Checklist.vue";
+import Members from "../cmps/Members.vue";
+import { boardService } from "../services/board.service.local.js";
 
-import { defineComponent } from "vue"
-import Popper from "vue3-popper"
+import { defineComponent } from "vue";
+import Popper from "vue3-popper";
 
 export default {
     data() {
@@ -144,15 +151,25 @@ export default {
             actionCmpName: null,
             isCoverActive: false,
             dynamicNames: ["Members", "Labels", "Checklist"],
-        }
+        };
     },
     created() {
-        this.setTask()
+        this.setTask();
     },
     methods: {
         set(cmp, idx) {
-            this.actionCmpType = cmp
-            this.actionCmpName = this.dynamicNames[idx]
+            this.actionCmpType = cmp;
+            this.actionCmpName = this.dynamicNames[idx];
+        },
+
+        setLabel(label) {
+            const labelIndex = this.taskToEdit.labelsIds.findIndex(
+                (label) => label.id === label.id
+            );
+            if (labelIndex !== -1) {
+                this.taskToEdit.labelsIds[labelIndex].splice.checked = !this.labels[labelIndex].checked;
+            }
+            this.taskToEdit.labelIds.push(label);
         },
 
         addChecklist(newChecklist) {
