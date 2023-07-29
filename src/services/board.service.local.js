@@ -12,6 +12,7 @@ export const boardService = {
   getEmptyBoard,
   addBoardMsg,
   getEmptyGroup,
+  getEmptyTask,
 }
 window.cs = boardService
 
@@ -78,6 +79,33 @@ function getEmptyGroup(title) {
     archivedAt: null,
     tasks: [],
     style: {},
+  }
+}
+
+function getEmptyTask(title) {
+  return {
+    id: utilService.makeId(),
+    title,
+    status: "",
+    description: "",
+    comments: [],
+    checklists: [],
+    labelIds: [],
+    attachments: [],
+    createdAt: Date.now(),
+    dueDate: "",
+    byMember: {
+      id: "m102",
+      username: "Guest",
+      fullname: "",
+      imgUrl: "",
+      createdAt: "2023-07-29",
+    },
+    members: [],
+    style: {
+      bgColor: "",
+      bgImgUrl: "",
+    },
   }
 }
 

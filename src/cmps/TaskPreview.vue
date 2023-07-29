@@ -15,9 +15,14 @@
           <span class="comment-counter">{{ task.comments.length }}</span>
         </div>
 
-        <div v-if="task.checklists && task.checklists.length > 0" :class="{ 'completed-checklist': checklistCompleted }">
+        <div
+          v-if="task.checklists && task.checklists.length > 0"
+          :class="{ 'completed-checklist': checklistCompleted }"
+        >
           <span class="icon checklist"></span>
-          <span class="checklist-counter">{{ doneChecklists }}/{{ totalChecklists }}</span>
+          <span class="checklist-counter"
+            >{{ doneChecklists }}/{{ totalChecklists }}</span
+          >
         </div>
 
         <div v-if="task.attachments && task.attachments.length > 0">
@@ -57,11 +62,6 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      done: 0,
-    }
-  },
   computed: {
     board() {
       const boardId = this.$store.getters.getCurrBoard?._id
@@ -69,22 +69,27 @@ export default {
     },
     totalChecklists() {
       let total = 0
-      this.task.checklists.forEach((checklist) => {
-        total += checklist.todos.length
-
-      })
+      if (this.task.checklists) {
+        // make sure checklists is defined
+        this.task.checklists.forEach((checklist) => {
+          total += checklist.todos.length
+        })
+      }
       return total
     },
     doneChecklists() {
-      this.task.checklists.forEach((checklist) => {
-        checklist.todos.forEach((todo) => {
-          if (todo.isDone) {
-            this.done += 1
-            console.log('this.done', this.done);
-          }
+      let done = 0
+      if (this.task.checklists) {
+        // make sure checklists is defined
+        this.task.checklists.forEach((checklist) => {
+          checklist.todos.forEach((todo) => {
+            if (todo.isChecked) {
+              done += 1
+            }
+          })
         })
-      })
-      return this.done
+      }
+      return done
     },
     checklistCompleted() {
       return this.doneChecklists === this.totalChecklists
@@ -104,7 +109,9 @@ export default {
   },
   methods: {
     goToTaskDetails() {
-      this.$router.push(`/details/${this.board}/group/${this.groupId}/task/${this.task.id}`)
+      this.$router.push(
+        `/details/${this.board}/group/${this.groupId}/task/${this.task.id}`
+      )
     },
     formatDate(timestamp) {
       return format(new Date(timestamp), 'dd MMM')

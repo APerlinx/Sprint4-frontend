@@ -1,7 +1,7 @@
 import { boardService } from '../services/board.service.local'
 // import { boardService } from '../services/board.service'
 import { applyDrag } from '../services/util.service.js'
-import { reactive } from 'vue';
+import { reactive } from 'vue'
 
 export function getActionRemoveBoard(boardId) {
   return {
@@ -40,8 +40,7 @@ export const boardStore = {
     filterBy: '',
     dropResults: [],
 
-
-    cmpsOrder: ["MemberPicker", "LabelsPicker", "ChecklistPicker"]
+    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker'],
   },
   getters: {
     boards({ boards }) {
@@ -51,8 +50,8 @@ export const boardStore = {
       return boards.filter((board) => board.isStarred)
     },
     filteredBoards({ boards, filterBy }) {
-      const byName = new RegExp(filterBy, "i")
-      return boards.filter(board => byName.test(board.title))
+      const byName = new RegExp(filterBy, 'i')
+      return boards.filter((board) => byName.test(board.title))
     },
     recentBoards({ recentBoards }) {
       return recentBoards
@@ -66,11 +65,11 @@ export const boardStore = {
     },
     getCurrenBoard({ currentBoard }) {
       const board = currentBoard
-      return board 
+      return board
     },
     getCurrBoard({ currentBoard }) {
       const board = currentBoard
-      return board //check this
+      return board
     },
     getCurrTask({ currentTask }) {
       return currentTask
@@ -87,7 +86,7 @@ export const boardStore = {
       state.currentBoard = board
     },
     setCurrBoard(state, { currBoard }) {
-      if(currBoard === undefined) return
+      if (currBoard === undefined) return
       state.currBoard = currBoard
     },
     addBoard(state, { board }) {
@@ -97,7 +96,7 @@ export const boardStore = {
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((c) => c._id === board._id)
       state.boards.splice(idx, 1, board)
-      console.log(state.boards[idx]);
+      console.log(state.boards[idx])
     },
     removeBoard(state, { boardId }) {
       state.boards = state.boards.filter((board) => board._id !== boardId)
@@ -140,16 +139,15 @@ export const boardStore = {
         state.recentBoards.push(board)
       }
     },
-
     // EDIT or ADD task
     setTask(state, { groupId, task }) {
       if (state.currentGroup) groupId = state.currentGroup._id
       const groupIdx = state.currentBoard.groups.findIndex(
-        group => group._id === groupId
+        (group) => group._id === groupId
       )
       if (task._id) {
         const taskIdx = state.currentBoard.groups[groupIdx].tasks.findIndex(
-          currTask => currTask._id === task._id
+          (currTask) => currTask._id === task._id
         )
         state.currentBoard.groups[groupIdx].tasks.splice(taskIdx, 1, task)
       } else {
@@ -159,27 +157,28 @@ export const boardStore = {
     },
     removeTask(state, { task }) {
       const taskIdx = state.currentBoard.groups[task.groupIdx].tasks.findIndex(
-        currTask => currTask._id === task.taskId
-      );
-      state.currentBoard.groups[task.groupIdx].tasks.splice(taskIdx, 1);
+        (currTask) => currTask._id === task.taskId
+      )
+      state.currentBoard.groups[task.groupIdx].tasks.splice(taskIdx, 1)
     },
     setFilterBy(state, { filterBy }) {
       state.filterBy = filterBy
     },
-    addTaskToGroup(state, { groupId, task }) {
-      const board = state.currentBoard
+    addTaskToGroup(state, { groupId, task, board }) {
       const group = board.groups.find((group) => group.id === groupId)
       if (!group) throw new Error('Group not found')
 
       group.tasks = [...group.tasks, task]
     },
     removeTask(state, { group, index }) {
-      group.tasks = [...group.tasks.slice(0, index), ...group.tasks.slice(index + 1)]
+      group.tasks = [
+        ...group.tasks.slice(0, index),
+        ...group.tasks.slice(index + 1),
+      ]
     },
     addTask(state, { group, task, index }) {
       group.tasks.splice(index, 0, task)
     },
-
   },
   actions: {
     async addBoard(context, { board }) {
@@ -275,36 +274,32 @@ export const boardStore = {
     },
     async addBoardToRecent({ commit, state }, { boardId }) {
       try {
-        const isBoardInRecent = state.recentBoards.some(board => board._id === boardId);
+        const isBoardInRecent = state.recentBoards.some(
+          (board) => board._id === boardId
+        )
         if (isBoardInRecent) return
 
-        const board = await boardService.getById(boardId);
-        commit({ type: 'saveBoardToRecent', board });
+        const board = await boardService.getById(boardId)
+        commit({ type: 'saveBoardToRecent', board })
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     },
-
-
-
     async setTask({ commit, state, dispatch }, { groupId, task }) {
       try {
-        commit({ type: 'setTask', groupId, task });
-        dispatch({ type: 'saveBoard', board: state.currentBoard });
+        commit({ type: 'setTask', groupId, task })
+        dispatch({ type: 'saveBoard', board: state.currentBoard })
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     },
-
-    async addTask({ commit, state }, { groupId, task }) {
+    async addTask({ commit, state }, { groupId, task, board }) {
       try {
-        const newTask = {
-          title: task.title,
-        }
-
-        commit('addTaskToGroup', { groupId, task: newTask })
+        const newTask = boardService.getEmptyTask(task.title)
+        commit('addTaskToGroup', { groupId, task: newTask, board })
 
         const savedBoard = await boardService.save(state.currentBoard)
+
         commit('updateBoard', { board: savedBoard })
       } catch (err) {
         console.error('Error in addTask', err)
@@ -317,9 +312,9 @@ export const boardStore = {
         currBoard.groups = groups
         const savedBoard = await boardService.save(currBoard)
         commit({ type: 'updateBoard', board: savedBoard })
-        dispatch({ type: "loadBoards" })
+        dispatch({ type: 'loadBoards' })
       } catch (err) {
-        console.log("Cannot save group", err)
+        console.log('Cannot save group', err)
         throw err
       }
     },
@@ -327,10 +322,9 @@ export const boardStore = {
       try {
         const savedBoard = await boardService.save(board)
         commit({ type: 'updateBoard', board: savedBoard })
-        dispatch({ type: "loadBoards" })
-
+        dispatch({ type: 'loadBoards' })
       } catch (err) {
-        console.log("Cannot save board", err)
+        console.log('Cannot save board', err)
         throw err
       }
     },
