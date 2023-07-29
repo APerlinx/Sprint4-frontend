@@ -57,9 +57,9 @@
                     </div>
                 </div>
 
-                <Checklist />
-                <!-- <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
-                    @updateChecklist="updateChecklist" /> -->
+                <!-- <Checklist /> -->
+                <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
+                    @updateChecklist="updateChecklist" />
 
                 <div class="details-activity">
                     <div class="activity-show-details">
@@ -107,13 +107,13 @@
 </template>
 
 <script>
-import DynamicModal from "./DynamicModal.vue";
-import Checklist from "../cmps/Checklist.vue";
-import Members from "../cmps/Members.vue";
-import { boardService } from "../services/board.service.local.js";
+import DynamicModal from "./DynamicModal.vue"
+import Checklist from "../cmps/Checklist.vue"
+import Members from "../cmps/Members.vue"
+import { boardService } from "../services/board.service.local.js"
 
-import { defineComponent } from "vue";
-import Popper from "vue3-popper";
+import { defineComponent } from "vue"
+import Popper from "vue3-popper"
 
 export default {
     data() {
@@ -129,39 +129,37 @@ export default {
             actionCmpName: null,
             isCoverActive: false,
             dynamicNames: ["Members", "Labels", "Checklist"],
-        };
+        }
     },
     created() {
-        this.setTask();
+        this.setTask()
     },
     methods: {
         set(cmp, idx) {
-            this.actionCmpType = cmp;
-            this.actionCmpName = this.dynamicNames[idx];
+            this.actionCmpType = cmp
+            this.actionCmpName = this.dynamicNames[idx]
         },
 
         addChecklist(newChecklist) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
-            this.taskToEdit.checklists.push(newChecklist);
-            console.log("modal3 - newChecklist:", newChecklist);
-            // this.closeDynamicModal()
+            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
+            this.taskToEdit.checklists.push(newChecklist)
+            console.log("modal3 - newChecklist:", newChecklist)
+            this.editTask()
         },
         addMember(newMember) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
-            this.taskToEdit.checklists.push(newChecklist);
-            console.log("modal3 - newChecklist:", newChecklist);
+            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
+            this.taskToEdit.checklists.push(newChecklist)
+            console.log("modal3 - newChecklist:", newChecklist)
+
             // this.closeDynamicModal()
         },
-        updateItem({ type, val }) {
-            if (type === "checklists") {
-                const checklists = this.taskToEdit.checklists;
-                const idx = checklists.findIndex(
-                    (checklist) => checklist._id === val._id
-                );
-                if (val.title) checklists.splice(idx, 1, val); // edit
-                else checklists.splice(idx, 1); // deletion
-            } else this.taskToEdit[type] = val;
-            this.editTask();
+        updateChecklist(newChecklist) {
+            const checklists = this.taskToEdit.checklists;
+            const idx = checklists.findIndex(
+                (checklist) => checklist._id === newChecklist._id)
+            if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
+            else checklists.splice(idx, 1)
+            this.editTask()
         },
         async setTask() {
             try {
@@ -194,15 +192,15 @@ export default {
             // this.actionCmpName = null
         },
         closeModal() {
-            this.$router.back();
+            this.$router.back()
         },
         editTask() {
-            console.log("edit task:");
-            const editedTask = JSON.parse(JSON.stringify(this.taskToEdit));
-            console.log("editedTask:", editedTask);
+            console.log("edit task:")
+            const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
+            console.log("editedTask:", editedTask)
             const taskIdx = this.group.tasks.findIndex(
                 (task) => task.id === this.taskToEdit.id
-            );
+            )
             // replace task with editTask
             this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
             this.$store.dispatch({ type: "updateBoard", board: this.board });

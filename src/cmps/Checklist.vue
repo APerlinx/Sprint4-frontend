@@ -1,6 +1,6 @@
 <template>
     <div class="checklist">
-        <section class="checklist-title-container">
+        <section class="checklist-title-container" v-if="checklist">
             <span></span>
             <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                 @focus="hideBtn = false"></textarea>
@@ -47,40 +47,40 @@ import { utilService } from '../services/util.service.js'
 
 export default {
     props: {
-        checklist: Object
+        checklist: Object,
     },
     data() {
         return {
-            // checklistToEdit: null,
+            checklistToEdit: null,
             isHideChecked: false,
             hideTodoBtn: false,
             hideBtn: true,
-            checklistToEdit:
-            {
-                _id: 'abc123',
-                title: 'test',
-                todos: [
-                    {
-                        id: "check101",
-                        title: "Guy",
-                        isChecked: true
-                    },
-                    {
-                        id: "check102",
-                        title: "Alon",
-                        isChecked: false
-                    },
-                    {
-                        id: "check103",
-                        title: "Shay",
-                        isChecked: false
-                    },
-                ],
-            },
+            // checklistToEdit:
+            // {
+            //     _id: 'abc123',
+            //     title: 'test',
+            //     todos: [
+            //         {
+            //             id: "check101",
+            //             title: "Guy",
+            //             isChecked: true
+            //         },
+            //         {
+            //             id: "check102",
+            //             title: "Alon",
+            //             isChecked: false
+            //         },
+            //         {
+            //             id: "check103",
+            //             title: "Shay",
+            //             isChecked: false
+            //         },
+            //     ],
+            // },
         }
     },
     created() {
-        // this.checklistToEdit = JSON.parse(JSON.stringify(this.checklist))
+        this.checklistToEdit = JSON.parse(JSON.stringify(this.checklist))
     },
     methods: {
         deleteChecklist() {
@@ -99,7 +99,7 @@ export default {
             this.updateTask()
         },
         updateTask() {
-            //need to add
+            this.$emit('updateItem', JSON.parse(JSON.stringify(this.checklistToEdit)));
         }
     },
     computed: {
