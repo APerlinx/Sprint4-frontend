@@ -1,21 +1,15 @@
 <template>
-  <div class="dynamic-modal-container">
-    <section class="dynamic-modal-header">
-      <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
-      <span class="dynamic-modal-close" @click="closeModal">X</span>
-    </section>
-    <section>
-      <component
-        v-if="actionCmpType"
-        :is="actionCmpType"
-        :info="taskToEdit"
-        @member="addMember"
-        @checklist="addChecklist"
-        @saveLabel="saveLabel"
-      >
-      </component>
-    </section>
-  </div>
+    <div class="dynamic-modal-container">
+        <section class="dynamic-modal-header">
+            <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
+            <span class="dynamic-modal-close" @click="closeModal">X</span>
+        </section>
+        <section>
+            <component v-if="actionCmpType" :is="actionCmpType" :info="taskToEdit" @member="addMember"
+                @checklist="addChecklist" @saveLabel="saveLabel">
+            </component>
+        </section>
+    </div>
 </template>
 <script>
 import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
@@ -44,7 +38,7 @@ export default {
         },
     },
     components: {
-      ChecklistPicker,
+        ChecklistPicker,
         ChecklistPicker,
         LabelsPicker,
     }
