@@ -33,7 +33,7 @@
         <div
           :class="`due-date ${dueDateStatus} ${task.status}`"
           v-if="task.dueDate"
-          @click.stop="completeTask"
+          @click.stop="toggleStatus"
         >
           <span class="icon date"></span>
           <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
@@ -120,8 +120,8 @@ export default {
     formatDate(timestamp) {
       return format(new Date(timestamp), 'dd MMM')
     },
-    completeTask() {
-      this.$store.dispatch('completeTask', {
+    toggleStatus() {
+      this.$store.dispatch('toggleStatus', {
         groupId: this.groupId,
         task: this.task,
       })

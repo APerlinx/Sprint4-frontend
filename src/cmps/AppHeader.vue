@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="app-header">
     <nav>
       <div class="logo-container">
         <RouterLink to="/board">

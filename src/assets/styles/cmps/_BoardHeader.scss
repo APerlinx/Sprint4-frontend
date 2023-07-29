@@ -24,7 +24,7 @@
     border: none;
     font-size: rem(18px);
     color: $list-text-color;
-    flex-grow: 1; /* allow the input field to take up the remaining space */
+    flex-grow: 1; 
     margin-right: 10px; 
   }
 
@@ -34,7 +34,7 @@
     line-height: rem(32px);
     font-size: rem(20px);
     margin: 0;
-    margin-inline-end: rem(-25px);
+    margin-inline: 1em;
   }
 
   .nav-bar > span {

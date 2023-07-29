@@ -138,7 +138,6 @@ export const boardStore = {
         state.recentBoards.push(board)
       }
     },
-    // EDIT or ADD task
     setTask(state, { groupId, task }) {
       if (state.currentGroup) groupId = state.currentGroup._id
       const groupIdx = state.currentBoard.groups.findIndex(
@@ -178,11 +177,11 @@ export const boardStore = {
     addTask(state, { group, task, index }) {
       group.tasks.splice(index, 0, task)
     },
-    completeTask(state, { groupId, task }) {
-      const groupIdx = state.currentBoard.groups.findIndex(group => group.id === groupId);
-      const taskIdx = state.currentBoard.groups[groupIdx].tasks.findIndex(t => t.id === task.id);
-      state.currentBoard.groups[groupIdx].tasks[taskIdx].status = 'done';
-  },
+    toggleTaskStatus(state, payload) {
+      const { groupIndex, taskIndex, board } = payload
+      const task = board.groups[groupIndex].tasks[taskIndex]
+      task.status = task.status === 'done' ? 'in-progress' : 'done'
+    },
   },
   actions: {
     async addBoard(context, { board }) {
@@ -201,7 +200,6 @@ export const boardStore = {
     },
     async updateBoard(context, { board }) {
       try {
-        // console.log(board);
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))
         return board
@@ -324,6 +322,7 @@ export const boardStore = {
     },
     async saveBoard({ commit, dispatch }, { board }) {
       try {
+        console.log('board', board)
         const savedBoard = await boardService.save(board)
         commit({ type: 'updateBoard', board: savedBoard })
         dispatch({ type: 'loadBoards' })
@@ -332,9 +331,32 @@ export const boardStore = {
         throw err
       }
     },
-    completeTask({ commit, dispatch, state }, { groupId, task }) {
-      commit('completeTask', { groupId, task });
-      dispatch('saveBoard', { board: state.currentBoard });
-  },
+    async toggleStatus({ commit, state, dispatch }, { groupId, task }) {
+      try {
+        let board
+        let groupIndex = -1
+
+        for (let i = 0; i < state.boards.length; i++) {
+          const index = state.boards[i].groups.findIndex(
+            (group) => group.id === groupId
+          )
+          if (index !== -1) {
+            board = state.boards[i]
+            groupIndex = index
+            break
+          }
+        }
+        const taskIndex = board.groups[groupIndex].tasks.findIndex(
+          (t) => t.id === task.id
+        )
+        commit('toggleTaskStatus', { groupIndex, taskIndex, board })
+        const savedBoard = await boardService.save(board)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: 'loadBoards' })
+      } catch (error) {
+        console.error(error.message)
+        throw err
+      }
+    },
   },
 }
