@@ -127,7 +127,7 @@
               @closeDynamicModal="closeDynamicModal"
               @checklist="addChecklist"
               @member="addMember"
-              @setLabel="setLabel"
+              @saveLabel="saveLabel"
             />
           </template>
         </Popper>
@@ -181,100 +181,103 @@ export default {
       this.actionCmpName = this.dynamicNames[idx];
     },
 
-    setLabel(label) {
-      const labelIndex = this.taskToEdit.labelsIds.findIndex(
-        (label) => label.id === label.id
+    saveLabel() {
+      this.$store.dispatch({ type: "updateBoard", board: this.board });
+
+      // console.log(label);
+      // const labelIndex = this.taskToEdit.labelsIds.findIndex(
+      //   (lab) => lab.id === label.id
+      // );
+      // console.log('1',this.taskToEdit.labelIds);
+      // this.taskToEdit.labelIds.splice(labelIndex, 1, label)
+      // console.log('2', this.taskToEdit.labelIds);
+    },
+
+    addChecklist(newChecklist) {
+      if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
+      this.taskToEdit.checklists.push(newChecklist);
+      // console.log("modal3 - newChecklist:", newChecklist)
+      this.editTask();
+    },
+    addMember(newMember) {
+      if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
+      this.taskToEdit.checklists.push(newChecklist);
+      // console.log("modal3 - newChecklist:", newChecklist)
+
+      // this.closeDynamicModal()
+    },
+    updateChecklist({ type, newChecklist }) {
+      // console.log('111111111Checklist:', Checklist)
+      const checklists = this.taskToEdit.checklists;
+      const idx = checklists.findIndex(
+        (checklist) => checklist._id === newChecklist._id
       );
-      if (labelIndex !== -1) {
-        this.taskToEdit.labelsIds[labelIndex].splice.checked = !this.labels[labelIndex].checked;
+      // console.log('idx:', idx)
+      // console.log('newChecklist.title:', newChecklist.title)
+      if (type === "editChecklist") checklists.splice(idx, 1, newChecklist);
+      // if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
+      else checklists.splice(idx, 1);
+      this.editTask();
+    },
+    async setTask() {
+      try {
+        const boardId = this.$route.params.boardId;
+        const board = await boardService.getById(boardId);
+        const taskId = this.$route.params.taskId;
+        const groupId = this.$route.params.groupId;
+        console.log("groupId:", groupId);
+
+        this.board = JSON.parse(JSON.stringify(board));
+        this.group = this.board.groups.find((group) => group.id === groupId);
+        this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
+      } catch (err) {
+        console.log("error:");
       }
-      this.taskToEdit.labelIds.push(label);
     },
-
-        addChecklist(newChecklist) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
-            this.taskToEdit.checklists.push(newChecklist)
-            // console.log("modal3 - newChecklist:", newChecklist)
-            this.editTask()
-        },
-        addMember(newMember) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
-            this.taskToEdit.checklists.push(newChecklist)
-            // console.log("modal3 - newChecklist:", newChecklist)
-
-            // this.closeDynamicModal()
-        },
-        updateChecklist({ type, newChecklist }) {
-            // console.log('111111111Checklist:', Checklist)
-            const checklists = this.taskToEdit.checklists;
-            const idx = checklists.findIndex(
-                (checklist) => checklist._id === newChecklist._id)
-            // console.log('idx:', idx)
-            // console.log('newChecklist.title:', newChecklist.title)
-            if (type === 'editChecklist') checklists.splice(idx, 1, newChecklist)
-            // if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
-            else checklists.splice(idx, 1)
-            this.editTask()
-        },
-        async setTask() {
-            try {
-                const boardId = this.$route.params.boardId;
-                const board = await boardService.getById(boardId);
-                const taskId = this.$route.params.taskId;
-                const groupId = this.$route.params.groupId;
-                console.log("groupId:", groupId);
-
-                this.board = JSON.parse(JSON.stringify(board));
-                this.group = this.board.groups.find((group) => group.id === groupId);
-                this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
-            } catch (err) {
-                console.log("error:");
-            }
-        },
-        toggleWatch() {
-            this.isWatchActive = !this.isWatchActive;
-            this.watch = this.isWatchActive ? "Watching" : "Watch";
-        },
-        // toggleOpenModal() {
-        //     // need to check if the specific action-btn that clicked, is the last clicked button. => Y? close modal. N? open the modal with new content from the other action-btn.
-        //     this.isDynamicModalOpen = !this.isDynamicModalOpen
-        // },
-        togglecover() {
-            this.isCoverActive = !this.isCoverActive;
-        },
-        closeDynamicModal() {
-            // this.actionCmpType = null
-            // this.actionCmpName = null
-        },
-        closeModal() {
-            this.$router.back()
-        },
-        editTask() {
-            console.log("edit task:")
-            const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
-            // console.log("editedTask:", editedTask)
-            const taskIdx = this.group.tasks.findIndex(
-                (task) => task.id === this.taskToEdit.id
-            )
-            // replace task with editTask
-            this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
-            this.$store.dispatch({ type: "updateBoard", board: this.board });
-        },
+    toggleWatch() {
+      this.isWatchActive = !this.isWatchActive;
+      this.watch = this.isWatchActive ? "Watching" : "Watch";
     },
-    computed: {
-        cmpOrder() {
-            return this.$store.getters.cmpsOrder;
-        },
+    // toggleOpenModal() {
+    //     // need to check if the specific action-btn that clicked, is the last clicked button. => Y? close modal. N? open the modal with new content from the other action-btn.
+    //     this.isDynamicModalOpen = !this.isDynamicModalOpen
+    // },
+    togglecover() {
+      this.isCoverActive = !this.isCoverActive;
     },
-    unmounted() {
-        // this.$store.commit({ type: 'setCurrTask', task: null })
+    closeDynamicModal() {
+      // this.actionCmpType = null
+      // this.actionCmpName = null
     },
-    components: {
-        DynamicModal,
-        Checklist,
-        Members,
-        Popper,
-        defineComponent,
+    closeModal() {
+      this.$router.back();
     },
+    editTask() {
+      console.log("edit task:");
+      const editedTask = JSON.parse(JSON.stringify(this.taskToEdit));
+      // console.log("editedTask:", editedTask)
+      const taskIdx = this.group.tasks.findIndex(
+        (task) => task.id === this.taskToEdit.id
+      );
+      // replace task with editTask
+      this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
+      this.$store.dispatch({ type: "updateBoard", board: this.board });
+    },
+  },
+  computed: {
+    cmpOrder() {
+      return this.$store.getters.cmpsOrder;
+    },
+  },
+  unmounted() {
+    // this.$store.commit({ type: 'setCurrTask', task: null })
+  },
+  components: {
+    DynamicModal,
+    Checklist,
+    Members,
+    Popper,
+    defineComponent,
+  },
 };
 </script>

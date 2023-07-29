@@ -59,7 +59,7 @@ export default {
         this.labels[labelIndex].checked = !this.labels[labelIndex].checked;
       }
 
-      this.$emit("setLabel", this.labels[labelIndex]);
+      this.$emit("saveLabel");
     },
   },
 };

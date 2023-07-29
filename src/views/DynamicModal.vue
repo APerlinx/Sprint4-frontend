@@ -12,7 +12,7 @@
         :info="taskToEdit"
         @member="addMember"
         @checklist="addChecklist"
-        @setLabel="setLabel"
+        @saveLabel="saveLabel"
       >
       </component>
     </section>
@@ -37,8 +37,8 @@ export default {
     closeModal() {
       this.isDynamicModalClose = !this.isDynamicModalClose;
     },
-    setLabel(label) {
-      this.$emit('setLabel', label)
+    saveLabel() {
+      this.$emit('saveLabel')
     },
     addMember() {},
     addChecklist(newChecklist) {
