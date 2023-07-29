@@ -1,49 +1,101 @@
 <template>
   <section class="task-preview" @click="goToTaskDetails" draggable="false">
     <li v-if="task">
-      <p>{{ task.title }}</p>
+      <div class="task-header">
+        <p>{{ task.title }}</p>
+      </div>
 
       <div class="tool-tip">
-        <span class="icon watch"></span>
-        <span class="icon desc"></span>
+        <div v-if="task.description">
+          <span class="icon desc"></span>
+        </div>
 
-        <span class="icon checklist"></span>
-        <span class="checklist-counter">0/3</span>
+        <div v-if="task.comments && task.comments.length > 0">
+          <span class="icon comment"></span>
+          <span class="comment-counter">{{ task.comments.length }}</span>
+        </div>
 
-        <span class="icon attach"></span>
-        <span class="attach-counter">3</span>
+        <div
+          v-if="task.checklists && task.checklists.length > 0"
+          :class="{ 'completed-checklist': checklistCompleted }"
+        >
+          <span class="icon checklist"></span>
+          <span class="checklist-counter"
+            >{{ doneChecklists }}/{{ totalChecklists }}</span
+          >
+        </div>
 
-        <span class="icon date"></span>
-        <span class="date-counter">28 Jul</span>
+        <div v-if="task.attachments && task.attachments.length > 0">
+          <span class="icon attach"></span>
+          <span class="attach-counter">{{ task.attachments.length }}</span>
+        </div>
 
-        <span class="icon comment"></span>
-        <span class="comment-counter">0/3</span>
+        <div :class="`due-date ${dueDateStatus}`" v-if="task.dueDate">
+          <span class="icon date"></span>
+          <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
+        </div>
 
-        <span class="icon member"></span>
+        <span class="icon member">M</span>
       </div>
     </li>
   </section>
 </template>
 
 <script>
+import { format } from 'date-fns'
+
 export default {
   props: {
     task: {
       type: Object,
       required: true,
-      // default: () => ({}),
     },
   },
   computed: {
-    currBoard() {
+    board() {
       const boardId = this.$store.getters.getCurrBoard?._id
-      console.log('boardId:', boardId)
       return boardId
+    },
+    totalChecklists() {
+      let total = 0
+      this.task.checklists.forEach((checklist) => {
+        total += checklist.todos.length
+      })
+      return total
+    },
+    doneChecklists() {
+      let done = 0
+      this.task.checklists.forEach((checklist) => {
+        checklist.todos.forEach((todo) => {
+          if (todo.isDone) {
+            done += 1
+          }
+        })
+      })
+      return done
+    },
+    checklistCompleted() {
+      return this.doneChecklists === this.totalChecklists
+    },
+    dueDateStatus() {
+      if (!this.task.dueDate) return 'no-due-date'
+
+      const now = Date.now()
+      const dueDate = new Date(this.task.dueDate).getTime()
+      const diffHours = (dueDate - now) / 1000 / 60 / 60
+
+      if (diffHours < -48) return 'overdue-long' 
+      if (diffHours < 0) return 'overdue-short' 
+      if (diffHours < 24) return 'due-soon'
+      return 'normal' 
     },
   },
   methods: {
     goToTaskDetails() {
-      this.$router.push(`/details/${this.currBoard}/task/${this.task.id}`)
+      this.$router.push(`/details/${this.board}/task/${this.task.id}`)
+    },
+    formatDate(timestamp) {
+      return format(new Date(timestamp), 'dd MMM')
     },
   },
 }

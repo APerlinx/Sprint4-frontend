@@ -1,52 +1,147 @@
 .task-preview {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 7px;
-    padding: 8px 8px 4px 12px;
-    box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
-    background-color: $task-bg-clr;
-    cursor: pointer;
-  
-    > li {
-      width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 7px;
+  padding: 8px 8px 4px 12px;
+  box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+  background-color: $task-bg-clr;
+  cursor: pointer;
 
-      .icon {
-        font-size: 1rem;
-        &.watch {
-          @include trello-icon($content: "\e969", $type: sm, $color: #626F86);
-        }
-        &.desc {
-          @include trello-icon($content: "\e922", $type: sm, $color: #626F86);
-        }
-        &.checklist {
-          @include trello-icon($content: "\e918", $type: sm, $color: #626F86);
-        }
-        &.comment {
-          @include trello-icon($content: "\e91e", $type: sm, $color: #626F86);
-        }
-        &.date {
-          @include trello-icon($content: "\e91b", $type: sm, $color: #626F86);
-        }
-        &.attach {
-          @include trello-icon($content: "\e908", $type: sm, $color: #626F86);
-        }
+  > li {
+    width: 100%;
+
+    .tool-tip {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      margin-bottom: 0.5em;
+      > div {
+        display: flex;
+        margin-right: 1em;
+      }
+      .icon.member {
+        margin-left: auto;
+      }
+      > div > .icon {
+        display: flex;
+        align-items: center;
         &.member {
-          // Members circles
+          margin-right: auto;
+        }
+        & + span {
+          vertical-align: middle;
+          font-size: 0.7rem;
+          margin-left: 0.3em;
+        }
+      }
+
+      .completed-checklist {
+        background-color: $background-success-bold;
+        border-radius: 3px;
+        padding: 2px 4px 2px 4px;
+
+        .icon.checklist {
+          color: $dynamic-text;
+        }
+
+        .checklist-counter {
+          color: $dynamic-text;
+        }
+      }
+
+      .due-date {
+        &.overdue-long {
+          background-color: $background-danger;
+          border-radius: 3px;
+          padding: 2px 4px 2px 4px;
+
+          .icon.date {
+            color: $ds-icon-danger;
+          }
+
+          .date-counter {
+            color: $ds-text-danger;
+          }
+
+          &:hover {
+            background-color: $ds-background-danger-hovered;
+            .icon.date {
+              @include trello-icon($content: "\e919", $type: sm, $color: $ds-icon-danger);
+            }
+          }
+        }
+
+        &.overdue-short {
+          background-color: red;
+          color: white;
+          border-radius: 3px;
+          padding: 2px 4px 2px 4px;
+
+          .icon.date {
+            color: white;
+          }
+
+          .date-counter {
+            color: white;
+          }
+        }
+
+        &.due-soon {
+          background-color: yellow;
+          color: black;
+          border-radius: 3px;
+          padding: 2px 4px 2px 4px;
+
+          .icon.date {
+            color: black;
+          }
+
+          .date-counter {
+            color: black;
+          }
+        }
+
+        &.normal,
+        &.no-due-date {
+          // normal styling for date icon and counter
         }
       }
     }
-  
-    > li > p {
-      margin: 0 0 4px;
-      overflow: hidden;
-      text-align: start;
-      font-size: 0.9em;
-    }
-  
-    &:hover {
-      background-color: rgba(160, 177, 190, 0.09);
+    .icon {
+      &.watch {
+        @include trello-icon($content: "\e969", $type: sm, $color: #626f86);
+      }
+      &.desc {
+        @include trello-icon($content: "\e922", $type: sm, $color: #626f86);
+      }
+      &.checklist {
+        @include trello-icon($content: "\e918", $type: sm, $color: #626f86);
+      }
+      &.comment {
+        @include trello-icon($content: "\e91e", $type: md, $color: #626f86);
+      }
+      &.date {
+        @include trello-icon($content: "\e91b", $type: sm, $color: #626f86);
+      }
+      &.attach {
+        @include trello-icon($content: "\e908", $type: sm, $color: #626f86);
+      }
+      &.member {
+        // Members circles
+      }
     }
   }
-  
+
+  > li > .task-header > p {
+    margin: 0 0 4px;
+    overflow: hidden;
+    text-align: start;
+    font-size: 0.9em;
+  }
+
+  &:hover {
+    background-color: rgba(160, 177, 190, 0.09);
+  }
+}
