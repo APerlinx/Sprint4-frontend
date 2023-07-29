@@ -1,5 +1,4 @@
 <template>
-    <AppHeader />
       <RouterView />
     <UserMsg />
 </template>
@@ -8,7 +7,6 @@
 import { userService } from "./services/user.service";
 import { store } from "./store/store";
 
-import AppHeader from "./cmps/AppHeader.vue";
 import UserMsg from "./cmps/UserMsg.vue";
 
 export default {
@@ -21,7 +19,6 @@ export default {
     if (user) store.commit({ type: "setLoggedinUser", user });
   },
   components: {
-    AppHeader,
     UserMsg,
   },
 };

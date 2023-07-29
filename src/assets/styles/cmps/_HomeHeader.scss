@@ -1,0 +1,46 @@
+.home-header {
+    display: grid;
+    grid-template-columns: 10% 1fr 1fr 10%;
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 3em;
+        padding: 0.5em;
+        grid-column: 2;
+    }
+
+    .user {
+        grid-template-columns: 3;
+        justify-self: end;
+        display: flex;
+        align-items: center;
+
+       
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: rem(150px);
+            height: 60%;
+            background-color: #0065ff;
+            color: white;
+            transition: 0.3s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #004fc5;
+            }
+        }
+         & :nth-child(1) {
+            background-color: white;
+            color: darkblue;
+            border: 1px solid #0065ff ;
+
+              &:hover {
+                background-color: #ffffff;
+            }
+        }
+    }
+}
