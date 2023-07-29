@@ -6,7 +6,7 @@
         </section>
 
         <section>
-            <component v-if="actionCmpType" :is="actionCmpType" @member="addMember" @cheklist="addChecklist">
+            <component v-if="actionCmpType" :is="actionCmpType" @member="addMember" @checklist="addChecklist">
             </component>
         </section>
     </div>
@@ -33,9 +33,9 @@ export default {
         addMember() {
 
         },
-        addChecklist() {
-            this.$emit('addChecklist', newChecklist)
-            console.log('newChecklist:', newChecklist)
+        addChecklist(newChecklist) {
+            this.$emit('checklist', newChecklist)
+            console.log('modal2 - newChecklist:', newChecklist)
         }
     },
     components: {

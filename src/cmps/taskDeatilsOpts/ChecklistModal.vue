@@ -37,8 +37,8 @@ export default {
                 title: this.checklistTitle,
                 todos: []
             }
-            this.$emit('addChecklist', newChecklist)
-            console.log('newChecklist:', newChecklist)
+            this.$emit('checklist', newChecklist)
+            console.log('modal1 - newChecklist:', newChecklist)
         }
     }
 }

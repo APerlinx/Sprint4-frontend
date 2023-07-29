@@ -36,6 +36,7 @@
                     </div>
                 </section>
             </div>
+            <button class="btn" @click="addTodo">Add an item</button>
 
         </section>
     </div>
@@ -46,6 +47,7 @@ import { utilService } from '../services/util.service.js'
 
 export default {
     props: {
+        checklist: Object
     },
     data() {
         return {
@@ -53,7 +55,9 @@ export default {
             isHideChecked: false,
             hideTodoBtn: false,
             hideBtn: true,
-            checklistToEdit: {
+            checklistToEdit:
+            {
+                _id: 'abc123',
                 title: 'test',
                 todos: [
                     {
@@ -76,11 +80,23 @@ export default {
         }
     },
     created() {
-
+        // this.checklistToEdit = JSON.parse(JSON.stringify(this.checklist))
     },
     methods: {
         deleteChecklist() {
             //need to add
+        },
+        addTodo() {
+            if (!this.newTodoTitle) return
+            const todo = {
+                _id: utilService.makeId(),
+                title: this.newTodoTitle,
+                isDone: false
+            }
+            this.checklistToEdit.todos.push(todo)
+            this.newTodoTitle = ''
+            this.addItemMode = false
+            this.updateTask()
         },
         updateTask() {
             //need to add

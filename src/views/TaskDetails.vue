@@ -54,6 +54,8 @@
                 </div>
 
                 <Checklist />
+                <!-- <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
+                    @updateChecklist="updateChecklist" /> -->
 
                 <div class="details-activity">
                     <div class="activity-show-details">
@@ -69,7 +71,8 @@
             <section class="action-btns-container">
                 <!-- <DynamicModal v-if="isDynamicModalOpen" /> -->
                 <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
-                    :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist" />
+                    :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
+                    @member="addMember" />
 
 
                 <h3 class="details-title-small">Suggested</h3>
@@ -136,10 +139,16 @@ export default {
             this.actionCmpType = 'MembersModal'
             this.actionCmpName = 'Members'
         },
-        addChecklist() {
+        addChecklist(newChecklist) {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
             this.taskToEdit.checklists.push(newChecklist)
-            console.log('addChecklist - newChecklist:', newChecklist)
+            console.log('modal3 - newChecklist:', newChecklist)
+            // this.closeDynamicModal()
+        },
+        addMember(newMember) {
+            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
+            this.taskToEdit.checklists.push(newChecklist)
+            console.log('modal3 - newChecklist:', newChecklist)
             // this.closeDynamicModal()
         },
         updateItem({ type, val }) {
@@ -178,8 +187,8 @@ export default {
             this.isCoverActive = !this.isCoverActive
         },
         closeDynamicModal() {
-            this.actionCmpType = null
-            this.actionCmpName = null
+            // this.actionCmpType = null
+            // this.actionCmpName = null
         },
         closeModal() {
             this.$router.back()
