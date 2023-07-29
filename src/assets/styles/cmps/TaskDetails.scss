@@ -128,9 +128,31 @@
 
         .task-alerts {
             display: flex;
-            flex-direction: row;
+            flex-wrap: wrap;
             align-items: center;
             margin: 25px 0 0 8px;
+
+            .label-wrapper {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.25em;
+
+                .label {
+                    display: flex;
+                    align-items: center;
+                    height: rem(34px);
+                    min-width: rem(50px);
+                    border-radius: 0.25em;
+                    padding: 1em;
+
+                    h6 {
+                        font-weight: 200;
+                        font-size: 1em;
+                    }
+
+                }
+
+            }
 
             .btn-watch {
                 padding: 6px 12px;
