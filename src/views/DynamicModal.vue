@@ -1,32 +1,52 @@
 <template>
-    <div class="dynamic-modal">
-        <section>
-            <h4>one of the btns</h4>
-            <span @click="$emit('closeModal')">X</span>
-        </section>
-
-        <section>
-            <component :is="cmp.type" :info="cmp.info" @set-val="setAns($event, idx)">
-                <!-- need to watch day38 recording again -->
-            </component>
-        </section>
-    </div>
+  <div class="dynamic-modal-container">
+    <section class="dynamic-modal-header">
+      <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
+      <span class="dynamic-modal-close" @click="closeModal">X</span>
+    </section>
+    <section>
+      <component
+        v-if="actionCmpType"
+        :is="actionCmpType"
+        :info="taskToEdit"
+        @member="addMember"
+        @checklist="addChecklist"
+        @saveLabel="saveLabel"
+      >
+      </component>
+    </section>
+  </div>
 </template>
-
 <script>
-// import Checklist from "../cmps/taskDeatilsOpts/CheckList.vue"
-
+import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
+import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
+import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
 export default {
     props: {
-        // need to get same props
+        taskToEdit: Object,
+        actionCmpType: String,
+        actionCmpName: String,
+    },
+    data() {
+        return {};
     },
     methods: {
         closeModal() {
-            this.$emit("closeModal")
+            this.isDynamicModalClose = !this.isDynamicModalClose;
+        },
+        saveLabel() {
+            this.$emit('saveLabel')
+        },
+        addMember() { },
+        addChecklist(newChecklist) {
+            this.$emit("checklist", newChecklist);
+            console.log("modal2 - newChecklist:", newChecklist);
         },
     },
     components: {
-        // Checklist,
+      ChecklistPicker,
+        ChecklistPicker,
+        LabelsPicker,
     }
 }
 </script>

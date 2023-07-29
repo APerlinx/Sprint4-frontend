@@ -20,7 +20,10 @@
 @import "cmps/BoardIndex";
 @import "cmps/BoardList";
 @import "cmps/BoardPreview";
+@import "cmps/BoardFilter";
 @import "cmps/AddBoard";
+@import "cmps/ColorPicker";
+@import "cmps/ImgPicker";
 
 @import "cmps/Home";
 
@@ -32,6 +35,13 @@
 @import "cmps/AddTask";
 @import "cmps/Checklist";
 @import "cmps/BoardHeader";
+@import "cmps/Members";
+@import "cmps/MemberModal";
+@import "cmps/DynamicModal";
+@import "cmps/ChecklistModal";
+
+
+@import "cmps/LabelsPicker";
 
 
 //Tailwind 

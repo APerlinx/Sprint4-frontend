@@ -44,7 +44,11 @@ export default {
   },
   computed: {
     imgUrl() {
-      return `url(${this.board?.imgUrl})` || "";
+      if (this.board.imgUrl) {
+        return `url(${this.board.imgUrl})`;
+      } else {
+        return this.board.bgColor
+      }
     },
   },
 };
@@ -53,5 +57,7 @@ export default {
 <style>
 .board {
   background-image: v-bind(imgUrl);
+  background-position: center;
+  background-size: cover;
 }
 </style>

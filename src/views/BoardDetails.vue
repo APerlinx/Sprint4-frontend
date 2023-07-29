@@ -19,6 +19,7 @@ export default {
     await this.$store.dispatch('loadBoards')
     const { boardId } = this.$route.params
     await this.$store.dispatch('loadCurrentBoard', { boardId })
+    await this.$store.dispatch('addBoardToRecent', { boardId })
   },
   computed: {
     board() {

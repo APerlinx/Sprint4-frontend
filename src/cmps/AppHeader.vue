@@ -1,16 +1,16 @@
 <template>
-  <div class="overlay" v-if="isAddBoard" @click="isAddBoard = false"></div>
-
   <header>
     <nav>
-      <RouterLink to="/board">
-        <div class="logo">
-          <i class="fa fa-trello"></i>
-          <h2>Trello</h2>
-        </div>
-      </RouterLink>
+      <div class="logo-container">
+        <RouterLink to="/board">
+          <div class="logo">
+            <i class="fa fa-trello"></i>
+            <h2>Trello</h2>
+          </div>
+        </RouterLink>
+      </div>
 
-      <div class="create">
+      <div class="create-btn">
         <Popper arrow placement="right">
           <RouterLink to="#">Create</RouterLink>
           <template #content>
@@ -18,28 +18,16 @@
           </template>
         </Popper>
       </div>
+
+    
+        <BoardFilter @filterByTxt="filterByTxt" />
+
     </nav>
-    <div class="actions">
-      <BoardFilter @filterByTxt="filterByTxt" />
-
-      <div class="loggedin-user">
-        <h2>SZ</h2>
-      </div>
-    </div>
-
-    <!-- <RouterLink :to="`/user/${loggedInUser._id}`">
-      {{ loggedInUser.fullname }}
-    </RouterLink> -->
-    <!-- <RouterLink to="/login">Login / Signup</RouterLink> -->
-    <!-- <section class="loggedin-user" v-if="loggedInUser"> -->
-    <!-- <span>{{ loggedInUser.score?.toLocaleString() }}</span> -->
-    <!-- <img :src="loggedInUser.imgUrl" /> -->
-    <!-- </section> -->
   </header>
 </template>
 <script>
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
-import AddBoard from "../cmps/AddBoard.vue";
+import AddBoard from "../cmps/addboard.vue";
 import BoardFilter from "../cmps/BoardFilter.vue";
 
 import { defineComponent } from "vue";
@@ -47,9 +35,7 @@ import Popper from "vue3-popper";
 
 export default {
   data() {
-    return {
-      isAddBoard: false,
-    };
+    return {};
   },
   methods: {
     async saveBoard(board) {

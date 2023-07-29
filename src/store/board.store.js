@@ -32,6 +32,7 @@ export function getActionAddBoardMsg(boardId) {
 export const boardStore = {
   state: {
     boards: [],
+    recentBoards: [],
     currentBoard: null,
     savedBoard: null,
     currentGroup: null,
@@ -40,6 +41,7 @@ export const boardStore = {
     dropResults: [],
 
 
+    cmpsOrder: ["MemberPicker", "LabelsPicker", "ChecklistPicker"]
   },
   getters: {
     boards({ boards }) {
@@ -50,8 +52,10 @@ export const boardStore = {
     },
     filteredBoards({ boards, filterBy }) {
       const byName = new RegExp(filterBy, "i")
-      return boards.filter(board => !board.isStarred &&
-        byName.test(board.title))
+      return boards.filter(board => byName.test(board.title))
+    },
+    recentBoards({ recentBoards }) {
+      return recentBoards
     },
     savedBoard({ savedBoard }) {
       return savedBoard
@@ -70,6 +74,9 @@ export const boardStore = {
     },
     getCurrTask({ currentTask }) {
       return currentTask
+    },
+    cmpsOrder({ cmpsOrder }) {
+      return cmpsOrder
     },
   },
   mutations: {
@@ -90,6 +97,7 @@ export const boardStore = {
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((c) => c._id === board._id)
       state.boards.splice(idx, 1, board)
+      console.log(state.boards[idx]);
     },
     removeBoard(state, { boardId }) {
       state.boards = state.boards.filter((board) => board._id !== boardId)
@@ -124,6 +132,36 @@ export const boardStore = {
     },
     setCurrTask(state, { task }) {
       state.currentTask = task
+    },
+    saveBoardToRecent(state, { board }) {
+      if (state.recentBoards.length >= 3) {
+        state.recentBoards.splice(0, 1, board)
+      } else {
+        state.recentBoards.push(board)
+      }
+    },
+
+    // EDIT or ADD task
+    setTask(state, { groupId, task }) {
+      if (state.currentGroup) groupId = state.currentGroup._id
+      const groupIdx = state.currentBoard.groups.findIndex(
+        group => group._id === groupId
+      )
+      if (task._id) {
+        const taskIdx = state.currentBoard.groups[groupIdx].tasks.findIndex(
+          currTask => currTask._id === task._id
+        )
+        state.currentBoard.groups[groupIdx].tasks.splice(taskIdx, 1, task)
+      } else {
+        task._id = utilService.makeId()
+        state.currentBoard.groups[groupIdx].tasks.push(task)
+      }
+    },
+    removeTask(state, { task }) {
+      const taskIdx = state.currentBoard.groups[task.groupIdx].tasks.findIndex(
+        currTask => currTask._id === task.taskId
+      );
+      state.currentBoard.groups[task.groupIdx].tasks.splice(taskIdx, 1);
     },
     setFilterBy(state, { filterBy }) {
       state.filterBy = filterBy
@@ -235,6 +273,29 @@ export const boardStore = {
         throw err
       }
     },
+    async addBoardToRecent({ commit, state }, { boardId }) {
+      try {
+        const isBoardInRecent = state.recentBoards.some(board => board._id === boardId);
+        if (isBoardInRecent) return
+
+        const board = await boardService.getById(boardId);
+        commit({ type: 'saveBoardToRecent', board });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+
+
+    async setTask({ commit, state, dispatch }, { groupId, task }) {
+      try {
+        commit({ type: 'setTask', groupId, task });
+        dispatch({ type: 'saveBoard', board: state.currentBoard });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async addTask({ commit, state }, { groupId, task }) {
       try {
         const newTask = {

@@ -1,13 +1,15 @@
 <template>
-  <ul v-if="boards.length" class="board-list">
-    <BoardPreview
-     v-for="board in boards"
-      :key="board._id" 
-      :board="board" 
-      @remove="$emit('remove', board._id)"
-      @star="star"
-      />
+  <div class="board-list">
+    <ul v-if="boards.length">
+      <li v-for="board in boards" :key="board._id">
+        <BoardPreview
+        :board="board"
+        @remove="$emit('remove', board._id)"
+        @star="star"
+        />
+      </li>
     </ul>
+  </div>
 </template>
 
 <script>
@@ -20,8 +22,8 @@ export default {
   },
   methods: {
     star(board) {
-      this.$emit("star", board)
-    }
+      this.$emit("star", board);
+    },
   },
   components: {
     BoardPreview,

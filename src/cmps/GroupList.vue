@@ -31,12 +31,8 @@
                   <span class="icon"></span> Add a card
                 </button>
 
-                <AddTask
-                  v-if="showTaskForm && currentGroupId === group.id"
-                  :groupId="currentGroupId"
-                  @addTask="addTask"
-                  @close="closeTaskForm"
-                />
+                <AddTask v-if="showTaskForm && currentGroupId === group.id" :groupId="currentGroupId" @addTask="addTask"
+                  @close="closeTaskForm" />
               </div>
             </template>
           </GroupPreview>
@@ -52,11 +48,7 @@
           <span class="icon"></span> Add another list
         </button>
       </li>
-      <li
-        class="open-form-wrapper"
-        v-if="toggleAddForm"
-        v-click-outside="handleCloseComponent"
-      >
+      <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
         <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
     </ul>

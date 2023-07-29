@@ -39,6 +39,13 @@
       </div>
     </li>
   </section>
+
+  <!-- <section class="task-preview">
+      <RouterLink :to="'/details/' + this.currBoard + '/group/' + this.groupId + '/task/' + task.id">
+        <li v-if="task">
+          <p>{{ task.title }}</p>
+        </li>
+      </RouterLink> -->
 </template>
 
 <script>
@@ -46,6 +53,10 @@ import { format } from 'date-fns'
 
 export default {
   props: {
+    groupId: {
+      type: String,
+      required: true,
+    },
     task: {
       type: Object,
       required: true,
@@ -92,7 +103,7 @@ export default {
   },
   methods: {
     goToTaskDetails() {
-      this.$router.push(`/details/${this.board}/task/${this.task.id}`)
+      this.$router.push(`/details/${this.currBoard}/group/${this.groupId}/task/${this.task.id}`)
     },
     formatDate(timestamp) {
       return format(new Date(timestamp), 'dd MMM')

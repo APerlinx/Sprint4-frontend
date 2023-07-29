@@ -64,10 +64,11 @@ async function addBoardMsg(boardId, txt) {
   return msg
 }
 
-function getEmptyBoard(title = '', imgUrl = 'https://images.unsplash.com/photo-1600691792883-dc29f53f6b17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80') {
+function getEmptyBoard(title = '', imgUrl = '', bgColor = '') {
   return {
     title,
-    imgUrl
+    imgUrl,
+    bgColor
   }
 }
 function getEmptyGroup(title) {
@@ -191,7 +192,6 @@ const board = {
         {
           "id": "c104",
           "title": "Help me",
-          "status": "in-progress", // monday
           "priority": "high",
           "description": "description",
           "comments": [
@@ -220,7 +220,11 @@ const board = {
             }
           ],
           "memberIds": ["u101"],
-          "labelIds": ["l101", "l102"],
+          "labelIds": [{ id: "l101", checked: false, bgColor: "#bc9609", txt: '' },
+          { id: "l102", checked: true, bgColor: "#bbf3db", txt: '' },
+          { id: "l103", checked: false, bgColor: "#faa63d", txt: '' },
+          { id: "l104", checked: false, bgColor: "#f87562", txt: '' },
+          { id: "l105", checked: false, bgColor: "#9f90ef", txt: '' }],
           "dueDate": 16156215211,
           "byMember": {
             "_id": "u101",
@@ -253,7 +257,7 @@ const board = {
     }
   ],
 
-  cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+  cmpsOrder: ["MemberPicker", "LabelsPicker", "CheckList", "DatePicker", "AttachmentPicker", "CoverPicker", "CustomFieldsPicker"]
 }
 
 const board2 = {
@@ -347,7 +351,11 @@ const board2 = {
             }
           ],
           "memberIds": ["u101"],
-          "labelIds": ["l101", "l102"],
+          "labelIds": [{ id: "l101", checked: false, bgColor: "#bc9609", txt: '' },
+          { id: "l102", checked: true, bgColor: "#bbf3db", txt: '' },
+          { id: "l103", checked: false, bgColor: "#faa63d", txt: '' },
+          { id: "l104", checked: false, bgColor: "#f87562", txt: '' },
+          { id: "l105", checked: false, bgColor: "#9f90ef", txt: '' }],
           "dueDate": 16156215211,
           "byMember": {
             "_id": "u101",
@@ -380,7 +388,7 @@ const board2 = {
     }
   ],
 
-  cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+  cmpsOrder: ["MemberPicker", "LabelsPicker", "ChecklistPicker", "DatePicker", "AttachmentPicker", "CoverPicker", "CustomFieldsPicker"]
 }
 
   // ; (async () => {
