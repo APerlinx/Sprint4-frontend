@@ -143,7 +143,6 @@ const board = {
         {
           "id": "c104",
           "title": "Help me",
-          "status": "in-progress", // monday
           "priority": "high",
           "description": "description",
           "comments": [
@@ -205,7 +204,7 @@ const board = {
     }
   ],
 
-  cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+  cmpsOrder: ["MemberPicker", "LabelsPicker", "CheckList", "DatePicker", "AttachmentPicker", "CoverPicker", "CustomFieldsPicker"]
 }
 
 const board2 = {
@@ -332,7 +331,7 @@ const board2 = {
     }
   ],
 
-  cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+  cmpsOrder: ["MemberPicker", "LabelsPicker", "CheckList", "DatePicker", "AttachmentPicker", "CoverPicker", "CustomFieldsPicker"]
 }
 
   // ; (async () => {

@@ -1,8 +1,9 @@
 .dynamic-modal-container {
-    position: fixed;
+    position: absolute;
     display: flex;
     flex-direction: row;
     z-index: 99;
+    height: 300px;
     border-radius: 10px;
     -webkit-box-shadow: 0 0 4px lightgrey;
     box-shadow: 0 0 4px lightgrey;
