@@ -5,8 +5,7 @@
             <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                 @focus="hideBtn = false"></textarea>
 
-            <button class="btn btn-checklist-hide-show" v-if="isTodoChecked && hideBtn"
-                @click="isHideChecked = !isHideChecked">
+            <button class="btn btn-checklist-hide-show" v-if="isTodoChecked" @click="isHideChecked = !isHideChecked">
                 {{ hideCheckedTxt }}</button>
             <div v-if="!hideBtn" class="btn-save-close">
                 <button class="btn" @click.stop="onTaskEdit">
@@ -23,20 +22,31 @@
         </section>
 
         <section class="todos-container">
-            <div v-for=" todo  in  checklistToEdit.todos " :key="todo._id">
+            <div v-for="todo in checklistToEdit.todos" :key="todo._id">
 
                 <section class="todo-container" v-if="isHideChecked ? !todo.isChecked : true">
                     <input type="checkbox" @change="updateChecklist" v-model="todo.isChecked" />
-                    <textarea class="todo-title" v-model="todo.title" @blur="hideTodoBtn = false"
-                        @focus="hideTodoBtn = true"></textarea>
-                    <div v-if="hideTodoBtn">
-                        <button class="btn btn-save-close" @click="updateChecklist">
-                            save
-                        </button>
-                    </div>
+                    <textarea class="todo-title" v-model="todo.title" :class="{ finished: todo.isChecked }"
+                        @blur="hideTodoBtn = false" @focus="hideTodoBtn = true">
+                </textarea>
                 </section>
             </div>
-            <button class="btn" @click="addTodo">Add an item</button>
+            <div v-if="hideTodoBtn">
+                <button class="btn btn-save-close" @click="updateChecklist">
+                    save
+                </button>
+                <button class="btn btn-save-close" @click="updateChecklist">
+                    x
+                </button>
+            </div>
+
+            <button class="btn is-add-todo" v-if="!isAddTodo" @click="isAddTodo = true">Add an item</button>
+
+            <div class="hide-add-todo-btns" v-else>
+                <textarea v-model="newTodoTitle" placeholder="Add an item" class="new-todo-title"></textarea>
+                <button class="btn-blue add-todo" @click="addTodo">Add</button>
+                <button class="btn cancel-todo">Cancel</button>
+            </div>
 
         </section>
     </div>
@@ -53,25 +63,28 @@ export default {
         return {
             checklistToEdit: null,
             isHideChecked: false,
+            isAddTodo: false,
+            isHideAddAnItem: false,
             hideTodoBtn: false,
             hideBtn: true,
+            newTodoTitle: '',
             // checklistToEdit:
             // {
             //     _id: 'abc123',
             //     title: 'test',
             //     todos: [
             //         {
-            //             id: "check101",
+            //             _id: "check101",
             //             title: "Guy",
             //             isChecked: true
             //         },
             //         {
-            //             id: "check102",
+            //             _id: "check102",
             //             title: "Alon",
             //             isChecked: false
             //         },
             //         {
-            //             id: "check103",
+            //             _id: "check103",
             //             title: "Shay",
             //             isChecked: false
             //         },
@@ -84,25 +97,36 @@ export default {
     },
     methods: {
         deleteChecklist() {
-            this.$emit('updateChecklist', this.checklistToEdit._id)
+            // console.log('checklistToEdit._id:', this.checklistToEdit)
+            this.checklistToEdit = JSON.parse(JSON.stringify(this.checklistToEdit))
+            this.$emit('updateChecklist', { type: 'deleteChecklist', newChecklist: this.checklistToEdit })
+
         },
         addTodo() {
-            if (!this.newTodoTitle) return
+            console.log('adding todo:')
+            // if (this.newTodoTitle) return
             const todo = {
                 _id: utilService.makeId(),
                 title: this.newTodoTitle,
-                isDone: false
+                isChecked: false
             }
+            // console.log('todo', todo)
             this.checklistToEdit.todos.push(todo)
             this.newTodoTitle = ''
-            this.addItemMode = false
+            this.isAddTodo = false
             this.updateChecklist()
         },
         updateChecklist() {
-            this.$emit('updateChecklist', JSON.parse(JSON.stringify(this.checklistToEdit)))
+            // console.log('this.checklistToEdit:', JSON.parse(JSON.stringify(this.checklistToEdit)))
+            this.checklistToEdit = JSON.parse(JSON.stringify(this.checklistToEdit))
+            this.$emit('updateChecklist', { type: 'editChecklist', newChecklist: this.checklistToEdit })
+
         }
     },
     computed: {
+        isTodoAdd() {
+
+        },
         isTodoChecked() {
             return this.checklistToEdit.todos.some(todo => todo.isChecked)
         },
