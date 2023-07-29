@@ -37,6 +37,7 @@ export const boardStore = {
     currentGroup: null,
     currentTask: null,
     filterBy: '',
+    cmpsOrder: ["MemberPicker", "LabelsPicker", "ChecklistModal"]
   },
   getters: {
     boards({ boards }) {
@@ -69,6 +70,9 @@ export const boardStore = {
     },
     getCurrTask({ currentTask }) {
       return currentTask
+    },
+    cmpsOrder({ cmpsOrder }) {
+      return cmpsOrder
     },
   },
   mutations: {
