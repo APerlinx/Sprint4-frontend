@@ -171,7 +171,11 @@ const board = {
             }
           ],
           "memberIds": ["u101"],
-          "labelIds": ["l101", "l102"],
+          "labelIds": [{ id: "l101", checked: false, bgColor: "#bc9609", txt: '' },
+          { id: "l102", checked: true, bgColor: "#bbf3db", txt: '' },
+          { id: "l103", checked: false, bgColor: "#faa63d", txt: '' },
+          { id: "l104", checked: false, bgColor: "#f87562", txt: '' },
+          { id: "l105", checked: false, bgColor: "#9f90ef", txt: '' }],
           "dueDate": 16156215211,
           "byMember": {
             "_id": "u101",
@@ -298,7 +302,11 @@ const board2 = {
             }
           ],
           "memberIds": ["u101"],
-          "labelIds": ["l101", "l102"],
+          "labelIds": [{ id: "l101", checked: false, bgColor: "#bc9609", txt: '' },
+          { id: "l102", checked: true, bgColor: "#bbf3db", txt: '' },
+          { id: "l103", checked: false, bgColor: "#faa63d", txt: '' },
+          { id: "l104", checked: false, bgColor: "#f87562", txt: '' },
+          { id: "l105", checked: false, bgColor: "#9f90ef", txt: '' }],
           "dueDate": 16156215211,
           "byMember": {
             "_id": "u101",

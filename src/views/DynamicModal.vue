@@ -37,8 +37,8 @@ export default {
     closeModal() {
       this.isDynamicModalClose = !this.isDynamicModalClose;
     },
-    setLabel(labels) {
-      this.$emit('setLabel', labels)
+    setLabel(label) {
+      this.$emit('setLabel', label)
     },
     addMember() {},
     addChecklist(newChecklist) {
