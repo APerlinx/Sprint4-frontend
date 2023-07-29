@@ -125,7 +125,7 @@
 
 <script>
 import DynamicModal from "./DynamicModal.vue";
-import Checklist from "../cmps/Checklist.vue";
+import Checklist from "../cmps/Checklist.vue"
 import Members from "../cmps/Members.vue";
 import Labels from "../cmps/Labels.vue";
 import { boardService } from "../services/board.service.local.js";
@@ -158,9 +158,9 @@ export default {
             this.actionCmpName = this.dynamicNames[idx];
         },
 
-    saveLabel() {
-      this.$store.dispatch({ type: "updateBoard", board: this.board })
-    },
+        saveLabel() {
+            this.$store.dispatch({ type: "updateBoard", board: this.board })
+        },
 
         addChecklist(newChecklist) {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];

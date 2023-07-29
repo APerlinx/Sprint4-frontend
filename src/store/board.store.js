@@ -255,14 +255,14 @@ export const boardStore = {
       try {
         const isBoardInRecent = state.recentBoards.some(board => board._id === boardId);
         if (isBoardInRecent) return
-    
+
         const board = await boardService.getById(boardId);
         commit({ type: 'saveBoardToRecent', board });
       } catch (err) {
         console.log(err);
       }
     },
-    
+
 
 
     async setTask({ commit, state, dispatch }, { groupId, task }) {

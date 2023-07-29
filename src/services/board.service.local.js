@@ -339,7 +339,7 @@ const board2 = {
     }
   ],
 
-  cmpsOrder: ["MemberPicker", "LabelsPicker", "CheckList", "DatePicker", "AttachmentPicker", "CoverPicker", "CustomFieldsPicker"]
+  cmpsOrder: ["MemberPicker", "LabelsPicker", "ChecklistPicker", "DatePicker", "AttachmentPicker", "CoverPicker", "CustomFieldsPicker"]
 }
 
   // ; (async () => {
