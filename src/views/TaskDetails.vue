@@ -182,15 +182,7 @@ export default {
     },
 
     saveLabel() {
-      this.$store.dispatch({ type: "updateBoard", board: this.board });
-
-      // console.log(label);
-      // const labelIndex = this.taskToEdit.labelsIds.findIndex(
-      //   (lab) => lab.id === label.id
-      // );
-      // console.log('1',this.taskToEdit.labelIds);
-      // this.taskToEdit.labelIds.splice(labelIndex, 1, label)
-      // console.log('2', this.taskToEdit.labelIds);
+      this.$store.dispatch({ type: "updateBoard", board: this.board })
     },
 
     addChecklist(newChecklist) {
