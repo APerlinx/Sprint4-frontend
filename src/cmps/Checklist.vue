@@ -26,11 +26,11 @@
             <div v-for=" todo  in  checklistToEdit.todos " :key="todo._id">
 
                 <section class="todo-container" v-if="isHideChecked ? !todo.isChecked : true">
-                    <input type="checkbox" @change="updateTask" v-model="todo.isChecked" />
+                    <input type="checkbox" @change="updateChecklist" v-model="todo.isChecked" />
                     <textarea class="todo-title" v-model="todo.title" @blur="hideTodoBtn = false"
                         @focus="hideTodoBtn = true"></textarea>
                     <div v-if="hideTodoBtn">
-                        <button class="btn btn-save-close" @click="updateTask">
+                        <button class="btn btn-save-close" @click="updateChecklist">
                             save
                         </button>
                     </div>
@@ -84,7 +84,7 @@ export default {
     },
     methods: {
         deleteChecklist() {
-            //need to add
+            this.$emit('updateChecklist', this.checklistToEdit._id)
         },
         addTodo() {
             if (!this.newTodoTitle) return
@@ -96,10 +96,10 @@ export default {
             this.checklistToEdit.todos.push(todo)
             this.newTodoTitle = ''
             this.addItemMode = false
-            this.updateTask()
+            this.updateChecklist()
         },
-        updateTask() {
-            this.$emit('updateItem', JSON.parse(JSON.stringify(this.checklistToEdit)));
+        updateChecklist() {
+            this.$emit('updateChecklist', JSON.parse(JSON.stringify(this.checklistToEdit)))
         }
     },
     computed: {
