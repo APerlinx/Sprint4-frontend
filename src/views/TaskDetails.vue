@@ -27,21 +27,8 @@
                 <div class="task-alerts">
                     <Members />
 
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
                     <Labels :task="taskToEdit" />
 
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
-                    <!-- <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
-                        <h5>Labels</h5>
-                        <template v-for="label in taskToEdit.labelIds">
-
-                            <div class="label" :style="{ backgroundColor: label.bgColor }">
-                                <h6>{{ label.txt }}</h6>
-                            </div>
-                        </template>
-                    </div> -->
-
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
 
                     <div class="details-notification">
                         <h5>Notifications</h5>
