@@ -38,17 +38,6 @@
                     </div>
 
                     <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
-                    <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
-                        <h5>Labels</h5>
-                        <template v-for="label in taskToEdit.labelIds">
-
-                            <div class="label" :style="{ backgroundColor: label.bgColor }">
-                                <h6>{{ label.txt }}</h6>
-                            </div>
-                        </template>
-                    </div>
-
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
 
                     <div class="details-notification">
                         <h5>Notifications</h5>
@@ -130,7 +119,7 @@
 
 <script>
 import DynamicModal from "./DynamicModal.vue";
-import Checklist from "../cmps/Checklist.vue";
+import Checklist from "../cmps/Checklist.vue"
 import Members from "../cmps/Members.vue";
 import { boardService } from "../services/board.service.local.js";
 
@@ -162,9 +151,9 @@ export default {
             this.actionCmpName = this.dynamicNames[idx];
         },
 
-    saveLabel() {
-      this.$store.dispatch({ type: "updateBoard", board: this.board })
-    },
+        saveLabel() {
+            this.$store.dispatch({ type: "updateBoard", board: this.board })
+        },
 
         addChecklist(newChecklist) {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];

@@ -4,7 +4,6 @@
             <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
             <span class="dynamic-modal-close" @click="closeModal">X</span>
         </section>
-
         <section>
             <component v-if="actionCmpType" :is="actionCmpType" :info="taskToEdit" @member="addMember"
                 @checklist="addChecklist" @saveLabel="saveLabel">
@@ -12,12 +11,10 @@
         </section>
     </div>
 </template>
-
 <script>
-import CheckListPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
+import ChecklistPicker from "../cmps/taskDeatilsOpts/ChecklistPicker.vue"
 import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
 import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
-
 export default {
     props: {
         taskToEdit: Object,
@@ -41,7 +38,7 @@ export default {
         },
     },
     components: {
-        CheckListPicker,
+        ChecklistPicker,
         LabelsPicker,
         MemberPicker,
     },
