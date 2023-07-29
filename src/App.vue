@@ -1,6 +1,6 @@
 <template>
-      <RouterView />
-    <UserMsg />
+  <RouterView />
+  <UserMsg />
 </template>
 
 <script>
