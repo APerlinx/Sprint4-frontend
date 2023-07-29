@@ -15,14 +15,9 @@
           <span class="comment-counter">{{ task.comments.length }}</span>
         </div>
 
-        <div
-          v-if="task.checklists && task.checklists.length > 0"
-          :class="{ 'completed-checklist': checklistCompleted }"
-        >
+        <div v-if="task.checklists && task.checklists.length > 0" :class="{ 'completed-checklist': checklistCompleted }">
           <span class="icon checklist"></span>
-          <span class="checklist-counter"
-            >{{ doneChecklists }}/{{ totalChecklists }}</span
-          >
+          <span class="checklist-counter">{{ doneChecklists }}/{{ totalChecklists }}</span>
         </div>
 
         <div v-if="task.attachments && task.attachments.length > 0">
@@ -62,6 +57,11 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      done: 0
+    }
+  },
   computed: {
     board() {
       const boardId = this.$store.getters.getCurrBoard?._id
@@ -71,19 +71,21 @@ export default {
       let total = 0
       this.task.checklists.forEach((checklist) => {
         total += checklist.todos.length
+
       })
       return total
     },
     doneChecklists() {
-      let done = 0
       this.task.checklists.forEach((checklist) => {
         checklist.todos.forEach((todo) => {
           if (todo.isDone) {
-            done += 1
+            this.done += 1
+            console.log("🚀 ~ file: TaskPreview.vue:80 ~ checklist.todos.forEach ~ done:", this.done)
+
           }
         })
       })
-      return done
+      return this.done
     },
     checklistCompleted() {
       return this.doneChecklists === this.totalChecklists
@@ -95,15 +97,15 @@ export default {
       const dueDate = new Date(this.task.dueDate).getTime()
       const diffHours = (dueDate - now) / 1000 / 60 / 60
 
-      if (diffHours < -48) return 'overdue-long' 
-      if (diffHours < 0) return 'overdue-short' 
+      if (diffHours < -48) return 'overdue-long'
+      if (diffHours < 0) return 'overdue-short'
       if (diffHours < 24) return 'due-soon'
-      return 'normal' 
+      return 'normal'
     },
   },
   methods: {
     goToTaskDetails() {
-      this.$router.push(`/details/${this.currBoard}/group/${this.groupId}/task/${this.task.id}`)
+      this.$router.push(`/details/${this.board}/group/${this.groupId}/task/${this.task.id}`)
     },
     formatDate(timestamp) {
       return format(new Date(timestamp), 'dd MMM')

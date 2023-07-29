@@ -28,9 +28,7 @@
                     <Members />
 
                     <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
-                   <Labels
-                   :task="taskToEdit"
-                   />
+                    <Labels :task="taskToEdit" />
 
                     <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
                     <!-- <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
@@ -108,7 +106,7 @@
                     </template>
                 </Popper>
 
-                <!-- <button class="btn">Dates</button>
+                <button class="btn">Dates</button>
                 <button class="btn">Attachments</button>
                 <button class="btn" @click="togglecover">Cover</button>
                 <button class="btn">Custom Fields</button>
@@ -117,7 +115,7 @@
                 <button class="btn">Copy</button>
                 <button class="btn">Make template</button>
                 <button class="btn">Archive</button>
-                <button class="btn">Share</button> -->
+                <button class="btn">Share</button>
             </section>
         </section>
     </div>
@@ -191,6 +189,8 @@ export default {
         async setTask() {
             try {
                 const boardId = this.$route.params.boardId;
+                console.log("🚀 ~ file: TaskDetails.vue:192 ~ setTask ~ boardId:", boardId)
+
                 const board = await boardService.getById(boardId);
                 const taskId = this.$route.params.taskId;
                 const groupId = this.$route.params.groupId;
@@ -200,7 +200,7 @@ export default {
                 this.group = this.board.groups.find((group) => group.id === groupId);
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
             } catch (err) {
-                console.log("error:");
+                console.log("error: check");
             }
         },
         toggleWatch() {
