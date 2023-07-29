@@ -143,24 +143,25 @@ export default {
         addChecklist(newChecklist) {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
             this.taskToEdit.checklists.push(newChecklist)
-            console.log("modal3 - newChecklist:", newChecklist)
+            // console.log("modal3 - newChecklist:", newChecklist)
             this.editTask()
         },
         addMember(newMember) {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
             this.taskToEdit.checklists.push(newChecklist)
-            console.log("modal3 - newChecklist:", newChecklist)
+            // console.log("modal3 - newChecklist:", newChecklist)
 
             // this.closeDynamicModal()
         },
-        updateChecklist(newChecklist) {
-            console.log('Checklist:', Checklist)
-
+        updateChecklist({ type, newChecklist }) {
+            // console.log('111111111Checklist:', Checklist)
             const checklists = this.taskToEdit.checklists;
             const idx = checklists.findIndex(
                 (checklist) => checklist._id === newChecklist._id)
-            console.log('idx:', idx)
-            if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
+            // console.log('idx:', idx)
+            // console.log('newChecklist.title:', newChecklist.title)
+            if (type === 'editChecklist') checklists.splice(idx, 1, newChecklist)
+            // if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
             else checklists.splice(idx, 1)
             this.editTask()
         },
@@ -200,7 +201,7 @@ export default {
         editTask() {
             console.log("edit task:")
             const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
-            console.log("editedTask:", editedTask)
+            // console.log("editedTask:", editedTask)
             const taskIdx = this.group.tasks.findIndex(
                 (task) => task.id === this.taskToEdit.id
             )

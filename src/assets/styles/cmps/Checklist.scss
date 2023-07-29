@@ -48,6 +48,10 @@
     background-color: white;
 }
 
+.finished {
+    text-decoration: line-through;
+}
+
 .todo-container {
     display: flex;
     flex-direction: row;
