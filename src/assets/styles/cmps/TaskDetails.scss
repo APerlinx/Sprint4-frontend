@@ -281,6 +281,13 @@
 
 }
 
+.icon {
+    &.date {
+        @include trello-icon($content: "\e91b", $type: sm, $color: #626f86);
+    }
+}
+
+
 // --ds-background-neutral: #091E420F;
 // --ds-background-neutral-hovered: #091E4224;
 // --ds-background-neutral-pressed: #091E424F;
