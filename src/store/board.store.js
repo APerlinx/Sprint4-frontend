@@ -1,7 +1,5 @@
 import { boardService } from '../services/board.service.local'
 // import { boardService } from '../services/board.service'
-import { applyDrag } from '../services/util.service.js'
-import { reactive } from 'vue'
 
 export function getActionRemoveBoard(boardId) {
   return {
@@ -39,6 +37,7 @@ export const boardStore = {
     currentTask: null,
     filterBy: '',
     dropResults: [],
+    areLabelsVisible: false,
 
     cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker'],
   },
@@ -77,6 +76,14 @@ export const boardStore = {
     cmpsOrder({ cmpsOrder }) {
       return cmpsOrder
     },
+    getLabelById: (state) => (id) => {
+      const board = state.currentBoard
+      if (board && board.labels) {
+        return board.labels.find((label) => label.id === id)
+      }
+      return null
+    },
+    areLabelsVisible: state => state.areLabelsVisible, 
   },
   mutations: {
     setBoards(state, { boards }) {
@@ -182,6 +189,9 @@ export const boardStore = {
       const task = board.groups[groupIndex].tasks[taskIndex]
       task.status = task.status === 'done' ? 'in-progress' : 'done'
     },
+    toggleLabelsVisibility(state) {
+      state.areLabelsVisible = !state.areLabelsVisible
+    }
   },
   actions: {
     async addBoard(context, { board }) {

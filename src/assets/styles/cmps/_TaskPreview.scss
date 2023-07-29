@@ -9,6 +9,10 @@
   background-color: $task-bg-clr;
   cursor: pointer;
 
+  &.with-cover {
+    border-radius: 0 0 8px 8px;
+  }
+
   > li {
     width: 100%;
 

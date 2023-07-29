@@ -92,6 +92,7 @@ function getEmptyTask(title) {
     checklists: [],
     labelIds: [],
     attachments: [],
+    watching:false,
     createdAt: Date.now(),
     dueDate: "",
     byMember: {
@@ -123,25 +124,9 @@ const board = {
   style: {
     backgroundImage: ""
   },
-  labels: [
-    {
-      "id": "l101",
-      "title": "Done",
-      "color": "#61bd4f"
-    },
-    {
-      "id": "l102",
-      "title": "Progress",
-      "color": "#61bd33"
-    }
-  ],
-  members: [
-    {
-      "_id": "u101",
-      "fullname": "Tal Tarablus",
-      "imgUrl": "https://www.google.com"
-    }
-  ],
+  labels: _labelOptions(),
+  members: _membersOptions(),
+  cover: coverOptions(),
   groups: [
     {
       "id": "g101",
@@ -153,6 +138,8 @@ const board = {
           "title": "Replace logo",
           "description": "Replace the logo at the header",
           "labels": ['l101','l102','l103'],
+          "watching":false,
+          "cover": { color: '#277da1', imgUrl: '', isFull: 'false'},
           "comments": [
             {
               "id": "ZdPnm",
@@ -203,7 +190,9 @@ const board = {
           "id": "c102",
           "title": "Add Samples",
           "description": "Add samples to the data",
-
+          "labels": ['l104','l105'],
+          "watching":true,
+          "cover": { color: '', imgUrl:'https://webneel.com/daily/sites/default/files/images/daily/08-2018/1-nature-photography-spring-season-mumtazshamsee.jpg', isFull: 'true'},
         }
       ],
       "style": {}
@@ -452,53 +441,53 @@ function _labelOptions() {
   return [
     {
       id: "l101",
-      bgColor: "#e63946",
-      txt: "Urgent",
+      color: "#f87562",
+      title: "Urgent",
     },
     {
       id: "l102",
-      bgColor: "#2a9d8f",
-      txt: "Important",
+      color: "#2a9d8f",
+      title: "Important",
     },
     {
       id: "l103",
-      bgColor: "#e9c46a",
-      txt: "New",
+      color: "#e9c46a",
+      title: "New",
     },
     {
       id: "l104",
-      bgColor: "#48cae4",
-      txt: "Nice to have",
+      color: "#48cae4",
+      title: "Nice to have",
     },
     {
       id: "l106",
-      bgColor: "#adc178",
-      txt: "Delayed",
+      color: "#adc178",
+      title: "Delayed",
     },
     {
       id: "l107",
-      bgColor: "#9c89b8",
-      txt: "In progress",
+      color: "#9c89b8",
+      title: "In progress",
     },
     {
       id: "l108",
-      bgColor: "#0ead69",
-      txt: "Done",
+      color: "#0ead69",
+      title: "Done",
     },
     {
       id: "l109",
-      bgColor: "#16697a",
-      txt: "Do not forget",
+      color: "#16697a",
+      title: "Do not forget",
     },
     {
       id: "l110",
-      bgColor: "#70e000",
-      txt: "Bug",
+      color: "#70e000",
+      title: "Bug",
     },
     {
       id: "l111",
-      bgColor: "#00a8e8",
-      txt: "Take care today",
+      color: "#00a8e8",
+      title: "Take care today",
     },
   ]
 }
