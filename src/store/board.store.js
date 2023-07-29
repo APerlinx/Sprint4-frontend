@@ -89,6 +89,7 @@ export const boardStore = {
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((c) => c._id === board._id)
       state.boards.splice(idx, 1, board)
+      console.log(state.boards[idx]);
     },
     removeBoard(state, { boardId }) {
       state.boards = state.boards.filter((board) => board._id !== boardId)

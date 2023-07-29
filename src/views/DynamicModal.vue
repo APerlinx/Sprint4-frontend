@@ -7,7 +7,7 @@
 
         <section>
             <component v-if="actionCmpType" :is="actionCmpType" :info="taskToEdit" @member="addMember"
-                @checklist="addChecklist" @setLabel="setLabel">
+                @checklist="addChecklist" @saveLabel="saveLabel">
             </component>
         </section>
     </div>
@@ -24,15 +24,15 @@ export default {
         actionCmpType: String,
         actionCmpName: String,
     },
+    data() {
+        return {};
+    },
     methods: {
-        setLabel(label) {
-            this.$emit('setLabel', label)
-        },
         closeModal() {
             this.isDynamicModalClose = !this.isDynamicModalClose;
         },
-        setLabel(labels) {
-            this.$emit('setLabel', labels)
+        saveLabel() {
+            this.$emit('saveLabel')
         },
         addMember() { },
         addChecklist(newChecklist) {
@@ -41,7 +41,7 @@ export default {
         },
     },
     components: {
-        CheckListPicker,
+        ChecklistModal,
         LabelsPicker,
         MemberPicker,
     },

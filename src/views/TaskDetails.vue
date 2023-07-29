@@ -109,7 +109,7 @@
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
-                            @member="addMember" @setLabel="setLabel" />
+                            @member="addMember" @saveLabel="saveLabel" />
                     </template>
                 </Popper>
 
@@ -162,25 +162,27 @@ export default {
             this.actionCmpName = this.dynamicNames[idx];
         },
 
-        setLabel(label) {
-            const labelIndex = this.taskToEdit.labelsIds.findIndex(
-                (label) => label.id === label.id
-            );
-            if (labelIndex !== -1) {
-                this.taskToEdit.labelsIds[labelIndex].splice.checked = !this.labels[labelIndex].checked;
-            }
-            this.taskToEdit.labelIds.push(label);
+        saveLabel() {
+            this.$store.dispatch({ type: "updateBoard", board: this.board });
+
+            // console.log(label);
+            // const labelIndex = this.taskToEdit.labelsIds.findIndex(
+            //   (lab) => lab.id === label.id
+            // );
+            // console.log('1',this.taskToEdit.labelIds);
+            // this.taskToEdit.labelIds.splice(labelIndex, 1, label)
+            // console.log('2', this.taskToEdit.labelIds);
         },
 
         addChecklist(newChecklist) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
-            this.taskToEdit.checklists.push(newChecklist)
+            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
+            this.taskToEdit.checklists.push(newChecklist);
             // console.log("modal3 - newChecklist:", newChecklist)
-            this.editTask()
+            this.editTask();
         },
         addMember(newMember) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
-            this.taskToEdit.checklists.push(newChecklist)
+            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
+            this.taskToEdit.checklists.push(newChecklist);
             // console.log("modal3 - newChecklist:", newChecklist)
 
             // this.closeDynamicModal()
@@ -189,13 +191,14 @@ export default {
             // console.log('111111111Checklist:', Checklist)
             const checklists = this.taskToEdit.checklists;
             const idx = checklists.findIndex(
-                (checklist) => checklist._id === newChecklist._id)
+                (checklist) => checklist._id === newChecklist._id
+            );
             // console.log('idx:', idx)
             // console.log('newChecklist.title:', newChecklist.title)
-            if (type === 'editChecklist') checklists.splice(idx, 1, newChecklist)
+            if (type === "editChecklist") checklists.splice(idx, 1, newChecklist);
             // if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
-            else checklists.splice(idx, 1)
-            this.editTask()
+            else checklists.splice(idx, 1);
+            this.editTask();
         },
         async setTask() {
             try {
@@ -228,15 +231,15 @@ export default {
             // this.actionCmpName = null
         },
         closeModal() {
-            this.$router.back()
+            this.$router.back();
         },
         editTask() {
-            console.log("edit task:")
-            const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
+            console.log("edit task:");
+            const editedTask = JSON.parse(JSON.stringify(this.taskToEdit));
             // console.log("editedTask:", editedTask)
             const taskIdx = this.group.tasks.findIndex(
                 (task) => task.id === this.taskToEdit.id
-            )
+            );
             // replace task with editTask
             this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
             this.$store.dispatch({ type: "updateBoard", board: this.board });
