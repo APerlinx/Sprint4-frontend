@@ -23,23 +23,23 @@
                 </div>
             </section>
 
-      <section class="task-details-main">
-        <div class="task-alerts">
-          
-          <Members />
+            <section class="task-details-main">
+                <div class="task-alerts">
 
-          <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
-          <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
-            <h5>Labels</h5>
-            <template v-for="label in taskToEdit.labelIds">
-              
-              <div class="label" :style="{ backgroundColor: label.bgColor }">
-                <h6>{{ label.txt }}</h6>
-              </div>
-            </template>
-          </div>
+                    <Members />
 
-          <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
+                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
+                    <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
+                        <h5>Labels</h5>
+                        <template v-for="label in taskToEdit.labelIds">
+
+                            <div class="label" :style="{ backgroundColor: label.bgColor }">
+                                <h6>{{ label.txt }}</h6>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
 
 
                     <div class="details-notification">
