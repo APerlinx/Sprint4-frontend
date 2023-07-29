@@ -196,7 +196,7 @@ const board = {
                 }
               ]
             }
-          ],,
+          ],
           "labelIds": [{ id: "l101", checked: false, bgColor: "#bc9609", txt: '' },
           { id: "l102", checked: true, bgColor: "#bbf3db", txt: '' },
           { id: "l103", checked: false, bgColor: "#faa63d", txt: '' },
