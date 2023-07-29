@@ -1,20 +1,62 @@
 .board-header {
-    background: rgb(23, 43, 77,0.3); 
+  background: rgb(23, 43, 77, 0.3);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: rem(56px);
+  justify-content: space-between;
+  border: none;
+  padding: 12px 10px 12px 16px;
+
+  .nav-bar {
     display: flex;
-    width: 100%;
     justify-content: space-between;
-    border: none;
-    padding: 12px 10px 12px 16px;
+    align-items: center;
   }
-  
+
   .nav-bar > input {
-    background: none;
+    background-color: $group-background-input;
+    box-shadow: $border-focused 0px 0px 0px 2px inset;
+    padding: 4px;
+    font-weight: bold;
+    line-height: rem(32px);
+    text-overflow: ellipsis;
     border: none;
-    font-size: 1.5em;
-    color: $dynamic-text; 
-    width: max-content;
+    font-size: rem(18px);
+    color: $list-text-color;
+    flex-grow: 1; /* allow the input field to take up the remaining space */
+    margin-right: 10px; 
   }
-  
-  .nav-bar > input::placeholder {
+
+  .nav-bar > h1 {
     color: $dynamic-text;
+    font-weight: bold;
+    line-height: rem(32px);
+    font-size: rem(20px);
+    margin: 0;
+    margin-inline-end: rem(-25px);
   }
+
+  .nav-bar > span {
+    cursor: pointer;
+    padding: rem(6px);
+    border-radius: 3px;
+    &.full-star {
+      @include trello-icon($content: "\e967", $type: sm, $color: #fff);
+    }
+    &.full-star:hover {
+      @include trello-icon($content: "\e966", $type: sm, $color: #fff);
+      background-color: $dynamic-button-hovered;
+
+    }
+    &.star {
+      @include trello-icon($content: "\e966", $type: sm, $color: #fff);
+    }
+    &.star:hover {
+      @include trello-icon($content: "\e966", $type: md, $color: #fff);
+      background-color: $dynamic-button-hovered;
+
+    }
+
+  }
+}

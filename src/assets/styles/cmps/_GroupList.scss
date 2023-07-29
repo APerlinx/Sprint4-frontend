@@ -16,7 +16,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
-
+    z-index: 999;
     .group-actions {
       display: flex;
     }
@@ -30,8 +30,8 @@
       width: 100%;
       text-align: start;
       margin-inline-start: 0.2em;
-      display: flex; 
-      align-items: center; 
+      display: flex;
+      align-items: center;
       > .icon {
         @include trello-icon($content: "\e901", $type: sm, $color: $text-subtle);
         margin-inline-end: 0.5em;
@@ -77,7 +77,6 @@
       > .icon {
         @include trello-icon($content: "\e901", $type: sm, $color: $dynamic-text);
       }
-
     }
 
     form {
@@ -109,3 +108,17 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
+
+.smooth-dnd-container {
+  min-height: 0;
+}
+
+.smooth-dnd-container.horizontal {
+  .smooth-dnd-draggable-wrapper {
+    transition-duration: 0ms;
+  }
+}
+
+// .smooth-dnd-draggable-wrapper:not(.draggable-item) {
+//   transition-duration: 0ms !important;
+// }

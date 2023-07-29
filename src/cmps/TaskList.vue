@@ -6,12 +6,17 @@
     :get-child-payload="getChildPayload"
     group-name="col-items"
     @drop="onDrop($event)"
+    :dragClass="'card-ghost'"
+    :drop-placeholder="dropPlaceholderOptions"
   >
-    <Draggable v-for="item in items" :key="item.id">
-      <task-preview :task="item" :groupId="groupId" />
+    <Draggable v-for="item in items" :key="item.id" class="draggable-item" drag-class="card-ghost">
+      <div class="card">
+        <task-preview :task="item" :groupId="groupId" />
+      </div>
     </Draggable>
   </Container>
 </template>
+
 <script>
 import taskPreview from './TaskPreview.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
@@ -30,6 +35,11 @@ export default {
   data() {
     return {
       items: [],
+      dropPlaceholderOptions: {
+        className: 'drop-preview',
+        animationDuration: '0',
+        showOnTop: false,
+      },
     }
   },
   watch: {
@@ -57,4 +67,16 @@ export default {
 }
 </script>
 
-
+<style>
+.drop-preview {
+  background-color: rgba(150, 150, 200, 0.1);
+  border-radius: 8px;
+}
+.card-ghost {
+  transition: transform 0.18s ease;
+  transform: rotateZ(0deg)
+}
+/* .draggable-item {
+  transition-duration: 80ms !important;
+} */
+</style>

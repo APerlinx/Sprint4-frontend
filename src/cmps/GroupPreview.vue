@@ -8,7 +8,7 @@
           :value="group.title"
           @input="updateTitle($event.target.value)"
         />
-        <div class="menu-btn" @click="$emit('remove', group.id)">
+        <div class="menu-btn" ref="menuButton" @click="toggleModal">
           <span class="icon"></span>
         </div>
       </div>
@@ -21,12 +21,36 @@
       </div>
       <slot name="actions"></slot>
     </div>
+
+    <div
+      v-if="showModal"
+      class="modal"
+      :style="{ top: modalTop + 'px', left: modalLeft + 'px' }"
+      v-click-outside="toggleModal"
+    >
+      <div class="modal-content">
+        <div class="header">
+          <span class="header-title">List actions</span>
+          <button @click="toggleModal"><span class="icon"></span></button>
+        </div>
+        <div class="actions">
+          <button class="action" @click="$emit('remove', group.id)">
+            Remove group...
+          </button>
+          <button class="action">Add card...</button>
+          <button class="action">Duplicate group...</button>
+          <button class="action">Watch</button>
+          <hr>
+        </div>
+      </div>
+    </div>
   </li>
 </template>
 
 <script>
 import TaskList from './TaskList.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
+import { clickOutsideDirective } from '../directives/index.js'
 
 export default {
   props: {
@@ -44,6 +68,9 @@ export default {
       removedIndex: null,
       currBoard: {},
       currTask: {},
+      showModal: false,
+      modalTop: 0,
+      modalLeft: 0,
     }
   },
   components: {
@@ -58,10 +85,22 @@ export default {
   methods: {
     replaceTasks(tasks) {
       let group = JSON.parse(JSON.stringify(this.group))
-      // group.tasks = tasks
       this.$emit('updateGroup', { info: { tasks, group } })
     },
+    toggleModal() {
+      this.showModal = !this.showModal
+      if (this.showModal) {
+        this.calculateModalPosition()
+      }
+    },
+    calculateModalPosition() {
+      const rect = this.$refs.menuButton.getBoundingClientRect()
+      this.modalTop = rect.top + rect.height
+      this.modalLeft = rect.left
+    },
+  },
+  directives: {
+    clickOutside: clickOutsideDirective,
   },
 }
 </script>
-

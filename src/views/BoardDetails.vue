@@ -1,6 +1,6 @@
 <template>
   <section class="board-details" v-if="board">
-    <BoardHeader />
+    <BoardHeader :board="board" />
     <GroupList v-if="board.groups" :groups="board.groups" :key="board.groups" />
     <RouterView />
   </section>

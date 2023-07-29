@@ -11,6 +11,31 @@
   
     > li {
       width: 100%;
+
+      .icon {
+        font-size: 1rem;
+        &.watch {
+          @include trello-icon($content: "\e969", $type: sm, $color: #626F86);
+        }
+        &.desc {
+          @include trello-icon($content: "\e922", $type: sm, $color: #626F86);
+        }
+        &.checklist {
+          @include trello-icon($content: "\e918", $type: sm, $color: #626F86);
+        }
+        &.comment {
+          @include trello-icon($content: "\e91e", $type: sm, $color: #626F86);
+        }
+        &.date {
+          @include trello-icon($content: "\e91b", $type: sm, $color: #626F86);
+        }
+        &.attach {
+          @include trello-icon($content: "\e908", $type: sm, $color: #626F86);
+        }
+        &.member {
+          // @include trello-icon($content: "\e93f", $type: sm, $color: #626F86);
+        }
+      }
     }
   
     > li > p {
