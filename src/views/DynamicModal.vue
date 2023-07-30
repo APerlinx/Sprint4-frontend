@@ -6,15 +6,17 @@
         </section>
         <section>
             <component v-if="actionCmpType" :is="actionCmpType" :info="taskToEdit" @member="addMember"
-                @checklist="addChecklist" @saveLabel="saveLabel">
+                @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="addDueDate" @setBgColor="setBgColor">
             </component>
         </section>
     </div>
 </template>
 <script>
-import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
-import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
-import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
+import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue"
+import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue"
+import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue"
+import DueDatePicker from "../cmps/taskDeatilsOpts/DueDatePicker.vue"
+import CoverPicker from "../cmps/taskDeatilsOpts/CoverPicker.vue"
 export default {
     props: {
         taskToEdit: Object,
@@ -22,25 +24,35 @@ export default {
         actionCmpName: String,
     },
     data() {
-        return {};
+        return {}
     },
     methods: {
+        setBgColor(color) {
+            this.$emit("setBgColor", color)
+        },
         closeModal() {
-            this.isDynamicModalClose = !this.isDynamicModalClose;
+            this.isDynamicModalClose = !this.isDynamicModalClose
         },
         saveLabel() {
             this.$emit('saveLabel')
         },
-        addMember() { },
+        addMember() {
+            this.$emit("member", addMember)
+        },
         addChecklist(newChecklist) {
-            this.$emit("checklist", newChecklist);
-            console.log("modal2 - newChecklist:", newChecklist);
+            this.$emit("checklist", newChecklist)
+            console.log("modal2 - newChecklist:", newChecklist)
+        },
+        addDueDate() {
+            this.$emit("dueDate", newDueDate)
         },
     },
     components: {
         ChecklistPicker,
-        ChecklistPicker,
         LabelsPicker,
+        MemberPicker,
+        DueDatePicker,
+        CoverPicker,
     }
 }
 </script>

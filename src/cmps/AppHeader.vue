@@ -19,9 +19,29 @@
         </Popper>
       </div>
 
-    
-        <BoardFilter @filterByTxt="filterByTxt" />
+      <div class="pickers">
+        <div class="starred">
+          <button
+            :style="{ position: 'relative' }"
+            @click="togglePickerModal('StarredPicker')"
+          >
+            Starred 
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        <div class="recent">
+          <button
+            :style="{ position: 'relative' }"
+            @click="togglePickerModal('RecentPicker')">Recent 
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        <div v-if="isPickerModal" class="pickers-modal">
+          <Component v-click-outside="togglePickerModal" :is="tab" />
+        </div>
+      </div>
 
+      <BoardFilter @filterByTxt="filterByTxt" />
     </nav>
   </header>
 </template>
@@ -29,13 +49,21 @@
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 import AddBoard from "../cmps/addboard.vue";
 import BoardFilter from "../cmps/BoardFilter.vue";
+import RecentPicker from "../cmps/RecentPicker.vue";
+import StarredPicker from "../cmps/StarredPicker.vue";
+
+import { clickOutsideDirective } from '../directives/index.js'
+
 
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";
 
 export default {
   data() {
-    return {};
+    return {
+      tab: "",
+      isPickerModal: false,
+    };
   },
   methods: {
     async saveBoard(board) {
@@ -50,6 +78,11 @@ export default {
         console.log(err);
         showErrorMsg("Cant add board");
       }
+    },
+
+    togglePickerModal(type) {
+      this.tab = type;
+      this.isPickerModal = !this.isPickerModal;
     },
 
     filterByTxt(filterBy) {
@@ -68,11 +101,16 @@ export default {
       return this.$store.getters.savedBoard;
     },
   },
+  directives: {
+    clickOutside: clickOutsideDirective,
+  },
   components: {
     AddBoard,
     BoardFilter,
     Popper,
     defineComponent,
+    RecentPicker,
+    StarredPicker,
   },
 };
 </script>

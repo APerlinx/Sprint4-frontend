@@ -4,9 +4,46 @@
         position: relative;
         background-color: white;
         display: grid;
-        grid-template-columns: minmax(auto, 150px) minmax(auto, 200px) minmax(auto, 1fr) minmax(auto, 100px);
+        grid-template-columns: minmax(auto, 150px) minmax(auto, 100px) minmax(auto, 300px) minmax(auto, 1fr) minmax(
+                auto,
+                100px
+            );
         color: #425672;
         border-bottom: 0.5px solid rgba(128, 128, 128, 0.466);
+
+        .pickers {
+            display: flex;
+            align-self: center;
+            justify-self: start;
+            margin: 0;
+
+            .pickers-modal {
+                position: absolute;
+                z-index: 999;
+                transform: translateX(50%);
+            }
+
+            button {
+                align-self: center;
+                padding: 0.4em 1em;
+                border-radius: 0.2em;
+                color: #627086;
+                
+                span {
+                    margin-block-start: 1em;
+                    font-size: rem(10px);
+                }
+            }
+
+            .recent, .starred {
+                button {
+                    &:hover {
+                        background-color: rgb(237, 237, 237);
+                    }
+                }
+            }
+         
+        }
 
         .logo-container {
             align-self: center;

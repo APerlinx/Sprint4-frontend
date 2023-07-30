@@ -1342,13 +1342,12 @@ function _membersOptions() {
       backgroundColor: '#48cae4',
     },
     {
-      id: 'm105',
-      username: 'adambercovich',
-      fullname: 'Adam Bercovich',
-      imgUrl:
-        'https://ca.slack-edge.com/T04U05NLZ2M-U04UB8KDZH6-0fbe87aa89af-72',
-      backgroundColor: '#adc178',
-    },
+      id: "m105",
+      username: "adambercovich",
+      fullname: "Adam Bercovich",
+      imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U04UB8KDZH6-0fbe87aa89af-72",
+      backgroundColor: "#adc178",
+    }
     // {
     //   id: "m106",
     //   username: "guydahan41",

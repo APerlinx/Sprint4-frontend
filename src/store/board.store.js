@@ -39,7 +39,7 @@ export const boardStore = {
     dropResults: [],
     areLabelsVisible: false,
 
-    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker'],
+    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker', 'DueDatePicker', "Attachments",'CoverPicker', "Custom Fields"],
   },
   getters: {
     boards({ boards }) {

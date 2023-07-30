@@ -7,18 +7,21 @@
                     <span @click="
                         closeModal();
                     editTask();
-                    ">X</span>
+                    " class="icon close"></span>
                 </div>
 
-                <div class="task-details-cover" :class="{ coverActive: !isCoverActive }">
+                <div class="task-details-cover" :style="{ backgroundColor: coverColor }">
                     <span class="span-cover" @click="togglecover()">Cover</span>
                 </div>
 
                 <div class="task-details-under-cover">
-                    <input type="text" class="deatils-title" v-model="taskToEdit.title" />
+                    <div class="icon-title-container">
+                        <span class="icon card-big"></span>
+                        <input type="text" class="deatils-title" v-model="taskToEdit.title" />
+                    </div>
                     <p class="task-in-list">
                         in list <span class="group-ops">{{ group.title }}</span><span
-                            :class="{ watchActive: !isWatchActive }"> i-eye</span>
+                            :class="{ watchActive: !isWatchActive }" class="icon eye"></span>
                     </p>
                 </div>
             </section>
@@ -27,26 +30,14 @@
                 <div class="task-alerts">
                     <Members />
 
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
                     <Labels :task="taskToEdit" />
 
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
-                    <!-- <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
-                        <h5>Labels</h5>
-                        <template v-for="label in taskToEdit.labelIds">
-
-                            <div class="label" :style="{ backgroundColor: label.bgColor }">
-                                <h6>{{ label.txt }}</h6>
-                            </div>
-                        </template>
-                    </div> -->
-
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
 
                     <div class="details-notification">
                         <h5>Notifications</h5>
                         <button class="btn btn-watch" @click="toggleWatch">
-                            {{ watch }}
+                            <span class="icon eye"></span><span class="word-watch">{{ watch }}</span><span
+                                class="icon full-checked-big"></span>
                         </button>
                     </div>
 
@@ -55,13 +46,16 @@
                         <input type="checkbox" @change="updateTask" />
                         <!-- v-model="dueDate.isChecked" -->
                         <button class="btn btn-due-date" @click="openCalender">
-                            need to add date lib
+                            Aug 10 at 3:27 AM
                         </button>
                     </div>
                 </div>
 
-                <div task-details->
-                    <h3 class="details-title-big">Description</h3>
+                <div class="details-description-container">
+                    <div class="icon-title-container-description">
+                        <span class="icon description-big"></span>
+                        <h3 class="details-title-big">Description</h3>
+                    </div>
                     <textarea v-model="taskToEdit.description" @blur="hideBtn = false" @focus="hideBtn = true"
                         placeholder="Add a more detailed description..." class="details-description"></textarea>
                     <div v-if="hideBtn">
@@ -79,7 +73,10 @@
 
                 <div class="details-activity">
                     <div class="activity-show-details">
-                        <h3 class="details-title-big">Activity</h3>
+                        <div class="icon-title-container">
+                            <span class="icon activity-big"></span>
+                            <h3 class="details-title-big">Activity</h3>
+                        </div>
                         <button class="btn toggle-show-details">Show details</button>
                     </div>
                     <input type="text" class="details-activity-comment" placeholder="Write a comment..." />
@@ -89,37 +86,48 @@
 
             <section class="action-btns-container">
                 <h3 class="details-title-small">Suggested</h3>
-                <button class="btn">Join</button>
+                <button class="btn"><span class="icon member"></span>Join</button>
 
                 <h3 class="details-title-small">Add To card</h3>
-                <Popper arrow placement="right">
+                <!-- <Popper arrow placement="right">
                     <div v-for="(cmp, idx) in cmpOrder" :key="idx">
-                        <button class="btn" @click="set(cmp, idx)">
-                            {{ dynamicNames[idx] }}
-                        </button>
+                        <button class="btn" @click="set(cmp, idx)"> <span class="icon" :class="`icon ${dynamicIcons[idx]}`"></span>
+                            {{ dynamicNames[idx] }}  </button>
+                          
                     </div>
 
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
-                            @member="addMember" @saveLabel="saveLabel" />
+                            @member="addMember" @saveLabel="saveLabel" @setBgColor="setBgColor" />
                     </template>
-                </Popper>
+                </Popper> -->
 
-                <button class="btn"><span class="icon date"></span>Dates</button>
-                <button class="btn">Attachments</button>
-                <button class="btn" @click="togglecover">Cover</button>
-                <button class="btn">Custom Fields</button>
+                <button class="btn" @member="addMember"><span class="icon member"></span>Members</button>
+                <button class="btn" @saveLabel="saveLabel"><span class="icon label"></span>Labels</button>
+                <button class="btn" @checklist="addChecklist"><span class="icon checklist"></span>Checklist</button>
+                <button class="btn" @dueDate="addDueDate"><span class="icon date"></span>Dates</button>
+                <button class="btn"><span class="icon attachments"></span>Attachments</button>
+                <!-- <button class="btn" @click="togglecover"><span class="icon cover"></span>Cover</button> -->
+                <button class="btn" @setBgColor="setBgColor"><span class="icon cover"></span>Cover</button>
+                <button class="btn"><span class="icon date"></span>Custom Fields</button>
                 <h3 class="details-title-small">Actions</h3>
-                <button class="btn">Move</button>
-                <button class="btn">Copy</button>
-                <button class="btn">Make template</button>
-                <button class="btn">Archive</button>
-                <button class="btn">Share</button>
+                <button class="btn"><span class="icon arrow-right"></span>Move</button>
+                <button class="btn"><span class="icon copy"></span>Copy</button>
+                <button class="btn"><span class="icon card"></span>Make template</button>
+                <button class="btn"><span class="icon archive"></span>Archive</button>
+                <button class="btn"><span class="icon share"></span>Share</button>
+
+                <Popper arrow placement="right">
+                    <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                        :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
+                        @member="addMember" @saveLabel="saveLabel" @setBgColor="setBgColor" />
+                </Popper>
             </section>
         </section>
     </div>
 </template>
+<!--  -->
 
 <script>
 import DynamicModal from "./DynamicModal.vue";
@@ -144,7 +152,9 @@ export default {
             actionCmpType: null,
             actionCmpName: null,
             isCoverActive: false,
-            dynamicNames: ["Members", "Labels", "Checklist"],
+            dynamicNames: ["Members", "Labels", "Checklist", "Dates","Attachments", "Cover", "Custom Fields"],
+            dynamicIcons:["member", "label", "checklist", "date","attachments", "cover", "date"], 
+            coverColor: '',
         };
     },
     created() {
@@ -156,6 +166,13 @@ export default {
             this.actionCmpName = this.dynamicNames[idx];
         },
 
+        setBgColor(color) {
+            this.coverColor = color
+            this.isCoverActive = true
+        },
+        addDueDate() {
+
+        },
         saveLabel() {
             this.$store.dispatch({ type: "updateBoard", board: this.board })
         },
@@ -186,12 +203,24 @@ export default {
             else checklists.splice(idx, 1);
             this.editTask();
         },
+        updateMembers({ type, newMember }) {
+            console.log('111111111member:', newMember)
+            if (!this.taskToEdit.members) this.taskToEdit.members = [];
+            if (this.taskToEdit.members.some(member => member._id === newMember._id)) {
+                const idx = this.taskToEdit.members.findIndex(member => member._id === newMember._id);
+                this.taskToEdit.members.splice(idx, 1);
+            } else {
+                this.taskToEdit.members.push(newMember);
+            }
+        },
         async setTask() {
             try {
                 const boardId = this.$route.params.boardId;
-                console.log("🚀 ~ file: TaskDetails.vue:192 ~ setTask ~ boardId:", boardId)
+                // console.log("🚀 ~ file: TaskDetails.vue:192 ~ setTask ~ boardId:", boardId)
 
                 const board = await boardService.getById(boardId);
+                console.log("🚀 ~ file: TaskDetails.vue:205 ~ setTask ~ board:", board)
+
                 const taskId = this.$route.params.taskId;
                 const groupId = this.$route.params.groupId;
                 console.log("groupId:", groupId);
@@ -200,7 +229,7 @@ export default {
                 this.group = this.board.groups.find((group) => group.id === groupId);
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
             } catch (err) {
-                console.log("error: check");
+                console.log("error in setTask");
             }
         },
         toggleWatch() {
