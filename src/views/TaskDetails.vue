@@ -10,7 +10,7 @@
                     " class="icon close"></span>
                 </div>
 
-                <div class="task-details-cover" :style="{ backgroundColor: coverColor }">
+                <div class="task-details-cover" v-if="coverColor" :style="{ backgroundColor: coverColor }">
                     <span class="span-cover" @click="togglecover()">Cover</span>
                 </div>
 
@@ -104,13 +104,7 @@
                     </template>
                 </Popper>
 
-                <button class="btn" @member="addMember"><span class="icon member"></span>Members</button>
-                <button class="btn" @saveLabel="saveLabel"><span class="icon label"></span>Labels</button>
-                <button class="btn" @checklist="addChecklist"><span class="icon checklist"></span>Checklist</button>
-                <button class="btn" @dueDate="addDueDate"><span class="icon date"></span>Dates</button>
-                <button class="btn"><span class="icon attachments"></span>Attachments</button>
-                <button class="btn" @setBgColor="setBgColor"><span class="icon cover"></span>Cover</button>
-                <button class="btn"><span class="icon date"></span>Custom Fields</button>
+
                 <h3 class="details-title-small">Actions</h3>
                 <button class="btn"><span class="icon arrow-right"></span>Move</button>
                 <button class="btn"><span class="icon copy"></span>Copy</button>
@@ -118,11 +112,7 @@
                 <button class="btn"><span class="icon archive"></span>Archive</button>
                 <button class="btn"><span class="icon share"></span>Share</button>
 
-                <!-- <Popper arrow placement="right">
-                    <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
-                        :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
-                        @member="addMember" @saveLabel="saveLabel" @setBgColor="setBgColor" />
-                </Popper> -->
+
             </section>
         </section>
     </div>
@@ -155,6 +145,7 @@ export default {
             dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachments", "Cover", "Custom Fields"],
             dynamicIcons: ["member", "label", "checklist", "date", "attachments", "cover", "date"],
             coverColor: '',
+            currColor: ''
         };
     },
     created() {
@@ -167,8 +158,14 @@ export default {
         },
 
         setBgColor(color) {
-            this.coverColor = color
-            this.isCoverActive = true
+            if (this.color === this.currColor) {
+                this.preview = ''
+                this.currColor = color
+            } else {
+                this.currColor = color
+                this.coverColor = color
+                this.isCoverActive = true
+            }
         },
         addDueDate() {
 
