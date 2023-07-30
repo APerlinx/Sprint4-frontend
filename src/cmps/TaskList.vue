@@ -32,6 +32,7 @@
 import taskPreview from './TaskPreview.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../services/util.service.js'
+import AddTask from './AddTask.vue'
 
 export default {
   name: 'task-list',
@@ -82,6 +83,7 @@ export default {
   },
   components: {
     taskPreview,
+    AddTask,
     Container,
     Draggable,
   },

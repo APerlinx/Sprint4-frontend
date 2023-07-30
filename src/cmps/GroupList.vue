@@ -18,13 +18,13 @@
             :key="group.id"
             :showTaskForm="showTaskForm"
             :currentGroupId="currentGroupId"
-            class="group-preview"
             @update-title="updateGroup"
             @removeGroup="removeGroup"
-            @addCard="showAddTaskForm"
             @duplicateGroup="duplicateGroup"
             @watch="watchGroup"
             @updateGroup="updateGroups"
+            @addTask="addTask"
+            @closeTaskForm="closeTaskForm"
           >
             <template #actions>
               <div class="group-actions">
@@ -186,7 +186,6 @@ export default {
           task: { title: taskTitle },
           board: this.currBoard,
         })
-        this.showTaskForm = false
         showSuccessMsg('Task was added')
       } catch (err) {
         console.log(err)
@@ -201,7 +200,6 @@ export default {
         showErrorMsg('Cannot duplicate Group ')
       }
     },
-
     watchGroup(groupId) {
       try {
         this.$store.dispatch('watchGroup', { groupId })
@@ -233,30 +231,6 @@ export default {
 </script>
 
 <style>
-/* .draggable-item {
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    display: block;
-    background-color: #686767;
-    outline: 0;
-    border: 1px solid rgba(0, 0, 0, .125);
-    margin-bottom: 2px;
-    margin-top: 2px;
-    cursor: default;
-    user-select: none;
-} */
-
-/* .draggable-item-horizontal {
-    line-height: 100px;
-    text-align: center;
-    display: block;
-    outline: 0;
-    margin-right: 4px;
-    cursor: default;
-    height: 400px;
-} */
-
 .card-container {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
 }

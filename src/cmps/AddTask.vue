@@ -1,7 +1,6 @@
 <template>
   <section class="add-task" v-click-outside="closeComponent">
     <form @submit.prevent="saveTask">
-
       <div class="input-wrapper">
         <textarea
           v-model="taskTitle"
@@ -13,9 +12,10 @@
 
       <div class="form-btn">
         <button class="add-btn">Add card</button>
-        <button @click.prevent="closeComponent"><span class="icon close"></span></button>
+        <button @click.prevent="closeComponent">
+          <span class="icon close"></span>
+        </button>
       </div>
-
     </form>
   </section>
 </template>
@@ -24,7 +24,7 @@
 import { focusDirective, clickOutsideDirective } from '../directives/index.js'
 
 export default {
-    props: {
+  props: {
     groupId: {
       type: String,
       required: true,
@@ -36,14 +36,15 @@ export default {
     }
   },
   methods: {
-    saveTask() {
+    saveTask(event) {
+      event.stopPropagation()
       this.$emit('addTask', {
         groupId: this.groupId,
         taskTitle: this.taskTitle,
       })
-      this.taskTitle = ''
     },
     closeComponent() {
+      this.taskTitle = ''
       this.$emit('close')
     },
   },

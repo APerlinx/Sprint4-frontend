@@ -31,7 +31,6 @@ export default {
 
 <style scoped>
 .task-cover {
-  width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 8px 8px 0 0;

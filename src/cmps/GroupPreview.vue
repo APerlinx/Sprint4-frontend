@@ -18,6 +18,8 @@
       <div class="scroll-container">
         <taskList
           @moveTasks="replaceTasks"
+          @addTask="addTask"
+          @closeTaskForm="closeTaskForm"
           :tasks="group.tasks"
           :groupId="group.id"
           :showAddTask="showTaskForm && currentGroupId === group.id"
@@ -66,6 +68,14 @@ export default {
       type: Object,
       required: true,
     },
+    showTaskForm: {
+      type: Boolean,
+      default: false,
+    },
+    currentGroupId: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -109,6 +119,12 @@ export default {
       const rect = this.$refs.menuButton.getBoundingClientRect()
       this.modalTop = rect.top + rect.height
       this.modalLeft = rect.left
+    },
+    addTask(task) {
+      this.$emit('addTask', task)
+    },
+    closeTaskForm() {
+      this.$emit('closeTaskForm')
     },
   },
   directives: {
