@@ -8,6 +8,10 @@
           :value="group.title"
           @input="updateTitle($event.target.value)"
         />
+        <div>
+                  <span class="icon watch" v-if="group.isWatched"></span>
+
+        </div>
         <div class="menu-btn" ref="menuButton" @click="toggleModal">
           <span class="icon"></span>
         </div>
@@ -34,13 +38,19 @@
           <button @click="toggleModal"><span class="icon"></span></button>
         </div>
         <div class="actions">
-          <button class="action" @click="$emit('remove', group.id)">
+          <button class="action" @click="handleAction('removeGroup')">
             Remove group...
           </button>
-          <button class="action">Add card...</button>
-          <button class="action">Duplicate group...</button>
-          <button class="action">Watch</button>
-          <hr>
+          <button class="action" @click="handleAction('addCard')">
+            Add card...
+          </button>
+          <button class="action" @click="handleAction('duplicateGroup')">
+            Duplicate group...
+          </button>
+          <button class="action" @click="handleAction('watch')">
+            Watch
+          </button>
+          <hr />
         </div>
       </div>
     </div>
@@ -83,6 +93,10 @@ export default {
   },
   computed: {},
   methods: {
+    handleAction(actionType) {
+      this.$emit(actionType, this.group.id)
+      this.showModal = false
+    },
     replaceTasks(tasks) {
       let group = JSON.parse(JSON.stringify(this.group))
       this.$emit('updateGroup', { info: { tasks, group } })

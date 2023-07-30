@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       isEditingTitle: false,
-      boardTitle: 'Hello Trello!',
+      boardTitle: 'Trello dev team',
       inputWidth: 0,
       isStarred: false,
     }

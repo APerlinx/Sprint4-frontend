@@ -1,7 +1,10 @@
 <template>
   <TaskCover :task="task" />
-
-  <section class="task-preview" :class="{ 'with-cover': task.cover }" @click="goToTaskDetails">
+  <section
+    class="task-preview"
+    :class="{ 'with-cover': task.cover }"
+    @click="goToTaskDetails"
+  >
     <li v-if="task">
       <div class="labels" @click.stop>
         <div

@@ -1,6 +1,6 @@
 import { boardService } from '../services/board.service.local'
 // import { boardService } from '../services/board.service'
-
+import { utilService } from '../services/util.service.js'
 export function getActionRemoveBoard(boardId) {
   return {
     type: 'removeBoard',
@@ -83,7 +83,7 @@ export const boardStore = {
       }
       return null
     },
-    areLabelsVisible: state => state.areLabelsVisible, 
+    areLabelsVisible: (state) => state.areLabelsVisible,
   },
   mutations: {
     setBoards(state, { boards }) {
@@ -191,7 +191,7 @@ export const boardStore = {
     },
     toggleLabelsVisibility(state) {
       state.areLabelsVisible = !state.areLabelsVisible
-    }
+    },
   },
   actions: {
     async addBoard(context, { board }) {
@@ -309,10 +309,9 @@ export const boardStore = {
       try {
         const newTask = boardService.getEmptyTask(task.title)
         commit('addTaskToGroup', { groupId, task: newTask, board })
-
-        const savedBoard = await boardService.save(state.currentBoard)
-
-        commit('updateBoard', { board: savedBoard })
+        const savedBoard = await boardService.save(board)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: 'loadBoards' })
       } catch (err) {
         console.error('Error in addTask', err)
         throw err
@@ -365,6 +364,52 @@ export const boardStore = {
         dispatch({ type: 'loadBoards' })
       } catch (error) {
         console.error(error.message)
+        throw err
+      }
+    },
+    async duplicateGroup({ state, commit, dispatch }, { groupId }) {
+      try {
+        const currBoard = JSON.parse(JSON.stringify(state.currentBoard));
+        const groupToDuplicate = currBoard.groups.find(group => group.id === groupId);
+        if (!groupToDuplicate) throw new Error('Group not found');
+    
+        const newGroupId = utilService.makeId();
+    
+        let duplicatedGroup = { ...groupToDuplicate, id: newGroupId };
+    
+        duplicatedGroup.tasks = duplicatedGroup.tasks.map(task => ({
+          ...task,
+          id: utilService.makeId(), 
+          groupId: newGroupId
+        }));
+    
+        currBoard.groups.push(duplicatedGroup);
+    
+        const savedBoard = await boardService.save(currBoard)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: 'loadBoards' })
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    },
+    
+    
+    async watchGroup({ state, commit,dispatch }, { groupId }) {
+      try {
+        const currBoard = JSON.parse(JSON.stringify(state.currentBoard))
+        const groupToWatch = currBoard.groups.find(
+          (group) => group.id === groupId
+        )
+        if (!groupToWatch) throw new Error('Group not found');
+
+        groupToWatch.isWatched = !groupToWatch.isWatched
+
+        const savedBoard = await boardService.save(currBoard)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: 'loadBoards' })
+      } catch (err) {
+        console.error(err)
         throw err
       }
     },
