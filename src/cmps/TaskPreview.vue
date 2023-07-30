@@ -63,7 +63,7 @@
           <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
         </div>
 
-        <span class="icon member">M</span>
+        <!-- <span class="icon member">M</span> -->
       </div>
     </li>
   </section>
@@ -175,7 +175,7 @@ export default {
   margin-bottom: 4px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: rem(12px);
+  font-size: 12pxbp;
   color: black;
   transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 }
