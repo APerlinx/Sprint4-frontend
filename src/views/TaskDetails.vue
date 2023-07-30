@@ -91,9 +91,9 @@
                 <h3 class="details-title-small">Add To card</h3>
                 <Popper arrow placement="right">
                     <div v-for="(cmp, idx) in cmpOrder" :key="idx">
-                        <button class="btn" @click="set(cmp, idx)">
-                            {{ dynamicNames[idx] }}
-                        </button>
+                        <button class="btn" @click="set(cmp, idx)"> <span class="icon" :class="`icon ${dynamicIcons[idx]}`"></span>
+                            {{ dynamicNames[idx] }}  </button>
+                          
                     </div>
 
                     <template #content>
@@ -103,13 +103,13 @@
                     </template>
                 </Popper>
 
-                <button class="btn"><span class="icon member"></span>Members</button>
+                <!-- <button class="btn"><span class="icon member"></span>Members</button>
                 <button class="btn"><span class="icon label"></span>Labels</button>
                 <button class="btn"><span class="icon checklist"></span>Checklist</button>
                 <button class="btn"><span class="icon date"></span>Dates</button>
                 <button class="btn"><span class="icon attachments"></span>Attachments</button>
                 <button class="btn" @click="togglecover"><span class="icon cover"></span>Cover</button>
-                <button class="btn"><span class="icon date"></span>Custom Fields</button>
+                <button class="btn"><span class="icon date"></span>Custom Fields</button> -->
                 <h3 class="details-title-small">Actions</h3>
                 <button class="btn"><span class="icon arrow-right"></span>Move</button>
                 <button class="btn"><span class="icon copy"></span>Copy</button>
@@ -144,7 +144,8 @@ export default {
             actionCmpType: null,
             actionCmpName: null,
             isCoverActive: false,
-            dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Cover"],
+            dynamicNames: ["Members", "Labels", "Checklist", "Dates","Attachments", "Cover", "Custom Fields"],
+            dynamicIcons:["member", "label", "checklist", "date","attachments", "cover", "date"], 
             coverColor: '',
         };
     },
