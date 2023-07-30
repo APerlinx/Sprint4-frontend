@@ -10,7 +10,7 @@
                     ">X</span>
                 </div>
 
-                <div class="task-details-cover" :class="{ coverActive: !isCoverActive }">
+                <div class="task-details-cover" :style="{ backgroundColor: coverColor }">
                     <span class="span-cover" @click="togglecover()">Cover</span>
                 </div>
 
@@ -89,13 +89,13 @@
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
-                            @member="addMember" @saveLabel="saveLabel" />
+                            @member="addMember" @saveLabel="saveLabel"  @setBgColor="setBgColor" />
                     </template>
                 </Popper>
 
                 <button class="btn"><span class="icon date"></span>Dates</button>
                 <button class="btn">Attachments</button>
-                <button class="btn" @click="togglecover">Cover</button>
+                <!-- <button class="btn" @click="togglecover">Cover</button> -->
                 <button class="btn">Custom Fields</button>
                 <h3 class="details-title-small">Actions</h3>
                 <button class="btn">Move</button>
@@ -131,7 +131,10 @@ export default {
             actionCmpType: null,
             actionCmpName: null,
             isCoverActive: false,
-            dynamicNames: ["Members", "Labels", "Checklist"],
+            coverColor:'',
+            dynamicNames: ["Members", "Labels", "Checklist","Cover"],
+
+
         };
     },
     created() {
@@ -141,6 +144,11 @@ export default {
         set(cmp, idx) {
             this.actionCmpType = cmp;
             this.actionCmpName = this.dynamicNames[idx];
+        },
+
+        setBgColor(color){
+            this.coverColor = color
+            this.isCoverActive = true
         },
 
         saveLabel() {
