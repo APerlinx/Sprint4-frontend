@@ -11,7 +11,7 @@
         flex-direction: column;
         flex-wrap: wrap;
         gap: 0.25em;
-        margin: rem(0px);
+        margin: rem(-16px) rem(-17px) rem(0px) rem(0px);
 
         h5 {
             margin-left: rem(12px);
@@ -24,7 +24,7 @@
         position: relative;
         align-items: center;
         height: rem(32px);
-        min-width: rem(50px);
+        min-width: rem(48px);
         border-radius: 0.25em;
         padding: 1em;
         margin: rem(4px) rem(20px) rem(5px) rem(0px);
