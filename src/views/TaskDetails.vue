@@ -89,7 +89,7 @@
                 <button class="btn"><span class="icon member"></span>Join</button>
 
                 <h3 class="details-title-small">Add To card</h3>
-                <Popper arrow placement="right">
+                <!-- <Popper arrow placement="right">
                     <div v-for="(cmp, idx) in cmpOrder" :key="idx">
                         <button class="btn" @click="set(cmp, idx)">
                             {{ dynamicNames[idx] }}
@@ -101,14 +101,15 @@
                             :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
                             @member="addMember" @saveLabel="saveLabel" @setBgColor="setBgColor" />
                     </template>
-                </Popper>
+                </Popper> -->
 
-                <button class="btn"><span class="icon member"></span>Members</button>
-                <button class="btn"><span class="icon label"></span>Labels</button>
-                <button class="btn"><span class="icon checklist"></span>Checklist</button>
-                <button class="btn"><span class="icon date"></span>Dates</button>
+                <button class="btn" @member="addMember"><span class="icon member"></span>Members</button>
+                <button class="btn" @saveLabel="saveLabel"><span class="icon label"></span>Labels</button>
+                <button class="btn" @checklist="addChecklist"><span class="icon checklist"></span>Checklist</button>
+                <button class="btn" @dueDate="addDueDate"><span class="icon date"></span>Dates</button>
                 <button class="btn"><span class="icon attachments"></span>Attachments</button>
-                <button class="btn" @click="togglecover"><span class="icon cover"></span>Cover</button>
+                <!-- <button class="btn" @click="togglecover"><span class="icon cover"></span>Cover</button> -->
+                <button class="btn" @setBgColor="setBgColor"><span class="icon cover"></span>Cover</button>
                 <button class="btn"><span class="icon date"></span>Custom Fields</button>
                 <h3 class="details-title-small">Actions</h3>
                 <button class="btn"><span class="icon arrow-right"></span>Move</button>
@@ -116,6 +117,12 @@
                 <button class="btn"><span class="icon card"></span>Make template</button>
                 <button class="btn"><span class="icon archive"></span>Archive</button>
                 <button class="btn"><span class="icon share"></span>Share</button>
+
+                <Popper arrow placement="right">
+                    <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                        :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
+                        @member="addMember" @saveLabel="saveLabel" @setBgColor="setBgColor" />
+                </Popper>
             </section>
         </section>
     </div>
@@ -161,7 +168,9 @@ export default {
             this.coverColor = color
             this.isCoverActive = true
         },
+        addDueDate() {
 
+        },
         saveLabel() {
             this.$store.dispatch({ type: "updateBoard", board: this.board })
         },
