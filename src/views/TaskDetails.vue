@@ -10,7 +10,7 @@
                     " class="icon close"></span>
                 </div>
 
-                <div class="task-details-cover" :class="{ coverActive: !isCoverActive }">
+                <div class="task-details-cover" :style="{ backgroundColor: coverColor }">
                     <span class="span-cover" @click="togglecover()">Cover</span>
                 </div>
 
@@ -30,21 +30,8 @@
                 <div class="task-alerts">
                     <Members />
 
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
                     <Labels :task="taskToEdit" />
 
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
-                    <!-- <div v-if="taskToEdit.labelIds.length > 0" class="label-wrapper">
-                        <h5>Labels</h5>
-                        <template v-for="label in taskToEdit.labelIds">
-
-                            <div class="label" :style="{ backgroundColor: label.bgColor }">
-                                <h6>{{ label.txt }}</h6>
-                            </div>
-                        </template>
-                    </div> -->
-
-                    <!-- LABELS -----------------------------------------------------LABELS--------------------------- -->
 
                     <div class="details-notification">
                         <h5>Notifications</h5>
@@ -112,7 +99,7 @@
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
-                            @member="addMember" @saveLabel="saveLabel" @dueDate="addDueDate" />
+                            @member="addMember" @saveLabel="saveLabel" @setBgColor="setBgColor" />
                     </template>
                 </Popper>
 
@@ -157,7 +144,8 @@ export default {
             actionCmpType: null,
             actionCmpName: null,
             isCoverActive: false,
-            dynamicNames: ["Members", "Labels", "Checklist", "Dates"],
+            dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Cover"],
+            coverColor: '',
         };
     },
     created() {
@@ -167,6 +155,11 @@ export default {
         set(cmp, idx) {
             this.actionCmpType = cmp;
             this.actionCmpName = this.dynamicNames[idx];
+        },
+
+        setBgColor(color) {
+            this.coverColor = color
+            this.isCoverActive = true
         },
 
         saveLabel() {

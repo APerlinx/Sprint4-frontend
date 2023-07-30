@@ -74,8 +74,8 @@
         }
 
         &.overdue-short {
-          background-color: red;
-          color: white;
+          background-color: $ds-background-danger-bold;
+          color: $dynamic-text;
           border-radius: 3px;
           padding: 2px 4px 2px 4px;
 
@@ -85,21 +85,34 @@
 
           .date-counter {
             color: white;
+          }
+
+          &:hover {
+            background-color: $ds-background-danger-bold-hovered;
+            .icon.date {
+              @include trello-icon($content: "\e919", $type: sm, $color: $dynamic-text);
+            }
           }
         }
 
         &.due-soon {
-          background-color: yellow;
-          color: black;
+          background-color: $ds-background-warning-bold;
+          color: $ds-text-warning-inverse;
           border-radius: 3px;
           padding: 2px 4px 2px 4px;
 
           .icon.date {
-            color: black;
+            color: $ds-text-warning-inverse
           }
 
           .date-counter {
-            color: black;
+            color: $ds-text-warning-inverse;
+          }
+          &:hover {
+            background-color: $ds-background-warning-bold-hovered;
+            .icon.date {
+              @include trello-icon($content: "\e919", $type: sm, $color: $ds-text-warning-inverse);
+            }
           }
         }
 

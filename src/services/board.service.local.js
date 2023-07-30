@@ -253,7 +253,7 @@ const board = {
           { id: "l103", checked: false, bgColor: "#faa63d", txt: '' },
           { id: "l104", checked: false, bgColor: "#f87562", txt: '' },
           { id: "l105", checked: false, bgColor: "#9f90ef", txt: '' }],
-          "dueDate": 16156215211,
+          "dueDate": Date.now(),
           "byMember": {
             "_id": "u101",
             "username": "Tal",
@@ -287,6 +287,11 @@ const board = {
 
   cmpsOrder: ["MemberPicker", "LabelsPicker", "CheckList", "DatePicker", "AttachmentPicker", "CoverPicker", "CustomFieldsPicker"]
 }
+
+// ; (async () => {
+//   await storageService.post(STORAGE_KEY, board)
+//   await storageService.post(STORAGE_KEY, board2)
+// })()
 
 const board2 = {
   _id: "b102",
@@ -384,7 +389,7 @@ const board2 = {
           { id: "l103", checked: false, bgColor: "#faa63d", txt: '' },
           { id: "l104", checked: false, bgColor: "#f87562", txt: '' },
           { id: "l105", checked: false, bgColor: "#9f90ef", txt: '' }],
-          "dueDate": 16156215211,
+          "dueDate": 1890560000,
           "byMember": {
             "_id": "u101",
             "username": "Tal",

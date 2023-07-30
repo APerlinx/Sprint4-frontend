@@ -30,7 +30,11 @@
           <span class="attach-counter">{{ task.attachments.length }}</span>
         </div>
 
-        <div :class="`due-date ${dueDateStatus}`" v-if="task.dueDate">
+        <div
+          :class="`due-date ${dueDateStatus} ${task.status}`"
+          v-if="task.dueDate"
+          @click.stop="completeTask"
+        >
           <span class="icon date"></span>
           <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
         </div>
@@ -115,6 +119,12 @@ export default {
     },
     formatDate(timestamp) {
       return format(new Date(timestamp), 'dd MMM')
+    },
+    completeTask() {
+      this.$store.dispatch('completeTask', {
+        groupId: this.groupId,
+        task: this.task,
+      })
     },
   },
 }

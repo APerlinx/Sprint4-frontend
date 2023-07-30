@@ -40,8 +40,8 @@ export const boardStore = {
     filterBy: '',
     dropResults: [],
 
-    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker', 'DueDatePicker'],
-    // , 'AttachmentsPicker', 'CoverPicker'
+    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker', 'DueDatePicker', , 'CoverPicker'],
+    // , 'AttachmentsPicker'
   },
   getters: {
     boards({ boards }) {
@@ -97,7 +97,6 @@ export const boardStore = {
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((c) => c._id === board._id)
       state.boards.splice(idx, 1, board)
-      console.log(state.boards[idx])
     },
     removeBoard(state, { boardId }) {
       state.boards = state.boards.filter((board) => board._id !== boardId)
@@ -179,6 +178,11 @@ export const boardStore = {
     },
     addTask(state, { group, task, index }) {
       group.tasks.splice(index, 0, task)
+    },
+    completeTask(state, { groupId, task }) {
+      const groupIdx = state.currentBoard.groups.findIndex(group => group.id === groupId);
+      const taskIdx = state.currentBoard.groups[groupIdx].tasks.findIndex(t => t.id === task.id);
+      state.currentBoard.groups[groupIdx].tasks[taskIdx].status = 'done';
     },
   },
   actions: {
@@ -328,6 +332,10 @@ export const boardStore = {
         console.log('Cannot save board', err)
         throw err
       }
+    },
+    completeTask({ commit, dispatch, state }, { groupId, task }) {
+      commit('completeTask', { groupId, task });
+      dispatch('saveBoard', { board: state.currentBoard });
     },
   },
 }
