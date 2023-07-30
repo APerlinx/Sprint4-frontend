@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { clickOutsideDirective } from '../directives/index.js' // Ensure the path is correct
+import { clickOutsideDirective } from '../directives/index.js' 
 
 export default {
   props: {
@@ -31,14 +31,14 @@ export default {
   data() {
     return {
       isEditingTitle: false,
-      boardTitle: 'Hello Trello!',
+      boardTitle: 'Trello dev team',
       inputWidth: 0,
       isStarred: false,
     }
   },
   created() {
     this.inputWidth = this.calculateInputWidth(this.boardTitle)
-    if(this.board?.isStarred) this.isStarred = this.board.isStarred; // set isStarred from board
+    if(this.board?.isStarred) this.isStarred = this.board.isStarred
   },
 
   methods: {
@@ -47,7 +47,7 @@ export default {
     },
     toggeleIsStarred() {
       this.isStarred = !this.isStarred;
-      this.$store.dispatch({ type: 'saveBoard', board: { ...this.board, isStarred: this.isStarred } });
+      this.$store.dispatch({ type: 'saveBoard', board: { ...this.board, isStarred: this.isStarred } })
     },
     calculateInputWidth(text) {
       const canvas = document.createElement('canvas')

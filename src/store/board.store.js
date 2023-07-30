@@ -1,8 +1,6 @@
 import { boardService } from '../services/board.service.local'
 // import { boardService } from '../services/board.service'
-import { applyDrag } from '../services/util.service.js'
-import { reactive } from 'vue'
-
+import { utilService } from '../services/util.service.js'
 export function getActionRemoveBoard(boardId) {
   return {
     type: 'removeBoard',
@@ -39,6 +37,7 @@ export const boardStore = {
     currentTask: null,
     filterBy: '',
     dropResults: [],
+    areLabelsVisible: false,
 
     cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker', 'DueDatePicker', "Attachments",'CoverPicker', "Custom Fields"],
   },
@@ -77,6 +76,14 @@ export const boardStore = {
     cmpsOrder({ cmpsOrder }) {
       return cmpsOrder
     },
+    getLabelById: (state) => (id) => {
+      const board = state.currentBoard
+      if (board && board.labels) {
+        return board.labels.find((label) => label.id === id)
+      }
+      return null
+    },
+    areLabelsVisible: (state) => state.areLabelsVisible,
   },
   mutations: {
     setBoards(state, { boards }) {
@@ -138,7 +145,6 @@ export const boardStore = {
         state.recentBoards.push(board)
       }
     },
-    // EDIT or ADD task
     setTask(state, { groupId, task }) {
       if (state.currentGroup) groupId = state.currentGroup._id
       const groupIdx = state.currentBoard.groups.findIndex(
@@ -178,10 +184,13 @@ export const boardStore = {
     addTask(state, { group, task, index }) {
       group.tasks.splice(index, 0, task)
     },
-    completeTask(state, { groupId, task }) {
-      const groupIdx = state.currentBoard.groups.findIndex(group => group.id === groupId);
-      const taskIdx = state.currentBoard.groups[groupIdx].tasks.findIndex(t => t.id === task.id);
-      state.currentBoard.groups[groupIdx].tasks[taskIdx].status = 'done';
+    toggleTaskStatus(state, payload) {
+      const { groupIndex, taskIndex, board } = payload
+      const task = board.groups[groupIndex].tasks[taskIndex]
+      task.status = task.status === 'done' ? 'in-progress' : 'done'
+    },
+    toggleLabelsVisibility(state) {
+      state.areLabelsVisible = !state.areLabelsVisible
     },
   },
   actions: {
@@ -201,7 +210,6 @@ export const boardStore = {
     },
     async updateBoard(context, { board }) {
       try {
-        // console.log(board);
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))
         return board
@@ -297,14 +305,13 @@ export const boardStore = {
         console.log(err)
       }
     },
-    async addTask({ commit, state }, { groupId, task, board }) {
+    async addTask({ commit, state,dispatch }, { groupId, task, board }) {
       try {
         const newTask = boardService.getEmptyTask(task.title)
         commit('addTaskToGroup', { groupId, task: newTask, board })
-
-        const savedBoard = await boardService.save(state.currentBoard)
-
-        commit('updateBoard', { board: savedBoard })
+        const savedBoard = await boardService.save(board)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: 'loadBoards' })
       } catch (err) {
         console.error('Error in addTask', err)
         throw err
@@ -324,6 +331,7 @@ export const boardStore = {
     },
     async saveBoard({ commit, dispatch }, { board }) {
       try {
+        console.log('board', board)
         const savedBoard = await boardService.save(board)
         commit({ type: 'updateBoard', board: savedBoard })
         dispatch({ type: 'loadBoards' })
@@ -332,9 +340,78 @@ export const boardStore = {
         throw err
       }
     },
-    completeTask({ commit, dispatch, state }, { groupId, task }) {
-      commit('completeTask', { groupId, task });
-      dispatch('saveBoard', { board: state.currentBoard });
+    async toggleStatus({ commit, state, dispatch }, { groupId, task }) {
+      try {
+        let board
+        let groupIndex = -1
+
+        for (let i = 0; i < state.boards.length; i++) {
+          const index = state.boards[i].groups.findIndex(
+            (group) => group.id === groupId
+          )
+          if (index !== -1) {
+            board = state.boards[i]
+            groupIndex = index
+            break
+          }
+        }
+        const taskIndex = board.groups[groupIndex].tasks.findIndex(
+          (t) => t.id === task.id
+        )
+        commit('toggleTaskStatus', { groupIndex, taskIndex, board })
+        const savedBoard = await boardService.save(board)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: 'loadBoards' })
+      } catch (error) {
+        console.error(error.message)
+        throw err
+      }
+    },
+    async duplicateGroup({ state, commit, dispatch }, { groupId }) {
+      try {
+        const currBoard = JSON.parse(JSON.stringify(state.currentBoard));
+        const groupToDuplicate = currBoard.groups.find(group => group.id === groupId);
+        if (!groupToDuplicate) throw new Error('Group not found');
+    
+        const newGroupId = utilService.makeId();
+    
+        let duplicatedGroup = { ...groupToDuplicate, id: newGroupId };
+    
+        duplicatedGroup.tasks = duplicatedGroup.tasks.map(task => ({
+          ...task,
+          id: utilService.makeId(), 
+          groupId: newGroupId
+        }));
+    
+        currBoard.groups.push(duplicatedGroup);
+    
+        const savedBoard = await boardService.save(currBoard)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: 'loadBoards' })
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    },
+    
+    
+    async watchGroup({ state, commit,dispatch }, { groupId }) {
+      try {
+        const currBoard = JSON.parse(JSON.stringify(state.currentBoard))
+        const groupToWatch = currBoard.groups.find(
+          (group) => group.id === groupId
+        )
+        if (!groupToWatch) throw new Error('Group not found');
+
+        groupToWatch.isWatched = !groupToWatch.isWatched
+
+        const savedBoard = await boardService.save(currBoard)
+        commit({ type: 'updateBoard', board: savedBoard })
+        dispatch({ type: 'loadBoards' })
+      } catch (err) {
+        console.error(err)
+        throw err
+      }
     },
   },
 }

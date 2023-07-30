@@ -104,13 +104,13 @@
                     </template>
                 </Popper>
 
-                <!-- <button class="btn" @member="addMember"><span class="icon member"></span>Members</button>
+                <button class="btn" @member="addMember"><span class="icon member"></span>Members</button>
                 <button class="btn" @saveLabel="saveLabel"><span class="icon label"></span>Labels</button>
                 <button class="btn" @checklist="addChecklist"><span class="icon checklist"></span>Checklist</button>
                 <button class="btn" @dueDate="addDueDate"><span class="icon date"></span>Dates</button>
                 <button class="btn"><span class="icon attachments"></span>Attachments</button>
                 <button class="btn" @setBgColor="setBgColor"><span class="icon cover"></span>Cover</button>
-                <button class="btn"><span class="icon date"></span>Custom Fields</button> -->
+                <button class="btn"><span class="icon date"></span>Custom Fields</button>
                 <h3 class="details-title-small">Actions</h3>
                 <button class="btn"><span class="icon arrow-right"></span>Move</button>
                 <button class="btn"><span class="icon copy"></span>Copy</button>

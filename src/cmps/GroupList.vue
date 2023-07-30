@@ -18,7 +18,10 @@
             :key="group.id"
             class="group-preview"
             @update-title="updateGroup"
-            @remove="removeGroup"
+            @removeGroup="removeGroup"
+            @addCard="showAddTaskForm"
+            @duplicateGroup="duplicateGroup"
+            @watch="watchGroup"
             @updateGroup="updateGroups"
           >
             <template #actions>
@@ -31,8 +34,12 @@
                   <span class="icon"></span> Add a card
                 </button>
 
-                <AddTask v-if="showTaskForm && currentGroupId === group.id" :groupId="currentGroupId" @addTask="addTask"
-                  @close="closeTaskForm" />
+                <AddTask
+                  v-if="showTaskForm && currentGroupId === group.id"
+                  :groupId="currentGroupId"
+                  @addTask="addTask"
+                  @close="closeTaskForm"
+                />
               </div>
             </template>
           </GroupPreview>
@@ -48,7 +55,11 @@
           <span class="icon"></span> Add another list
         </button>
       </li>
-      <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
+      <li
+        class="open-form-wrapper"
+        v-if="toggleAddForm"
+        v-click-outside="handleCloseComponent"
+      >
         <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
     </ul>
@@ -180,6 +191,20 @@ export default {
         showErrorMsg('Cannot add task')
       }
     },
+    async duplicateGroup(groupId) {
+      try {
+        this.$store.dispatch('duplicateGroup', { groupId })
+        showSuccessMsg('Group duplicated')
+      } catch {
+        showErrorMsg('Cannot duplicate Group ')
+      }
+    },
+
+    watchGroup(groupId) {
+      try {
+        this.$store.dispatch('watchGroup', { groupId })
+      } catch {}
+    },
     closeTaskForm() {
       this.showTaskForm = false
     },
@@ -206,7 +231,6 @@ export default {
 </script>
 
 <style>
-
 /* .draggable-item {
     height: 50px;
     line-height: 50px;
@@ -221,7 +245,7 @@ export default {
     user-select: none;
 } */
 
-.draggable-item-horizontal {
+/* .draggable-item-horizontal {
     line-height: 100px;
     text-align: center;
     display: block;
@@ -229,69 +253,25 @@ export default {
     margin-right: 4px;
     cursor: default;
     height: 400px;
-}
-
-/* .dragging {
-    background-color: blue;
 } */
 
 .card-container {
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
 }
 
-/* .card {
-    margin: 5px;
-    border: 1px solid #ccc;
-    background-color: white;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
-    padding: 10px;
-} */
-
-/* .card-column-header {
-    font-size: 18px;
-} */
-
-/* .column-drag-handle {
-    cursor: move;
-    padding: 5px;
-} */
-
 .card-ghost {
-    transition: transform 0.18s ease;
-    transform: rotateZ(5deg)
+  transition: transform 0.18s ease;
+  transform: rotateZ(5deg);
 }
 
 .card-ghost-drop {
-    transition: transform 0.18s ease;
-    transform: rotateZ(0deg)
+  transition: transform 0.18s ease;
+  transform: rotateZ(0deg);
 }
-/* 
-.opacity-ghost {
-    transition: all .18s ease;
-    opacity: 0.8;
-    transform: rotateZ(5deg);
-    background-color: cornflowerblue;
-    box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.3);
-} */
-
-/* .opacity-ghost-drop {
-    opacity: 1;
-    transform: rotateZ(0deg);
-    box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.0);
-} */
-
-
-/* .drop-preview {
-  background-color: rgba(150, 150, 200, 0.1);
-  border: 1px dashed #abc;
-  margin: 5px;
-} */
 
 .cards-drop-preview {
   background-color: rgba(44, 44, 51, 0.2);
   border-radius: 12px;
   width: 256px;
 }
-
-
 </style>

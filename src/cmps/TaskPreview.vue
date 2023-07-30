@@ -1,11 +1,35 @@
 <template>
-  <section class="task-preview" @click="goToTaskDetails" draggable="false">
+  <TaskCover :task="task" />
+  <section
+    class="task-preview"
+    :class="{ 'with-cover': task.cover }"
+    @click="goToTaskDetails"
+  >
     <li v-if="task">
+      <div class="labels" @click.stop>
+        <div
+          v-for="labelId in task.labels"
+          :key="labelId"
+          class="label"
+          :class="{ expanded: areLabelsVisible }"
+          :style="{
+            backgroundColor: (getLabel(labelId) || {}).color || 'defaultColor',
+          }"
+          @click.stop="toggleLabel(labelId)"
+        >
+          <span v-if="areLabelsVisible">{{ getLabel(labelId).title }}</span>
+        </div>
+      </div>
+
       <div class="task-header">
         <p>{{ task.title }}</p>
       </div>
 
       <div class="tool-tip">
+        <div v-if="task.watching">
+          <span class="icon watch"></span>
+        </div>
+
         <div v-if="task.description">
           <span class="icon desc"></span>
         </div>
@@ -33,7 +57,7 @@
         <div
           :class="`due-date ${dueDateStatus} ${task.status}`"
           v-if="task.dueDate"
-          @click.stop="completeTask"
+          @click.stop="toggleStatus"
         >
           <span class="icon date"></span>
           <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
@@ -43,17 +67,11 @@
       </div>
     </li>
   </section>
-
-  <!-- <section class="task-preview">
-      <RouterLink :to="'/details/' + this.currBoard + '/group/' + this.groupId + '/task/' + task.id">
-        <li v-if="task">
-          <p>{{ task.title }}</p>
-        </li>
-      </RouterLink> -->
 </template>
 
 <script>
 import { format } from 'date-fns'
+import TaskCover from './TaskCover.vue'
 
 export default {
   props: {
@@ -74,7 +92,6 @@ export default {
     totalChecklists() {
       let total = 0
       if (this.task.checklists) {
-        // make sure checklists is defined
         this.task.checklists.forEach((checklist) => {
           total += checklist.todos.length
         })
@@ -84,7 +101,6 @@ export default {
     doneChecklists() {
       let done = 0
       if (this.task.checklists) {
-        // make sure checklists is defined
         this.task.checklists.forEach((checklist) => {
           checklist.todos.forEach((todo) => {
             if (todo.isChecked) {
@@ -110,6 +126,9 @@ export default {
       if (diffHours < 24) return 'due-soon'
       return 'normal'
     },
+    areLabelsVisible() {
+      return this.$store.getters.areLabelsVisible
+    },
   },
   methods: {
     goToTaskDetails() {
@@ -120,12 +139,63 @@ export default {
     formatDate(timestamp) {
       return format(new Date(timestamp), 'dd MMM')
     },
-    completeTask() {
-      this.$store.dispatch('completeTask', {
+    toggleStatus() {
+      this.$store.dispatch('toggleStatus', {
         groupId: this.groupId,
         task: this.task,
       })
     },
+    getLabel(id) {
+      return this.$store.getters.getLabelById(id) || {}
+    },
+
+    toggleLabel() {
+      this.$store.commit('toggleLabelsVisibility')
+    },
+  },
+  components: {
+    TaskCover,
   },
 }
 </script>
+
+<style scoped>
+.labels {
+  display: flex;
+  flex-wrap: wrap;
+}
+.label {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: start;
+  width: 40px;
+  height: 8px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: rem(12px);
+  color: black;
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+.label.expanded {
+  min-width: 56px;
+  width: max-content;
+  height: 16px;
+  padding: 0 8px;
+}
+
+.label-text {
+  opacity: 0;
+  visibility: hidden;
+  font-weight: 500;
+  transition: opacity 2s, visibility 5s;
+}
+
+.label.expanded .label-text {
+  opacity: 1;
+  visibility: visible;
+}
+</style>

@@ -9,6 +9,10 @@
   background-color: $task-bg-clr;
   cursor: pointer;
 
+  &.with-cover {
+    border-radius: 0 0 8px 8px;
+  }
+
   > li {
     width: 100%;
 
@@ -116,9 +120,14 @@
           }
         }
 
-        &.normal,
-        &.no-due-date {
-          // normal styling for date icon and counter
+        &.done{
+          background-color: $background-success-bold;
+          &:hover {
+            background-color: $background-success-bold-hovered;
+            .icon.date {
+              @include trello-icon($content: "\e918", $type: sm, $color: $dynamic-text);
+            }
+          }
         }
       }
     }

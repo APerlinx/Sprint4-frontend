@@ -43,6 +43,9 @@
             justify-content: space-between;
             width: 100%;
             margin-bottom: 0.5em;
+            > div > .watch {
+                @include trello-icon($content: "\e969", $type: sm, $color: #626f86);
+            }
         }
 
         .group-title {
@@ -70,20 +73,20 @@
             }
         }
 
-        // @media (min-width: 1024px) {
-        //     max-height: calc(100vh - 156px);
-        // }
+        @media (min-width: 1024px) {
+            max-height: calc(100vh - 180px);
+        }
 
-        // @media (min-width: 1440px) {
-        //     max-height: calc(100vh - 100px);
-        // }
+        @media (min-width: 1440px) {
+            max-height: calc(100vh - 200px);
+        }
     }
 
     .modal-content {
         display: flex;
         flex-direction: column;
-        overflow-x: hidden;
-        overflow-y: auto;
+        // overflow-x: hidden;
+        // overflow-y: auto;
 
         & .header {
             display: flex;

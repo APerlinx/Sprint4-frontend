@@ -34,9 +34,9 @@
             word-spacing: -1px; 
             resize: vertical; 
             overflow: auto;
-
             border-bottom: 16px solid transparent;
             border-right: 16px solid transparent;
+            font-size: 1em;
         }
 
         > textarea::after {
@@ -47,13 +47,14 @@
             right: 0;
             width: 8px;
             height: 8px;
-            background: white;
+            background: white
         }
     }
 
     .form-btn {
         display: flex;
         justify-content: start;
+        align-items: start;
         > .add-btn {
             @include add-group-btn
         }
