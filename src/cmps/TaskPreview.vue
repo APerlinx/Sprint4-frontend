@@ -175,7 +175,7 @@ export default {
   margin-bottom: 4px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 12pxbp;
+  font-size: 10px;
   color: black;
   transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 }
