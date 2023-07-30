@@ -63,7 +63,7 @@
           <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
         </div>
 
-        <span class="icon member">M</span>
+        <!-- <span class="icon member">M</span> -->
       </div>
     </li>
   </section>
