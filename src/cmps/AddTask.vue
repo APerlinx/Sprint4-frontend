@@ -12,8 +12,8 @@
       </div>
 
       <div class="form-btn">
-        <button class="form-btn add-btn">Add card</button>
-        <button class="form-btn" @click.prevent="closeComponent"><span class="icon"></span></button>
+        <button class="add-btn">Add card</button>
+        <button @click.prevent="closeComponent"><span class="icon close"></span></button>
       </div>
 
     </form>

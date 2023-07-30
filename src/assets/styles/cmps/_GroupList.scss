@@ -7,7 +7,7 @@
   margin-bottom: 8px;
   padding-bottom: 8px;
   margin-inline-start: 1rem;
-
+  
   .group-list {
     display: flex;
     flex-direction: row;
@@ -48,33 +48,36 @@
       background-color: #ffffff3d;
       border-radius: 12px;
       margin-block-start: 0.55em;
-      width: 272px;
       text-align: start;
       cursor: pointer;
-      min-width: 272px;
-    }
+      min-width: rem(250px);
+      height: rem(45px);
 
-    .list-btn-wrapper:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
     }
 
     .open-form-wrapper {
       background-color: $list-background-color;
-      margin-block-start: 0.55em;
-
-      border-radius: 12px;
+      border-radius: rem(12px);
       min-width: 272px;
-      margin: 0 4px;
-      padding: 8px;
+      padding: rem(8px);
     }
 
     .list-btn {
       color: $dynamic-text;
       padding: 6px 8px;
       margin: 0;
-
+      display: flex;
+      gap: rem(3.8px);
+      font-size: em(14.92px);
+      align-items: center;
       > .icon {
         @include trello-icon($content: "\e901", $type: sm, $color: $dynamic-text);
+        margin-inline-start: 0.05rem;
+        font-size: em(18px);
+        font-weight: 500;
       }
     }
 

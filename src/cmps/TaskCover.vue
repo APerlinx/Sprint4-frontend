@@ -1,9 +1,10 @@
 <template>
-  <div 
+    <div 
     class="task-cover" 
     v-if="task.cover" 
     :style="{...coverStyle, height: coverHeight}"
   ></div>
+
 </template>
 
 <script>

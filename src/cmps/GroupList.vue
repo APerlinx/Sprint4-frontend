@@ -16,6 +16,8 @@
           <GroupPreview
             :group="group"
             :key="group.id"
+            :showTaskForm="showTaskForm"
+            :currentGroupId="currentGroupId"
             class="group-preview"
             @update-title="updateGroup"
             @removeGroup="removeGroup"
@@ -34,12 +36,12 @@
                   <span class="icon"></span> Add a card
                 </button>
 
-                <AddTask
+                <!-- <AddTask
                   v-if="showTaskForm && currentGroupId === group.id"
                   :groupId="currentGroupId"
                   @addTask="addTask"
                   @close="closeTaskForm"
-                />
+                /> -->
               </div>
             </template>
           </GroupPreview>

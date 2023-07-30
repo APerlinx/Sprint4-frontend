@@ -9,11 +9,22 @@
     :dragClass="'card-ghost'"
     :drop-placeholder="dropPlaceholderOptions"
   >
-    <Draggable v-for="item in items" :key="item.id" class="draggable-item" drag-class="card-ghost">
+    <Draggable
+      v-for="item in items"
+      :key="item.id"
+      class="draggable-item"
+      drag-class="card-ghost"
+    >
       <div class="card">
         <task-preview :task="item" :groupId="groupId" />
       </div>
     </Draggable>
+    <AddTask
+      v-if="showAddTask"
+      :groupId="groupId"
+      @addTask="addTask"
+      @close="closeTaskForm"
+    />
   </Container>
 </template>
 
@@ -30,6 +41,10 @@ export default {
     },
     tasks: {
       type: Array,
+    },
+    showAddTask: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -58,6 +73,12 @@ export default {
     getChildPayload(idx) {
       return this.items[idx]
     },
+    addTask(task) {
+      this.$emit('addTask', task)
+    },
+    closeTaskForm() {
+      this.$emit('closeTaskForm')
+    },
   },
   components: {
     taskPreview,
@@ -74,7 +95,7 @@ export default {
 }
 .card-ghost {
   transition: transform 0.18s ease;
-  transform: rotateZ(0deg)
+  transform: rotateZ(0deg);
 }
 /* .draggable-item {
   transition-duration: 80ms !important;

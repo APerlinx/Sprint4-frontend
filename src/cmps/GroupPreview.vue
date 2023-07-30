@@ -9,8 +9,7 @@
           @input="updateTitle($event.target.value)"
         />
         <div>
-                  <span class="icon watch" v-if="group.isWatched"></span>
-
+          <span class="icon watch" v-if="group.isWatched"></span>
         </div>
         <div class="menu-btn" ref="menuButton" @click="toggleModal">
           <span class="icon"></span>
@@ -21,6 +20,7 @@
           @moveTasks="replaceTasks"
           :tasks="group.tasks"
           :groupId="group.id"
+          :showAddTask="showTaskForm && currentGroupId === group.id"
         />
       </div>
       <slot name="actions"></slot>
@@ -47,9 +47,7 @@
           <button class="action" @click="handleAction('duplicateGroup')">
             Duplicate group...
           </button>
-          <button class="action" @click="handleAction('watch')">
-            Watch
-          </button>
+          <button class="action" @click="handleAction('watch')">Watch</button>
           <hr />
         </div>
       </div>

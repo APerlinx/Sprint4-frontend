@@ -1,7 +1,7 @@
 .task-preview {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 256px;
   border-radius: 8px;
   margin-bottom: 7px;
   padding: 8px 8px 4px 12px;
@@ -20,7 +20,7 @@
       display: flex;
       justify-content: start;
       align-items: center;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.33em;
       > div {
         display: flex;
         margin-right: 1em;
@@ -160,7 +160,10 @@
     margin: 0 0 4px;
     overflow: hidden;
     text-align: start;
-    font-size: 0.9em;
+    font-size: rem(12.6px);
+    word-spacing: rem(0.5px);
+    letter-spacing: rem(0.5px);
+    color: $task-title;
   }
 
   &:hover {

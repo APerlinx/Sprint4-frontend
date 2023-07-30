@@ -6,7 +6,7 @@
     > form {
         display: flex;
         flex-direction: column;
-        box-sizing: border-box;
+        justify-content: center;
     }
 
     > form > .input-wrapper {
@@ -21,7 +21,6 @@
         > textarea {
             box-sizing: border-box;
             width: 100%;
-            margin-bottom: 7px;
             padding: 8px 8px 4px 12px;
             background: none;
             border: none;
@@ -30,9 +29,9 @@
             cursor: text;
             height: 70px;
             border-radius: 12px;
-            font-size: 12px; 
-            word-spacing: -1px; 
-            resize: vertical; 
+            font-size: 12px;
+            word-spacing: -1px;
+            resize: vertical;
             overflow: auto;
             border-bottom: 16px solid transparent;
             border-right: 16px solid transparent;
@@ -40,27 +39,32 @@
         }
 
         > textarea::after {
-            content: '';
+            content: "";
             display: block;
             position: absolute;
             bottom: 0;
             right: 0;
             width: 8px;
             height: 8px;
-            background: white
+            background: white;
         }
     }
 
     .form-btn {
         display: flex;
         justify-content: start;
-        align-items: start;
+        align-items: center;
+        margin-top: 0.2em;
+        padding: 0 12px;
         > .add-btn {
-            @include add-group-btn
+            align-self: center;
+            @include add-group-btn;
+            padding: 6px 12px;
         }
 
-        > .icon {
-            @include trello-icon($content: "\e91c", $type: lg, $color: #626F86);
-          }
+        button > .icon.close {
+            vertical-align: middle;
+            @include trello-icon($content: "\e91c", $type: lg, $color: #626f86);
+        }
     }
 }

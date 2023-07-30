@@ -8,7 +8,7 @@
       />
       <div>
         <button class="form-btn add-btn" >Add list</button>
-        <button class="form-btn" @click.prevent="closeComponent">X</button>
+        <button class="form-btn" @click.prevent="closeComponent"><span class="icon close"></span></button>
       </div>
     </form>
   </section>

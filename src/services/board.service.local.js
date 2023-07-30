@@ -295,7 +295,6 @@ const board = {
           description: 'Add a carousel to the homepage',
           labels: ['l102', 'l103'],
           watching: true,
-          cover: { color: '#4d908e', imgUrl: '', isFull: true },
           comments: [
             {
               id: 'C4',
@@ -381,7 +380,6 @@ const board = {
           description: 'Improve loading speed and reduce page size',
           labels: ['l102', 'l106'],
           watching: false,
-          cover: { color: '#fb6f92', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -421,7 +419,6 @@ const board = {
           description: 'Make the website compatible with various devices',
           labels: ['l104', 'l105'],
           watching: false,
-          cover: { color: '#90be6d', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -725,7 +722,6 @@ const board = {
           description: 'Hold a meeting to clarify project requirements',
           labels: ['l103', 'l105'],
           watching: false,
-          cover: { color: '#90be6d', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -760,7 +756,6 @@ const board = {
           description: 'Add user authentication',
           labels: ['l102', 'l104'],
           watching: true,
-          cover: { color: '#4d908e', imgUrl: '', isFull: false },
           comments: [
             {
               id: 'C6',
@@ -841,7 +836,6 @@ const board = {
           description: 'Update README and project documentation',
           labels: ['l105', 'l106'],
           watching: false,
-          cover: { color: '#f9c74f', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -881,7 +875,6 @@ const board = {
           description: 'Plan the agenda for the upcoming team meeting',
           labels: ['l101', 'l103'],
           watching: false,
-          cover: { color: '#26de81', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -936,7 +929,6 @@ const board = {
           description: 'Prepare a comprehensive user guide for the application',
           labels: ['l108', 'l105'],
           watching: false,
-          cover: { color: '#fb6f92', imgUrl: '', isFull: false },
           comments: [],
           checklists: [],
           dueDate: Date.now(),
@@ -983,7 +975,6 @@ const board = {
             'Deploy the latest version of the application to production',
           labels: ['l102', 'l108'],
           watching: true,
-          cover: { color: '#3a5a40', imgUrl: '', isFull: false },
           comments: [],
           checklists: [],
           dueDate: 1675040918000,
