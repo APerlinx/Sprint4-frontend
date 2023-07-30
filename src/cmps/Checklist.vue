@@ -1,9 +1,11 @@
 <template>
     <div class="checklist">
         <section class="checklist-title-container" v-if="checklist">
-            <span></span>
-            <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
-                @focus="hideBtn = false"></textarea>
+            <div class="icon-title-container">
+                <span class="icon full-checked-big"></span>
+                <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
+                    @focus="hideBtn = false"></textarea>
+            </div>
 
             <button class="btn btn-checklist-hide-show" v-if="isTodoChecked" @click="isHideChecked = !isHideChecked">
                 {{ hideCheckedTxt }}</button>

@@ -533,7 +533,6 @@ function _membersOptions() {
       fullname: "Adam Bercovich",
       imgUrl: "https://ca.slack-edge.com/T04U05NLZ2M-U04UB8KDZH6-0fbe87aa89af-72",
       backgroundColor: "#adc178",
-
     }
     // {
     //   id: "m106",

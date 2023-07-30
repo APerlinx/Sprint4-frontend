@@ -6,7 +6,7 @@
         </section>
         <section>
             <component v-if="actionCmpType" :is="actionCmpType" :info="taskToEdit" @member="addMember"
-                @checklist="addChecklist" @saveLabel="saveLabel">
+                @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="addDueDate">
             </component>
         </section>
     </div>
@@ -15,6 +15,7 @@
 import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
 import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
 import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
+import DueDatePicker from "../cmps/taskDeatilsOpts/DueDatePicker.vue"
 export default {
     props: {
         taskToEdit: Object,
@@ -31,16 +32,23 @@ export default {
         saveLabel() {
             this.$emit('saveLabel')
         },
-        addMember() { },
+        addMember() {
+            this.$emit("member", addMember);
+        },
         addChecklist(newChecklist) {
             this.$emit("checklist", newChecklist);
             console.log("modal2 - newChecklist:", newChecklist);
         },
+        addDueDate() {
+            this.$emit("dueDate", newDueDate);
+        }
     },
     components: {
         ChecklistPicker,
-        ChecklistPicker,
         LabelsPicker,
+        MemberPicker,
+        DueDatePicker,
+
     }
 }
 </script>

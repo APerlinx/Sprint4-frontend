@@ -40,7 +40,8 @@ export const boardStore = {
     filterBy: '',
     dropResults: [],
 
-    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker'],
+    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker', 'DueDatePicker'],
+    // , 'AttachmentsPicker', 'CoverPicker'
   },
   getters: {
     boards({ boards }) {

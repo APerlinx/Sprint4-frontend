@@ -19,7 +19,7 @@
         position: absolute;
 
         width: 768px;
-        border-radius: 8px;
+        border-radius: 13px;
         margin-bottom: 40px;
         padding: 0;
 
@@ -27,9 +27,10 @@
         color: #172b4d;
         text-align: left;
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+        letter-spacing: -0.005rem;
 
         display: grid;
-        grid-template-columns: 580px 188px;
+        grid-template-columns: 576px 192px;
         grid-template-rows: 2;
 
         .btn {
@@ -54,8 +55,8 @@
     .close-task-details {
         z-index: 1;
         position: absolute;
-        right: 20px;
-        top: 15px;
+        right: 25px;
+        top: 22px;
         cursor: pointer;
     }
 
@@ -99,9 +100,10 @@
                 width: 90%;
                 height: 40px;
                 font-size: 1.3rem;
-                // margin: 17px 0 0 11px; //with icon
-                margin: 17px 0 0 46px;
+                margin: 12px 0 0 -7px; //with icon
+                // margin: 17px 0 0 46px;
                 padding: 10px;
+                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
 
                 &:focus {
                     border: none;
@@ -112,7 +114,7 @@
             }
 
             .task-in-list {
-                margin: -4px 0 0 59px;
+                margin: -4px 0 0 57px;
             }
 
             .group-ops {
@@ -124,18 +126,15 @@
     .task-details-main {
         grid-column: 1/2;
         grid-row: 2/3;
-        margin-left: 40px;
+        margin-left: 50px;
 
         .task-alerts {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            margin: 25px 0 0 8px;
+            margin: 29px 0 0 0px;
 
             .label-wrapper {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.25em;
 
                 .label {
                     display: flex;
@@ -143,20 +142,49 @@
                     height: rem(34px);
                     min-width: rem(50px);
                     border-radius: 0.25em;
-                    padding: 1em;
+                    padding: 0.9em;
 
                     h6 {
                         font-weight: 200;
                         font-size: 1em;
                     }
-
                 }
-
             }
 
-            .btn-watch {
-                padding: 6px 12px;
-                transition-duration: 85ms;
+            .details-notification {
+                margin: 16px 8px 5px 0;
+
+                h5 {
+                    margin: 0 0 7px 0;
+                }
+
+                .btn-watch {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 8px 8px;
+                    text-justify: center;
+
+                    .word-watch {
+                        margin: 0px 20px 0 0px;
+                    }
+
+                    transition-duration: 85ms;
+                }
+
+                margin-left: 0px;
+            }
+
+            .task-due-date {
+                margin: 9px 0 0px 0;
+
+                h5 {
+                    margin: 0 0 7px 0;
+                }
+
+                .btn-due-date {
+                    margin-left: 5px;
+                    padding: 9px 15px;
+                }
             }
 
             .toggle-show-details {
@@ -193,16 +221,17 @@
         display: flex;
         flex-direction: column;
         padding: 0 16px 8px 8px;
+        margin-top: 5px;
 
         h3.details-title-small {
-            margin: 15px 0 0 5px;
+            margin: 15px 0 0 0px;
             font-size: 12px;
             font-weight: 600;
             line-height: 20px;
 
-            &:nth-child(1) {
-                margin: 0 0 0 5px;
-            }
+            // &:nth-child(1) {
+            //     margin: 0 0 0 5px;
+            // }
         }
 
         .btn {
@@ -233,29 +262,7 @@
         background-color: #D0D4DB;
     }
 
-    .details-description {
-        width: 100%;
-        height: 60px;
-        border: none;
-        border-radius: 3px;
-        margin: 17px 0 4px 12px;
-        padding: 8px 12px;
-        background-color: #E4E6EA;
-        ;
-        text-decoration: none;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-        font-size: 14px;
-        font-weight: 400;
-        text-decoration: none;
-        line-height: 20px;
 
-        &:focus {
-            border: 0;
-            min-height: 100px;
-            box-shadow: inset 0 0 0 2px #388bff;
-            background-color: white;
-        }
-    }
 
     .activity-show-details {
         display: flex;
@@ -278,12 +285,140 @@
     .task-detail button {
         margin: 0;
     }
+}
+
+.icon-title-container {
+    display: flex;
+    flex-direction: row;
+
+    .icon.card-big {
+        margin: 22px 0 0 19px;
+    }
+}
+
+.icon-title-container-description {
+    display: flex;
+    flex-direction: row;
+
+    .description-big {
+        margin: 26px 0 0 -46px;
+    }
+
+    .details-title-big {
+        margin: 23px 0px 0 10px;
+    }
 
 }
 
+.details-description {
+    width: 100%;
+    height: 60px;
+    border: none;
+    border-radius: 3px;
+    margin: 15px 0 4px 0px;
+    padding: 8px 12px;
+    background-color: #E4E6EA;
+    ;
+    text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    line-height: 20px;
+
+    &:focus {
+        border: 0;
+        min-height: 100px;
+        box-shadow: inset 0 0 0 2px #388bff;
+        background-color: white;
+    }
+}
+
 .icon {
+    padding: 0 10px 0 0;
+    margin-left: -4px;
+    ;
+}
+
+.icon {
+    &.member {
+        @include trello-icon($content: "\e946", $type: sm, $color: #626f86);
+    }
+
+    &.label {
+        @include trello-icon($content: "\e93f", $type: sm, $color: #626f86);
+    }
+
+    &.checklist {
+        @include trello-icon($content: "\e91a", $type: sm, $color: #626f86);
+    }
+
     &.date {
         @include trello-icon($content: "\e91b", $type: sm, $color: #626f86);
+    }
+
+    &.attachments {
+        @include trello-icon($content: "\e908", $type: sm, $color: #626f86);
+    }
+
+    &.cover {
+        @include trello-icon($content: "\e914", $type: sm, $color: #626f86);
+    }
+
+    &.arrow-right {
+        @include trello-icon($content: "\e94a", $type: sm, $color: #626f86);
+    }
+
+    &.copy {
+        @include trello-icon($content: "\e91f", $type: sm, $color: #626f86);
+    }
+
+    &.archive {
+        @include trello-icon($content: "\e907", $type: sm, $color: #626f86);
+    }
+
+    &.share {
+        @include trello-icon($content: "\e963", $type: sm, $color: #626f86);
+    }
+
+    &.card {
+        @include trello-icon($content: "\e912", $type: sm, $color: #626f86);
+    }
+
+    &.card-big {
+        @include trello-icon($content: "\e912", $type: lg, $color: #626f86);
+    }
+
+    &.eye {
+        @include trello-icon($content: "\e969", $type: sm, $color: #626f86);
+    }
+
+    &.close {
+        @include trello-icon($content: "\e91c", $type: sm, $color: #626f86);
+    }
+
+    &.full-checked {
+        @include trello-icon($content: "\e918", $type: sm, $color: #626f86);
+    }
+
+    &.full-checked-big {
+        @include trello-icon($content: "\e918", $type: lg, $color: #626f86);
+    }
+
+    &.checked {
+        @include trello-icon($content: "\e916", $type: sm, $color: #626f86);
+    }
+
+    &.description-big {
+        @include trello-icon($content: "\e922", $type: lg, $color: #626f86);
+    }
+
+    &.activity-big {
+        @include trello-icon($content: "\e900", $type: lg, $color: #626f86);
+    }
+
+    &.plus {
+        @include trello-icon($content: "\e901", $type: sm, $color: #626f86);
     }
 }
 
