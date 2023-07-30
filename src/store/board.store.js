@@ -305,7 +305,7 @@ export const boardStore = {
         console.log(err)
       }
     },
-    async addTask({ commit, state }, { groupId, task, board }) {
+    async addTask({ commit, state,dispatch }, { groupId, task, board }) {
       try {
         const newTask = boardService.getEmptyTask(task.title)
         commit('addTaskToGroup', { groupId, task: newTask, board })
