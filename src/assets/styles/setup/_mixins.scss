@@ -41,44 +41,46 @@
 }
 
 @mixin pickerModal {
-    .picker-modal {
-        transform: translate(-50%, 17%);
-        .search-output {
-            background-color: white;
-            width: rem(304px);
-            height: rem(202px);
-            border-radius: 0.2em;
-            box-shadow: 0 0 3px lightgray;
+    position: absolute;
+    transform: translate(3%,6%);
+    z-index: 999;
+    .search-output {
+        background-color: white;
+        width: rem(304px);
+        height: rem(202px);
+        border-radius: 0.2em;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.139);
+        border: 1px solid rgb(238, 236, 236);
+        border-radius: 1em;
 
-            & > * :hover {
-                background-color: rgb(244, 244, 244);
-            }
+        & > * :hover {
+            background-color: rgb(244, 244, 244);
+        }
 
-            .output-list {
+        .output-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            list-style: none;
+            padding: 0;
+
+            .row {
                 display: flex;
-                flex-direction: column;
-                gap: 1em;
-                list-style: none;
-                padding: 0;
+                align-items: center;
+                gap: 0.5em;
+                padding-inline-start: 1em;
+                padding-block: 0.4em;
 
-                .row {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5em;
-                    padding-inline-start: 1em;
-                    padding-block: 0.4em;
+                img {
+                    height: rem(25px);
+                    width: rem(25px);
+                    border-radius: 0.2em;
+                }
 
-                    img {
-                        height: rem(25px);
-                        width: rem(25px);
-                        border-radius: 0.2em;
-                    }
-
-                    h2 {
-                        font-weight: 300;
-                        font-size: 1em;
-                        color: #182b4d;
-                    }
+                h2 {
+                    font-weight: 300;
+                    font-size: 1em;
+                    color: #182b4d;
                 }
             }
         }

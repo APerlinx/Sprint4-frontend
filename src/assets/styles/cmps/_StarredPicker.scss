@@ -1,0 +1,8 @@
+.starred {
+    .starred-modal {
+        @include pickerModal;
+        position: absolute;
+        background-color: white;
+        z-index: 999;
+    }
+}

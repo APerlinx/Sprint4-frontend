@@ -1,5 +1,5 @@
 <template>
- <div class="picker-modal">
+ <div class="recent-modal">
           <div class="search-output">
             <ul class="output-list">
               <li v-for="board in recentBoards">

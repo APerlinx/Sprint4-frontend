@@ -1,47 +1,56 @@
 <template>
   <header class="app-header">
     <nav>
-      <div class="logo-container">
-        <RouterLink to="/board">
-          <div class="logo">
-            <i class="fa fa-trello"></i>
-            <h2>Trello</h2>
-          </div>
-        </RouterLink>
-      </div>
-
-      <div class="create-btn">
-        <Popper arrow placement="right">
-          <RouterLink to="#">Create</RouterLink>
-          <template #content>
-            <AddBoard @close="closeModal" @save="saveBoard" />
-          </template>
-        </Popper>
-      </div>
-
-      <div class="pickers">
-        <div class="starred">
-          <button
-            :style="{ position: 'relative' }"
-            @click="togglePickerModal('StarredPicker')"
-          >
-            Starred 
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
+      <div class="left">
+        <div class="menu">
+          <img src="../assets/styles/img/menu.png" alt="" />
         </div>
+        <div class="logo-container">
+          <RouterLink to="/board">
+            <div class="logo">
+              <i class="fa fa-trello"></i>
+              <h2>Trello</h2>
+            </div>
+          </RouterLink>
+        </div>
+
         <div class="recent">
           <button
             :style="{ position: 'relative' }"
-            @click="togglePickerModal('RecentPicker')">Recent 
+            @click="togglePickerModalRecent"
+          >
+            Recent
             <i class="fa-solid fa-chevron-down"></i>
           </button>
+          <div v-if="isPickerModalRecent" class="recent-modal">
+            <RecentPicker v-click-outside="togglePickerModalRecent" />
+          </div>
         </div>
-        <div v-if="isPickerModal" class="pickers-modal">
-          <Component v-click-outside="togglePickerModal" :is="tab" />
+
+        <div class="starred">
+          <button
+            :style="{ position: 'relative' }"
+            @click="togglePickerModalStarred"
+          >
+            Starred
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div v-if="isPickerModalStarred" class="starred-modal">
+            <StarredPicker v-click-outside="togglePickerModalStarred" />
+          </div>
+        </div>
+
+        <div class="create-btn">
+          <Popper arrow placement="right">
+            <RouterLink to="#">Create</RouterLink>
+            <template #content>
+              <AddBoard @close="closeModal" @save="saveBoard" />
+            </template>
+          </Popper>
         </div>
       </div>
 
-      <BoardFilter @filterByTxt="filterByTxt" />
+      <!-- <BoardFilter @filterByTxt="filterByTxt" /> -->
     </nav>
   </header>
 </template>
@@ -52,8 +61,7 @@ import BoardFilter from "../cmps/BoardFilter.vue";
 import RecentPicker from "../cmps/RecentPicker.vue";
 import StarredPicker from "../cmps/StarredPicker.vue";
 
-import { clickOutsideDirective } from '../directives/index.js'
-
+import { clickOutsideDirective } from "../directives/index.js";
 
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";
@@ -61,8 +69,8 @@ import Popper from "vue3-popper";
 export default {
   data() {
     return {
-      tab: "",
-      isPickerModal: false,
+      isPickerModalStarred: false,
+      isPickerModalRecent: false,
     };
   },
   methods: {
@@ -80,9 +88,11 @@ export default {
       }
     },
 
-    togglePickerModal(type) {
-      this.tab = type;
-      this.isPickerModal = !this.isPickerModal;
+    togglePickerModalRecent() {
+      this.isPickerModalRecent = !this.isPickerModalRecent;
+    },
+    togglePickerModalStarred() {
+      this.isPickerModalStarred = !this.isPickerModalStarred;
     },
 
     filterByTxt(filterBy) {
