@@ -4,7 +4,7 @@
         <div class="members-container">
             <h3>Board members</h3>
             <ul>
-                <li v-for="member in board.members " @click="addMember" class="list">
+                <li v-for="member in board.members" @click="toggleMember(member)" class="list">
                     <div class="single-member-container">
                         <!-- <div class="member-pic" :style="{ backgroundColor: member.backgroundColor }"> -->
                         <div class="member-pic">
@@ -50,9 +50,17 @@ export default {
     data() {
     },
     methods: {
-        addMember() {
-            this.$emit('addMember', member);
+        toggleMember({ id, username, fullname, imgUrl, backgroundColor }) {
+            const member = {
+                id,
+                fullname,
+                username,
+                imgUrl,
+                backgroundColor,
+            }
+            // console.log('member:', member)
+            this.$emit('toggleMember', member);
         }
-    }
+    },
 }
 </script>

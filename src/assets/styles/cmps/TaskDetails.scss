@@ -185,7 +185,7 @@
 .details-members {
     display: flex;
     flex-direction: column;
-    // border: 1px solid red;
+    border: 1px solid red;
     margin-right: 11px;
     margin-bottom: 20px;
 }
@@ -196,7 +196,7 @@
     flex-wrap: wrap;
     // float: left;
     max-width: 100%;
-    // margin: -2px 0px 16px 1px;
+    // margin: -2px 0px 0px 1px;
 
     .btn-member {
         width: 32px;
@@ -209,19 +209,27 @@
         justify-content: center;
 
         :last-child {
-            margin-right: -2px;
+            // margin-right: -2px;
         }
 
-        .member-img {
-            aspect-ratio: auto 30 / 30;
-        }
     }
+}
+
+.member-pic {
+    // position: relative;
+
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    // border: 1px solid white;
+    background-color: rgb(168, 164, 164);
+    aspect-ratio: auto 30/30;
 }
 
 
 ///////////////////////   LABELS    ///////////////////////
 .label-wrapper {
-    // border: 1px solid red;
+    border: 1px solid red;
     margin-bottom: 20px;
     margin-right: 10px;
 

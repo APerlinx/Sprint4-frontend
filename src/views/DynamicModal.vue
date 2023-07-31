@@ -6,17 +6,9 @@
       <!-- <pre>{{ board }}</pre> -->
     </section>
     <section>
-      <component
-        v-if="actionCmpType"
-        :board="board"
-        :is="actionCmpType"
-        :taskToEdit="taskToEdit"
-        @member="addMember"
-        @checklist="addChecklist"
-        @saveLabel="saveLabel"
-        @dueDate="addDueDate"
-        @setBgColor="setBgColor"
-      >
+      <component v-if="actionCmpType" :board="board" :is="actionCmpType" :taskToEdit="taskToEdit"
+        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="addDueDate"
+        @setBgColor="setBgColor">
       </component>
     </section>
   </div>
@@ -35,7 +27,9 @@ export default {
     actionCmpName: String,
   },
   data() {
-    return {};
+    return {
+
+    };
   },
   methods: {
     setBgColor(color) {
@@ -47,8 +41,8 @@ export default {
     saveLabel(labelId) {
       this.$emit("saveLabel", labelId);
     },
-    addMember() {
-      this.$emit("member", addMember);
+    toggleMember(member) {
+      this.$emit("toggleMember", member);
     },
     addChecklist(newChecklist) {
       this.$emit("checklist", newChecklist);

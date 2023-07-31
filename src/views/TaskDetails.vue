@@ -24,7 +24,10 @@
             <section class="task-details-main">
 
                 <div class="task-alerts">
-                    <Members />
+                    <!-- <Members /> -->
+                    <!-- <Members v-for="member in taskToEdit.members" :key="member.id" :member="member" /> -->
+                    <Members :task="taskToEdit" :board="board" />
+
                     <Labels :task="taskToEdit" :board="board" />
 
                     <div class="notifications-container">
@@ -114,7 +117,8 @@
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
-                            @checklist="addChecklist" @member="addMember" @saveLabel="saveLabel" @setBgColor="setBgColor" />
+                            @checklist="addChecklist" @toggleMember="toggleMember" @saveLabel="saveLabel"
+                            @setBgColor="setBgColor" />
                     </template>
                 </Popper>
                 <div class="action-btns-in-btns">
@@ -194,17 +198,25 @@ export default {
         },
 
         addChecklist(newChecklist) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
-            this.taskToEdit.checklists.push(newChecklist);
-            // console.log("modal3 - newChecklist:", newChecklist)
-            this.editTask();
+            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
+            this.taskToEdit.checklists.push(newChecklist)
+            console.log("modal3 - newChecklist:", newChecklist)
+            this.editTask()
         },
-        addMember(newMember) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
-            this.taskToEdit.checklists.push(newChecklist);
-            // console.log("modal3 - newChecklist:", newChecklist)
-
-            // this.closeDynamicModal()
+        toggleMember(clickedMember) {
+            // console.log('TaskDeatails - newMember:', clickedMember)
+            if (!this.taskToEdit.members) {
+                this.taskToEdit.members = []
+                this.taskToEdit.members.push(clickedMember)
+            } else {
+                if (this.taskToEdit.members.some(member => member.id === clickedMember.id)) {
+                    const idx = this.taskToEdit.members.findIndex(member => member.id === clickedMember.id);
+                    this.taskToEdit.members.splice(idx, 1);
+                } else {
+                    this.taskToEdit.members.push(clickedMember);
+                }
+            }
+            console.log('TaskDeatails - members:', this.taskToEdit.members)
         },
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)
@@ -218,16 +230,6 @@ export default {
             // if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
             else checklists.splice(idx, 1);
             this.editTask();
-        },
-        updateMembers({ type, newMember }) {
-            console.log('111111111member:', newMember)
-            if (!this.taskToEdit.members) this.taskToEdit.members = [];
-            if (this.taskToEdit.members.some(member => member._id === newMember._id)) {
-                const idx = this.taskToEdit.members.findIndex(member => member._id === newMember._id);
-                this.taskToEdit.members.splice(idx, 1);
-            } else {
-                this.taskToEdit.members.push(newMember);
-            }
         },
         async setTask() {
             try {
@@ -271,7 +273,7 @@ export default {
             const editedTask = JSON.parse(JSON.stringify(this.taskToEdit));
             // console.log("editedTask:", editedTask)
             const taskIdx = this.group.tasks.findIndex(
-                (task) => task.id === this.taskToEdit.id
+                task => task.id === this.taskToEdit.id
             );
             // replace task with editTask
             this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
