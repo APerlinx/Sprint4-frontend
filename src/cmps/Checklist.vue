@@ -4,6 +4,7 @@
 
             <div class="icon-title-container-checklist">
                 <span class="icon full-checked-big"></span>
+                <!-- <h3 @click="hideBtn">{{ checklistToEdit.title }}</h3> -->
                 <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                     @focus="hideBtn = false"></textarea>
             </div>
@@ -72,28 +73,6 @@ export default {
             hideTodoBtn: false,
             hideBtn: true,
             newTodoTitle: '',
-            // checklistToEdit:
-            // {
-            //     _id: 'abc123',
-            //     title: 'test',
-            //     todos: [
-            //         {
-            //             _id: "check101",
-            //             title: "Guy",
-            //             isChecked: true
-            //         },
-            //         {
-            //             _id: "check102",
-            //             title: "Alon",
-            //             isChecked: false
-            //         },
-            //         {
-            //             _id: "check103",
-            //             title: "Shay",
-            //             isChecked: false
-            //         },
-            //     ],
-            // },
         }
     },
     created() {

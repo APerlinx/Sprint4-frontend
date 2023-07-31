@@ -26,20 +26,30 @@
     line-height: 20px;
 
     .dynamic-modal-header {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
+        align-items: center;
+        display: grid;
+        grid-template-columns: 32px 1fr 32px;
+        padding: 4px 8px;
+        position: relative;
+        text-align: center;
 
         .dynamic-modal-title {
             box-shadow: none;
             height: 20px;
+            grid-column: 2;
+            grid-row: 1;
         }
 
         .dynamic-modal-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
+            color: var(--ds-icon-subtle, #626f86);
+            grid-column: 3;
+            grid-row: 1;
+            padding: 6px;
+            z-index: 2;
+            // position: absolute;
+            // top: 10px;
+            // right: 10px;
+            // cursor: pointer;
         }
     }
 }

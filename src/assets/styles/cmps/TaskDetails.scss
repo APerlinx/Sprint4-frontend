@@ -8,6 +8,7 @@
     height: 100%;
     top: 0;
     left: 0;
+    display: flex;
     padding-top: 48px;
     align-items: start;
     overflow-y: auto;
@@ -68,11 +69,9 @@
     flex-direction: column;
     // border: 1px solid red;
 
-
-
     .details-title {
 
-        height: 32px;
+        height: 37px;
         width: 90%;
         // margin: -6px -10px;
         padding: 8px 12px;
@@ -294,13 +293,8 @@
     margin-right: 5px;
     margin-bottom: 20px;
 
-    .h5h5 {
+    h5 {
         margin-bottom: 8px;
-    }
-
-    &input {
-        height: 20px;
-
     }
 }
 
@@ -311,11 +305,52 @@
     flex-direction: row;
     justify-content: center;
     align-content: center;
-    margin-bottom: 10px;
+    // margin-bottom: 0px;
 
-    &input {
-        // margin-right: 20px;
-        // margin-top: 20px;
+    // input {
+    //     height: 16px;
+    //     width: 16px;
+    //     margin-top: 7px;
+    //     margin-right: 5px;
+    //     // opacity: 0;
+    //     box-shadow: 0 1px 2px -1px #091e4240, 0 0 0 1px #091e4214;
+    //     box-shadow: inset 0 0 0 2px #091e4224;
+    //     border-radius: 2px;
+    //     transition: all .2s ease-in-out;
+
+    //     &:hover {
+    //         color: #0c66e4;
+    //     }
+
+    input {
+        -webkit-appearance: none;
+        background-color: #fafbfc;
+        border-radius: 2px;
+        box-shadow: inset 0 0 0 2px #dfe1e6;
+        cursor: pointer;
+        height: 16px;
+        width: 16px;
+        margin-top: 7px;
+        margin-right: 5px;
+        overflow: hidden;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            background-color: #ebecf0;
+        }
+
+        &:checked {
+            background-color: #0079bf;
+            content: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23fff' viewBox='-3 -4 16 16'%3E%3Cpath d='M1.49 3.215a.667.667 0 0 0-.98.903l2.408 2.613c.358.351.892.351 1.223.02l.243-.239a1689.645 1689.645 0 0 0 2.625-2.589l.027-.026a328.23 328.23 0 0 0 2.439-2.429.667.667 0 1 0-.95-.936c-.469.476-1.314 1.316-2.426 2.417l-.027.026a1368.126 1368.126 0 0 1-2.517 2.482L1.49 3.215z'/%3E%3C/svg%3E");
+            height: 16px;
+            width: 16px;
+            opacity: 1;
+            box-shadow: none;
+
+            &:hover {
+                background-color: #5ba4cf;
+            }
+        }
     }
 }
 
@@ -368,8 +403,10 @@
         line-height: 20px;
         text-align: start;
         margin-bottom: 21px;
+        resize: none;
 
         &:focus {
+            // margin-left: 20px;
             border: 0;
             min-height: 100px;
             box-shadow: inset 0 0 0 2px #388bff;

@@ -26,36 +26,36 @@ export default {
         return {
             // checklistToEdit: null,
             isShowen: false,
-            members: [
-                {
-                    _id: "member101",
-                    name: "Guy Dahan",
-                    username: "guydahan4191",
-                    imgUrl: "",
-                    isPicked: false
-                },
-                {
-                    id: "member102",
-                    title: "Alon Perlin",
-                    isChecked: "alonp11",
-                    imgUrl: "",
-                    isPicked: false
-                },
-                {
-                    id: "member103",
-                    title: "Shay Zigdon",
-                    isChecked: "shayzigdon1",
-                    imgUrl: "",
-                    isPicked: false
-                },
-                {
-                    id: "member104",
-                    title: "Dima Polo",
-                    isChecked: "dimapolo1",
-                    imgUrl: "",
-                    isPicked: false
-                },
-            ]
+            // members: [
+            //     {
+            //         _id: "member101",
+            //         name: "Guy Dahan",
+            //         username: "guydahan4191",
+            //         imgUrl: "",
+            //         isPicked: false
+            //     },
+            //     {
+            //         id: "member102",
+            //         title: "Alon Perlin",
+            //         isChecked: "alonp11",
+            //         imgUrl: "",
+            //         isPicked: false
+            //     },
+            //     {
+            //         id: "member103",
+            //         title: "Shay Zigdon",
+            //         isChecked: "shayzigdon1",
+            //         imgUrl: "",
+            //         isPicked: false
+            //     },
+            //     {
+            //         id: "member104",
+            //         title: "Dima Polo",
+            //         isChecked: "dimapolo1",
+            //         imgUrl: "",
+            //         isPicked: false
+            //     },
+            // ]
         }
     },
     created() {

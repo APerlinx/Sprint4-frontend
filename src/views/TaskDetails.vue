@@ -31,9 +31,9 @@
                         <h5>Notifications</h5>
                         <button class="btn btn-watch" @click="toggleWatch">
                             <span class="icon eye"></span><span class="word-watch">{{ watch }}</span><span
-                                class="svg-checkbox"><svg width="35px" height="35px" viewBox="0 0 24 24" version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    fill="#000000">
+                                class="svg-checkbox" :class="{ watchActive: !isWatchActive }"><svg width="35px"
+                                    height="35px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="due-date-container">
-                        <h5 class="h5h5">Due-date</h5>
+                        <h5>Due-date</h5>
                         <div class="due-date-checkbox">
                             <input type="checkbox" @change="updateTask" />
                             <!-- v-model="dueDate.isChecked" -->

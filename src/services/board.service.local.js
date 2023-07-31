@@ -92,7 +92,7 @@ function getEmptyTask(title) {
     comments: [],
     checklists: [],
     labelIds: [],
-    labels:[],
+    labels: [],
     attachments: [],
     watching: false,
     createdAt: Date.now(),
