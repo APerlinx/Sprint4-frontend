@@ -25,8 +25,9 @@
 
                 <div class="task-alerts">
                     <Members />
-
-                    <Labels :task="taskToEdit" />
+                    <Labels :task="taskToEdit"
+                    :board="board"
+                     />
 
                     <div class="notifications-container">
                         <h5>Notifications</h5>
@@ -111,14 +112,19 @@
                             {{ dynamicNames[idx] }} </button>
 
                     </div>
-
                     <template #content>
-                        <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
-                            :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal" @checklist="addChecklist"
-                            @member="addMember" @saveLabel="saveLabel" @setBgColor="setBgColor" />
+                        <DynamicModal v-if="actionCmpType"
+                         :actionCmpType="actionCmpType"
+                         :taskToEdit="taskToEdit"
+                         :board="board"
+                         :actionCmpName="actionCmpName"
+                             @closeDynamicModal="closeDynamicModal"
+                              @checklist="addChecklist"
+                            @member="addMember"
+                             @saveLabel="saveLabel"
+                             @setBgColor="setBgColor" />
                     </template>
                 </Popper>
-
 
                 <h3 class="details-title-small">Actions</h3>
                 <button class="btn"><span class="icon arrow-right"></span>Move</button>
@@ -159,7 +165,8 @@ export default {
             dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachments", "Cover", "Custom Fields"],
             dynamicIcons: ["member", "label", "checklist", "date", "attachments", "cover", "date"],
             coverColor: '',
-            currColor: ''
+            currColor: '',
+            check:'hello'
         };
     },
     created() {
@@ -184,8 +191,14 @@ export default {
         addDueDate() {
 
         },
-        saveLabel() {
-            this.$store.dispatch({ type: "updateBoard", board: this.board })
+        saveLabel(labelId) {
+        const idx = this.taskToEdit.labels?.findIndex(
+        (label) => label === labelId);
+        if (idx >= 0) this.taskToEdit.labels?.splice(idx, 1);
+        else {
+        this.taskToEdit.labels.push(labelId);
+        }
+         this.$store.dispatch({ type: "updateBoard", board: this.board });
         },
 
         addChecklist(newChecklist) {

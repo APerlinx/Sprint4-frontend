@@ -92,6 +92,7 @@ function getEmptyTask(title) {
     comments: [],
     checklists: [],
     labelIds: [],
+    labels:[],
     attachments: [],
     watching: false,
     createdAt: Date.now(),
@@ -247,34 +248,7 @@ const board = {
             },
           ],
           memberIds: ['u101'],
-          labelIds: [
-            { id: 'l101', checked: false, bgColor: '#f87562', txt: 'Done' },
-            {
-              id: 'l102',
-              checked: true,
-              bgColor: '#2a9d8f',
-              txt: 'In-progress',
-            },
-            { id: 'l103', checked: false, bgColor: '#e9c46a', txt: 'New' },
-            {
-              id: 'l104',
-              checked: false,
-              bgColor: '#48cae4',
-              txt: 'Nice to have',
-            },
-            { id: 'l105', checked: false, bgColor: '#adc178', txt: 'Delayed' },
-            { id: 'l106', checked: false, bgColor: '#9f90ef', txt: 'Critical' },
-            { id: 'l107', checked: false, bgColor: '#0ead69', txt: 'Done' },
-            { id: 'l108',checked: false,bgColor: '#16697a',txt: 'Do not forget',
-            },
-            { id: 'l109', checked: false, bgColor: '#70e000', txt: 'Bug' },
-            {
-              id: 'l110',
-              checked: false,
-              bgColor: '#00a8e8',
-              txt: 'Take care today',
-            },
-          ],
+          labelIds: [],
           dueDate: Date.now(),
           byMember: {
             _id: 'u101',
@@ -648,16 +622,6 @@ const board = {
           ],
           memberIds: ['u101'],
           labelIds: [
-            { id: 'l101', checked: false, bgColor: '#bc9609', txt: 'Done' },
-            {
-              id: 'l102',
-              checked: true,
-              bgColor: '#bbf3db',
-              txt: 'In-progress',
-            },
-            { id: 'l103', checked: false, bgColor: '#faa63d', txt: 'Help' },
-            { id: 'l104', checked: false, bgColor: '#f87562', txt: 'Bug' },
-            { id: 'l105', checked: false, bgColor: '#9f90ef', txt: 'Critical' },
           ],
           byMember: {
             _id: 'u101',
@@ -1167,11 +1131,6 @@ const board2 = {
           ],
           memberIds: ['u101'],
           labelIds: [
-            { id: 'l101', checked: false, bgColor: '#bc9609', txt: '' },
-            { id: 'l102', checked: true, bgColor: '#bbf3db', txt: '' },
-            { id: 'l103', checked: false, bgColor: '#faa63d', txt: '' },
-            { id: 'l104', checked: false, bgColor: '#f87562', txt: '' },
-            { id: 'l105', checked: false, bgColor: '#9f90ef', txt: '' },
           ],
           dueDate: 1890560000,
           byMember: {
