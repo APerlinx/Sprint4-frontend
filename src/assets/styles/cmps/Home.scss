@@ -1,112 +1,166 @@
-
 .homepage {
-    .bg-container {
-        height: 81vh;
-        background-image: url(../cmps/images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266e…/white-wave-bg.svg),
-            linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
-        background-position-x: center, 0px;
-        background-position-y: bottom -0.5px, 0px;
-        background-size: 100% 14%, auto;
-        background-repeat: no-repeat, repeat;
-        background-attachment: scroll, scroll;
-        background-origin: padding-box, padding-box;
-        background-clip: border-box, border-box;
-        background-color: rgb(82, 67, 170);
+    height: 720px;
+    background-image: url(../cmps/images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266e…/white-wave-bg.svg),
+        linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
+    background-position-x: center, 0px;
+    background-position-y: bottom -0.5px, 0px;
+    // background-size: 100% 14%, auto;
+    background-repeat: no-repeat, repeat;
+    background-attachment: scroll, scroll;
+    background-origin: padding-box, padding-box;
+    background-clip: border-box, border-box;
+    background-color: rgb(82, 67, 170);
 
-        .main-layout {
-            position: relative;
-            display: grid;
-            grid-template-columns: 9% 0.9fr 1.1fr 4%;
-            .right-hero-container {
-                margin-block-start: 6em;
-                justify-self: end;
-                padding: 2em 0 0 2em;
-                img {
-                    width: 100%;
-                }
-            }
-
-            .demo {
-                padding-block-start: 3em;
-                grid-column: 2;
-                justify-self: start;
-
-                h2 {
-                    color: white;
-                    font-size: rem(50px);
-                    font-weight: 600;
-                    line-height: 1.2em;
-                    font-family: roboto;
-                }
-                h6 {
-                    padding-block-start: 2em;
-                    color: white;
-                    font-size: rem(25px);
-                    font-weight: 200;
-                }
-
-                button {
-                    background-color: #0065ff;
-                    color: white;
-                    padding: 0.5em 2em;
-                    font-size: 1.5em;
-                    border-radius: 0.3em;
-                    margin: 0;
-                    margin-block-start: 1em;
-                    margin-block-end: rem(30px);
-                }
-            }
-        }
-    }
-
-    .wave {
-        margin-block-start: rem(-90px);
-        width: 100%;
-    }
-
-    .bottom-info {
-        .sub-header {
-            padding-inline: 8%;
-            margin-block-start: rem(30px);
-
-            h1 {
-                margin-block-end: rem(20px);
-                font-size: 3em;
-            }
-            h5 {
-                margin-block-end: rem(20px);
-                font-size: 1.5em;
-                font-weight: 100;
-            }
-        }
-    }
-
-    .sub-header2 {
-        margin-block-start: 6em;
-        margin-block-end: 6em;
+    .main-layout {
+        position: relative;
         display: grid;
-        grid-template-columns: 10% 1fr 1fr 10%;
+        grid-template-columns: 1fr minmax(auto, rem(570px)) minmax(auto, rem(570px)) 1fr;
+        min-height: rem(630px);
 
-        .cards-container {
+        .demo {
             grid-column: 2;
-            display: flex;
-            flex-direction: column;
-            gap: 3em;
-            font-size: 1.3em;
-            line-height: 1em;
+            align-self: center;
+            margin-block-start: rem(-110px);
 
-            h5 {
-                margin-block-end: 0.4em;
+            h2 {
+                color: white;
+                font-size: rem(48px);
+                font-weight: 600;
+                line-height: 1.2em;
+                font-family: charlie-semi;
+            }
+            h6 {
+                padding-block-start: 2em;
+                color: white;
+                font-size: rem(20px);
+                font-weight: 200;
+                font-family: charlie-semi;
+            }
+
+            button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #0065ff;
+                color: white;
+                padding: 0.7em 2.1em;
+                font-size: 1rem;
+                border-radius: 0.3em;
+                margin: 0;
+                margin-block-start: rem(24px);
+                margin-block-end: rem(30px);
+                font-family: charlie;
             }
         }
-
-        .img-container {
+        .right-hero-container {
             grid-column: 3;
-            width: 100%;
+            margin-block-start: 5em;
+            align-self: center;
+            z-index: 999;
 
             img {
-                width: 100%;
+                width: 113%;
+                z-index: 999;
+            }
+        }
+
+        .buttom-layout {
+            position: relative;
+            grid-column: 4/2;
+            z-index: 999;
+            margin-block-start: rem(-100px);
+
+            .trio {
+                margin-block-start: -11em;
+                margin-block-end: 2em;
+                font-family: charlie-semi;
+                font-size: rem(16px);
+            }
+
+            .sub-header {
+                grid-column: 1/-1;
+                h1 {
+                    margin-block-end: 1.5em;
+                    font-family: charlie-semi;
+                    font-size: rem(36px);
+                }
+
+                h5 {
+                    font-family: charlie;
+                    font-size: rem(20px);
+                    letter-spacing: 0.05em;
+                    line-height: 1.5em;
+                }
+            }
+
+            .cards-container {
+                font-size: 1.3em;
+                line-height: 1.4em;
+                margin-block-start: 5em;
+                display: grid;
+                grid-template-columns: rem(380px) 1fr;
+                grid-template-rows: repeat(3, auto);
+                gap: rem(32px);
+                margin-block-end: 10em;
+                font-family: charlie;
+
+                & > * > :first-child {
+                    margin-block-end: 0.8em;
+                    font-family: charlie-semi;
+                    font-size:1rem ;
+                }
+
+                .card-1 {
+                    grid-column: 1;
+                    grid-row: 1;
+                    align-self: start;
+                    background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.077);
+                    padding: rem(16px);
+                    border-left: 7px solid rgb(0, 199, 229);
+                    border-radius: 0.3em;
+                    font-size: rem(16px);
+                    font-family: charlie;
+                }
+                .card-2 {
+                    align-self: center;
+                    grid-column: 1;
+                    grid-row: 2;
+                    font-size: rem(16px);
+                    font-family: charlie;
+                    margin-inline-start: 1.7em;
+                }
+                .card-3 {
+                    align-self: end;
+                    grid-column: 1;
+                    grid-row: 3;
+                    font-size: rem(16px);
+                    font-family: charlie;
+                    margin-inline-start: 1.7em;
+                }
+
+                img {
+                    width: 100%;
+                    grid-column: 2;
+                    grid-row: 4/1;
+                }
+                // .bg {
+                //     position: fixed;
+                //     width: 100%;
+                //     bottom: 0;
+                //     height: 200px;
+                //     background: rgb(231 252 254);
+                //     background: linear-gradient(0deg, rgb(213, 234, 250) 0%, rgba(255, 255, 255, 0.12292677993527512) 100%);
+                // }
             }
         }
     }
+    .wave {
+        grid-column: 1 / -1;
+        align-self: end;
+        width: 100%;
+        margin-block-start: rem(-68px);
+        height: 340px;
+    }
 }
+
