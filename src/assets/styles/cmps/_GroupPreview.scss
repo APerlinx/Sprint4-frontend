@@ -15,12 +15,12 @@
         padding-right: 0;
         width: 272px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        // overflow-y: auto;
-        @include responsive-max-height();
+        // @include responsive-max-height();
+        max-height: calc(100vh - em(190px));
+        min-height: 100%;
 
         .scroll-container {
             overflow-y: auto;
-            // max-height: calc(100vh - 42.89px - 64.38px);
             margin: 0 4px;
             padding: 1px 4px 0;
 
@@ -46,9 +46,11 @@
         .group-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             width: 100%;
             margin-bottom: 0.5em;
             > div > .watch {
+
                 @include trello-icon($content: "\e969", $type: sm, $color: #626f86);
             }
         }
@@ -78,14 +80,6 @@
                 @include button-hover-style;
             }
         }
-
-        @media (min-width: 1024px) {
-            max-height: calc(100vh - 180px);
-        }
-
-        @media (min-width: 1440px) {
-            max-height: calc(100vh - 200px);
-        }
     }
 
     .modal-content {
@@ -103,7 +97,7 @@
         & .icon {
             @include trello-icon($content: "\e91c", $type: sm, $color: $icon-subtle);
             align-self: flex-start;
-            vertical-align: middle;
+            margin-inline-end: -0.6em;
             padding: 6px 6px;
             border-radius: 6px;
             &:hover {
@@ -119,8 +113,8 @@
             flex-grow: 1;
             margin-top: 1.2em;
             margin-bottom: 1.2em;
-            margin-inline-start: 3em;
-            letter-spacing: 0.01em;
+            margin-inline-start: 2em;
+            letter-spacing: 0.02em;
         }
 
         > .actions {
@@ -135,10 +129,21 @@
                 margin: 0 rem(-12px);
                 width: 100%;
                 text-align: start;
+
+                .watch-on {
+                    @include trello-icon($content: "\e916", $type: sm, $color: $icon-subtle);
+                }
             }
 
             > .action:hover {
                 @include button-hover-style;
+            }
+
+            hr {
+                border: none;
+                height: 1px;
+                background: #091e4224;
+                width: 100%;
             }
         }
     }

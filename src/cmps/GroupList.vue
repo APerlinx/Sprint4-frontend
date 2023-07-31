@@ -36,12 +36,6 @@
                   <span class="icon"></span> Add a card
                 </button>
 
-                <!-- <AddTask
-                  v-if="showTaskForm && currentGroupId === group.id"
-                  :groupId="currentGroupId"
-                  @addTask="addTask"
-                  @close="closeTaskForm"
-                /> -->
               </div>
             </template>
           </GroupPreview>
@@ -150,8 +144,9 @@ export default {
           group: groupToAdd,
         })
         showSuccessMsg('Group added')
-      } catch (err) {
-        console.log(err)
+
+        this.unscrollOnAction()
+      } catch {
         showErrorMsg('Cannot add group')
       }
     },
@@ -163,6 +158,7 @@ export default {
           groupId,
         })
         showSuccessMsg('Group removed')
+        this.unscrollOnAction()
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot remove group')
@@ -214,6 +210,19 @@ export default {
     showAddTaskForm(groupId) {
       this.currentGroupId = groupId
       this.showTaskForm = true
+      this.scrollToBottomOnAction()
+    },
+    unscrollOnAction() {
+      this.$nextTick(() => {
+        const container = document.querySelector('.group-list-section')
+        container.scrollLeft = container.scrollWidth
+      })
+    },
+    scrollToBottomOnAction() {
+      this.$nextTick(() => {
+        const container = document.querySelector('.group-list-section')
+        container.scrollTop = container.scrollHeight
+      })
     },
   },
   components: {

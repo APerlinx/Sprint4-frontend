@@ -10,7 +10,7 @@
     }
 
     > form > .input-wrapper {
-        width: 256px;
+        width: 248px;
         box-sizing: border-box;
 
         > textarea:focus {
@@ -20,7 +20,7 @@
 
         > textarea {
             box-sizing: border-box;
-            width: 250px;
+            width: 248px;
             padding: 8px 8px 4px 12px;
             background: none;
             border: none;
@@ -55,11 +55,13 @@
         justify-content: start;
         align-items: center;
         margin-top: 0.2em;
-        padding: 0 12px;
         > .add-btn {
             align-self: center;
             @include add-group-btn;
             padding: 6px 12px;
+            &:hover {
+                background-color: $add-btn-bold-hovered;
+            }
         }
 
         button > .icon.close {

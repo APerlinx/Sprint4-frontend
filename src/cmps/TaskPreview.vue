@@ -55,6 +55,7 @@
         </div>
 
         <div
+          class="date"
           :class="`due-date ${dueDateStatus} ${task.status}`"
           v-if="task.dueDate"
           @click.stop="toggleStatus"

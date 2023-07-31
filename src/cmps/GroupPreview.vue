@@ -40,16 +40,17 @@
           <button @click="toggleModal"><span class="icon"></span></button>
         </div>
         <div class="actions">
-          <button class="action" @click="handleAction('removeGroup')">
-            Remove group...
-          </button>
           <button class="action" @click="handleAction('addCard')">
             Add card...
           </button>
           <button class="action" @click="handleAction('duplicateGroup')">
             Duplicate group...
           </button>
-          <button class="action" @click="handleAction('watch')">Watch</button>
+          <button class="action" @click="handleAction('removeGroup')">
+            Remove group...
+          </button>
+
+          <button class="action" @click="handleAction('watch')">Watch <span class="watch-on" v-if="group.isWatched"></span></button>
           <hr />
         </div>
       </div>
@@ -103,7 +104,7 @@ export default {
   methods: {
     handleAction(actionType) {
       this.$emit(actionType, this.group.id)
-      this.showModal = false
+      actionType === 'watch' ? '' : (this.showModal = false)
     },
     replaceTasks(tasks) {
       let group = JSON.parse(JSON.stringify(this.group))
