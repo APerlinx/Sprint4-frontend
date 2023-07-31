@@ -210,6 +210,7 @@ const board = {
           title: 'Improve board store',
           priority: 'high',
           description: 'description',
+          labels: ['l110', 'l107'],
           comments: [
             {
               id: 'C3',
@@ -264,11 +265,7 @@ const board = {
             { id: 'l105', checked: false, bgColor: '#adc178', txt: 'Delayed' },
             { id: 'l106', checked: false, bgColor: '#9f90ef', txt: 'Critical' },
             { id: 'l107', checked: false, bgColor: '#0ead69', txt: 'Done' },
-            {
-              id: 'l108',
-              checked: false,
-              bgColor: '#16697a',
-              txt: 'Do not forget',
+            { id: 'l108',checked: false,bgColor: '#16697a',txt: 'Do not forget',
             },
             { id: 'l109', checked: false, bgColor: '#70e000', txt: 'Bug' },
             {

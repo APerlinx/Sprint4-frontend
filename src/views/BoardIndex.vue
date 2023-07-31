@@ -77,7 +77,7 @@ export default {
           board,
         });
         this.isAddBoard = false;
-        this.$router.push("/details/" + this.savedBoard._id);
+        // this.$router.push("/details/" + this.savedBoard._id);
       } catch (err) {
         console.log(err);
         showErrorMsg("Cant add board");
