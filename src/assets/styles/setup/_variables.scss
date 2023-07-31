@@ -11,7 +11,7 @@ $lclr1: #182b4d;
 $lclr2: #1266e4;
 
 // Board Details - colors
-
+$task-title: #172B4D;
 $list-background-color: #F1F2F4;
 $list-title-color: rgb(23, 43, 77);
 $list-text-color: rgb(23, 43, 77);
@@ -23,8 +23,10 @@ $group-background-input: #FFFFFF;
 $background-Add-btn: #0C66E4;
 $dynamic-text: #FFFFFF;
 $icon-subtle: #626F86;
+$text-subtle: #44546F;
 $dynamic-button: transparent;
 $dynamic-button-hovered: #A6C5E229;
+$add-btn-bold-hovered: #0055CC;
 $dynamic-button-pressed: #BFDBF847;
 $dynamic-button-highlighted: #DFE1E6;
 $dynamic-button-highlighted-text: #172B4D;
@@ -42,6 +44,10 @@ $ds-background-warning-bold-hovered: #CF9F02;
 $ds-text-warning-inverse: #172B4D;
 $label-text-accent-yellow-bolder:#533F04;
 $ds-text-accent-green-bolder: #164B35;
+
+// task : 
+$task-shadow-raised: 0px 1px 1px #091E4240, 0px 0px 1px #091E424F;
+
 // Breakpoints
 $mobile-breakpoint: 460px;
 $narrow-breakpoint: 720px;

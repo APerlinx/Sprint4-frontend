@@ -92,6 +92,7 @@ function getEmptyTask(title) {
     comments: [],
     checklists: [],
     labelIds: [],
+    labels:[],
     attachments: [],
     watching: false,
     createdAt: Date.now(),
@@ -247,34 +248,7 @@ const board = {
             },
           ],
           memberIds: ['u101'],
-          labelIds: [
-            { id: 'l101', checked: false, bgColor: '#f87562', txt: 'Done' },
-            {
-              id: 'l102',
-              checked: true,
-              bgColor: '#2a9d8f',
-              txt: 'In-progress',
-            },
-            { id: 'l103', checked: false, bgColor: '#e9c46a', txt: 'New' },
-            {
-              id: 'l104',
-              checked: false,
-              bgColor: '#48cae4',
-              txt: 'Nice to have',
-            },
-            { id: 'l105', checked: false, bgColor: '#adc178', txt: 'Delayed' },
-            { id: 'l106', checked: false, bgColor: '#9f90ef', txt: 'Critical' },
-            { id: 'l107', checked: false, bgColor: '#0ead69', txt: 'Done' },
-            { id: 'l108',checked: false,bgColor: '#16697a',txt: 'Do not forget',
-            },
-            { id: 'l109', checked: false, bgColor: '#70e000', txt: 'Bug' },
-            {
-              id: 'l110',
-              checked: false,
-              bgColor: '#00a8e8',
-              txt: 'Take care today',
-            },
-          ],
+          labelIds: [],
           dueDate: Date.now(),
           byMember: {
             _id: 'u101',
@@ -292,7 +266,6 @@ const board = {
           description: 'Add a carousel to the homepage',
           labels: ['l102', 'l103'],
           watching: true,
-          cover: { color: '#4d908e', imgUrl: '', isFull: true },
           comments: [
             {
               id: 'C4',
@@ -378,7 +351,6 @@ const board = {
           description: 'Improve loading speed and reduce page size',
           labels: ['l102', 'l106'],
           watching: false,
-          cover: { color: '#fb6f92', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -418,7 +390,6 @@ const board = {
           description: 'Make the website compatible with various devices',
           labels: ['l104', 'l105'],
           watching: false,
-          cover: { color: '#90be6d', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -648,16 +619,6 @@ const board = {
           ],
           memberIds: ['u101'],
           labelIds: [
-            { id: 'l101', checked: false, bgColor: '#bc9609', txt: 'Done' },
-            {
-              id: 'l102',
-              checked: true,
-              bgColor: '#bbf3db',
-              txt: 'In-progress',
-            },
-            { id: 'l103', checked: false, bgColor: '#faa63d', txt: 'Help' },
-            { id: 'l104', checked: false, bgColor: '#f87562', txt: 'Bug' },
-            { id: 'l105', checked: false, bgColor: '#9f90ef', txt: 'Critical' },
           ],
           byMember: {
             _id: 'u101',
@@ -722,7 +683,6 @@ const board = {
           description: 'Hold a meeting to clarify project requirements',
           labels: ['l103', 'l105'],
           watching: false,
-          cover: { color: '#90be6d', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -757,7 +717,6 @@ const board = {
           description: 'Add user authentication',
           labels: ['l102', 'l104'],
           watching: true,
-          cover: { color: '#4d908e', imgUrl: '', isFull: false },
           comments: [
             {
               id: 'C6',
@@ -838,7 +797,6 @@ const board = {
           description: 'Update README and project documentation',
           labels: ['l105', 'l106'],
           watching: false,
-          cover: { color: '#f9c74f', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -878,7 +836,6 @@ const board = {
           description: 'Plan the agenda for the upcoming team meeting',
           labels: ['l101', 'l103'],
           watching: false,
-          cover: { color: '#26de81', imgUrl: '', isFull: false },
           comments: [],
           checklists: [
             {
@@ -933,7 +890,6 @@ const board = {
           description: 'Prepare a comprehensive user guide for the application',
           labels: ['l108', 'l105'],
           watching: false,
-          cover: { color: '#fb6f92', imgUrl: '', isFull: false },
           comments: [],
           checklists: [],
           dueDate: Date.now(),
@@ -980,7 +936,6 @@ const board = {
             'Deploy the latest version of the application to production',
           labels: ['l102', 'l108'],
           watching: true,
-          cover: { color: '#3a5a40', imgUrl: '', isFull: false },
           comments: [],
           checklists: [],
           dueDate: 1675040918000,
@@ -1167,11 +1122,6 @@ const board2 = {
           ],
           memberIds: ['u101'],
           labelIds: [
-            { id: 'l101', checked: false, bgColor: '#bc9609', txt: '' },
-            { id: 'l102', checked: true, bgColor: '#bbf3db', txt: '' },
-            { id: 'l103', checked: false, bgColor: '#faa63d', txt: '' },
-            { id: 'l104', checked: false, bgColor: '#f87562', txt: '' },
-            { id: 'l105', checked: false, bgColor: '#9f90ef', txt: '' },
           ],
           dueDate: 1890560000,
           byMember: {

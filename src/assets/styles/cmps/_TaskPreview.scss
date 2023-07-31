@@ -1,11 +1,13 @@
 .task-preview {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  // width: 256px;
   border-radius: 8px;
   margin-bottom: 7px;
   padding: 8px 8px 4px 12px;
-  box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+  // box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+  box-shadow: $task-shadow-raised;
+  border: 0.1px solid rgb(212, 212, 212);
   background-color: $task-bg-clr;
   cursor: pointer;
 
@@ -20,10 +22,19 @@
       display: flex;
       justify-content: start;
       align-items: center;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.33em;
       > div {
         display: flex;
         margin-right: 1em;
+        align-items: center;
+        justify-content: center;
+
+        .checklist-counter {
+          margin-top: 0.09rem;
+        }
+        .date-counter {
+          margin-top: 0.09rem;
+        }
       }
       .icon.member {
         margin-left: auto;
@@ -35,9 +46,10 @@
           margin-right: auto;
         }
         & + span {
+          font-size: rem(12px);
           vertical-align: middle;
-          font-size: 0.7rem;
           margin-left: 0.3em;
+          color: $text-subtle;
         }
       }
 
@@ -50,12 +62,14 @@
           color: $dynamic-text;
         }
 
-        .checklist-counter {
+        > .checklist-counter {
           color: $dynamic-text;
         }
       }
 
       .due-date {
+        align-self: center;
+
         &.overdue-long {
           background-color: $background-danger;
           border-radius: 3px;
@@ -67,6 +81,7 @@
 
           .date-counter {
             color: $ds-text-danger;
+            margin-top: 0.021rem;
           }
 
           &:hover {
@@ -106,11 +121,12 @@
           padding: 2px 4px 2px 4px;
 
           .icon.date {
-            color: $ds-text-warning-inverse
+            color: $ds-text-warning-inverse;
           }
 
           .date-counter {
             color: $ds-text-warning-inverse;
+            margin-top: 0.021rem;
           }
           &:hover {
             background-color: $ds-background-warning-bold-hovered;
@@ -120,7 +136,7 @@
           }
         }
 
-        &.done{
+        &.done {
           background-color: $background-success-bold;
           &:hover {
             background-color: $background-success-bold-hovered;
@@ -160,7 +176,10 @@
     margin: 0 0 4px;
     overflow: hidden;
     text-align: start;
-    font-size: 0.9em;
+    font-size: rem(12.6px);
+    word-spacing: rem(0.5px);
+    letter-spacing: rem(0.5px);
+    color: $task-title;
   }
 
   &:hover {

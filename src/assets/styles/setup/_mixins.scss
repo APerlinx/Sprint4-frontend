@@ -1,7 +1,6 @@
 /* Breakpoint mixins */
 //Trello icons
 
-
 @mixin for-mobile-layout {
     @media (max-width: calc($mobile-breakpoint + 40px)) {
         @content;
@@ -34,59 +33,66 @@
     background-size: cover;
 }
 
-@mixin color-pallate{
+@mixin color-pallate {
     display: flex;
     justify-content: space-between;
     height: rem(32px);
     padding: 0;
-
 }
 
-@mixin pickerModal{
-  .picker-modal {
-    transform: translate(-50%, 17%);
-    .search-output {
-        background-color: white;
-        width: rem(304px);
-        height: rem(202px);
-        border-radius: 0.2em;
-        box-shadow: 0 0 3px lightgray;
+@mixin pickerModal {
+    .picker-modal {
+        transform: translate(-50%, 17%);
+        .search-output {
+            background-color: white;
+            width: rem(304px);
+            height: rem(202px);
+            border-radius: 0.2em;
+            box-shadow: 0 0 3px lightgray;
 
-        & > * :hover {
-            background-color: rgb(244, 244, 244);
-        }
+            & > * :hover {
+                background-color: rgb(244, 244, 244);
+            }
 
-        .output-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1em;
-            list-style: none;
-            padding: 0;
-
-            .row {
+            .output-list {
                 display: flex;
-                align-items: center;
-                gap: 0.5em;
-                padding-inline-start: 1em;
-                padding-block: 0.4em;
+                flex-direction: column;
+                gap: 1em;
+                list-style: none;
+                padding: 0;
 
-                img {
-                    height: rem(25px);
-                    width: rem(25px);
-                    border-radius: 0.2em;
-                }
+                .row {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5em;
+                    padding-inline-start: 1em;
+                    padding-block: 0.4em;
 
-                h2 {
-                    font-weight: 300;
-                    font-size: 1em;
-                    color: #182b4d;
+                    img {
+                        height: rem(25px);
+                        width: rem(25px);
+                        border-radius: 0.2em;
+                    }
+
+                    h2 {
+                        font-weight: 300;
+                        font-size: 1em;
+                        color: #182b4d;
+                    }
                 }
             }
         }
     }
 }
 
-
+@mixin modalBtn {
+    display: flex;
+    justify-content: center;
+    color: #f1f2f4;
+    background-color: #f7f8f9;
+    border-radius: 0.2em;
+    font-weight: 200;
+    padding: 0.5em;
 }
 @mixin modal {
     display: flex;
@@ -121,59 +127,58 @@
     height: rem(40px);
     padding: 0;
 }
-$icon-member: '\e946';
-$icon-label: '\e93f';
-$icon-checklist: '\e91a';
-$icon-attachment: '\e908';
-$icon-plus: '\e901';
-$icon-arrow-right: '\e94a';
-$icon-copy: '\e91f';
-$icon-share: '\e963';
-$icon-description: '\e922';
-$icon-activity: '\e900';
-$icon-archive: '\e907';
-$icon-card: '\e912';
-$icon-card-cover: '\e914';
-$icon-gear: '\e932';
-$icon-eye: '\e969';
-$icon-comment: '\e91e';
-$icon-clock: '\e91b';
-$icon-star: '\e966';
-$icon-full-star: '\e967';
-$icon-two-members: '\e951';
-$icon-three-dots: '\e952';
-$icon-lighting-bolt: '\e909';
-$icon-power-up: '\e956';
-$icon-close: '\e91c';
-$con-checked: '\e916';
-$icon-triello: '\e90b';
-$icon-empty-checked: '\e919';
-$icon-full-checked: '\e918';
+$icon-member: "\e946";
+$icon-label: "\e93f";
+$icon-checklist: "\e91a";
+$icon-attachment: "\e908";
+$icon-plus: "\e901";
+$icon-arrow-right: "\e94a";
+$icon-copy: "\e91f";
+$icon-share: "\e963";
+$icon-description: "\e922";
+$icon-activity: "\e900";
+$icon-archive: "\e907";
+$icon-card: "\e912";
+$icon-card-cover: "\e914";
+$icon-gear: "\e932";
+$icon-eye: "\e969";
+$icon-comment: "\e91e";
+$icon-clock: "\e91b";
+$icon-star: "\e966";
+$icon-full-star: "\e967";
+$icon-two-members: "\e951";
+$icon-three-dots: "\e952";
+$icon-lighting-bolt: "\e909";
+$icon-power-up: "\e956";
+$icon-close: "\e91c";
+$icon-checked: "\e916";
+$icon-triello: "\e90b";
+$icon-empty-checked: "\e919";
+$icon-full-checked: "\e918";
 
 @font-face {
-  font-family: trellicons;
-  src: url(../fonts/trello/trellicons.ttf);
+    font-family: trellicons;
+    src: url(../fonts/trello/trellicons.ttf);
 }
 
-@mixin trello-icon($content: '', $type: sm, $color: #42526e) {
-  font-family: 'trellicons';
-  color: $color;
+@mixin trello-icon($content: "", $type: sm, $color: #42526e) {
+    font-family: "trellicons";
+    color: $color;
 
-  @if $type ==sm {
-    font-size: 1rem;
-  } @else if $type ==md {
-    font-size: 1.25rem;
-  } @else if $type ==lg {
-    font-size: 1.5rem;
-  } @else if $type ==xl {
-    font-size: 2.5rem;
-  }
+    @if $type ==sm {
+        font-size: 1rem;
+    } @else if $type ==md {
+        font-size: 1.25rem;
+    } @else if $type ==lg {
+        font-size: 1.5rem;
+    } @else if $type ==xl {
+        font-size: 2.5rem;
+    }
 
-  &::before {
-    content: $content;
-  }
+    &::before {
+        content: $content;
+    }
 }
-
 
 /* Media  Mixins */
 @mixin aspect-ratio($width, $height) {
@@ -223,8 +228,8 @@ $icon-full-checked: '\e918';
 
 // scroll-bar mixin
 
-@mixin responsive-max-height($large: 156px, $extra-large: 50px) {
-    max-height: calc(100vh - 156px);
+@mixin responsive-max-height($large: em(190px), $extra-large: em(190px)) {
+    max-height: calc(100vh - em(120px));
 
     @media (min-width: 1024px) {
         max-height: calc(100vh - #{$large});
@@ -235,24 +240,23 @@ $icon-full-checked: '\e918';
     }
 }
 
+// Icons
 
-// Icons 
+@mixin trello-icon($content: "", $type: sm, $color: #42526e) {
+    font-family: "trellicons";
+    color: $color;
 
-@mixin trello-icon($content: '', $type: sm, $color: #42526e) {
-  font-family: 'trellicons';
-  color: $color;
+    @if $type ==sm {
+        font-size: 1rem;
+    } @else if $type ==md {
+        font-size: 1.25rem;
+    } @else if $type ==lg {
+        font-size: 1.5rem;
+    } @else if $type ==xl {
+        font-size: 2.5rem;
+    }
 
-  @if $type ==sm {
-    font-size: 1rem;
-  } @else if $type ==md {
-    font-size: 1.25rem;
-  } @else if $type ==lg {
-    font-size: 1.5rem;
-  } @else if $type ==xl {
-    font-size: 2.5rem;
-  }
-
-  &::before {
-    content: $content;
-  }
+    &::before {
+        content: $content;
+    }
 }
