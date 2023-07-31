@@ -9,8 +9,7 @@
           @input="updateTitle($event.target.value)"
         />
         <div>
-                  <span class="icon watch" v-if="group.isWatched"></span>
-
+          <span class="icon watch" v-if="group.isWatched"></span>
         </div>
         <div class="menu-btn" ref="menuButton" @click="toggleModal">
           <span class="icon"></span>
@@ -19,8 +18,11 @@
       <div class="scroll-container">
         <taskList
           @moveTasks="replaceTasks"
+          @addTask="addTask"
+          @closeTaskForm="closeTaskForm"
           :tasks="group.tasks"
           :groupId="group.id"
+          :showAddTask="showTaskForm && currentGroupId === group.id"
         />
       </div>
       <slot name="actions"></slot>
@@ -38,18 +40,17 @@
           <button @click="toggleModal"><span class="icon"></span></button>
         </div>
         <div class="actions">
-          <button class="action" @click="handleAction('removeGroup')">
-            Remove group...
-          </button>
           <button class="action" @click="handleAction('addCard')">
             Add card...
           </button>
           <button class="action" @click="handleAction('duplicateGroup')">
             Duplicate group...
           </button>
-          <button class="action" @click="handleAction('watch')">
-            Watch
+          <button class="action" @click="handleAction('removeGroup')">
+            Remove group...
           </button>
+
+          <button class="action" @click="handleAction('watch')">Watch <span class="watch-on" v-if="group.isWatched"></span></button>
           <hr />
         </div>
       </div>
@@ -67,6 +68,14 @@ export default {
     group: {
       type: Object,
       required: true,
+    },
+    showTaskForm: {
+      type: Boolean,
+      default: false,
+    },
+    currentGroupId: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -95,7 +104,7 @@ export default {
   methods: {
     handleAction(actionType) {
       this.$emit(actionType, this.group.id)
-      this.showModal = false
+      actionType === 'watch' ? '' : (this.showModal = false)
     },
     replaceTasks(tasks) {
       let group = JSON.parse(JSON.stringify(this.group))
@@ -111,6 +120,12 @@ export default {
       const rect = this.$refs.menuButton.getBoundingClientRect()
       this.modalTop = rect.top + rect.height
       this.modalLeft = rect.left
+    },
+    addTask(task) {
+      this.$emit('addTask', task)
+    },
+    closeTaskForm() {
+      this.$emit('closeTaskForm')
     },
   },
   directives: {

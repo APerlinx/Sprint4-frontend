@@ -1,9 +1,10 @@
 <template>
-  <div 
+    <div 
     class="task-cover" 
     v-if="task.cover" 
     :style="{...coverStyle, height: coverHeight}"
   ></div>
+
 </template>
 
 <script>
@@ -30,7 +31,6 @@ export default {
 
 <style scoped>
 .task-cover {
-  width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 8px 8px 0 0;

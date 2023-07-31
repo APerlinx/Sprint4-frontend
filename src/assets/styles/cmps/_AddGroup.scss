@@ -2,16 +2,24 @@
     padding: 0;
 
     > form {
-        display: flex;
-        align-items: flex-start;
 
+        > div {
+            display: flex;
+        }
         > div > .form-btn {
             color: $list-text-color;
             margin: 0;
             padding: 4px 12px;
+            display: flex;
+            flex-direction: column;
 
             &.add-btn {
-            @include add-group-btn
+                align-self: center;
+                @include add-group-btn;
+            }
+            > .icon.close {
+                align-self: center;
+                @include trello-icon($content: "\e91c", $type: lg, $color: #626f86);
             }
         }
 

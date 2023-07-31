@@ -16,13 +16,15 @@
           <GroupPreview
             :group="group"
             :key="group.id"
-            class="group-preview"
+            :showTaskForm="showTaskForm"
+            :currentGroupId="currentGroupId"
             @update-title="updateGroup"
             @removeGroup="removeGroup"
-            @addCard="showAddTaskForm"
             @duplicateGroup="duplicateGroup"
             @watch="watchGroup"
             @updateGroup="updateGroups"
+            @addTask="addTask"
+            @closeTaskForm="closeTaskForm"
           >
             <template #actions>
               <div class="group-actions">
@@ -34,12 +36,6 @@
                   <span class="icon"></span> Add a card
                 </button>
 
-                <AddTask
-                  v-if="showTaskForm && currentGroupId === group.id"
-                  :groupId="currentGroupId"
-                  @addTask="addTask"
-                  @close="closeTaskForm"
-                />
               </div>
             </template>
           </GroupPreview>
@@ -148,8 +144,9 @@ export default {
           group: groupToAdd,
         })
         showSuccessMsg('Group added')
-      } catch (err) {
-        console.log(err)
+
+        this.unscrollOnAction()
+      } catch {
         showErrorMsg('Cannot add group')
       }
     },
@@ -161,6 +158,7 @@ export default {
           groupId,
         })
         showSuccessMsg('Group removed')
+        this.unscrollOnAction()
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot remove group')
@@ -184,7 +182,6 @@ export default {
           task: { title: taskTitle },
           board: this.currBoard,
         })
-        this.showTaskForm = false
         showSuccessMsg('Task was added')
       } catch (err) {
         console.log(err)
@@ -199,7 +196,6 @@ export default {
         showErrorMsg('Cannot duplicate Group ')
       }
     },
-
     watchGroup(groupId) {
       try {
         this.$store.dispatch('watchGroup', { groupId })
@@ -214,6 +210,19 @@ export default {
     showAddTaskForm(groupId) {
       this.currentGroupId = groupId
       this.showTaskForm = true
+      this.scrollToBottomOnAction()
+    },
+    unscrollOnAction() {
+      this.$nextTick(() => {
+        const container = document.querySelector('.group-list-section')
+        container.scrollLeft = container.scrollWidth
+      })
+    },
+    scrollToBottomOnAction() {
+      this.$nextTick(() => {
+        const container = document.querySelector('.group-list-section')
+        container.scrollTop = container.scrollHeight
+      })
     },
   },
   components: {
@@ -231,30 +240,6 @@ export default {
 </script>
 
 <style>
-/* .draggable-item {
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    display: block;
-    background-color: #686767;
-    outline: 0;
-    border: 1px solid rgba(0, 0, 0, .125);
-    margin-bottom: 2px;
-    margin-top: 2px;
-    cursor: default;
-    user-select: none;
-} */
-
-/* .draggable-item-horizontal {
-    line-height: 100px;
-    text-align: center;
-    display: block;
-    outline: 0;
-    margin-right: 4px;
-    cursor: default;
-    height: 400px;
-} */
-
 .card-container {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
 }

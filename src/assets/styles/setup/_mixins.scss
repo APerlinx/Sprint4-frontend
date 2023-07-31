@@ -228,8 +228,8 @@ $icon-full-checked: "\e918";
 
 // scroll-bar mixin
 
-@mixin responsive-max-height($large: 156px, $extra-large: 50px) {
-    max-height: calc(100vh - 156px);
+@mixin responsive-max-height($large: em(190px), $extra-large: em(190px)) {
+    max-height: calc(100vh - em(120px));
 
     @media (min-width: 1024px) {
         max-height: calc(100vh - #{$large});
