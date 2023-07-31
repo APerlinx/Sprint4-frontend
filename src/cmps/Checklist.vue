@@ -1,7 +1,7 @@
 <template>
     <div class="checklist">
         <section class="checklist-title-container" v-if="checklist">
-            <div class="icon-title-container">
+            <div class="icon-title-container-checklist">
                 <span class="icon full-checked-big"></span>
                 <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                     @focus="hideBtn = false"></textarea>
@@ -29,8 +29,7 @@
                 <section class="todo-container" v-if="isHideChecked ? !todo.isChecked : true">
                     <input type="checkbox" @change="updateChecklist" v-model="todo.isChecked" />
                     <textarea class="todo-title" v-model="todo.title" :class="{ finished: todo.isChecked }"
-                        @blur="hideTodoBtn = false" @focus="hideTodoBtn = true">
-                </textarea>
+                        @blur="hideTodoBtn = false" @focus="hideTodoBtn = true"></textarea>
                 </section>
             </div>
             <div v-if="hideTodoBtn">
@@ -45,7 +44,7 @@
             <button class="btn is-add-todo" v-if="!isAddTodo" @click="isAddTodo = true">Add an item</button>
 
             <div class="hide-add-todo-btns" v-else>
-                <textarea v-model="newTodoTitle" placeholder="Add an item" class="new-todo-title"></textarea>
+                <input v-model="newTodoTitle" placeholder="Add an item" class="new-todo-title" />
                 <button class="btn-blue add-todo" @click="addTodo">Add</button>
                 <button class="btn cancel-todo">Cancel</button>
             </div>
