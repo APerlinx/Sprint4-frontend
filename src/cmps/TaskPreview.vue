@@ -45,7 +45,7 @@
         >
           <span class="icon checklist"></span>
           <span class="checklist-counter"
-            >{{ doneChecklists }}/{{ totalChecklists }}</span
+            >{{ doneChecklists }}<span class="slash">/</span>{{ totalChecklists }}</span
           >
         </div>
 

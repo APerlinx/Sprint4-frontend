@@ -9,6 +9,13 @@
     :dragClass="'card-ghost'"
     :drop-placeholder="dropPlaceholderOptions"
   >
+    <AddTask
+      v-if="openedFromModal"
+      :groupId="groupId"
+      @addTask="addTask"
+      @close="closeTaskForm"
+      class="opend-from-modal"
+    />
     <Draggable
       v-for="item in items"
       :key="item.id"
@@ -20,7 +27,7 @@
       </div>
     </Draggable>
     <AddTask
-      v-if="showAddTask"
+      v-if="showAddTask && !openedFromModal"
       :groupId="groupId"
       @addTask="addTask"
       @close="closeTaskForm"
@@ -46,6 +53,10 @@ export default {
     showAddTask: {
       type: Boolean,
       default: false,
+    },
+    openedFromModal: {
+      type: Boolean, 
+      default: false, 
     },
   },
   data() {
@@ -81,6 +92,7 @@ export default {
       this.$emit('closeTaskForm')
     },
   },
+  
   components: {
     taskPreview,
     AddTask,
@@ -102,4 +114,8 @@ export default {
 /* .draggable-item {
   transition-duration: 80ms !important;
 } */
+
+.opend-from-modal {
+  margin-bottom: 8px;
+}
 </style>

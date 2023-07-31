@@ -30,10 +30,14 @@
         justify-content: center;
 
         .checklist-counter {
-          margin-top: 0.09rem;
+          margin-top: -0.05rem;
+          // vertical-align: middle;
+          > .slash {
+            scale: (1.1);
+          }
         }
         .date-counter {
-          margin-top: 0.09rem;
+          // margin-top: 0.02rem;
         }
       }
       .icon.member {
@@ -81,7 +85,6 @@
 
           .date-counter {
             color: $ds-text-danger;
-            margin-top: 0.021rem;
           }
 
           &:hover {
