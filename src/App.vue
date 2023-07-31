@@ -1,7 +1,10 @@
 <template>
-  <AppHeader />
-  <RouterView />
-  <UserMsg />
+  <div>
+    <HomeHeader v-if="showHomeHeader" />
+    <AppHeader v-else />
+    <RouterView />
+    <UserMsg />
+  </div>
 </template>
 
 <script>
@@ -10,19 +13,32 @@ import { store } from "./store/store";
 
 import UserMsg from "./cmps/UserMsg.vue";
 import AppHeader from "./cmps/AppHeader.vue";
+import HomeHeader from "./cmps/HomeHeader.vue";
 
 export default {
+  data() {
+    return {
+      showHomeHeader: true,
+    };
+  },
   created() {
-    console.log("Vue App created");
-
     this.$store.dispatch({ type: "loadBoards" });
 
     const user = userService.getLoggedinUser();
     if (user) store.commit({ type: "setLoggedinUser", user });
   },
+  mounted() {
+    this.appHeader = true;
+  },
   components: {
     UserMsg,
-    AppHeader
+    AppHeader,
+    HomeHeader,
+  },
+  watch: {
+    $route(to, from) {
+      this.showHomeHeader = to.name === "Home"
+    },
   },
 };
 </script>

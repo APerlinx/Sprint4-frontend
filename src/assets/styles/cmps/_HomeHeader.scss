@@ -1,46 +1,48 @@
 .home-header {
     display: grid;
-    grid-template-columns: 10% 1fr 1fr 10%;
+    grid-template-columns: 0.65fr 1fr 0.7fr;
 
     .logo {
         display: flex;
-        align-items: center;
+        align-items: baseline;
+        justify-self: end;
+        gap: rem(6px);
         font-size: 3em;
         padding: 0.5em;
-        grid-column: 2;
+        grid-column: 1;
+
+        h5 {
+            font-family: charlie-semi;
+        }
+        .trello {
+            img {
+                height: 24px;
+            }
+        }
     }
 
     .user {
-        grid-template-columns: 3;
-        justify-self: end;
+        grid-column: 3;
+        justify-self: start;
         display: flex;
         align-items: center;
 
-       
-
-        .btn {
+        .btn-header {
             display: flex;
             align-items: center;
             justify-content: center;
             width: rem(150px);
-            height: 60%;
+            height: 100%;
             background-color: #0065ff;
             color: white;
             transition: 0.3s;
             cursor: pointer;
-
-            &:hover {
-                background-color: #004fc5;
-            }
+            font-family: charlie;
+            font-size: rem(19px);
         }
-         & :nth-child(1) {
+        & :nth-child(1) {
             background-color: white;
             color: darkblue;
-            border: 1px solid #0065ff ;
-
-              &:hover {
-                background-color: #ffffff;
-            }
         }
     }
 }
