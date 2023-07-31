@@ -1,7 +1,6 @@
 <template>
-
-  <HomeHeader/>
-
+  <div class="check"></div>
+<h2>hello</h2>
   <div class="homepage">
     <div class="bg-container">
       <div class="main-layout">
@@ -27,9 +26,14 @@
             alt=""
           />
         </div>
+       
       </div>
     </div>
-
+    <img
+          class="wave"
+          src="../assets/styles/img/white-wave-mobile.svg"
+          alt=""
+        />
     <!-- <div class="bottom-info">
       <div class="sub-header">
         <h1>A productivity powerhouse</h1>
@@ -79,7 +83,7 @@
 </template>
 
 <script>
-import HomeHeader from '../cmps/HomeHeader.vue'
+import HomeHeader from "../cmps/HomeHeader.vue";
 export default {
   name: "home",
   data() {
@@ -89,7 +93,7 @@ export default {
   created() {},
   methods: {},
   components: {
-    HomeHeader
-  }
+    HomeHeader,
+  },
 };
 </script>

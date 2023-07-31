@@ -1,6 +1,8 @@
+
 .homepage {
     .bg-container {
-        background-image: url(//images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266e…/white-wave-bg.svg),
+        height: 81vh;
+        background-image: url(../cmps/images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266e…/white-wave-bg.svg),
             linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
         background-position-x: center, 0px;
         background-position-y: bottom -0.5px, 0px;
@@ -12,10 +14,11 @@
         background-color: rgb(82, 67, 170);
 
         .main-layout {
+            position: relative;
             display: grid;
-            grid-template-columns: 10% 0.8fr 1.2fr 10%;
+            grid-template-columns: 9% 0.9fr 1.1fr 4%;
             .right-hero-container {
-                padding-block-start: 2.5em;
+                margin-block-start: 6em;
                 justify-self: end;
                 padding: 2em 0 0 2em;
                 img {
@@ -33,6 +36,7 @@
                     font-size: rem(50px);
                     font-weight: 600;
                     line-height: 1.2em;
+                    font-family: roboto;
                 }
                 h6 {
                     padding-block-start: 2em;
@@ -55,8 +59,12 @@
         }
     }
 
-    .bottom-info {
+    .wave {
+        margin-block-start: rem(-90px);
+        width: 100%;
+    }
 
+    .bottom-info {
         .sub-header {
             padding-inline: 8%;
             margin-block-start: rem(30px);
@@ -86,12 +94,12 @@
             gap: 3em;
             font-size: 1.3em;
             line-height: 1em;
-            
+
             h5 {
                 margin-block-end: 0.4em;
             }
         }
-        
+
         .img-container {
             grid-column: 3;
             width: 100%;
