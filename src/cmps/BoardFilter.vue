@@ -16,7 +16,7 @@
             <h5>RECENT BOARDS</h5>
 
             <ul class="output-list">
-              <li v-for="board in filteredBoards">
+              <li v-for="board in filteredBoards" :key="board._id">
                 <RouterLink :to="'/details/' + board._id">
                   <div class="check">
                     <img :src="board.imgUrl" />
