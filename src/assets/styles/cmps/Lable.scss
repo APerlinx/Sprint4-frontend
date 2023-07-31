@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 25px 0 0 0px;
+    margin: 0px 0 0 0px;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
     font-size: 14px;
 
@@ -11,33 +11,36 @@
         flex-direction: column;
         flex-wrap: wrap;
         gap: 0.25em;
-        margin: rem(-16px) rem(-17px) rem(0px) rem(0px);
+        // margin: rem(-16px) rem(-17px) rem(0px) rem(0px);
 
-        h5 {
-            margin-left: rem(12px);
-        }
+        // h5 {
+        //     margin-left: rem(12px);
+        // }
     }
 
     .labels {
         display: flex;
         flex-direction: row;
+        white-space: nowrap;
         position: relative;
         align-items: center;
         height: rem(32px);
         min-width: rem(48px);
         border-radius: 0.25em;
-        padding: 1em;
-        margin: rem(4px) rem(20px) rem(5px) rem(0px);
+        // padding: 1em;
+        // margin-bottom: rem(5px);
+        margin: rem(5px) rem(4px) rem(0px) rem(0px);
+        // margin: rem(4px) rem(5px) rem(0px) rem(0px);
 
         .label {
-            margin: rem(0px) rem(5px) rem(0px) rem(0px);
-            padding: 0;
             text-overflow: clip;
+            margin-right: 7px;
+            margin: 0 7px 0 1px
         }
 
         .add-label {
-            height: rem(33px);
-            width: rem(33px);
+            height: rem(32px);
+            width: rem(32px);
             background-color: #E4E6EA;
         }
 

@@ -22,13 +22,19 @@
     width: 768px;
     border-radius: 13px;
     margin-bottom: 40px;
-    padding: 0;
+    padding-left: 36px;
+    // margin-left: 40px;
+    // margin-left:
+
+    display: grid;
+    grid-template-columns: 552px 216px;
+    grid-template-rows: 1fr min-content;
+
 
     background-color: #f1f2f4;
     color: #172b4d;
     text-align: left;
-    font-family:
-        -apple-system,
+    font-family: -apple-system,
         BlinkMacSystemFont,
         Segoe UI,
         Roboto,
@@ -38,217 +44,431 @@
         Helvetica Neue,
         sans-serif;
     letter-spacing: -0.005rem;
-
-    display: grid;
-    grid-template-columns: 576px 192px;
-    grid-template-rows: 2;
-
-    .btn {
-        height: 32px;
-        border-radius: 5px;
-
-        background-color: #e4e6ea;
-        color: #172b4d;
-        text-align: left;
-        cursor: pointer;
-
-        &:hover {
-            background-color: #d0d4db;
-        }
-    }
 }
 
-.watchActive {
-    display: none;
-}
-
-.close-task-details {
-    z-index: 1;
-    position: absolute;
-    right: 25px;
-    top: 22px;
-    cursor: pointer;
-}
-
-// grid
 .task-details-header {
-    grid-column: 1/-1;
+    grid-column: 1/3;
     grid-row: 1/2;
-
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-
-    .task-details-cover {
-        position: relative;
-        width: 100%;
-        height: 116px;
-        border-radius: 8px 8px 0 0;
-        // background-color: green;
-        top: 0;
-        left: 0;
-
-        .span-cover {
-            position: absolute;
-            right: 20px;
-            bottom: 14px;
-            cursor: pointer;
-        }
-    }
-
-    .coverActive {
-        display: none;
-    }
-
-    .task-details-under-cover {
-        position: relative;
-        margin-top: 0;
-
-        .deatils-title {
-            border: 0;
-            background-color: #f1f2f4;
-            width: 90%;
-            height: 40px;
-            font-size: 1.3rem;
-            margin: 12px 0 0 1px; //with icon
-            // margin: 17px 0 0 46px;
-            padding: 10px;
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                Segoe UI,
-                Roboto,
-                Noto Sans,
-                Ubuntu,
-                Droid Sans,
-                Helvetica Neue,
-                sans-serif;
-
-            &:focus {
-                border: none;
-                outline: none;
-                box-shadow: inset 0 0 0 2px #388bff;
-                background-color: white;
-            }
-        }
-
-        .task-in-list {
-            margin: -4px 0 0 57px;
-        }
-
-        .group-ops {
-            text-decoration: underline;
-        }
-    }
 }
 
 .task-details-main {
     grid-column: 1/2;
     grid-row: 2/3;
-    margin-left: 50px;
+    padding-right: 20px;
+}
 
-    .task-alerts {
+.btns-container {
+    grid-column: 2/3;
+    grid-row: 1/3;
+}
+
+///////////////////////   TASK TITLE    ///////////////////////
+.task-details-header {
+    display: flex;
+    flex-direction: column;
+    // border: 1px solid red;
+
+
+
+    .details-title {
+
+        height: 32px;
+        width: 90%;
+        // margin: -6px -10px;
+        padding: 8px 12px;
+        resize: none;
+        min-height: 24px;
+        border-radius: 4px;
+        background-color: #F1F2F4;
+        line-height: 24px;
+        font-size: 20px;
+        font-weight: 600;
+        border: none;
+        box-sizing: border-box;
         display: flex;
-        flex-wrap: wrap;
+        justify-content: center;
         align-items: center;
-        margin: 29px 0 0 0px;
+        // margin-bottom: 12px;
+        outline: none;
+        transition-duration: 85ms;
+        transition-property: background-color, border-color, box-shadow;
+        transition-timing-function: ease;
+        color: #172b4d;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
 
-        .label-wrapper {
-            .label {
+        &:focus {
+            background-color: white;
+            border: none;
+            outline: none;
+            box-shadow: inset 0 0 0 2px #388bff;
+
+            // &:hover {
+            //     // background-color: #F1F2F4;
+            // }
+        }
+    }
+}
+
+.close-task-details {
+    text-align: center;
+    justify-items: center;
+    padding: 0;
+    border-radius: 50%;
+    color: #44546f;
+    height: 32px;
+    margin: 0;
+    // overflow: hidden;
+    // position: absolute;
+    margin-right: 12px;
+    margin-top: 12px;
+    transition: background-color 85ms, color 85ms;
+    width: 32px;
+    z-index: 2;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #091e420f;
+        color: #44546f;
+        text-decoration: none;
+    }
+}
+
+.task-details-cover {
+    // position: absolute;
+    min-width: 0px;
+    overflow: hidden;
+    height: 116px;
+    border-radius: 8px 8px 0 0;
+    margin: 0 20px 0 -20px;
+    // background-color: green;
+    top: 0;
+    left: 0;
+}
+
+.task-details-cover-menu {
+    // position: absolute;
+    margin-right: 20px;
+    bottom: 14px;
+    cursor: pointer;
+}
+
+.task-in-list {
+    margin: -6px 0 32px 22px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.task-details-main {
+    margin-left: 20px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+///////////////////////   ALL ALERTS    ///////////////////////
+.task-alerts {
+    display: flex;
+    // width: calc();
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 30;
+
+
+    .small-title {
+        margin-left: 0;
+        font-weight: 200;
+        font-size: 1em;
+    }
+}
+
+///////////////////////   MEMBERS    ///////////////////////
+.details-members {
+    display: flex;
+    flex-direction: column;
+    // border: 1px solid red;
+    margin-right: 11px;
+    margin-bottom: 20px;
+}
+
+.members {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    // float: left;
+    max-width: 100%;
+    // margin: -2px 0px 16px 1px;
+
+    .btn-member {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: rgb(79, 138, 228);
+        margin: 8px 4px 0px 0;
+        padding: 0;
+        text-align: center;
+        justify-content: center;
+
+        :last-child {
+            margin-right: -2px;
+        }
+
+        .member-img {
+            aspect-ratio: auto 30 / 30;
+        }
+    }
+}
+
+
+///////////////////////   LABELS    ///////////////////////
+.label-wrapper {
+    // border: 1px solid red;
+    margin-bottom: 20px;
+    margin-right: 10px;
+
+    .label {
+        display: inline-block;
+        position: relative;
+        margin: 0;
+        border-radius: 3px;
+        padding: 0 12px;
+        max-width: 100%;
+        min-width: rem(48px);
+        height: rem(32px);
+        line-height: 32px;
+        color: #172b4d;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.labels-container {
+    display: flex;
+    flex-direction: column;
+
+    .labelsonly {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+
+////////////////////   NOTIFICATIONS    ////////////////////
+.notifications-container {
+    display: flex;
+    flex-direction: column;
+    // border: 1px solid red;
+    margin-right: 5px;
+    margin-bottom: 20px;
+
+    .btn-watch {
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 10px 0 0;
+        padding: 8px 8px;
+        text-justify: center;
+        align-items: center;
+        transition-duration: 85ms;
+
+        .word-watch {
+            margin: 0px 20px 0 6px;
+        }
+
+        .svg-checkbox {
+            margin: 6px -8px 0 -6px;
+        }
+    }
+}
+
+//////////////////////   DUE DATE    //////////////////////
+.due-date-container {
+    display: flex;
+    flex-direction: column;
+    // border: 1px solid red;
+    margin-right: 5px;
+    margin-bottom: 20px;
+
+    .h5h5 {
+        margin-bottom: 8px;
+    }
+
+    &input {
+        height: 20px;
+
+    }
+}
+
+.due-date-checkbox {
+    // margin-top: 50px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 10px;
+
+    &input {
+        // margin-right: 20px;
+        // margin-top: 20px;
+    }
+}
+
+//////////////////////   DESCRIPTION   //////////////////////
+.icon-title-container-activity,
+.icon-title-container-checklist,
+.icon-title-container-description {
+    margin: -6px 0 -12px -34px;
+    display: flex;
+    flex-direction: row;
+    // margin-left: 0;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+
+    // justify-content: center;
+    // text-align: center;
+    // justify-self: center;
+    padding: 8px 0;
+    text-align: left;
+    // align-content: center;
+    // border: 1px solid red;
+
+}
+
+.details-description-container {
+
+    .description-input {
+        width: 100%;
+        height: 60px;
+        border: none;
+        border-radius: 3px;
+        // margin: 9px 0 4px 0px;
+        padding: 8px 12px;
+        background-color: #e4e6ea;
+        text-decoration: none;
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            Segoe UI,
+            Roboto,
+            Noto Sans,
+            Ubuntu,
+            Droid Sans,
+            Helvetica Neue,
+            sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: start;
+        margin-bottom: 21px;
+
+        &:focus {
+            border: 0;
+            min-height: 100px;
+            box-shadow: inset 0 0 0 2px #388bff;
+            background-color: white;
+        }
+    }
+}
+
+//////////////////////   CHECKLIST   //////////////////////
+.task-details-checklist {
+    display: flex;
+    flex-direction: column;
+
+    .checklist-header {
+
+        .checklist-btns {
+
+            .hide-checked {}
+
+            .delete-checklist {}
+
+        }
+    }
+
+    .checklist-bar {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .checklist-todos {
+        display: flex;
+        flex-direction: row;
+
+        .checklist-todo-container {
+            .checklist-input {}
+
+            .checklist-text-area {}
+
+            .todo-btns {
                 display: flex;
-                align-items: center;
-                height: rem(34px);
-                min-width: rem(44px);
-                border-radius: 0.25em;
-                padding: 0.9em;
+                flex-direction: row;
 
-                h6 {
-                    font-weight: 200;
-                    font-size: 1em;
-                }
+                .due-date {}
+
+                .add-member {}
+
+                .todo-item-actions {}
             }
         }
+    }
 
-        .details-notification {
+    .checklist-textarea-add-todo {}
 
-            h5 {
-                margin: 0 0 7px 0;
-            }
+    .checklist-on-add-todo {
+        display: flex;
+        flex-direction: row;
 
-            .btn-watch {
-                display: flex;
-                justify-content: space-between;
-                padding: 8px 8px;
-                text-justify: center;
-
-                .word-watch {
-                    margin: 0px 20px 0 6px;
-                }
-
-                transition-duration: 85ms;
-            }
-
-            margin: -21px 10px 0px 0px;
+        .checklist-btn-add-todo {
+            // blue-btn
         }
 
-        .task-due-date {
-            margin: -21px 0 0px 0;
+        .checklist-btn-cancel-todo {}
+    }
+}
 
-            h5 {
-                margin: 0 0 7px 0;
-            }
+//////////////////////   ACTIVITY   //////////////////////
+.task-details-activity {
+    display: flex;
+    flex-direction: column;
 
-            .btn-due-date {
-                margin-left: 5px;
-                padding: 9px 15px;
-            }
-        }
+    .checklist-header {
+        display: flex;
+        flex-direction: column;
+        align-content: space-between;
 
         .toggle-show-details {
             margin: 0 0 0 8px;
         }
     }
 
-    .details-title-small {
-        margin: 15px 0 0 5px;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 20px;
+    .icon-title-container {
+        .member {}
 
-        &:nth-child(1) {
-            margin: 0 0 0 5px;
-        }
-    }
-
-    .details-title-big {
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 20px;
-        // margin: 0 0 4px 0px;
-        margin: 17px 0 -9px 12px;
-        min-height: 32px;
-        padding: 8px 0;
+        .activity-textarea {}
     }
 }
 
+//////////////////////   ACTION BTNS   //////////////////////
+
 .action-btns-container {
-    grid-column: 2/3;
-    grid-row: 2/3;
 
-    display: flex;
-    flex-direction: column;
-    padding: 0 16px 8px 8px;
-    margin-top: 5px;
+    .suggested-container {
+        .title-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-content: space-between;
 
-    h3.details-title-small {
-        margin: 15px 0 0 0px;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 20px;
-
-        // &:nth-child(1) {
-        //     margin: 0 0 0 5px;
-        // }
+        }
     }
 
     .btn {
@@ -260,7 +480,7 @@
         height: 32px;
         margin: 8px 20px 0 0;
         width: 168px;
-        padding: 0 16px 8px 8px;
+        // padding: 0 16px 8px 8px;
         max-width: 300px;
         padding: 6px 12px;
         text-decoration: none;
@@ -274,7 +494,132 @@
     }
 }
 
-.details-title:hover,
+.icon-title-container {
+    margin-bottom: -5px;
+    margin: 1px 0 -5px -15px;
+    display: flex;
+    flex-direction: row;
+    // margin-left: 0;
+    align-items: center;
+    // justify-content: center;
+    // text-align: center;
+    // justify-self: center;
+    padding: 8px 0;
+    text-align: left;
+    // align-content: center;
+    // border: 1px solid red;
+
+}
+
+.action-btn-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px 8px 8px;
+    margin-top: 100px;
+
+    h3.details-title-small {
+        margin: 15px 0 0 0px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 20px;
+
+        // &:nth-child(1) {
+        //     margin: 0 0 0 5px;
+        // }
+    }
+
+    .action-btns-container .icon {
+        padding: 0 10px 0 0;
+        margin-left: -4px;
+    }
+}
+
+.description-input {
+    width: 100%;
+    height: 40px;
+    // margin: 12px 0 0 1px; //with icon
+    padding: 9px;
+    border: 0;
+    margin: 13px 0px 0px 0px;
+
+    background-color: #f1f2f4;
+    font-size: 14px;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        Segoe UI,
+        Roboto,
+        Noto Sans,
+        Ubuntu,
+        Droid Sans,
+        Helvetica Neue,
+        sans-serif;
+
+    &:focus {
+        border: none;
+        outline: none;
+        box-shadow: inset 0 0 0 2px #388bff;
+        background-color: white;
+    }
+}
+
+
+.coverActive {
+    display: none;
+}
+
+.group-ops {
+    text-decoration: underline;
+}
+
+.btn {
+    height: 32px;
+    border-radius: 5px;
+
+    background-color: #e4e6ea;
+    color: #172b4d;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #d0d4db;
+    }
+}
+
+.watchActive {
+    display: none;
+}
+
+.details-title-small {
+    margin: 15px 0 0 5px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+
+    &:nth-child(1) {
+        margin: 0 0 0 5px;
+    }
+}
+
+.details-title-big {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    // margin: 0 0 4px 0px;
+    // margin: 17px 0 -9px 12px;
+    min-height: 32px;
+    padding: 8px 12px;
+}
+
+// blue-btn
+
+//     btn
+
+
+
+
 .details-description:hover {
     background-color: #d0d4db;
 }
@@ -301,67 +646,6 @@
 
 .task-detail button {
     margin: 0;
-}
-
-
-.icon-title-container {
-    display: flex;
-    flex-direction: row;
-
-    .icon.card-big {
-        margin: 22px 0 0 19px;
-    }
-}
-
-.icon-title-container-description {
-    display: flex;
-    flex-direction: row;
-
-    .description-big {
-        margin: 26px 0 0 -46px;
-    }
-
-    .details-title-big {
-        margin: 23px 0px 0 10px;
-    }
-}
-
-.details-description {
-    width: 100%;
-    height: 60px;
-    border: none;
-    border-radius: 3px;
-    margin: 15px 0 4px 0px;
-    padding: 8px 12px;
-    background-color: #e4e6ea;
-    text-decoration: none;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        Segoe UI,
-        Roboto,
-        Noto Sans,
-        Ubuntu,
-        Droid Sans,
-        Helvetica Neue,
-        sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    text-decoration: none;
-    line-height: 20px;
-
-    &:focus {
-        border: 0;
-        min-height: 100px;
-        box-shadow: inset 0 0 0 2px #388bff;
-        background-color: white;
-    }
-}
-
-.action-btns-container .icon {
-    padding: 0 10px 0 0;
-    margin-left: -4px;
-    ;
 }
 
 .icon {

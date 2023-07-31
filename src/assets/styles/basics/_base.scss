@@ -55,6 +55,7 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
 a:hover {
     // text-decoration: underline;
 }
@@ -73,4 +74,8 @@ body {
 
 textarea {
     font-family: sans-serif;
+}
+
+section {
+    padding: 0;
 }

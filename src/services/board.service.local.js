@@ -613,7 +613,7 @@ const board = {
         {
           id: 'c103',
           title: 'Add dnd for columns',
-          labels: ['l104', 'l109','l106', 'l107'],
+          labels: ['l104', 'l109', 'l106', 'l107'],
           archivedAt: 1589983468418,
           description: 'Fix bug line on moveTask function',
         },
