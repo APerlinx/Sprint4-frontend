@@ -12,17 +12,15 @@
 
 .checklist-title,
 .todo-title {
-    // height: 30px;
     margin: 0 0 4px -2px;
     width: 100%;
-    height: 25px;
     border: 0;
-    padding: 0;
+    padding: 6px 10px;
     background-color: #F1F2F4;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    // align-items: center;
+    // justify-content: center;
 
     &:focus {
         border: none;
@@ -30,30 +28,78 @@
         min-height: 55px;
         background-color: white;
         display: flex;
-        box-shadow: inset 0 0 0 2px #388bff;
+        // box-shadow: inset 0 0 0 2px #388bff;
+        border-color: #091e4224;
+        box-shadow: inset 0 0 0 1px #091e4224;
+        margin-bottom: 4px;
     }
 
 }
 
-.checklist-title-container {
-    width: 471px;
+.icon-title-container-checklist {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-.checklist-title-container,
+.checklist-title {
+    border: 0;
+    background-color: #F1F2F4;
+    height: 32px;
+    width: 100%;
+    // font-size: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+    padding: 0px;
+
+    &:focus {
+        background-color: white;
+        height: 70px;
+        padding: 10px;
+    }
+}
+
 .todo-container {
     // width: 100%;
     align-content: space-between;
+    // border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    margin: 0px 0 0px -40px;
+    align-items: flex-start;
+
+    input {
+        // border: 1px solid red;
+        // position: absolute;
+        padding-top: 10px;
+        margin: 13px 9px 0px 9px;
+    }
 
     textarea {
         border: 0;
         background-color: #F1F2F4;
-        height: 40px;
+        height: 36px;
+        width: 100%;
         // font-size: 1rem;
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-        padding: 10px;
+        padding: 0 10px;
 
         &:focus {
+            display: flex;
+            flex-direction: column;
             background-color: white;
+            height: 100px;
+        }
+
+        &:hover {
+            transition: 0.6s;
+            background-color: #E4E6EA;
+
+            textarea {
+                // transition: 0.6s;
+                background-color: #E4E6EA;
+                // padding: 0;
+            }
         }
     }
 }
@@ -72,28 +118,11 @@
     text-decoration: line-through;
 }
 
-.todo-container {
-    display: flex;
-    flex-direction: row;
-
-    padding: 0;
-    margin: -7px 0 0px -40px;
-
-    input {
-        margin: 9px;
-    }
-
-    &:hover {
-        transition: 0.6s;
-        background-color: #E4E6EA;
-
-        input {
-            transition: 0.6s;
-            margin-left: 6px;
-            background-color: #E4E6EA;
-        }
-    }
+.todo-title {
+    border: 1px solid red;
+    align-items: center;
 }
+
 
 .is-add-todo {
     border: 0;
@@ -124,7 +153,9 @@
     height: 30px;
 
     p {
-        padding: 20px;
+        text-align: center;
+        justify-content: center;
+        padding: 0 15px 0 20px;
     }
 
     progress {

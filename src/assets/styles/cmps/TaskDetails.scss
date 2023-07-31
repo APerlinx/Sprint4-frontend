@@ -23,13 +23,11 @@
     border-radius: 13px;
     margin-bottom: 40px;
     padding-left: 36px;
-    // margin-left: 40px;
-    // margin-left:
+    padding-bottom: 40px;
 
     display: grid;
     grid-template-columns: 552px 216px;
     grid-template-rows: 1fr min-content;
-
 
     background-color: #f1f2f4;
     color: #172b4d;
@@ -45,6 +43,8 @@
         sans-serif;
     letter-spacing: -0.005rem;
 }
+
+///////////////////////   GRID    ///////////////////////
 
 .task-details-header {
     grid-column: 1/3;
@@ -139,7 +139,7 @@
     overflow: hidden;
     height: 116px;
     border-radius: 8px 8px 0 0;
-    margin: 0 20px 0 -20px;
+    margin: 0 36px 0 -36px;
     // background-color: green;
     top: 0;
     left: 0;
@@ -379,61 +379,7 @@
 }
 
 //////////////////////   CHECKLIST   //////////////////////
-.task-details-checklist {
-    display: flex;
-    flex-direction: column;
 
-    .checklist-header {
-
-        .checklist-btns {
-
-            .hide-checked {}
-
-            .delete-checklist {}
-
-        }
-    }
-
-    .checklist-bar {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .checklist-todos {
-        display: flex;
-        flex-direction: row;
-
-        .checklist-todo-container {
-            .checklist-input {}
-
-            .checklist-text-area {}
-
-            .todo-btns {
-                display: flex;
-                flex-direction: row;
-
-                .due-date {}
-
-                .add-member {}
-
-                .todo-item-actions {}
-            }
-        }
-    }
-
-    .checklist-textarea-add-todo {}
-
-    .checklist-on-add-todo {
-        display: flex;
-        flex-direction: row;
-
-        .checklist-btn-add-todo {
-            // blue-btn
-        }
-
-        .checklist-btn-cancel-todo {}
-    }
-}
 
 //////////////////////   ACTIVITY   //////////////////////
 .task-details-activity {
@@ -460,18 +406,21 @@
 //////////////////////   ACTION BTNS   //////////////////////
 
 .action-btns-container {
+    margin: -12px 0 0 -4px;
+    padding: 0;
 
-    .suggested-container {
-        .title-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            align-content: space-between;
-
-        }
+    .title-container {
+        // padding-left: 10px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-content: space-between;
     }
 
+
+
     .btn {
+        margin: 0px 0px 0px 10px;
         border: none;
         white-space: nowrap;
         border-radius: 3px;
@@ -492,6 +441,20 @@
         font-size: 14px;
         font-weight: 400;
     }
+}
+
+.btn {
+    padding: 6px 12px;
+}
+
+.suggested-container {
+    margin: 0;
+}
+
+.action-btns-in-btns {}
+
+.title-container {
+    padding-left: 10px;
 }
 
 .icon-title-container {
@@ -515,24 +478,13 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 0 16px 8px 8px;
+    padding: 0px 16px 8px 8px;
     margin-top: 100px;
+}
 
-    h3.details-title-small {
-        margin: 15px 0 0 0px;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 20px;
-
-        // &:nth-child(1) {
-        //     margin: 0 0 0 5px;
-        // }
-    }
-
-    .action-btns-container .icon {
-        padding: 0 10px 0 0;
-        margin-left: -4px;
-    }
+.action-btns-container .icon {
+    padding: 0 7px 0 0;
+    margin-left: -4px;
 }
 
 .description-input {
@@ -575,6 +527,7 @@
 }
 
 .btn {
+    display: flex;
     height: 32px;
     border-radius: 5px;
 
@@ -593,14 +546,19 @@
 }
 
 .details-title-small {
-    margin: 15px 0 0 5px;
+    // padding: 2px;
+    margin: 18px 0 -6px 0px;
     font-size: 12px;
     font-weight: 600;
     line-height: 20px;
 
     &:nth-child(1) {
-        margin: 0 0 0 5px;
+        margin: 1px 0 -6px 0px;
     }
+}
+
+.action-btns-in-btns {
+    margin: 25px 0 0px 0px;
 }
 
 .details-title-big {

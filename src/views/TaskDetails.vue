@@ -56,7 +56,7 @@
 
                     <div class="due-date-container">
                         <h5 class="h5h5">Due-date</h5>
-                        <div due-date-checkbox>
+                        <div class="due-date-checkbox">
                             <input type="checkbox" @change="updateTask" />
                             <!-- v-model="dueDate.isChecked" -->
                             <button class="btn btn-due-date" @click="openCalender">
@@ -100,10 +100,11 @@
             </section>
 
             <section class="action-btns-container">
-                <h3 class="details-title-small">Suggested</h3>
-                <button class="btn"><span class="icon member"></span>Join</button>
-
-                <h3 class="details-title-small">Add To card</h3>
+                <div class="suggested-container">
+                    <h3 class="details-title-small">Suggested</h3>
+                    <button class="btn"><span class="icon member"></span>Join</button>
+                </div>
+                <h3 class="details-title-small">Add to card</h3>
                 <Popper arrow placement="right">
                     <div v-for="(cmp, idx) in cmpOrder" :key="idx">
                         <button class="btn" @click="set(cmp, idx)"> <span class="icon"
@@ -119,14 +120,14 @@
                     </template>
                 </Popper>
 
-
-                <h3 class="details-title-small">Actions</h3>
-                <button class="btn"><span class="icon arrow-right"></span>Move</button>
-                <button class="btn"><span class="icon copy"></span>Copy</button>
-                <button class="btn"><span class="icon card"></span>Make template</button>
-                <button class="btn"><span class="icon archive"></span>Archive</button>
-                <button class="btn"><span class="icon share"></span>Share</button>
-
+                <div class="action-btns-in-btns">
+                    <h3 class="details-title-small">Actions</h3>
+                    <button class="btn"><span class="icon arrow-right"></span>Move</button>
+                    <button class="btn"><span class="icon copy"></span>Copy</button>
+                    <button class="btn"><span class="icon card"></span>Make template</button>
+                    <button class="btn"><span class="icon archive"></span>Archive</button>
+                    <button class="btn"><span class="icon share"></span>Share</button>
+                </div>
 
             </section>
         </section>
