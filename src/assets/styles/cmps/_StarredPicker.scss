@@ -1,8 +1,17 @@
 .starred {
     .starred-modal {
         @include pickerModal;
-        position: absolute;
-        background-color: white;
-        z-index: 999;
+
+        .empty-starred {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-inline: rem(13px);
+            text-align: center;
+
+            p {
+                color: rgb(68, 84, 111);
+            }
+        }
     }
 }

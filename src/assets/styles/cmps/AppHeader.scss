@@ -1,7 +1,8 @@
 .app-header {
     nav {
         display: flex;
-        padding: rem(8px);
+        justify-content: space-between;
+        padding: rem(7px);
         position: relative;
         background-color: white;
         color: $textClr;
@@ -12,7 +13,7 @@
             align-items: center;
 
             & > * {
-                margin-inline-end: 0.9em;
+                margin-inline-end: 1.5em;
             }
             .menu {
                 grid-column: 1;
@@ -23,25 +24,11 @@
             }
 
             .recent {
-                button {
-                    color: $textClr;
-                }
+                @include header-btn;
             }
             .starred {
-                button {
-                    color: $textClr;
-                }
-            }
-            button {
-                align-self: center;
-                padding: 0.4em 1em;
-                border-radius: 0.2em;
-                color: #627086;
-
-                span {
-                    margin-block-start: 1em;
-                    font-size: rem(10px);
-                }
+                @include header-btn;
+                margin-inline-start: -1em;
             }
         }
 
@@ -55,7 +42,7 @@
                 font-size: rem(13px);
                 border-radius: 0.3em;
                 transition: 0.5s;
-
+                margin-inline-start: -0.5em;
 
                 h2 {
                     padding-inline-end: em(4.35, 14);
@@ -79,19 +66,33 @@
             width: rem(68px);
         }
 
-        //Filter in diff doc
+        .right {
+            display: flex;
+            align-items: center;
+            gap: rem(15px);
+
+            .contrast {
+                margin-block-start: 0.3em;
+                img {
+                    height: rem(18px);
+                }
+            }
+            .user {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: rem(22px);
+                width: rem(22px);
+                background-color: rgb(240, 172, 0);
+                border-radius: 50%;
+                padding: 0.8em;
+                font-size: 0.7em;
+                font-weight: 700;
+
+                h2 {
+                    margin: 0;
+                }
+            }
+        }
     }
 }
-
-// .loggedin-user {
-//     align-self: center;
-//     justify-self: center;
-//     display: flex;
-//     background-color: rgb(255, 187, 15);
-//     border-radius: 50%;
-//     padding: 0.8em;
-//     font-size: 0.55em;
-
-//     h2 {
-//         margin: 0;
-//     }

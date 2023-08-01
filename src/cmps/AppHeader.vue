@@ -13,28 +13,33 @@
             </div>
           </RouterLink>
         </div>
+        
 
         <div class="recent">
-          <button
-            :style="{ position: 'relative' }"
+          <div
+            class="header-btn"
+            :class="{ checked: isPickerModalRecent }"
             @click="togglePickerModalRecent"
           >
             Recent
             <i class="fa-solid fa-chevron-down"></i>
-          </button>
+          </div>
           <div v-if="isPickerModalRecent" class="recent-modal">
             <RecentPicker v-click-outside="togglePickerModalRecent" />
           </div>
         </div>
 
+        
+
         <div class="starred">
-          <button
-            :style="{ position: 'relative' }"
+          <div
+            class="header-btn"
+            :class="{ checked: isPickerModalStarred }"
             @click="togglePickerModalStarred"
           >
             Starred
             <i class="fa-solid fa-chevron-down"></i>
-          </button>
+          </div>
           <div v-if="isPickerModalStarred" class="starred-modal">
             <StarredPicker v-click-outside="togglePickerModalStarred" />
           </div>
@@ -50,10 +55,15 @@
         </div>
       </div>
 
-      <!-- <BoardFilter @filterByTxt="filterByTxt" /> -->
+      <div class="right">
+        <BoardFilter @filterByTxt="filterByTxt" />
+          <span class="contrast"><img src="../assets/styles/img/contrast.png" alt=""></span>
+          <span class="user">SZ</span>
+        </div>
     </nav>
   </header>
 </template>
+
 <script>
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 import AddBoard from "../cmps/addboard.vue";
