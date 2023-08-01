@@ -16,6 +16,16 @@
     transform: translateX(100%);
     transition: transform 0.1s ease-in;
 
+    .background-preview {
+        width: 20px;
+        height: 20px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        border-radius: 3px;
+        margin-inline-end: 0.9em;
+    }
+
     &.menu-visible {
         transform: translateX(0);
     }
@@ -27,13 +37,31 @@
 
     .menu-header {
         padding: 0 rem(6px) 0 rem(12px);
-        text-align: center;
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            > .close-icon {
+                @include trello-icon($content: "\e91c", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+            > h1 {
+                margin: 7px 28px;
+                margin-inline-end: 7rem;
+                margin-inline-start: 8em;
+                font-size: em(18.3px);
+                font-weight: 550;
+            }
+        }
     }
 
     .menu-content {
         width: 100%;
         height: 100%;
-        padding: rem(12px) rem(12px) em(8px);
+        padding: rem(12px) rem(0px) em(8px);
+
+        margin-inline-start: 0.2em;
+        margin-block-start: -0.7em;
         transition-duration: 0.12s;
         transition-property: transform, opacity;
         transition-timing-function: ease-in;
@@ -45,15 +73,48 @@
             flex-direction: column;
             gap: 10px;
 
+            .menu-item.preview {
+                display: flex;
+                align-items: center;
+                margin-block-start: -0.6em;
+            }
+
+            .menu-item {
+                cursor: pointer;
+                padding-inline-start: 12px;
+                padding-block: 6px;
+                border-radius: 3px;
+            }
+
+            .menu-item:hover {
+                background-color: $background-neutral-subtle-hovered;
+            }
+
             .menu-item > span {
                 font-weight: 600;
                 line-height: 20px;
+                display: flex;
+                align-items: center;
+                > .activity-icon {
+                    margin-inline-end: 0.7em;
+                    @include trello-icon($content: "\e900", $type: md, $color: $ds-icon);
+                }
+            }
+
+            .menu-item > p {
+                margin-inline-start: 2.3em;
             }
 
             .menu-item > div {
                 display: flex;
+
+                > span {
+                    font-weight: 600;
+                }
+
                 .trello-icon {
-                    @include trello-icon($content: "\e90b", $type: sm, $color: $ds-icon);
+                    margin-inline-end: 0.6em;
+                    @include trello-icon($content: "\e90b", $type: md, $color: $ds-icon);
                 }
             }
         }
@@ -151,16 +212,6 @@ hr {
     height: 1px;
     background: $border;
     width: 100%;
-}
-
-.background-preview {
-    width: 20px;
-    height: 20px;
-    background-image: url("https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/volcano.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    border-radius: 3px;
 }
 
 /* ... */
@@ -401,7 +452,6 @@ hr {
         background-color: rgba(220, 219, 224, 0.418);
         > .bg-icon {
             @include trello-icon($content: "\e901", $type: md, $color: $ds-icon);
-
         }
 
         &:hover {
@@ -414,5 +464,103 @@ hr {
         font-weight: 600;
         margin-bottom: rem(8px);
         margin-top: rem(20px);
+    }
+}
+
+// Activity
+
+.activity-section {
+    .activity-header {
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            > h1 {
+                margin: 10px 28px;
+                margin-inline: 6em;
+                font-size: em(18.286px);
+                font-weight: 550;
+            }
+            > .close-icon {
+                @include trello-icon($content: "\e91c", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+            > .back-icon {
+                @include trello-icon($content: "\e906", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .activity-log {
+        padding: 5px;
+        padding-inline-start: 2px;
+        background-color: #f4f5f7;
+        border-radius: 3px;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        box-sizing: border-box;
+
+        .activity-list {
+            display: flex;
+            padding: 10px;
+            padding-inline-start: 0;
+            padding-block-end: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            img {
+                margin-right: 10px;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+            }
+            .active-user {
+                margin-right: 10px;
+                color: #172b4d;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+            .activity-details {
+                line-height: 1.3;
+                .activity-member-name {
+                    font-weight: 700;
+                    color: #172b4d;
+                }
+                .activity-txt {
+                    font-size: 14px;
+                    color: #42526e;
+                }
+                .activity-task-title {
+                    font-size: 14px;
+                    color: $link;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+                .activity-created-at {
+                    font-size: 12px;
+                    color: #6b778c;
+                }
+                .activity-task-status {
+                    font-size: 14px;
+                    color: #42526e;
+                }
+
+                .activity-group-title {
+                    font-size: 14px;
+                    color: #42526e;
+                }
+            }
+        }
     }
 }

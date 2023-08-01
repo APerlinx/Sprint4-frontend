@@ -205,6 +205,9 @@ export const boardStore = {
       state.currentBoard.style.backgroundColor = ''
       state.currentBoard.style.backgroundImage = `url(${gradient})`
     },
+    addActivity(state, { newActivity }) {
+      state.currentBoard.activities.push(newActivity)
+    },
   },
   actions: {
     async addBoard(context, { board }) {
@@ -258,7 +261,7 @@ export const boardStore = {
         throw err
       }
     },
-    async addGroup({ commit, state }, { group }) {
+    async addGroup({ commit, state, dispatch }, { group }) {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
 
@@ -268,12 +271,15 @@ export const boardStore = {
 
         const savedBoard = await boardService.save(updatedBoard)
         commit({ type: 'addGroup', boardId: savedBoard._id, group })
+        dispatch('addActivity', {
+          activity: `Added ${group.title} to this board`,
+        })
       } catch (err) {
         console.log('boardStore: Error in addGroup', err)
         throw err
       }
     },
-    async removeGroup({ commit, state }, { groupId }) {
+    async removeGroup({ commit, state, dispatch }, { groupId }) {
       try {
         if (!state.currentBoard) throw new Error('Current board not found')
 
@@ -292,6 +298,7 @@ export const boardStore = {
         const savedBoard = await boardService.save(updatedBoard)
 
         commit({ type: 'removeGroup', boardId: savedBoard._id, groupId })
+        dispatch('addActivity', { activity: `Removed ${groupId}` })
       } catch (err) {
         console.error(err)
         throw err
@@ -323,6 +330,10 @@ export const boardStore = {
       { groupId, task, board, openedFromModal }
     ) {
       try {
+        const group = state.currentBoard.groups.find(
+          (group) => group.id === groupId
+        )
+
         const newTask = boardService.getEmptyTask(task.title)
         commit('addTaskToGroup', {
           groupId,
@@ -332,6 +343,8 @@ export const boardStore = {
         })
         const savedBoard = await boardService.save(board)
         commit({ type: 'updateBoard', board: savedBoard })
+
+        dispatch('addActivity', { activity: 'added Task to', group })
         dispatch({ type: 'loadBoards' })
       } catch (err) {
         console.error('Error in addTask', err)
@@ -381,6 +394,7 @@ export const boardStore = {
         commit('toggleTaskStatus', { groupIndex, taskIndex, board })
         const savedBoard = await boardService.save(board)
         commit({ type: 'updateBoard', board: savedBoard })
+        dispatch('addActivity', { activity: 'marked the due date on', task })
         dispatch({ type: 'loadBoards' })
       } catch (error) {
         console.error(error.message)
@@ -409,13 +423,16 @@ export const boardStore = {
 
         const savedBoard = await boardService.save(currBoard)
         commit({ type: 'updateBoard', board: savedBoard })
+        dispatch('addActivity', {
+          activity: 'duplicated list',
+          duplicatedGroup,
+        })
         dispatch({ type: 'loadBoards' })
       } catch (err) {
         console.error(err)
         throw err
       }
     },
-
     async watchGroup({ state, commit, dispatch }, { groupId }) {
       try {
         const currBoard = JSON.parse(JSON.stringify(state.currentBoard))
@@ -443,6 +460,17 @@ export const boardStore = {
     async changeBoardBgGrad({ state, commit }, payload) {
       try {
         commit('setBoardBgGrad', payload)
+        await boardService.save(state.currentBoard)
+      } catch (err) {
+        throw err
+      }
+    },
+    async addActivity({ commit, state }, { activity, task = {}, group = {} }) {
+      try {
+        const newActivity = boardService.getEmptyActivity(activity, task, group)
+        console.log('newActivity', newActivity)
+        commit('addActivity', { newActivity })
+
         await boardService.save(state.currentBoard)
       } catch (err) {
         throw err

@@ -189,3 +189,11 @@
     background-color: rgba(160, 177, 190, 0.09);
   }
 }
+
+.icon-pencil {
+  font-size: 11px;
+  position: absolute;
+  right: 8px;
+  margin-block-start: -1em;
+  @include trello-icon($content: "\e928", $type: sm, $color: black);
+}

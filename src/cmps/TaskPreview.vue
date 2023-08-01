@@ -1,6 +1,12 @@
 <template>
   <TaskCover :task="task" />
-  <section class="task-preview" :class="{ 'with-cover': task.cover }" @click="goToTaskDetails">
+  <section
+    class="task-preview"
+    :class="{ 'with-cover': task.cover }"
+    @mouseover="showEditIcon = true"
+    @mouseleave="showEditIcon = false"
+    @click="goToTaskDetails"
+  >
     <li v-if="task">
       <div class="labels" @click.stop>
         <div v-for="labelId in task.labels" :key="labelId" class="label" :class="{ expanded: areLabelsVisible }" :style="{
@@ -11,6 +17,11 @@
       </div>
 
       <div class="task-header">
+        <i
+          class="icon-pencil"
+          v-show="showEditIcon"
+          @click.stop="openQuickEdit"
+        ></i>
         <p>{{ task.title }}</p>
       </div>
 
@@ -30,7 +41,10 @@
 
         <div v-if="task.checklists && task.checklists.length > 0" :class="{ 'completed-checklist': checklistCompleted }">
           <span class="icon checklist"></span>
-          <span class="checklist-counter">{{ doneChecklists }}<span class="slash">/</span>{{ totalChecklists }}</span>
+          <span class="checklist-counter"
+            >{{ doneChecklists }}<span class="slash">/</span
+            >{{ totalChecklists }}</span
+          >
         </div>
 
         <div v-if="task.attachment && task.attachment.length > 0">
@@ -48,12 +62,18 @@
       </div>
     </li>
   </section>
+
+  <TaskQuickEdit
+    :task="task"
+    v-if="quickEditDisplay"
+    @close="quickEditDisplay = false"
+  />
 </template>
 
 <script>
 import { format } from 'date-fns'
 import TaskCover from './TaskCover.vue'
-
+import TaskQuickEdit from './TaskQuickEdit.vue'
 export default {
   props: {
     groupId: {
@@ -64,6 +84,12 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      quickEditDisplay: false,
+      showEditIcon: false,
+    }
   },
   computed: {
     board() {
@@ -133,9 +159,14 @@ export default {
     toggleLabel() {
       this.$store.commit('toggleLabelsVisibility')
     },
+    openQuickEdit(e) {
+      e.stopPropagation()
+      this.quickEditDisplay = true
+    },
   },
   components: {
     TaskCover,
+    TaskQuickEdit,
   },
 }
 </script>

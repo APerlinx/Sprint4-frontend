@@ -59,7 +59,7 @@
     <div class="bg-picker-content">
       <div class="gradient-options">
         <div
-          v-for="gradient in gradients"
+          v-for="gradient in gradientList"
           :key="gradient.id"
           :style="{ backgroundImage: 'url(' + gradient.color + ')' }"
           class="gradient-option"
@@ -72,7 +72,7 @@
       <hr />
       <div class="color-options">
         <div
-          v-for="color in colors"
+          v-for="color in colorList"
           :key="color.id"
           :style="{ backgroundColor: color.color }"
           class="color-option"
@@ -113,7 +113,7 @@
 import debounce from 'lodash.debounce'
 
 export default {
-  emits: ['close', 'closeMenu'],
+  emits: ['close', 'closeMenu', 'backgroundChanged'],
   props: {
     colorOption: {
       type: Object,
@@ -121,8 +121,8 @@ export default {
   },
   data() {
     return {
-      colors: this.colorOption.colors,
-      gradients: this.colorOption.gradients,
+      colorList: this.colorOption.colors,
+      gradientList: this.colorOption.gradients,
       accesKey: 'MW3WlTYHFpvQZJwkJp360WPZFpDiNui3_1sdi4VjuhY',
       photos: false,
       colors: false,
@@ -162,6 +162,7 @@ export default {
           this.$store.dispatch('changeBoardBgGrad', {
             gradient: e.target.result,
           })
+          this.$emit('backgroundChanged', e.target.result)
         }
         reader.readAsDataURL(file)
       }
@@ -173,11 +174,13 @@ export default {
       this.$store.dispatch('changeBoardBgClr', {
         color: color,
       })
+      this.$emit('backgroundChanged', color)
     },
     changeBoardBgGrad(gradient) {
       this.$store.dispatch('changeBoardBgGrad', {
         gradient: gradient,
       })
+      this.$emit('backgroundChanged', gradient)
     },
     colorSection() {
       this.colors = true
@@ -197,14 +200,5 @@ export default {
 <style scoped>
 .image-upload-input {
   display: none;
-}
-
-.bg-option {
-  position: relative;
-  /* ...other styles... */
-}
-
-.bg-option button {
-  /* ...other styles... */
 }
 </style>

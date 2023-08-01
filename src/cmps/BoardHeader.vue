@@ -63,7 +63,13 @@
         </div>
       </nav>
     </header>
-    <BoardMenu :menuOpen="menuOpen" :colorOption="board.backGround" @closeMenu="menuOpen = false" />
+    <BoardMenu
+      :menuOpen="menuOpen"
+      :colorOption="board.backGround"
+      :styleOption="board.style"
+      :boardActivity="board.activities"
+      @closeMenu="menuOpen = false"
+    />
   </div>
 </template>
 
@@ -112,8 +118,8 @@ export default {
       return metrics.width
     },
     toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    }
+      this.menuOpen = !this.menuOpen
+    },
   },
   computed: {
     icon() {

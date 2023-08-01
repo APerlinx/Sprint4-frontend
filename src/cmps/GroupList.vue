@@ -150,7 +150,6 @@ export default {
       }
     },
     async removeGroup(groupId) {
-      console.log('groupId', groupId)
       try {
         await this.$store.dispatch({
           type: 'removeGroup',
