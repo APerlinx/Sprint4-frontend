@@ -1,5 +1,5 @@
 <template>
-  <section class="board-details" v-if="board" :style="board.style">
+  <section class="board-details" v-if="board" :style="this.boardStyle">
     <BoardHeader :board="board" />
     <GroupList v-if="board.groups" :groups="board.groups" :key="board.groups" />
     <RouterView />
@@ -15,11 +15,11 @@ export default {
   data() {
     return {
       boardStyle: {
-      backgroundImage: '',
-      backgroundColor: '',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-    },
+        backgroundImage: '',
+        backgroundColor: '',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+      },
     }
   },
   async created() {
@@ -34,17 +34,17 @@ export default {
     },
   },
   watch: {
-  'board.style': {
-    deep: true,
-    handler(newVal) {
-      this.boardStyle = {
-        backgroundImage: newVal.backgroundImage ? `url(${newVal.backgroundImage})` : '',
-        backgroundColor: newVal.backgroundColor || '',
-         backgroundSize: '100%',
-        backgroundRepeat: 'no-repeat',
-      };
+    'board.style': {
+      deep: true,
+      handler(newVal) {
+        this.boardStyle = {
+          backgroundImage: newVal.backgroundImage || '',
+          backgroundColor: newVal.backgroundColor || '',
+          backgroundSize: '100%',
+          backgroundRepeat: 'no-repeat',
+        }
+      },
     },
   },
-},
 }
 </script>

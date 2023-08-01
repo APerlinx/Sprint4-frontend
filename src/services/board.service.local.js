@@ -1016,7 +1016,7 @@ const board = {
       createdAt: 154514,
       byMember: {
         _id: 'u101',
-        fullname: 'Abi Abambi',
+        fullname: 'Guest',
         imgUrl: 'http://some-img',
       },
       task: {
