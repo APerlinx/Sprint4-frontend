@@ -1,35 +1,48 @@
 <template>
-
-  <section class="board-container">
-    <div v-if="starredBoards.length > 0" class="starred">
-      <h2 class="title">Starred boards</h2>
-      <BoardList @star="starBoard" :boards="starredBoards" />
-    </div>
-
-    <div v-if="recentBoards.length > 0" class="recent">
-      <h2 class="title">Recently viewed</h2>
-      <BoardList @star="starBoard" :boards="recentBoards" />
-    </div>
-
-    <h3>Your workspace</h3>
-    <div class="workspace">
-      <div>
-        <BoardList :boards="boards" @remove="removeBoard" @star="starBoard" />
+  <div class="index-layout">
+    <section class="board-container">
+      <div v-if="starredBoards.length > 0" class="starred">
+        <div class="starred">
+          <div class="starred-title">
+            <span class="starred-icon"></span>
+            <h2>Starred boards</h2>
+          </div>
+        </div>
+        <BoardList @star="starBoard" :boards="starredBoards" />
       </div>
 
-      <div class="create-board">
-        <Popper arrow placement="right">
-          <div class="board-title">Create new board</div>
-          <template #content>
-            <AddBoard @save="saveBoard" />
-          </template>
-        </Popper>
+      <div v-if="recentBoards.length > 0" class="recent">
+        <div class="recently">
+          <div class="recently-title">
+            <span class="recently-icon"></span>
+            <h2>Recently viewed</h2>
+          </div>
+        </div>
+        <BoardList @star="starBoard" :boards="recentBoards" />
       </div>
-    </div>
+      <div class="workspace-title">
+        <h3>YOUR WORKSPACE</h3>
+        <div class="sub-workspace">
+          <div class="user-title">S</div>
+          <h3>Shay Zigdon's workspace</h3>
+        </div>
+      </div>
+      <div class="workspace">
+        <div>
+          <BoardList :boards="boards" @remove="removeBoard" @star="starBoard" />
+        </div>
 
-    <!-- <div class="member-icon">
-    </div> -->
-  </section>
+        <div class="create-board">
+          <Popper arrow placement="right">
+            <div class="board-title">Create new board</div>
+            <template #content>
+              <AddBoard @save="saveBoard" />
+            </template>
+          </Popper>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -107,7 +120,6 @@ export default {
     AddBoard,
     Popper,
     defineComponent,
-
   },
 };
 </script>
