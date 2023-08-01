@@ -2,12 +2,12 @@
   <div class="dynamic-modal-container">
     <section class="dynamic-modal-header">
       <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
-      <span class="dynamic-modal-close" @click="closeModal">X</span>
+      <span class="dynamic-modal-close" @click="closeModal"><span class="icon close"></span></span>
       <!-- <pre>{{ board }}</pre> -->
     </section>
     <section>
       <component v-if="actionCmpType" :board="board" :is="actionCmpType" :taskToEdit="taskToEdit"
-        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="addDueDate"
+        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @addDueDate="addDueDate"
         @setBgColor="setBgColor" @attachment="addAttachment">
       </component>
     </section>
@@ -55,8 +55,9 @@ export default {
       this.$emit("attachment", newAttachment);
       console.log("modal2 - newAttachment:", newAttachment);
     },
-    addDueDate() {
-      this.$emit("dueDate", newDueDate);
+    addDueDate(date) {
+      this.$emit("addDueDate", date);
+      console.log("modal2 - date:", date);
     },
   },
   components: {

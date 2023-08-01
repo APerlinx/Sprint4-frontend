@@ -84,8 +84,8 @@ function getEmptyBoard(title = '', imgUrl = '', bgColor = '') {
     labels: _labelOptions(),
     members: _membersOptions(),
     cover: coverOptions(),
-    groups:[],
-    activities:[]
+    groups: [],
+    activities: []
   }
 }
 function getEmptyGroup(title) {
@@ -1358,55 +1358,55 @@ function backgroundOptions() {
         id: 'g101',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/snow.svg',
-          emoji:'❄️'
+        emoji: '❄️'
       },
       {
         id: 'g102',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/ocean.svg',
-          emoji:'🌊'
+        emoji: '🌊'
       },
       {
         id: 'g103',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/crystal.svg',
-          emoji:'🔮'
+        emoji: '🔮'
       },
       {
         id: 'g104',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/rainbow.svg',
-          emoji:'🌈'
+        emoji: '🌈'
       },
       {
         id: 'g106',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/peach.svg',
-          emoji:'🍑'
+        emoji: '🍑'
       },
       {
         id: 'g107',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/flower.svg',
-          emoji:'🌸'
+        emoji: '🌸'
       },
       {
         id: 'g108',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/earth.svg',
-          emoji:'🌍'
+        emoji: '🌍'
       },
       {
         id: 'g109',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/alien.svg',
-          emoji:'👽'
+        emoji: '👽'
       },
       {
         id: 'g110',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/volcano.svg',
-          emoji:'🌋'
+        emoji: '🌋'
       },
     ],
     colors: [

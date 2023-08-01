@@ -99,6 +99,20 @@ export default {
             this.isAddTodo = false
             this.updateChecklist()
         },
+        // deleteTodo() { ////////////////////////////////////////////////////////need to edit
+        //     console.log('delete todo:')
+        //     // if (this.newTodoTitle) return
+        //     const todo = {
+        //         _id: utilService.makeId(),
+        //         title: this.newTodoTitle,
+        //         isChecked: false
+        //     }
+        //     // console.log('todo', todo)
+        //     this.checklistToEdit.todos.push(todo)
+        //     this.newTodoTitle = ''
+        //     this.isAddTodo = false
+        //     this.updateChecklist()
+        // },
         updateChecklist() {
             // console.log('this.checklistToEdit:', JSON.parse(JSON.stringify(this.checklistToEdit)))
             this.checklistToEdit = JSON.parse(JSON.stringify(this.checklistToEdit))

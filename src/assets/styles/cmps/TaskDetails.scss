@@ -1,7 +1,7 @@
 .task-back-drop {
     position: fixed;
     display: flex;
-    align-items: center;
+    // align-items: center;
     justify-content: center;
 
     width: 100%;
@@ -10,6 +10,7 @@
     left: 0;
     display: flex;
     padding-top: 48px;
+    padding-bottom: 48px;
     align-items: start;
     overflow-y: auto;
 
@@ -18,7 +19,7 @@
 
 .task-details {
     z-index: 25;
-    position: absolute;
+    // position: absolute;
 
     width: 768px;
     border-radius: 13px;
@@ -73,7 +74,7 @@
         margin-top: 1px;
         margin-left: 0px;
         height: 37px;
-        width: 90%;
+        width: 85%;
         // margin: -6px -10px;
         padding: 8px 12px;
         resize: none;
@@ -122,11 +123,9 @@
     border-radius: 50%;
     color: #44546f;
     height: 32px;
-    margin: 0;
+    // margin: 12px 12px 0 0;
     // overflow: hidden;
     // position: absolute;
-    margin-right: 12px;
-    margin-top: 12px;
     transition: background-color 85ms, color 85ms;
     width: 32px;
     z-index: 2;
@@ -136,6 +135,11 @@
         background-color: #091e420f;
         color: #44546f;
         text-decoration: none;
+    }
+
+    span {
+        padding: 0;
+        margin: 0;
     }
 }
 
