@@ -93,7 +93,7 @@ function getEmptyTask(title) {
     checklists: [],
     labelIds: [],
     labels: [],
-    attachments: [],
+    attachment: [],
     watching: false,
     createdAt: Date.now(),
     dueDate: '',
@@ -1015,7 +1015,7 @@ const board = {
   cmpsOrder: [
     'MemberPicker',
     'LabelsPicker',
-    'CheckList',
+    'ChecklistPicker',
     'DatePicker',
     'AttachmentPicker',
     'CoverPicker',

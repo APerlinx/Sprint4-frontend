@@ -39,7 +39,7 @@ export const boardStore = {
     dropResults: [],
     areLabelsVisible: false,
 
-    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker', 'DueDatePicker', "Attachments",'CoverPicker', "Custom Fields"],
+    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker', 'DueDatePicker', "AttachmentPicker", 'CoverPicker', "Custom Fields"],
   },
   getters: {
     boards({ boards }) {
@@ -305,7 +305,7 @@ export const boardStore = {
         console.log(err)
       }
     },
-    async addTask({ commit, state,dispatch }, { groupId, task, board }) {
+    async addTask({ commit, state, dispatch }, { groupId, task, board }) {
       try {
         const newTask = boardService.getEmptyTask(task.title)
         commit('addTaskToGroup', { groupId, task: newTask, board })
@@ -372,19 +372,19 @@ export const boardStore = {
         const currBoard = JSON.parse(JSON.stringify(state.currentBoard));
         const groupToDuplicate = currBoard.groups.find(group => group.id === groupId);
         if (!groupToDuplicate) throw new Error('Group not found');
-    
+
         const newGroupId = utilService.makeId();
-    
+
         let duplicatedGroup = { ...groupToDuplicate, id: newGroupId };
-    
+
         duplicatedGroup.tasks = duplicatedGroup.tasks.map(task => ({
           ...task,
-          id: utilService.makeId(), 
+          id: utilService.makeId(),
           groupId: newGroupId
         }));
-    
+
         currBoard.groups.push(duplicatedGroup);
-    
+
         const savedBoard = await boardService.save(currBoard)
         commit({ type: 'updateBoard', board: savedBoard })
         dispatch({ type: 'loadBoards' })
@@ -393,9 +393,9 @@ export const boardStore = {
         throw err;
       }
     },
-    
-    
-    async watchGroup({ state, commit,dispatch }, { groupId }) {
+
+
+    async watchGroup({ state, commit, dispatch }, { groupId }) {
       try {
         const currBoard = JSON.parse(JSON.stringify(state.currentBoard))
         const groupToWatch = currBoard.groups.find(

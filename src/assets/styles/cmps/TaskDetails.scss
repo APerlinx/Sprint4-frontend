@@ -70,7 +70,8 @@
     // border: 1px solid red;
 
     .details-title {
-
+        margin-top: 1px;
+        margin-left: 0px;
         height: 37px;
         width: 90%;
         // margin: -6px -10px;
@@ -105,6 +106,12 @@
             //     // background-color: #F1F2F4;
             // }
         }
+    }
+
+    .icon {
+        margin-left: -1px;
+        // margin-top: 0px;
+        padding-top: 2px;
     }
 }
 
@@ -152,7 +159,7 @@
 }
 
 .task-in-list {
-    margin: -6px 0 32px 22px;
+    margin: -7px 0 31px 22px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -185,8 +192,8 @@
 .details-members {
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
-    margin-right: 11px;
+    // border: 1px solid red;
+    margin: 1px 11px 0 -1px;
     margin-bottom: 20px;
 }
 
@@ -196,13 +203,14 @@
     flex-wrap: wrap;
     // float: left;
     max-width: 100%;
-    // margin: -2px 0px 0px 1px;
+    margin: -1px 0px 0px 1px;
+    // border: 1px solid red;
 
     .btn-member {
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        background-color: rgb(79, 138, 228);
+        background-color: #dfe1e6;
         margin: 8px 4px 0px 0;
         padding: 0;
         text-align: center;
@@ -212,11 +220,15 @@
             // margin-right: -2px;
         }
 
+        div {
+            padding: 0;
+            margin: 0;
+        }
     }
 }
 
 .member-pic {
-    // position: relative;
+    position: relative;
 
     height: 32px;
     width: 32px;
@@ -227,9 +239,11 @@
 }
 
 
+
+
 ///////////////////////   LABELS    ///////////////////////
 .label-wrapper {
-    border: 1px solid red;
+    // border: 1px solid red;
     margin-bottom: 20px;
     margin-right: 10px;
 
@@ -451,7 +465,7 @@
 //////////////////////   ACTION BTNS   //////////////////////
 
 .action-btns-container {
-    margin: -12px 0 0 -4px;
+    margin: -11px 0 0 -4px;
     padding: 0;
 
     .title-container {
@@ -528,7 +542,7 @@
 }
 
 .action-btns-container .icon {
-    padding: 0 7px 0 0;
+    padding: 0 8px 0 0;
     margin-left: -4px;
 }
 
@@ -668,7 +682,7 @@
         @include trello-icon($content: "\e91b", $type: sm, $color: #626f86);
     }
 
-    &.attachments {
+    &.attachment {
         @include trello-icon($content: "\e908", $type: sm, $color: #626f86);
     }
 

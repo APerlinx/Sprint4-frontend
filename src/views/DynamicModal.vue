@@ -8,17 +8,20 @@
     <section>
       <component v-if="actionCmpType" :board="board" :is="actionCmpType" :taskToEdit="taskToEdit"
         @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="addDueDate"
-        @setBgColor="setBgColor">
+        @setBgColor="setBgColor" @attachment="addAttachment">
       </component>
     </section>
   </div>
 </template>
 <script>
+
 import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
 import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
 import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
 import DueDatePicker from "../cmps/taskDeatilsOpts/DueDatePicker.vue";
 import CoverPicker from "../cmps/taskDeatilsOpts/CoverPicker.vue";
+import AttachmentPicker from "../cmps/taskDeatilsOpts/AttachmentPicker.vue";
+
 export default {
   props: {
     taskToEdit: Object,
@@ -48,6 +51,10 @@ export default {
       this.$emit("checklist", newChecklist);
       console.log("modal2 - newChecklist:", newChecklist);
     },
+    addAttachment(newAttachment) {
+      this.$emit("attachment", newAttachment);
+      console.log("modal2 - newAttachment:", newAttachment);
+    },
     addDueDate() {
       this.$emit("dueDate", newDueDate);
     },
@@ -58,6 +65,7 @@ export default {
     MemberPicker,
     DueDatePicker,
     CoverPicker,
+    AttachmentPicker,
   },
 };
 </script>

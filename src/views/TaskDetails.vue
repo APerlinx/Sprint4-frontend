@@ -117,8 +117,8 @@
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
-                            @checklist="addChecklist" @toggleMember="toggleMember" @saveLabel="saveLabel"
-                            @setBgColor="setBgColor" />
+                            @toggleMember="toggleMember" @saveLabel="saveLabel" @checklist="addChecklist"
+                            @attachment="addAttachment" @setBgColor="setBgColor" />
                     </template>
                 </Popper>
                 <div class="action-btns-in-btns">
@@ -140,6 +140,7 @@ import DynamicModal from "./DynamicModal.vue";
 import Checklist from "../cmps/Checklist.vue"
 import Members from "../cmps/Members.vue";
 import Labels from "../cmps/Labels.vue";
+import AttachmentList from "../cmps/AttachmentList.vue"
 import { boardService } from "../services/board.service.local.js";
 
 import { defineComponent } from "vue";
@@ -158,8 +159,8 @@ export default {
             actionCmpType: null,
             actionCmpName: null,
             isCoverActive: false,
-            dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachments", "Cover", "Custom Fields"],
-            dynamicIcons: ["member", "label", "checklist", "date", "attachments", "cover", "date"],
+            dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachment", "Cover", "Custom Fields"],
+            dynamicIcons: ["member", "label", "checklist", "date", "attachment", "cover", "date"],
             coverColor: '',
             currColor: '',
             check: 'hello'
@@ -170,6 +171,8 @@ export default {
     },
     methods: {
         set(cmp, idx) {
+            console.log('cmp:', cmp)
+            console.log('idx:', idx)
             this.actionCmpType = cmp;
             this.actionCmpName = this.dynamicNames[idx];
         },
@@ -196,7 +199,12 @@ export default {
             }
             this.$store.dispatch({ type: "updateBoard", board: this.board });
         },
-
+        addAttachment(newAttachment) {
+            console.log('newAttachment:', newAttachment)
+            if (!this.taskToEdit.attachments) this.taskToEdit.attachments = [];
+            this.taskToEdit.attachments.push(newAttachment);
+            this.onTaskEdit();
+        },
         addChecklist(newChecklist) {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
             this.taskToEdit.checklists.push(newChecklist)
@@ -216,7 +224,7 @@ export default {
                     this.taskToEdit.members.push(clickedMember);
                 }
             }
-            console.log('TaskDeatails - members:', this.taskToEdit.members)
+            // console.log('TaskDeatails - members:', this.taskToEdit.members)
         },
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)
@@ -294,7 +302,8 @@ export default {
         Members,
         Popper,
         defineComponent,
-        Labels
+        Labels,
+        AttachmentList,
     },
 };
 </script>
