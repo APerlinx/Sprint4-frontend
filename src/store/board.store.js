@@ -39,15 +39,7 @@ export const boardStore = {
     dropResults: [],
     areLabelsVisible: false,
 
-    cmpsOrder: [
-      'MemberPicker',
-      'LabelsPicker',
-      'ChecklistPicker',
-      'DueDatePicker',
-      'Attachments',
-      'CoverPicker',
-      'Custom Fields',
-    ],
+    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker', 'DueDatePicker', "AttachmentPicker", 'CoverPicker', "Custom Fields"],
   },
   getters: {
     boards({ boards }) {
@@ -463,7 +455,7 @@ export const boardStore = {
       try {
         commit('setBoardBgClr', payload)
         await boardService.save(state.currentBoard)
-      } catch (err) {}
+      } catch (err) { }
     },
     async changeBoardBgGrad({ state, commit }, payload) {
       try {

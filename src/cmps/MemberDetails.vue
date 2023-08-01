@@ -10,7 +10,7 @@
                     <p class="member-username">@username</p>
                     <!-- @{{ member.username }} -->
                 </div>
-                <div class="member-pic"></div>
+                <div class="member-pic-big"></div>
             </div>
 
 
