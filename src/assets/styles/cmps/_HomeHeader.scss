@@ -1,7 +1,14 @@
 .home-header {
-    display: grid;
-    grid-template-columns: 0.65fr 1fr 0.7fr;
+    display: flex;
+    justify-content: space-between;
 
+    & > :first-child {
+        margin-inline-start: 100px;
+        
+    }
+    & > :last-child {
+        margin-inline-end: 100px;
+    }
     .logo {
         display: flex;
         align-items: baseline;

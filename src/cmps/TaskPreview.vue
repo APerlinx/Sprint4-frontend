@@ -30,7 +30,7 @@
 
         <div v-if="task.checklists && task.checklists.length > 0" :class="{ 'completed-checklist': checklistCompleted }">
           <span class="icon checklist"></span>
-          <span class="checklist-counter">{{ doneChecklists }}/{{ totalChecklists }}</span>
+          <span class="checklist-counter">{{ doneChecklists }}<span class="slash">/</span>{{ totalChecklists }}</span>
         </div>
 
         <div v-if="task.attachment && task.attachment.length > 0">

@@ -23,6 +23,7 @@
           :tasks="group.tasks"
           :groupId="group.id"
           :showAddTask="showTaskForm && currentGroupId === group.id"
+          :openedFromModal="openedFromModal"
         />
       </div>
       <slot name="actions"></slot>
@@ -50,7 +51,9 @@
             Remove group...
           </button>
 
-          <button class="action" @click="handleAction('watch')">Watch <span class="watch-on" v-if="group.isWatched"></span></button>
+          <button class="action" @click="handleAction('watch')">
+            Watch <span class="watch-on" v-if="group.isWatched"></span>
+          </button>
           <hr />
         </div>
       </div>
@@ -90,6 +93,7 @@ export default {
       showModal: false,
       modalTop: 0,
       modalLeft: 0,
+      openedFromModal: false,
     }
   },
   components: {
@@ -104,7 +108,10 @@ export default {
   methods: {
     handleAction(actionType) {
       this.$emit(actionType, this.group.id)
-      actionType === 'watch' ? '' : (this.showModal = false)
+      if (actionType === 'addCard') {
+        this.openedFromModal = true
+      }
+      this.showModal = actionType === 'watch'
     },
     replaceTasks(tasks) {
       let group = JSON.parse(JSON.stringify(this.group))
@@ -112,6 +119,9 @@ export default {
     },
     toggleModal() {
       this.showModal = !this.showModal
+      if (!this.showModal) {
+        this.openedFromModal = false
+      }
       if (this.showModal) {
         this.calculateModalPosition()
       }
@@ -122,10 +132,12 @@ export default {
       this.modalLeft = rect.left
     },
     addTask(task) {
-      this.$emit('addTask', task)
+      this.$emit('addTask', { ...task, openedFromModal: this.openedFromModal })
+      this.openedFromModal = false
     },
     closeTaskForm() {
-      this.$emit('closeTaskForm')
+      this.$emit('closeTaskForm', this.openedFromModal)
+      this.openedFromModal = false
     },
   },
   directives: {

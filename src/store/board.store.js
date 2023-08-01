@@ -103,6 +103,7 @@ export const boardStore = {
     updateBoard(state, { board }) {
       const idx = state.boards.findIndex((c) => c._id === board._id)
       state.boards.splice(idx, 1, board)
+      state.currentBoard = board
     },
     removeBoard(state, { boardId }) {
       state.boards = state.boards.filter((board) => board._id !== boardId)
@@ -169,11 +170,15 @@ export const boardStore = {
     setFilterBy(state, { filterBy }) {
       state.filterBy = filterBy
     },
-    addTaskToGroup(state, { groupId, task, board }) {
+    addTaskToGroup(state, { groupId, task, board, openedFromModal }) {
       const group = board.groups.find((group) => group.id === groupId)
       if (!group) throw new Error('Group not found')
 
-      group.tasks = [...group.tasks, task]
+      if (openedFromModal) {
+        group.tasks.unshift(task)
+      } else {
+        group.tasks.push(task)
+      }
     },
     removeTask(state, { group, index }) {
       group.tasks = [
@@ -191,6 +196,14 @@ export const boardStore = {
     },
     toggleLabelsVisibility(state) {
       state.areLabelsVisible = !state.areLabelsVisible
+    },
+    setBoardBgClr(state, { color }) {
+      state.currentBoard.style.backgroundImage = ''
+      state.currentBoard.style.backgroundColor = color
+    },
+    setBoardBgGrad(state, { gradient }) {
+      state.currentBoard.style.backgroundColor = ''
+      state.currentBoard.style.backgroundImage = `url(${gradient})`
     },
   },
   actions: {
@@ -305,10 +318,18 @@ export const boardStore = {
         console.log(err)
       }
     },
-    async addTask({ commit, state, dispatch }, { groupId, task, board }) {
+    async addTask(
+      { commit, state, dispatch },
+      { groupId, task, board, openedFromModal }
+    ) {
       try {
         const newTask = boardService.getEmptyTask(task.title)
-        commit('addTaskToGroup', { groupId, task: newTask, board })
+        commit('addTaskToGroup', {
+          groupId,
+          task: newTask,
+          board,
+          openedFromModal,
+        })
         const savedBoard = await boardService.save(board)
         commit({ type: 'updateBoard', board: savedBoard })
         dispatch({ type: 'loadBoards' })
@@ -331,7 +352,6 @@ export const boardStore = {
     },
     async saveBoard({ commit, dispatch }, { board }) {
       try {
-        console.log('board', board)
         const savedBoard = await boardService.save(board)
         commit({ type: 'updateBoard', board: savedBoard })
         dispatch({ type: 'loadBoards' })
@@ -369,31 +389,32 @@ export const boardStore = {
     },
     async duplicateGroup({ state, commit, dispatch }, { groupId }) {
       try {
-        const currBoard = JSON.parse(JSON.stringify(state.currentBoard));
-        const groupToDuplicate = currBoard.groups.find(group => group.id === groupId);
-        if (!groupToDuplicate) throw new Error('Group not found');
+        const currBoard = JSON.parse(JSON.stringify(state.currentBoard))
+        const groupToDuplicate = currBoard.groups.find(
+          (group) => group.id === groupId
+        )
+        if (!groupToDuplicate) throw new Error('Group not found')
 
-        const newGroupId = utilService.makeId();
+        const newGroupId = utilService.makeId()
 
-        let duplicatedGroup = { ...groupToDuplicate, id: newGroupId };
+        let duplicatedGroup = { ...groupToDuplicate, id: newGroupId }
 
-        duplicatedGroup.tasks = duplicatedGroup.tasks.map(task => ({
+        duplicatedGroup.tasks = duplicatedGroup.tasks.map((task) => ({
           ...task,
           id: utilService.makeId(),
-          groupId: newGroupId
-        }));
+          groupId: newGroupId,
+        }))
 
-        currBoard.groups.push(duplicatedGroup);
+        currBoard.groups.push(duplicatedGroup)
 
         const savedBoard = await boardService.save(currBoard)
         commit({ type: 'updateBoard', board: savedBoard })
         dispatch({ type: 'loadBoards' })
       } catch (err) {
-        console.error(err);
-        throw err;
+        console.error(err)
+        throw err
       }
     },
-
 
     async watchGroup({ state, commit, dispatch }, { groupId }) {
       try {
@@ -401,7 +422,7 @@ export const boardStore = {
         const groupToWatch = currBoard.groups.find(
           (group) => group.id === groupId
         )
-        if (!groupToWatch) throw new Error('Group not found');
+        if (!groupToWatch) throw new Error('Group not found')
 
         groupToWatch.isWatched = !groupToWatch.isWatched
 
@@ -410,6 +431,20 @@ export const boardStore = {
         dispatch({ type: 'loadBoards' })
       } catch (err) {
         console.error(err)
+        throw err
+      }
+    },
+    async changeBoardBgClr({ state, commit }, payload) {
+      try {
+        commit('setBoardBgClr', payload)
+        await boardService.save(state.currentBoard)
+      } catch (err) { }
+    },
+    async changeBoardBgGrad({ state, commit }, payload) {
+      try {
+        commit('setBoardBgGrad', payload)
+        await boardService.save(state.currentBoard)
+      } catch (err) {
         throw err
       }
     },

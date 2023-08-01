@@ -1,0 +1,418 @@
+.board-menu-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    position: fixed;
+    right: 0;
+    top: rem(48px);
+    bottom: 0;
+    width: rem(339px);
+    background: #f4f5f7;
+    box-shadow: $shadow-overlay;
+    z-index: 10;
+    padding: rem(10px);
+    transform: translateX(100%);
+    transition: transform 0.1s ease-in;
+
+    &.menu-visible {
+        transform: translateX(0);
+    }
+
+    .board-menu-header-divider {
+        margin: rem(-1px) 0 0;
+        background-color: $border;
+    }
+
+    .menu-header {
+        padding: 0 rem(6px) 0 rem(12px);
+        text-align: center;
+    }
+
+    .menu-content {
+        width: 100%;
+        height: 100%;
+        padding: rem(12px) rem(12px) em(8px);
+        transition-duration: 0.12s;
+        transition-property: transform, opacity;
+        transition-timing-function: ease-in;
+
+        .board-menu-nav {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .menu-item > span {
+                font-weight: 600;
+                line-height: 20px;
+            }
+
+            .menu-item > div {
+                display: flex;
+                .trello-icon {
+                    @include trello-icon($content: "\e90b", $type: sm, $color: $ds-icon);
+                }
+            }
+        }
+    }
+}
+
+// BACKGROUND PICKER
+
+//COLORS
+
+.bg-picker {
+    padding: 0px 4px 1px;
+    height: 100%;
+    .bg-picker-header {
+        position: sticky;
+        top: 0;
+
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            > h1 {
+                margin: 10px 28px;
+                margin-inline: 7rem;
+                font-size: em(18px);
+                font-weight: 550;
+            }
+            > .close-icon {
+                @include trello-icon($content: "\e91c", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+            > .back-icon {
+                @include trello-icon($content: "\e906", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .bg-picker-content {
+        overflow-y: auto;
+        height: 100%;
+        overflow-x: hidden;
+        margin-block-start: 0.8em;
+        margin-inline-start: 0.2rem;
+    }
+
+    .bg-picker-content > .color-options {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        align-items: center;
+        justify-items: stretch;
+        column-gap: 5px;
+        row-gap: 7px;
+        margin-block-start: 1em;
+
+        > .color-option {
+            border-radius: 8px;
+            width: 53.4px;
+            height: 57.59px;
+            margin: 0;
+            cursor: pointer;
+        }
+    }
+
+    .bg-picker-content > .gradient-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        justify-items: stretch;
+        column-gap: 1px;
+        row-gap: 7px;
+        margin-bottom: 1.2em;
+
+        > .gradient-option {
+            border-radius: 8px;
+            width: 145.5px;
+            height: 96px;
+            margin: 0;
+            cursor: pointer;
+
+            > .emoji {
+                position: absolute;
+                font-size: 1rem;
+                bottom: 16px;
+                left: 10px;
+                text-shadow: 0 1px 1px $shadow-overflow-spread;
+            }
+        }
+    }
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background: $border;
+    width: 100%;
+}
+
+.background-preview {
+    width: 20px;
+    height: 20px;
+    background-image: url("https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/volcano.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 3px;
+}
+
+/* ... */
+
+.bg-picker-content > .color-options > .color-option,
+.bg-picker-content > .gradient-options > .gradient-option {
+    border-radius: 8px;
+    width: 53.4px;
+    height: 57.59px;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-picker-content > .color-options > .color-option::before,
+.bg-picker-content > .gradient-options > .gradient-option::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(219, 219, 219, 0.4);
+    opacity: 0;
+    transition: opacity 0.05s ease;
+}
+
+.bg-picker-content > .color-options > .color-option:hover::before,
+.bg-picker-content > .gradient-options > .gradient-option:hover::before {
+    opacity: 1;
+}
+
+// UNSPLASH
+
+.unsplash {
+    .unsplash-header {
+        position: sticky;
+        top: 0;
+
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            > h1 {
+                margin: 10px 28px;
+                margin-inline: 3em;
+                font-size: em(18.286px);
+                font-weight: 550;
+
+                > a {
+                    color: $link;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+            > .close-icon {
+                @include trello-icon($content: "\e91c", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+            > .back-icon {
+                @include trello-icon($content: "\e906", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .input-field-container {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .search-icon {
+        @include trello-icon($content: "\e94a", $type: sm, $color: $ds-icon);
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translate(0, -50%);
+    }
+
+    input[type="text"] {
+        display: block;
+        width: 97%;
+        height: 30px;
+        margin: 12px auto;
+        margin-bottom: 12px;
+        border: 1px solid #ccc;
+        padding: 8px 12px 8px 32px;
+        font-size: 16px;
+        box-shadow: inset 0 0 0 2px #091e4224;
+
+        &:focus {
+            box-shadow: inset 0 0 0 2px $border-focused;
+        }
+    }
+}
+
+.unsplash-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: start;
+    cursor: pointer;
+}
+
+.unsplash-image {
+    width: 149px;
+    height: 96px;
+    margin: 5px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.unsplash-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.unsplash-image {
+    position: relative;
+}
+
+.unsplash-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(219, 219, 219, 0.3);
+    opacity: 0;
+    transition: opacity 0.05s ease;
+}
+
+.unsplash-image:hover::before {
+    opacity: 1;
+}
+
+// background option menu
+
+.bg-menu {
+    .bg-menu-header {
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            > h1 {
+                margin: 10px 28px;
+                margin-inline: 3em;
+                font-size: em(18.286px);
+                font-weight: 550;
+                > a {
+                    color: $link;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+            > .close-icon {
+                @include trello-icon($content: "\e91c", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+            > .back-icon {
+                @include trello-icon($content: "\e906", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .bg-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+
+        > .bg-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(50% - 10px);
+            margin-inline-start: auto;
+            cursor: pointer;
+
+            > .bg-img-wrapper {
+                position: relative;
+                width: 149.5px;
+                height: 96px;
+                border-radius: 8px;
+                margin-bottom: 0.5em;
+
+                > img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 8px;
+                }
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    background-color: rgba(219, 219, 219, 0.3);
+                    opacity: 0;
+                    transition: opacity 0.05s ease;
+                }
+
+                &:hover::before {
+                    opacity: 1;
+                }
+            }
+
+            > .bg-text {
+                text-align: center;
+                width: 100%;
+            }
+        }
+    }
+
+    .upload {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        width: 149.5px;
+        height: 96px;
+        border-radius: 8px;
+        padding: 0 4px 8px;
+        z-index: 1;
+        margin-inline-start: 0.5rem;
+        background-color: rgba(220, 219, 224, 0.418);
+        > .bg-icon {
+            @include trello-icon($content: "\e901", $type: md, $color: $ds-icon);
+
+        }
+
+        &:hover {
+            background-color: rgba(194, 193, 197, 0.6);
+        }
+    }
+
+    h2 {
+        font-size: rem(19px);
+        font-weight: 600;
+        margin-bottom: rem(8px);
+        margin-top: rem(20px);
+    }
+}

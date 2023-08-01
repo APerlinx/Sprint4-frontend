@@ -1,7 +1,7 @@
 <template>
   <div class="add-modal">
     <div class="action">
-      <div class="close"></div>
+      <div class="check"></div>
       <h3 class="title">Create board</h3>
       <div @click="closeModal" class="close">x</div>
     </div>
@@ -49,6 +49,7 @@ export default {
       isTitle: false,
       boardToEdit: boardService.getEmptyBoard(),
       preview: "",
+      isModal: false
     };
   },
   methods: {

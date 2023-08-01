@@ -21,6 +21,7 @@
 @import "cmps/BoardList";
 @import "cmps/BoardPreview";
 @import "cmps/BoardFilter";
+@import "cmps/BoardMenu";
 @import "cmps/AddBoard";
 @import "cmps/ColorPicker";
 @import "cmps/CoverPicker";
@@ -28,7 +29,8 @@
 
 @import "cmps/Home";
 @import "cmps/HomeHeader";
-@import "cmps/DynamicHeaderPicker";
+@import "cmps/RecentPicker";
+@import "cmps/StarredPicker";
 
 @import "cmps/GroupList";
 @import "cmps/GroupPreview";
