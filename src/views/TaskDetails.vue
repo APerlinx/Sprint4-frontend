@@ -24,18 +24,19 @@
             <section class="task-details-main">
 
                 <div class="task-alerts">
-                    <Members />
-                    <Labels :task="taskToEdit"
-                    :board="board"
-                     />
+                    <!-- <Members /> -->
+                    <!-- <Members v-for="member in taskToEdit.members" :key="member.id" :member="member" /> -->
+                    <Members :task="taskToEdit" :board="board" />
+
+                    <Labels :task="taskToEdit" :board="board" />
 
                     <div class="notifications-container">
                         <h5>Notifications</h5>
                         <button class="btn btn-watch" @click="toggleWatch">
                             <span class="icon eye"></span><span class="word-watch">{{ watch }}</span><span
-                                class="svg-checkbox"><svg width="35px" height="35px" viewBox="0 0 24 24" version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    fill="#000000">
+                                class="svg-checkbox" :class="{ watchActive: !isWatchActive }"><svg width="35px"
+                                    height="35px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
@@ -56,8 +57,8 @@
                     </div>
 
                     <div class="due-date-container">
-                        <h5 class="h5h5">Due-date</h5>
-                        <div due-date-checkbox>
+                        <h5>Due-date</h5>
+                        <div class="due-date-checkbox">
                             <input type="checkbox" @change="updateTask" />
                             <!-- v-model="dueDate.isChecked" -->
                             <button class="btn btn-due-date" @click="openCalender">
@@ -101,10 +102,11 @@
             </section>
 
             <section class="action-btns-container">
-                <h3 class="details-title-small">Suggested</h3>
-                <button class="btn"><span class="icon member"></span>Join</button>
-
-                <h3 class="details-title-small">Add To card</h3>
+                <div class="suggested-container">
+                    <h3 class="details-title-small">Suggested</h3>
+                    <button class="btn"><span class="icon member"></span>Join</button>
+                </div>
+                <h3 class="details-title-small">Add to card</h3>
                 <Popper arrow placement="right">
                     <div v-for="(cmp, idx) in cmpOrder" :key="idx">
                         <button class="btn" @click="set(cmp, idx)"> <span class="icon"
@@ -113,26 +115,20 @@
 
                     </div>
                     <template #content>
-                        <DynamicModal v-if="actionCmpType"
-                         :actionCmpType="actionCmpType"
-                         :taskToEdit="taskToEdit"
-                         :board="board"
-                         :actionCmpName="actionCmpName"
-                             @closeDynamicModal="closeDynamicModal"
-                              @checklist="addChecklist"
-                            @member="addMember"
-                             @saveLabel="saveLabel"
-                             @setBgColor="setBgColor" />
+                        <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                            :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
+                            @checklist="addChecklist" @toggleMember="toggleMember" @saveLabel="saveLabel"
+                            @setBgColor="setBgColor" />
                     </template>
                 </Popper>
-
-                <h3 class="details-title-small">Actions</h3>
-                <button class="btn"><span class="icon arrow-right"></span>Move</button>
-                <button class="btn"><span class="icon copy"></span>Copy</button>
-                <button class="btn"><span class="icon card"></span>Make template</button>
-                <button class="btn"><span class="icon archive"></span>Archive</button>
-                <button class="btn"><span class="icon share"></span>Share</button>
-
+                <div class="action-btns-in-btns">
+                    <h3 class="details-title-small">Actions</h3>
+                    <button class="btn"><span class="icon arrow-right"></span>Move</button>
+                    <button class="btn"><span class="icon copy"></span>Copy</button>
+                    <button class="btn"><span class="icon card"></span>Make template</button>
+                    <button class="btn"><span class="icon archive"></span>Archive</button>
+                    <button class="btn"><span class="icon share"></span>Share</button>
+                </div>
 
             </section>
         </section>
@@ -166,7 +162,7 @@ export default {
             dynamicIcons: ["member", "label", "checklist", "date", "attachments", "cover", "date"],
             coverColor: '',
             currColor: '',
-            check:'hello'
+            check: 'hello'
         };
     },
     created() {
@@ -192,27 +188,35 @@ export default {
 
         },
         saveLabel(labelId) {
-        const idx = this.taskToEdit.labels?.findIndex(
-        (label) => label === labelId);
-        if (idx >= 0) this.taskToEdit.labels?.splice(idx, 1);
-        else {
-        this.taskToEdit.labels.push(labelId);
-        }
-         this.$store.dispatch({ type: "updateBoard", board: this.board });
+            const idx = this.taskToEdit.labels?.findIndex(
+                (label) => label === labelId);
+            if (idx >= 0) this.taskToEdit.labels?.splice(idx, 1);
+            else {
+                this.taskToEdit.labels.push(labelId);
+            }
+            this.$store.dispatch({ type: "updateBoard", board: this.board });
         },
 
         addChecklist(newChecklist) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
-            this.taskToEdit.checklists.push(newChecklist);
-            // console.log("modal3 - newChecklist:", newChecklist)
-            this.editTask();
+            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
+            this.taskToEdit.checklists.push(newChecklist)
+            console.log("modal3 - newChecklist:", newChecklist)
+            this.editTask()
         },
-        addMember(newMember) {
-            if (!this.taskToEdit.checklists) this.taskToEdit.checklists = [];
-            this.taskToEdit.checklists.push(newChecklist);
-            // console.log("modal3 - newChecklist:", newChecklist)
-
-            // this.closeDynamicModal()
+        toggleMember(clickedMember) {
+            // console.log('TaskDeatails - newMember:', clickedMember)
+            if (!this.taskToEdit.members) {
+                this.taskToEdit.members = []
+                this.taskToEdit.members.push(clickedMember)
+            } else {
+                if (this.taskToEdit.members.some(member => member.id === clickedMember.id)) {
+                    const idx = this.taskToEdit.members.findIndex(member => member.id === clickedMember.id);
+                    this.taskToEdit.members.splice(idx, 1);
+                } else {
+                    this.taskToEdit.members.push(clickedMember);
+                }
+            }
+            console.log('TaskDeatails - members:', this.taskToEdit.members)
         },
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)
@@ -226,16 +230,6 @@ export default {
             // if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
             else checklists.splice(idx, 1);
             this.editTask();
-        },
-        updateMembers({ type, newMember }) {
-            console.log('111111111member:', newMember)
-            if (!this.taskToEdit.members) this.taskToEdit.members = [];
-            if (this.taskToEdit.members.some(member => member._id === newMember._id)) {
-                const idx = this.taskToEdit.members.findIndex(member => member._id === newMember._id);
-                this.taskToEdit.members.splice(idx, 1);
-            } else {
-                this.taskToEdit.members.push(newMember);
-            }
         },
         async setTask() {
             try {
@@ -279,7 +273,7 @@ export default {
             const editedTask = JSON.parse(JSON.stringify(this.taskToEdit));
             // console.log("editedTask:", editedTask)
             const taskIdx = this.group.tasks.findIndex(
-                (task) => task.id === this.taskToEdit.id
+                task => task.id === this.taskToEdit.id
             );
             // replace task with editTask
             this.group.tasks.splice(taskIdx, 1, this.taskToEdit);

@@ -1,21 +1,26 @@
 <template>
     <div class="checklist">
         <section class="checklist-title-container" v-if="checklist">
+
             <div class="icon-title-container-checklist">
                 <span class="icon full-checked-big"></span>
+                <!-- <h3 @click="hideBtn">{{ checklistToEdit.title }}</h3> -->
                 <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                     @focus="hideBtn = false"></textarea>
             </div>
 
             <button class="btn btn-checklist-hide-show" v-if="isTodoChecked" @click="isHideChecked = !isHideChecked">
                 {{ hideCheckedTxt }}</button>
+
             <div v-if="!hideBtn" class="btn-save-close">
                 <button class="btn" @click.stop="onTaskEdit">
                     Save
                 </button>
                 <button class="btn" @click="closeTodoTitle">Cancel</button>
             </div>
+
             <button class="btn" v-if="hideBtn" @click="deleteChecklist">Delete</button>
+
         </section>
 
         <section class="percentage-bar">
@@ -25,7 +30,6 @@
 
         <section class="todos-container">
             <div v-for="todo in checklistToEdit.todos" :key="todo._id">
-
                 <section class="todo-container" v-if="isHideChecked ? !todo.isChecked : true">
                     <input type="checkbox" @change="updateChecklist" v-model="todo.isChecked" />
                     <textarea class="todo-title" v-model="todo.title" :class="{ finished: todo.isChecked }"
@@ -69,28 +73,6 @@ export default {
             hideTodoBtn: false,
             hideBtn: true,
             newTodoTitle: '',
-            // checklistToEdit:
-            // {
-            //     _id: 'abc123',
-            //     title: 'test',
-            //     todos: [
-            //         {
-            //             _id: "check101",
-            //             title: "Guy",
-            //             isChecked: true
-            //         },
-            //         {
-            //             _id: "check102",
-            //             title: "Alon",
-            //             isChecked: false
-            //         },
-            //         {
-            //             _id: "check103",
-            //             title: "Shay",
-            //             isChecked: false
-            //         },
-            //     ],
-            // },
         }
     },
     created() {
