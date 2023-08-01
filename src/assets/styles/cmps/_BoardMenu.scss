@@ -60,6 +60,10 @@
     }
 }
 
+// BACKGROUND PICKER
+
+//COLORS
+
 .bg-picker {
     padding: 0px 4px 1px;
     height: 100%;
@@ -87,13 +91,6 @@
                 cursor: pointer;
             }
         }
-    }
-
-    hr {
-        border: none;
-        height: 1px;
-        background: $border;
-        width: 100%;
     }
 
     .bg-picker-content {
@@ -149,6 +146,13 @@
     }
 }
 
+hr {
+    border: none;
+    height: 1px;
+    background: $border;
+    width: 100%;
+}
+
 .background-preview {
     width: 20px;
     height: 20px;
@@ -164,17 +168,17 @@
 .bg-picker-content > .color-options > .color-option,
 .bg-picker-content > .gradient-options > .gradient-option {
     border-radius: 8px;
-    width: 53.4px; 
-    height: 57.59px; 
+    width: 53.4px;
+    height: 57.59px;
     margin: 0;
     cursor: pointer;
     position: relative;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .bg-picker-content > .color-options > .color-option::before,
 .bg-picker-content > .gradient-options > .gradient-option::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
@@ -182,7 +186,7 @@
     left: 0;
     background-color: rgba(219, 219, 219, 0.4);
     opacity: 0;
-    transition: opacity 0.05s ease; 
+    transition: opacity 0.05s ease;
 }
 
 .bg-picker-content > .color-options > .color-option:hover::before,
@@ -190,3 +194,113 @@
     opacity: 1;
 }
 
+// UNSPLASH
+
+.unsplash {
+
+    .unsplash-header {
+        position: sticky;
+        top: 0;
+
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            > h1 {
+                margin: 10px 28px;
+                margin-inline: 3em;
+                font-size: em(18.286px);
+                font-weight: 550;
+
+                > a {
+                    color: $link;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+            > .close-icon {
+                @include trello-icon($content: "\e91c", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+            > .back-icon {
+                @include trello-icon($content: "\e906", $type: md, $color: $ds-icon);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .input-field-container {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+    
+    .search-icon {
+        @include trello-icon($content: "\e94a", $type: sm, $color: $ds-icon);
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translate(0, -50%);
+    }
+    
+    input[type="text"] {
+        display: block;
+        width: 97%;
+        height: 30px;
+        margin: 12px auto;
+        margin-bottom: 12px;
+        border: 1px solid #ccc;
+        padding: 8px 12px 8px 32px;
+        font-size: 16px;
+        box-shadow: inset 0 0 0 2px #091e4224;
+
+        &:focus {
+            box-shadow: inset 0 0 0 2px $border-focused;
+        }
+
+    }
+}
+
+.unsplash-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: start;
+    cursor: pointer;
+}
+
+.unsplash-image {
+    width: 149px;
+    height: 96px;
+    margin: 5px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.unsplash-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.unsplash-image {
+    position: relative;
+}
+
+.unsplash-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(219, 219, 219, 0.3);
+    opacity: 0;
+    transition: opacity 0.05s ease;
+}
+
+.unsplash-image:hover::before {
+    opacity: 1;
+}
