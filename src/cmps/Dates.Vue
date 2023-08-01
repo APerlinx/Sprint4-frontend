@@ -1,20 +1,13 @@
 <template>
-    <div class="due-date-container" v-if="dueDate">
+    <div class="due-date-container" v-if="task.dueDate">
         <h5>Due-date</h5>
         <div class="due-date-checkbox">
-            <!-- @change="updateStatus" -->
             <input type="checkbox" />
-            <div class="due-date-long-date">
-                <span>{{ formatDate(task.dueDate) }}</span>
+            <button class=" btn due-date-long-date" @click="openDueDate">
+                <span>{{ formatDate(task.dueDate) }}&nbsp</span>
                 at
-                <span>{{ formatTime(task.dueDate) }}</span>
-            </div>
-
-
-
-            <!-- <button class="btn btn-due-date">
-                Aug 10 at 3:27 AM
-            </button> -->
+                <span>&nbsp{{ formatTime(task.dueDate) }}</span>
+            </button>
         </div>
     </div>
 </template>
