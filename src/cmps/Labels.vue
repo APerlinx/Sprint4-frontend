@@ -2,8 +2,11 @@
   <div class="label-wrapper">
     <h5>Labels</h5>
     <div class="labels">
-      <div v-for="label in task.labels">
-        <div class="label" :style="{ backgroundColor: getLabel(label).color }" >
+      <div v-for="labelId in task.labels" :key="labelId">
+        <div
+          class="label"
+          :style="{ backgroundColor: getLabel(labelId).color }">
+          <h6>{{ getLabelTitle(labelId) }}</h6>
         </div>
       </div>
       <button class="add-label"><span class="icon plus"></span></button>
@@ -25,6 +28,14 @@ export default {
       return this.board.labels.find((label) => label.id === id);
     },
   },
+  computed: {
+    getLabelTitle() {
+      return (id) => {
+        const label = this.board.labels.find((label) => label.id === id);
+        return label ? label.title : "";
+      };
+    },
+  },
 };
 </script>
 
@@ -33,4 +44,3 @@ input:focus {
   outline: none;
 }
 </style>
-

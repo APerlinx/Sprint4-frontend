@@ -1,6 +1,5 @@
 <template>
   <section class="filter">
-
     <Popper arrow placement="bottom">
       <input
         class="search-bar"
@@ -8,6 +7,7 @@
         @input="onSetFilterBy"
         type="text"
         placeholder="Search"
+        v-focus
       />
 
       <template #content>
@@ -19,18 +19,17 @@
               <li v-for="board in filteredBoards" :key="board._id">
                 <RouterLink :to="'/details/' + board._id">
                   <div class="check">
-                    <img :src="board.imgUrl" />
+                    <img v-if="board.imgUrl" :src="board.imgUrl" />
+                    <div class="color" v-else :style="{ background: board.bgColor }"></div>
                     <h2>{{ board.title }}</h2>
                   </div>
                 </RouterLink>
               </li>
             </ul>
-
           </div>
         </div>
       </template>
     </Popper>
-
   </section>
 </template>
 

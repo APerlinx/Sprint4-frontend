@@ -36,7 +36,7 @@
           <Popper arrow placement="right">
             <div class="board-title">Create new board</div>
             <template #content>
-              <AddBoard @save="saveBoard" />
+              <AddBoard @close="" @save="saveBoard" />
             </template>
           </Popper>
         </div>

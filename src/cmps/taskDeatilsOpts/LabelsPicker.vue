@@ -1,9 +1,17 @@
 <template>
   <div class="filter-label">
-    <input type="text" v-model="searchLabels" placeholder="Search labels..." />
+    <input
+      type="text"
+      v-model="searchLabels"
+      placeholder="Search labels..."
+      v-focus
+    />
   </div>
 
   <div class="labels-container">
+    <div class="edit-label" v-if="isEditModeModal">
+      <EditLabel :labelToEdit="labelToEdit" @updateLabel="updateLabel" @removeLabel="removeLabel" />
+    </div>
     <h6 class="sub-title">Labels</h6>
 
     <div class="label" v-for="label in this.board.labels" :key="label.id">
@@ -20,17 +28,26 @@
         :style="{ backgroundColor: label.color }"
         class="label-picker-color"
         @click="toggleLabel(label.id)"
-      ></div>
-    <i class="fa-sharp fa-solid fa-pencil"></i>
-
+      >
+        <h5>{{ label.title }}</h5>
+      </div>
+      <img
+        @click="isEditMode(label)"
+        class="pencil"
+        src="../../assets/styles/img/pencil.svg"
+        alt="edit"
+      />
     </div>
-    
-    <button class="create-label">Create a new label</button>
+
+    <button @click="isEditMode('')" class="create-label">
+      Create a new label
+    </button>
   </div>
 </template>
 
 <script>
 import { utilService } from "../../services/util.service.js";
+import EditLabel from "./EditLabel.vue";
 
 export default {
   props: {
@@ -44,6 +61,8 @@ export default {
         taskToEdit: this.taskToEdit,
         board: this.board,
       },
+      isEditModeModal: false,
+      labelToEdit: null,
     };
   },
   methods: {
@@ -53,6 +72,23 @@ export default {
     isLabelChecked(labelId) {
       return this.taskToEdit.labels?.includes(labelId);
     },
+    isEditMode(label) {
+      if (!label) {
+        this.labelToEdit = null;
+      } else {
+        this.labelToEdit = label;
+      }
+      this.isEditModeModal = !this.isEditModeModal;
+    },
+    updateLabel(lable) {
+      this.$emit("updateLable", lable);
+    },
+    removeLabel(label) {
+      this.$emit("removeLabel", label);
+    },
+  },
+  components: {
+    EditLabel,
   },
 };
 </script>
