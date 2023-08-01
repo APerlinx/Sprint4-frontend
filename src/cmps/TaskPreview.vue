@@ -3,6 +3,8 @@
   <section
     class="task-preview"
     :class="{ 'with-cover': task.cover }"
+    @mouseover="showEditIcon = true"
+    @mouseleave="showEditIcon = false"
     @click="goToTaskDetails"
   >
     <li v-if="task">
@@ -22,6 +24,11 @@
       </div>
 
       <div class="task-header">
+        <i
+          class="icon-pencil"
+          v-show="showEditIcon"
+          @click.stop="openQuickEdit"
+        ></i>
         <p>{{ task.title }}</p>
       </div>
 
@@ -45,7 +52,8 @@
         >
           <span class="icon checklist"></span>
           <span class="checklist-counter"
-            >{{ doneChecklists }}<span class="slash">/</span>{{ totalChecklists }}</span
+            >{{ doneChecklists }}<span class="slash">/</span
+            >{{ totalChecklists }}</span
           >
         </div>
 
@@ -68,12 +76,18 @@
       </div>
     </li>
   </section>
+
+  <TaskQuickEdit
+    :task="task"
+    v-if="quickEditDisplay"
+    @close="quickEditDisplay = false"
+  />
 </template>
 
 <script>
 import { format } from 'date-fns'
 import TaskCover from './TaskCover.vue'
-
+import TaskQuickEdit from './TaskQuickEdit.vue'
 export default {
   props: {
     groupId: {
@@ -84,6 +98,12 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      quickEditDisplay: false,
+      showEditIcon: false,
+    }
   },
   computed: {
     board() {
@@ -138,7 +158,6 @@ export default {
       )
     },
     formatDate(timestamp) {
-      console.log(timestamp);
       return format(new Date(timestamp), 'dd MMM')
     },
     toggleStatus() {
@@ -154,9 +173,14 @@ export default {
     toggleLabel() {
       this.$store.commit('toggleLabelsVisibility')
     },
+    openQuickEdit(e) {
+      e.stopPropagation()
+      this.quickEditDisplay = true
+    },
   },
   components: {
     TaskCover,
+    TaskQuickEdit,
   },
 }
 </script>
