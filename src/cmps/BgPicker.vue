@@ -1,7 +1,49 @@
 <template>
   <section class="bg-menu" v-if="!photos && !colors">
-    <button @click="colorSection">Colors</button>
-    <button @click="photoSection">Photos</button>
+    <header class="bg-menu-header">
+      <div>
+        <span class="back-icon" @click="this.$emit('close')"></span>
+        <h1>Change background</h1>
+        <span class="close-icon" @click="this.$emit('closeMenu')"></span>
+      </div>
+      <hr />
+    </header>
+    <div class="bg-nav">
+      <div class="bg-option" @click="photoSection">
+        <div class="bg-img-wrapper">
+          <img
+            class="bg-img"
+            src="https://trello.com/assets/8f9c1323c9c16601a9a4.jpg"
+            alt="photos"
+          />
+        </div>
+
+        <button class="bg-text">Photos</button>
+      </div>
+      <div class="bg-option" @click="colorSection">
+        <div class="bg-img-wrapper">
+          <img
+            class="bg-img"
+            src="https://trello.com/assets/97db30fe74a58b7b7a18.png"
+            alt="colors"
+          />
+        </div>
+
+        <button class="bg-text">Colors</button>
+      </div>
+    </div>
+    <hr />
+    <h2>Custom</h2>
+    <div class="bg-option upload">
+      <input
+        type="file"
+        accept="image/*"
+        @change="handleImageUpload"
+        class="image-upload-input"
+        ref="fileInput"
+      />
+      <button class="bg-icon" @click="triggerFileInput"></button>
+    </div>
   </section>
 
   <section class="bg-picker" v-if="!photos && colors">
@@ -89,11 +131,11 @@ export default {
     }
   },
   created() {
-    this.debouncedGetResult = debounce(this.fetchListOfPhotos, 300);
-    this.fetchListOfPhotos();
+    this.debouncedGetResult = debounce(this.fetchListOfPhotos, 300)
+    this.fetchListOfPhotos()
   },
   methods: {
-async fetchListOfPhotos(query = this.query || 'nature view') {
+    async fetchListOfPhotos(query = this.query || 'nature view') {
       try {
         const response = await fetch(
           `https://api.unsplash.com/search/photos?client_id=${this.accesKey}&query=${query}`
@@ -112,6 +154,21 @@ async fetchListOfPhotos(query = this.query || 'nature view') {
         throw err
       }
     },
+    handleImageUpload(e) {
+      const file = e.target.files[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          this.$store.dispatch('changeBoardBgGrad', {
+            gradient: e.target.result,
+          })
+        }
+        reader.readAsDataURL(file)
+      }
+    },
+    triggerFileInput() {
+      this.$refs.fileInput.click()
+    },
     changeBoardBgClr(color) {
       this.$store.dispatch('changeBoardBgClr', {
         color: color,
@@ -129,10 +186,25 @@ async fetchListOfPhotos(query = this.query || 'nature view') {
       this.photos = true
     },
   },
- watch: {
+  watch: {
     query() {
       this.debouncedGetResult()
     },
   },
 }
 </script>
+
+<style scoped>
+.image-upload-input {
+  display: none;
+}
+
+.bg-option {
+  position: relative;
+  /* ...other styles... */
+}
+
+.bg-option button {
+  /* ...other styles... */
+}
+</style>

@@ -40,7 +40,7 @@ export default {
       this.boardStyle = {
         backgroundImage: newVal.backgroundImage ? `url(${newVal.backgroundImage})` : '',
         backgroundColor: newVal.backgroundColor || '',
-        backgroundSize: 'cover',
+         backgroundSize: '100%',
         backgroundRepeat: 'no-repeat',
       };
     },
