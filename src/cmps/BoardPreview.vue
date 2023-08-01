@@ -2,18 +2,11 @@
   <RouterLink :to="'/details/' + board._id">
     <div class="board">
       <div class="drop">
-        <div @click.stop.prevent="toggleStar" class="icon">
-          <i
-            v-if="!isStarred"
-            class="fa-regular fa-star"
-            style="color: #ffff"
-          ></i>
-          <i
-            v-if="isStarred"
-            class="fa-solid fa-star"
-            style="color: #ffbb00"
-          ></i>
-        </div>
+        <div
+          @click.stop.prevent="toggleStar"
+          class="btn-star"
+          :class="boardClass"
+        ></div>
         <h2>{{ board.title.toUpperCase() }}</h2>
       </div>
     </div>
@@ -28,17 +21,20 @@ export default {
 
   data() {
     return {
-      isStarred: this.board.isStarred,
+      localBoard: null
     };
+  },
+  created() {
+    this.localBoard = this.board
   },
   methods: {
     removeBoard(boardId) {
       this.$emit("remove", boardId);
     },
     toggleStar() {
-      this.isStarred = !this.isStarred;
-      const board = JSON.parse(JSON.stringify(this.board));
-      board.isStarred = this.isStarred;
+      const board = JSON.parse(JSON.stringify(this.localBoard));
+      board.isStarred = !board.isStarred;
+      this.localBoard = board
       this.$emit("star", board);
     },
   },
@@ -47,7 +43,13 @@ export default {
       if (this.board.imgUrl) {
         return `url(${this.board.imgUrl})`;
       } else {
-        return this.board.bgColor
+        return this.board.bgColor;
+      }
+    },
+    boardClass() {
+      return {
+        unstarred: !this.localBoard.isStarred,
+        starred: this.localBoard.isStarred,
       }
     },
   },

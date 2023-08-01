@@ -7,7 +7,7 @@
         v-model="filterBy"
         @input="onSetFilterBy"
         type="text"
-        placeholder="Search Trello..."
+        placeholder="Search"
       />
 
       <template #content>

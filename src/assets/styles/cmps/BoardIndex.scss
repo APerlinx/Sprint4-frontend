@@ -1,47 +1,114 @@
-.board-container {
-  padding: 2em 10em;
+.index-layout {
+  display: grid;
+  grid-template-columns: 0.23fr 1400px 1fr;
+  .board-container {
+    grid-column: 2;
+    padding: 2em 10em;
 
-  .member-icon {
-    @include trello-icon($content:'\e946' , $type: sm);
-  }
+    .workspace-title {
+      margin-block-start: rem(55px);
+      margin-block-end: rem(12px);
+      h3 {
+        color: #44546f;
+        font-size: 1rem;
+        margin-block-end: rem(25px);
+      }
 
-  .starred {
-    margin-block-end: rem(55px);
-  }
-  .recent {
-    margin-block-end: rem(55px);
-  }
-  
-  .workspace {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    gap: rem(16px);
-  }
+      .sub-workspace {
+        display: flex;
+        align-items: center;
+        gap: rem(6px);
 
-  h3 {
-    color: $lclr1;
-    margin: em(11, 14) 0;
-  }
+        .user-title {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-size: 1.5em;
+          font-weight: 600;
+          height: rem(32px);
+          width: rem(32px);
+          border-radius: 0.2em;
+          background: rgb(103, 94, 200);
+          background: linear-gradient(180deg, rgba(103, 94, 200, 1) 0%, rgba(26, 101, 224, 1) 100%);
+        }
 
-  > * .title {
-    font-size: 1rem;
-    color: $lclr1;
-    font-weight: 600;
-    margin: em(11, 14) 0;
-  }
-  .create-board {
-    position: relative;
-    @include board;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f1f2f4;
-    cursor: pointer;
+        h3 {
+          margin: 0;
+        }
+      }
+    }
 
-    .board-title {
-      font-weight: 200;
-      font-size: rem(14px);
+    .member-icon {
+      @include trello-icon($content: "\e946", $type: sm);
+    }
+
+    .starred {
+      margin-block-start: rem(18px);
+
+      .starred-title {
+        margin-block-end: rem(13px);
+        display: flex;
+        align-items: center;
+        gap: rem(8px);
+
+        h2 {
+          font-size: rem(17px);
+        }
+        .starred-icon {
+          @include trello-icon($content: $icon-star, $type: lg);
+        }
+      }
+    }
+    .recent {
+      margin-block-start: rem(55px);
+
+      .recently-title {
+        margin-block-end: rem(13px);
+        display: flex;
+        align-items: center;
+        gap: rem(8px);
+
+        h2 {
+          font-size: rem(17px);
+        }
+        .recently-icon {
+          @include trello-icon($content: $icon-clock, $type: lg);
+        }
+      }
+    }
+
+    .workspace {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
+      gap: rem(16px);
+    }
+
+    h3 {
+      color: $lclr1;
+      margin: em(11, 14) 0;
+    }
+
+    > * .title {
+      font-size: 1rem;
+      color: $lclr1;
+      font-weight: 600;
+      margin: em(11, 14) 0;
+    }
+    .create-board {
+      position: relative;
+      @include board;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f1f2f4;
+      cursor: pointer;
+
+      .board-title {
+        font-weight: 200;
+        font-size: rem(14px);
+      }
     }
   }
 }

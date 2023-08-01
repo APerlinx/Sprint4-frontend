@@ -1,8 +1,9 @@
 <template>
     <div class="backdrop">
-        <div class="members-preview">
+        <div class="member-preview">
             <div class="members-preview-upper">
-                <span class="close-member-preview" @click="onclose">X</span>
+                <span class="close-member-preview" @click="onclose"><span @click="closeModal()"
+                        class="icon close close-task-details"></span></span>
                 <div class="member-name-container">
                     <p class="member-name">Name</p>
                     <!-- {{ member.name }} -->

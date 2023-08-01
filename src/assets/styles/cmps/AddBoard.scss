@@ -1,4 +1,7 @@
 .add-modal {
+    position: absolute;
+    transform: translate(-17px, 20px);
+    z-index: 999;
     @include modal;
     padding-inline: rem(12px);
 
