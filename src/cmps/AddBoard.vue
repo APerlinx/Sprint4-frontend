@@ -6,7 +6,7 @@
       <div @click="closeModal" class="close">x</div>
     </div>
 
-    <div class="board-layout" :style="{ background: preview }">
+    <div class="board-layout" :style="{ background: preview, 'background-size': 'cover', 'background-position': 'center' }">
       <img
         src="https://workflow-g0zq.onrender.com/static/media/board-preview-skeleton.14cda5dc635d1f13bc4828f5113d1e86.svg"/>
     </div>
@@ -56,6 +56,7 @@ export default {
     saveBoard() {
       if (!this.boardToEdit.title) return;
       this.$emit("save", this.boardToEdit);
+      console.log();
     },
     closeModal() {
       this.$emit("close");
@@ -65,7 +66,7 @@ export default {
       this.boardToEdit.bgColor = color;
     },
     setBgImg(img) {
-      this.preview = img;
+      this.preview = `url(${img})`;
       this.boardToEdit.imgUrl = img;
     },
   },
@@ -85,7 +86,6 @@ export default {
 </script>
 <style>
 .board-layout {
-  background: v-bind(imgUrl);
   background-position: center;
   background-size: cover;
 }

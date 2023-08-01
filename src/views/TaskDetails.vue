@@ -117,7 +117,10 @@
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
-                            @checklist="addChecklist" @toggleMember="toggleMember" @saveLabel="saveLabel"
+                            @checklist="addChecklist" @toggleMember="toggleMember"
+                             @saveLabel="saveLabel"
+                             @removeLabel="removeLabel"
+                             @updateLable="updateLable"
                             @setBgColor="setBgColor" />
                     </template>
                 </Popper>
@@ -183,6 +186,23 @@ export default {
                 this.coverColor = color
                 this.isCoverActive = true
             }
+        },
+        removeLabel(lab) {
+            const board = JSON.parse(JSON.stringify(this.board));
+            const labIdx = board.labels.findIndex(label => label.id === lab.id)
+            board.labels.splice(labIdx, 1)
+            this.$store.dispatch({ type: "updateBoard", board });
+    },
+        updateLable (lab) {
+            const board = JSON.parse(JSON.stringify(this.board));
+
+            const labIdx = board.labels.findIndex(label => label.id === lab.id)
+            if (!labIdx) {
+                board.labels.push(lab)
+            } else {
+                board.labels.splice(labIdx, 1 ,lab)
+            }
+            this.$store.dispatch({ type: "updateBoard", board });
         },
         addDueDate() {
 

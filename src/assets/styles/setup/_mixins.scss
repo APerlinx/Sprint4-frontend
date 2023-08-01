@@ -310,3 +310,11 @@ $icon-full-checked: "\e918";
         content: $content;
     }
 }
+
+//headline in modal
+@mixin mini-title {
+    font-size: rem(13px);
+    font-weight: 600;
+    color: $lclr1;
+    margin: 0;
+}

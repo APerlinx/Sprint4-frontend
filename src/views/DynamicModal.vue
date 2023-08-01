@@ -6,8 +6,10 @@
       <!-- <pre>{{ board }}</pre> -->
     </section>
     <section>
-      <component v-if="actionCmpType" :board="board" :is="actionCmpType" :taskToEdit="taskToEdit"
-        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="addDueDate"
+      console.log(lable);
+      console.log(lable);
+      <component v-if="actionCmpType" :board="board" :is="actionCmpType" :taskToEdit="taskToEdit" @updateLable="updateLable"
+        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="addDueDate" @removeLabel="removeLabel"
         @setBgColor="setBgColor">
       </component>
     </section>
@@ -50,6 +52,12 @@ export default {
     },
     addDueDate() {
       this.$emit("dueDate", newDueDate);
+    },
+    updateLable(label) {
+      this.$emit("updateLable", label)
+    },
+    removeLabel(label) {
+      this.$emit("removeLabel", label);
     },
   },
   components: {

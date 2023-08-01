@@ -3,23 +3,22 @@
     justify-self: end;
 
     .search-bar {
-        width:rem(200px);
+        width: rem(200px);
         padding: 0.5em;
         border-radius: 0.35em;
         border: 1px solid lightgrey;
-       
 
         &:focus {
             width: rem(500px);
         }
     }
-  
+
     .material-symbols-outlined {
         font-size: 1.3em;
         padding-inline-start: 0.3em;
         color: #627086;
     }
-    
+
     .open {
         input {
             width: 700px;
@@ -60,6 +59,12 @@
                     padding-block: 0.4em;
 
                     img {
+                        height: rem(25px);
+                        width: rem(25px);
+                        border-radius: 0.2em;
+                    }
+
+                    .color {
                         height: rem(25px);
                         width: rem(25px);
                         border-radius: 0.2em;
