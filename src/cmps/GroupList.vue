@@ -35,7 +35,6 @@
                 >
                   <span class="icon"></span> Add a card
                 </button>
-
               </div>
             </template>
           </GroupPreview>
@@ -151,7 +150,6 @@ export default {
       }
     },
     async removeGroup(groupId) {
-      console.log('groupId', groupId)
       try {
         await this.$store.dispatch({
           type: 'removeGroup',
@@ -174,15 +172,18 @@ export default {
         showErrorMsg('Cannot update group')
       }
     },
-    async addTask({ groupId, taskTitle }) {
+    async addTask({ groupId, taskTitle, openedFromModal }) {
       try {
+        this.showTaskForm = true
         await this.$store.dispatch({
           type: 'addTask',
           groupId,
           task: { title: taskTitle },
           board: this.currBoard,
+          openedFromModal,
         })
-        showSuccessMsg('Task was added')
+        // this.unscrollOnAction() // TODO : FIX JUMPING SCROLL
+        this.scrollToBottomOnAction()
       } catch (err) {
         console.log(err)
         showErrorMsg('Cannot add task')
@@ -220,8 +221,8 @@ export default {
     },
     scrollToBottomOnAction() {
       this.$nextTick(() => {
-        const container = document.querySelector('.group-list-section')
-        container.scrollTop = container.scrollHeight
+        const container = document.getElementById(this.currentGroupId)
+        if (container) container.scrollTop = container.scrollHeight
       })
     },
   },

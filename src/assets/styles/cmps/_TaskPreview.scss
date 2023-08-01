@@ -30,10 +30,14 @@
         justify-content: center;
 
         .checklist-counter {
-          margin-top: 0.09rem;
+          margin-top: -0.05rem;
+          // vertical-align: middle;
+          > .slash {
+            scale: (1.1);
+          }
         }
         .date-counter {
-          margin-top: 0.09rem;
+          // margin-top: 0.02rem;
         }
       }
       .icon.member {
@@ -81,7 +85,6 @@
 
           .date-counter {
             color: $ds-text-danger;
-            margin-top: 0.021rem;
           }
 
           &:hover {
@@ -185,4 +188,12 @@
   &:hover {
     background-color: rgba(160, 177, 190, 0.09);
   }
+}
+
+.icon-pencil {
+  font-size: 11px;
+  position: absolute;
+  right: 8px;
+  margin-block-start: -1em;
+  @include trello-icon($content: "\e928", $type: sm, $color: black);
 }

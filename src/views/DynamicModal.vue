@@ -2,25 +2,28 @@
   <div class="dynamic-modal-container">
     <section class="dynamic-modal-header">
       <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
-      <span class="dynamic-modal-close" @click="closeModal">X</span>
+      <span class="dynamic-modal-close" @click="closeModal"><span class="icon close"></span></span>
       <!-- <pre>{{ board }}</pre> -->
     </section>
     <section>
       console.log(lable);
       console.log(lable);
       <component v-if="actionCmpType" :board="board" :is="actionCmpType" :taskToEdit="taskToEdit" @updateLable="updateLable"
-        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="addDueDate" @removeLabel="removeLabel"
-        @setBgColor="setBgColor">
+        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @addDueDate="addDueDate" @removeLabel="removeLabel"
+        @setBgColor="setBgColor" @attachment="addAttachment">
       </component>
     </section>
   </div>
 </template>
 <script>
+
 import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
 import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
 import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
 import DueDatePicker from "../cmps/taskDeatilsOpts/DueDatePicker.vue";
 import CoverPicker from "../cmps/taskDeatilsOpts/CoverPicker.vue";
+import AttachmentPicker from "../cmps/taskDeatilsOpts/AttachmentPicker.vue";
+
 export default {
   props: {
     taskToEdit: Object,
@@ -50,8 +53,19 @@ export default {
       this.$emit("checklist", newChecklist);
       console.log("modal2 - newChecklist:", newChecklist);
     },
-    addDueDate() {
-      this.$emit("dueDate", newDueDate);
+    addAttachment(newAttachment) {
+      this.$emit("attachment", newAttachment);
+      console.log("modal2 - newAttachment:", newAttachment);
+    },
+    addDueDate(date) {
+      this.$emit("addDueDate", date);
+      console.log("modal2 - date:", date);
+    },
+    updateLable(label) {
+      this.$emit("updateLable", label)
+    },
+    removeLabel(label) {
+      this.$emit("removeLabel", label);
     },
     updateLable(label) {
       this.$emit("updateLable", label)
@@ -66,6 +80,7 @@ export default {
     MemberPicker,
     DueDatePicker,
     CoverPicker,
+    AttachmentPicker,
   },
 };
 </script>

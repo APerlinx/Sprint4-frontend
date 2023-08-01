@@ -1,52 +1,62 @@
 <template>
-    <div class="dynamic-modal-container">
-        <section class="dynamic-modal-header">
-            <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
-            <span class="dynamic-modal-close" @click="closeModal">X</span>
-        </section>
-        <section>
-            <component v-if="actionCmpType" :is="actionCmpType" :info="taskToEdit" @member="addMember"
-                @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="adddueDate"></component>
-        </section>
+    <div class="due-date-container" v-if="dueDate">
+        <h5>Due-date</h5>
+        <div class="due-date-checkbox">
+            <!-- @change="updateStatus" -->
+            <input type="checkbox" />
+            <div class="due-date-long-date">
+                <span>{{ formatDate(task.dueDate) }}</span>
+                at
+                <span>{{ formatTime(task.dueDate) }}</span>
+            </div>
+
+
+
+            <!-- <button class="btn btn-due-date">
+                Aug 10 at 3:27 AM
+            </button> -->
+        </div>
     </div>
 </template>
 
 <script>
-import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
-import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
-import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
+import moment from 'moment'
+import { format } from 'date-fns'
 
 export default {
     props: {
-        taskToEdit: Object,
-        actionCmpType: String,
-        actionCmpName: String,
+        task: Object,
+    },
+    created() {
+        console.log("🚀 ~ file: Dates.Vue:25 ~ taskToEdit:", this.task.dueDate)
+    },
+    data() {
+        return {
+
+        }
     },
     methods: {
-        closeModal() {
-            // Implement your closeModal logic here
-            // Emit an event to the parent component if needed
-            this.$emit("closeModal");
+        setDueDate() {
+
         },
-        saveLabel() {
-            // Emit saveLabel event to the parent component
-            this.$emit("saveLabel");
+        formatDate(timestamp) {
+            // console.log(timestamp)
+            return format(new Date(timestamp), 'MMM dd')
+            // const formatedDate = format(new Date(this.task.dueDate), 'dd MMM')
+            // console.log('this.task.dueDate', this.task.dueDate)
+            // console.log('this.task.dueDate', formatedDate)
+            // return pririDate
         },
-        addMember() {
-            // Implement your addMember logic here
-            // Emit an event to the parent component if needed
-            this.$emit("addMember");
+        formatTime(timestamp) {
+            // console.log(timestamp)
+            return format(new Date(timestamp), 'h:mm aa')
+            // const formatedDate = format(new Date(this.task.dueDate), 'dd MMM')
+            // console.log('this.task.dueDate', this.task.dueDate)
+            // console.log('this.task.dueDate', formatedDate)
+            // return pririDate
         },
-        addChecklist(newChecklist) {
-            // Emit checklist event to the parent component
-            this.$emit("checklist", newChecklist);
-            console.log("modal2 - newChecklist:", newChecklist);
+        dueDate() {
         },
     },
-    components: {
-        ChecklistPicker,
-        LabelsPicker,
-        MemberPicker,
-    },
-};
+}
 </script>

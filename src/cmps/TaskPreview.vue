@@ -3,25 +3,25 @@
   <section
     class="task-preview"
     :class="{ 'with-cover': task.cover }"
+    @mouseover="showEditIcon = true"
+    @mouseleave="showEditIcon = false"
     @click="goToTaskDetails"
   >
     <li v-if="task">
       <div class="labels" @click.stop>
-        <div
-          v-for="labelId in task.labels"
-          :key="labelId"
-          class="label"
-          :class="{ expanded: areLabelsVisible }"
-          :style="{
-            backgroundColor: (getLabel(labelId) || {}).color || 'defaultColor',
-          }"
-          @click.stop="toggleLabel(labelId)"
-        >
+        <div v-for="labelId in task.labels" :key="labelId" class="label" :class="{ expanded: areLabelsVisible }" :style="{
+          backgroundColor: (getLabel(labelId) || {}).color || 'defaultColor',
+        }" @click.stop="toggleLabel(labelId)">
           <span v-if="areLabelsVisible">{{ getLabel(labelId).title }}</span>
         </div>
       </div>
 
       <div class="task-header">
+        <i
+          class="icon-pencil"
+          v-show="showEditIcon"
+          @click.stop="openQuickEdit"
+        ></i>
         <p>{{ task.title }}</p>
       </div>
 
@@ -39,27 +39,21 @@
           <span class="comment-counter">{{ task.comments.length }}</span>
         </div>
 
-        <div
-          v-if="task.checklists && task.checklists.length > 0"
-          :class="{ 'completed-checklist': checklistCompleted }"
-        >
+        <div v-if="task.checklists && task.checklists.length > 0" :class="{ 'completed-checklist': checklistCompleted }">
           <span class="icon checklist"></span>
           <span class="checklist-counter"
-            >{{ doneChecklists }}/{{ totalChecklists }}</span
+            >{{ doneChecklists }}<span class="slash">/</span
+            >{{ totalChecklists }}</span
           >
         </div>
 
-        <div v-if="task.attachments && task.attachments.length > 0">
+        <div v-if="task.attachment && task.attachment.length > 0">
           <span class="icon attach"></span>
-          <span class="attach-counter">{{ task.attachments.length }}</span>
+          <span class="attach-counter">{{ task.attachment.length }}</span>
         </div>
 
-        <div
-          class="date"
-          :class="`due-date ${dueDateStatus} ${task.status}`"
-          v-if="task.dueDate"
-          @click.stop="toggleStatus"
-        >
+        <div class="date" :class="`due-date ${dueDateStatus} ${task.status}`" v-if="task.dueDate"
+          @click.stop="toggleStatus">
           <span class="icon date"></span>
           <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
         </div>
@@ -68,12 +62,18 @@
       </div>
     </li>
   </section>
+
+  <TaskQuickEdit
+    :task="task"
+    v-if="quickEditDisplay"
+    @close="quickEditDisplay = false"
+  />
 </template>
 
 <script>
 import { format } from 'date-fns'
 import TaskCover from './TaskCover.vue'
-
+import TaskQuickEdit from './TaskQuickEdit.vue'
 export default {
   props: {
     groupId: {
@@ -84,6 +84,12 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      quickEditDisplay: false,
+      showEditIcon: false,
+    }
   },
   computed: {
     board() {
@@ -153,9 +159,14 @@ export default {
     toggleLabel() {
       this.$store.commit('toggleLabelsVisibility')
     },
+    openQuickEdit(e) {
+      e.stopPropagation()
+      this.quickEditDisplay = true
+    },
   },
   components: {
     TaskCover,
+    TaskQuickEdit,
   },
 }
 </script>
@@ -165,6 +176,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
+
 .label {
   display: flex;
   flex-direction: row;

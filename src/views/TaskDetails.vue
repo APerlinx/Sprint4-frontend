@@ -1,7 +1,10 @@
 <template>
     <div class="task-back-drop">
-        <!-- <section class="task-details" v-if="taskToEdit"> -->
-        <section v-if="taskToEdit" class="task-details">
+        <!-- <section v-if="taskToEdit" class="task-details"> -->
+        <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
+            closeModal()
+            editTask()
+        }">
             <section class="task-details-header">
 
                 <div class="task-details-cover" v-if="coverColor" :style="{ backgroundColor: coverColor }">
@@ -56,16 +59,8 @@
                         </button>
                     </div>
 
-                    <div class="due-date-container">
-                        <h5>Due-date</h5>
-                        <div class="due-date-checkbox">
-                            <input type="checkbox" @change="updateTask" />
-                            <!-- v-model="dueDate.isChecked" -->
-                            <button class="btn btn-due-date" @click="openCalender">
-                                Aug 10 at 3:27 AM
-                            </button>
-                        </div>
-                    </div>
+                    <Dates :task="taskToEdit" />
+
                 </div>
 
                 <div class="details-description-container">
@@ -108,7 +103,7 @@
                 </div>
                 <h3 class="details-title-small">Add to card</h3>
                 <Popper arrow placement="right">
-                    <div v-for="(cmp, idx) in cmpOrder" :key="idx">
+                    <div v-for="( cmp, idx ) in  cmpOrder " :key="idx">
                         <button class="btn" @click="set(cmp, idx)"> <span class="icon"
                                 :class="`icon ${dynamicIcons[idx]}`"></span>
                             {{ dynamicNames[idx] }} </button>
@@ -117,11 +112,11 @@
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
-                            @checklist="addChecklist" @toggleMember="toggleMember"
-                             @saveLabel="saveLabel"
+                            @toggleMember="toggleMember"
+                             @saveLabel="saveLabel" @checklist="addChecklist"
                              @removeLabel="removeLabel"
                              @updateLable="updateLable"
-                            @setBgColor="setBgColor" />
+                            @addDueDate="addDueDate" @attachment="addAttachment" @setBgColor="setBgColor" />
                     </template>
                 </Popper>
                 <div class="action-btns-in-btns">
@@ -139,10 +134,14 @@
 </template>
 
 <script>
+import { focusDirective, clickOutsideDirective } from '../directives/index.js'
+
 import DynamicModal from "./DynamicModal.vue";
 import Checklist from "../cmps/Checklist.vue"
 import Members from "../cmps/Members.vue";
 import Labels from "../cmps/Labels.vue";
+import AttachmentList from "../cmps/AttachmentList.vue"
+import Dates from "../cmps/Dates.vue"
 import { boardService } from "../services/board.service.local.js";
 
 import { defineComponent } from "vue";
@@ -161,8 +160,8 @@ export default {
             actionCmpType: null,
             actionCmpName: null,
             isCoverActive: false,
-            dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachments", "Cover", "Custom Fields"],
-            dynamicIcons: ["member", "label", "checklist", "date", "attachments", "cover", "date"],
+            dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachment", "Cover", "Custom Fields"],
+            dynamicIcons: ["member", "label", "checklist", "date", "attachment", "cover", "date"],
             coverColor: '',
             currColor: '',
             check: 'hello'
@@ -173,6 +172,8 @@ export default {
     },
     methods: {
         set(cmp, idx) {
+            console.log('cmp:', cmp)
+            console.log('idx:', idx)
             this.actionCmpType = cmp;
             this.actionCmpName = this.dynamicNames[idx];
         },
@@ -204,8 +205,12 @@ export default {
             }
             this.$store.dispatch({ type: "updateBoard", board });
         },
-        addDueDate() {
+        addDueDate(date) {
+            // console.log("🚀 ~ file: TaskDetails.vue:196 ~ addDueDate ~ date:", date)
+            this.taskToEdit.dueDate = date
+            console.log("🚀 ~ file: TaskDetails.vue:191 ~ addDueDate ~ this.taskToEdit.dueDate.item:", this.taskToEdit.dueDate)
 
+            this.editTask()
         },
         saveLabel(labelId) {
             const idx = this.taskToEdit.labels?.findIndex(
@@ -216,11 +221,16 @@ export default {
             }
             this.$store.dispatch({ type: "updateBoard", board: this.board });
         },
-
+        addAttachment(newAttachment) {
+            // console.log('newAttachment:', newAttachment)
+            if (!this.taskToEdit.attachments) this.taskToEdit.attachments = [];
+            this.taskToEdit.attachments.push(newAttachment);
+            this.onTaskEdit();
+        },
         addChecklist(newChecklist) {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
             this.taskToEdit.checklists.push(newChecklist)
-            console.log("modal3 - newChecklist:", newChecklist)
+            // console.log("modal3 - newChecklist:", newChecklist)
             this.editTask()
         },
         toggleMember(clickedMember) {
@@ -236,7 +246,7 @@ export default {
                     this.taskToEdit.members.push(clickedMember);
                 }
             }
-            console.log('TaskDeatails - members:', this.taskToEdit.members)
+            // console.log('TaskDeatails - members:', this.taskToEdit.members)
         },
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)
@@ -257,15 +267,16 @@ export default {
                 // console.log("🚀 ~ file: TaskDetails.vue:192 ~ setTask ~ boardId:", boardId)
 
                 const board = await boardService.getById(boardId);
-                console.log("🚀 ~ file: TaskDetails.vue:205 ~ setTask ~ board:", board)
+                // console.log("🚀 ~ file: TaskDetails.vue:205 ~ setTask ~ board:", board)
 
                 const taskId = this.$route.params.taskId;
                 const groupId = this.$route.params.groupId;
-                console.log("groupId:", groupId);
+                // console.log("groupId:", groupId);
 
                 this.board = JSON.parse(JSON.stringify(board));
                 this.group = this.board.groups.find((group) => group.id === groupId);
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
+                console.log("🚀 ~ file: TaskDetails.vue:259 ~ setTask ~ this.taskToEdit:", this.taskToEdit)
             } catch (err) {
                 console.log("error in setTask");
             }
@@ -299,6 +310,10 @@ export default {
             this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
             this.$store.dispatch({ type: "updateBoard", board: this.board });
         },
+        closeComponent() {
+            this.taskTitle = ''
+            this.$emit('close')
+        },
     },
     computed: {
         cmpOrder() {
@@ -314,7 +329,13 @@ export default {
         Members,
         Popper,
         defineComponent,
-        Labels
+        Labels,
+        AttachmentList,
+        Dates,
+    },
+    directives: {
+        focus: focusDirective,
+        clickOutside: clickOutsideDirective,
     },
 };
 </script>

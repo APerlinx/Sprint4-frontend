@@ -3,12 +3,12 @@
   <div class="layout">
     <div class="layout1" :style="{ background: !isCover && !preview ? '#ececec' : preview }">
       <div class="bottom-section">
-        <div class="line1" :style="{ background: !isCover && !preview ? '#ececec' : '' }" ></div>
-        <div class="line2" :style="{ background: !isCover && !preview  ?  '#ececec' : '' }" ></div>
+        <div class="line1" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
+        <div class="line2" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
         <div class="bottom-line">
-          <div class="line3" :style="{ background: !isCover && !preview ? '#ececec' : '' }" ></div>
-          <div class="line3" :style="{ background: !isCover && !preview ? '#ececec' : '' }" ></div>
-          <div class="circle" :style="{ background: !isCover && !preview ? '#ececec' : '' }" ></div>
+          <div class="line3" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
+          <div class="line3" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
+          <div class="circle" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
         </div>
       </div>
     </div>
@@ -30,15 +30,11 @@
 
   <h6 class="colors-title">Colors</h6>
   <section class="color-pallate-wide">
-    <div
-      v-for="(color, index) in colorOptions1"
-      :key="index"
-      @click="setBgColor(color)"
-      :class="colorClass1[index]"
-    ></div>
+    <div v-for="(color, index) in colorOptions1" :key="index" @click="setBgColor(color)" :class="colorClass1[index]">
+    </div>
   </section>
 
-  <h6>Attachments</h6>
+  <h6>Attachment</h6>
 
   <button>Upload a cover image</button>
 
@@ -47,12 +43,7 @@
   <h6>Photos from unsplash</h6>
 
   <section class="img-pallte">
-    <div
-      v-for="(img, index) in imgOptions"
-      :key="index"
-      @click="setBgImg(img)"
-      :class="imgClass[index]"
-    ></div>
+    <div v-for="(img, index) in imgOptions" :key="index" @click="setBgImg(img)" :class="imgClass[index]"></div>
   </section>
 </template>
 

@@ -1,16 +1,15 @@
 <template>
     <div class="backdrop">
-        <div class="member-preview">
+        <div class="members-preview">
             <div class="members-preview-upper">
-                <span class="close-member-preview" @click="onclose"><span @click="closeModal()"
-                        class="icon close close-task-details"></span></span>
+                <span class="close-member-preview" @click="onclose">X</span>
                 <div class="member-name-container">
                     <p class="member-name">Name</p>
                     <!-- {{ member.name }} -->
                     <p class="member-username">@username</p>
                     <!-- @{{ member.username }} -->
                 </div>
-                <div class="member-pic-big"></div>
+                <div class="member-pic"></div>
             </div>
 
 
