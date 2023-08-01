@@ -138,6 +138,7 @@ export default {
       )
     },
     formatDate(timestamp) {
+      console.log(timestamp);
       return format(new Date(timestamp), 'dd MMM')
     },
     toggleStatus() {

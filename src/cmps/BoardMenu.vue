@@ -1,6 +1,6 @@
 <template>
   <div class="board-menu-container" :class="{ 'menu-visible': menuOpen }">
-    <div v-if="!backgroundPickerOpen">
+    <div v-if="showMenu && !backgroundPickerOpen && !activityOpen">
       <header class="menu-header">
         <div>
           <h1>Menu</h1>
@@ -33,7 +33,7 @@
           <hr />
 
           <li class="menu-item">
-            <span class="txt" @click="openActivity"
+            <span class="txt" @click.stop="openActivity"
               ><span class="activity-icon"></span>Activity</span
             >
           </li>
@@ -48,9 +48,14 @@
       @closeMenu="closeMenu"
       @backgroundChanged="handleBackgroundChange"
     />
-  </div>
 
-  <ActivityLog :boardActivity="boardActivity" />
+    <ActivityLog
+      :boardActivity="boardActivity"
+      v-if="activityOpen"
+      @close="closeActivity"
+      @closeMenu="closeMenu"
+    />
+  </div>
 </template>
 
 <script>
@@ -59,6 +64,7 @@ import bgPicker from './BgPicker.vue'
 
 export default {
   name: 'BoardMenu',
+  emits: ['closeMenu'],
   props: {
     menuOpen: {
       type: Boolean,
@@ -73,27 +79,31 @@ export default {
     },
     boardActivity: {
       type: Array,
-      default: () => ({}),
+      default: () => [],
     },
   },
   data() {
     return {
       backgroundPickerOpen: false,
       activityOpen: false,
+      showMenu: true, // Added showMenu property in data
       background: this.getBackground(),
     }
   },
   created() {
-    console.log('this.boardActivity', this.boardActivity);
+    console.log('this.boardActivity', this.boardActivity)
   },
   methods: {
     closeMenu() {
+      this.showMenu = true
       this.$emit('closeMenu')
     },
     openBackgroundPicker() {
+      this.showMenu = false
       this.backgroundPickerOpen = true
     },
     closeBackgroundPicker() {
+      this.showMenu = true
       this.backgroundPickerOpen = false
     },
     handleBackgroundChange(newBackground) {
@@ -107,6 +117,14 @@ export default {
         return this.styleOption.backgroundColor
       }
       return 'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/volcano.svg'
+    },
+    openActivity() {
+      this.showMenu = false
+      this.activityOpen = true
+    },
+    closeActivity() {
+      this.showMenu = true
+      this.activityOpen = false
     },
   },
   components: {

@@ -13,6 +13,7 @@ export const boardService = {
   addBoardMsg,
   getEmptyGroup,
   getEmptyTask,
+  getEmptyActivity,
 }
 window.cs = boardService
 
@@ -127,6 +128,27 @@ function getEmptyTask(title) {
   }
 }
 
+function getEmptyActivity(activity,task = {} ,group = {}) {
+  return {
+    id: utilService.makeId(),
+    txt: activity,
+    createdAt: Date.now(),
+    task: {
+      id: task.id || '',
+      title: task.title || '',
+    },
+    group: {
+      id: group.id || '',
+      title: group.title || '',
+    },
+    byMember: {
+      _id: 'g100',
+      fullname: 'Guest',
+      imgUrl: '',
+    },
+  }
+}
+
 const board = {
   _id: 'b101',
   title: 'Robot dev proj',
@@ -140,7 +162,7 @@ const board = {
     imgUrl: 'http://some-img',
   },
   style: {
-    backgroundImage: '',
+    backgroundImage: 'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/ocean.svg',
   },
   labels: _labelOptions(),
   members: _membersOptions(),
@@ -1013,15 +1035,29 @@ const board = {
     {
       id: 'a101',
       txt: 'Changed Color',
-      createdAt: 154514,
+      createdAt: Date.now(),
       byMember: {
         _id: 'u101',
-        fullname: 'Guest',
-        imgUrl: 'http://some-img',
+        fullname: 'Alon Perlin',
+        imgUrl: 'https://ca.slack-edge.com/T04U05NLZ2M-U053T2NRWQL-ec8cffe84642-192',
       },
       task: {
         id: 'c101',
         title: 'Replace Logo',
+      },
+    },
+    {
+      id: 'a102',
+      txt: 'Fixed details ui',
+      createdAt: Date.now(),
+      byMember: {
+        _id: 'u101',
+        fullname: 'Guy Dahan',
+        imgUrl: 'https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192',
+      },
+      task: {
+        id: 'c102',
+        title: 'Fix button',
       },
     },
   ],
@@ -1156,7 +1192,7 @@ const board2 = {
     {
       id: 'a101',
       txt: 'Changed Color',
-      createdAt: 154514,
+      createdAt: Date.now(),
       byMember: {
         _id: 'u101',
         fullname: 'Abi Abambi',
