@@ -3,18 +3,23 @@
     <div class="search-output">
       <ul class="output-list">
         <li v-if="starredBoards" v-for="board in starredBoards">
-          <RouterLink :to="'/details/' + board._id">
+          <RouterLink @click="closeModal" :to="'/details/' + board._id">
             <div class="row">
               <img :src="board.imgUrl" />
               <div class="text">
                 <h2>{{ board.title }}</h2>
                 <p>User work space</p>
               </div>
+              <div
+                @click.stop.prevent="toggleStar(board)"
+                class="btn-star"
+                :class="boardClass"
+              ></div>
             </div>
           </RouterLink>
         </li>
         <div v-if="starredBoards.length === 0" class="empty-starred">
-          <img src="../assets/styles/img/bg.svg" alt="">
+          <img src="../assets/styles/img/bg.svg" alt="" />
           <p>Star important boards to access them quickly and easily.</p>
         </div>
       </ul>
@@ -25,11 +30,32 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      isFull: true,
+    };
+  },
+  methods: {
+    changeStar() {
+      this.isFull = !this.isFull;
+    },
+    closeModal() {
+      this.$emit("closeModal");
+    },
+    toggleStar(board) {
+      board = JSON.parse(JSON.stringify(board));
+      board.isStarred = !board.isStarred;
+      this.$emit("star", board);
+    },
   },
   computed: {
     starredBoards() {
       return this.$store.getters.starredBoards;
+    },
+    boardClass() {
+      return {
+        unstarred: !this.isFull,
+        starred: this.isFull,
+      };
     },
   },
 };

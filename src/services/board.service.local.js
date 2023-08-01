@@ -68,9 +68,24 @@ async function addBoardMsg(boardId, txt) {
 
 function getEmptyBoard(title = '', imgUrl = '', bgColor = '') {
   return {
+    id: utilService.makeId(),
     title,
     imgUrl,
-    bgColor,
+    isStarred: false,
+    archivedAt: Date.now,
+    createdBy: {
+      _id: 'u101',
+      fullname: 'Abi Abambi',
+      imgUrl: 'http://some-img',
+    },
+    style: {
+      backgroundImage: '',
+    },
+    labels: _labelOptions(),
+    members: _membersOptions(),
+    cover: coverOptions(),
+    groups:[],
+    activities:[]
   }
 }
 function getEmptyGroup(title) {

@@ -21,7 +21,7 @@
     background-color: rgba(0, 0, 0, 0.23);
   }
   &:hover .btn-star {
-    transform: translateX(-50%);
+    transform: translateX(0);
   }
 
   h2 {
@@ -31,7 +31,7 @@
   }
   .btn-star {
     position: absolute;
-    right: 2%;
+    right: 4.5%;
     bottom: 7%;
     color: white;
     cursor: pointer;

@@ -2,8 +2,11 @@
   <RouterLink :to="'/details/' + board._id">
     <div class="board">
       <div class="drop">
-        <div @click.stop.prevent="toggleStar" class="btn-star"
-         :class="boardClass"></div>
+        <div
+          @click.stop.prevent="toggleStar"
+          class="btn-star"
+          :class="boardClass"
+        ></div>
         <h2>{{ board.title.toUpperCase() }}</h2>
       </div>
     </div>
@@ -17,17 +20,21 @@ export default {
   props: ["board"],
 
   data() {
-    return {     
+    return {
+      localBoard: null
     };
+  },
+  created() {
+    this.localBoard = this.board
   },
   methods: {
     removeBoard(boardId) {
       this.$emit("remove", boardId);
     },
     toggleStar() {
-      this.board.isStarred = !this.board.isStarred;
-      const board = JSON.parse(JSON.stringify(this.board));
-      // board.isStarred = this.isStarred;
+      const board = JSON.parse(JSON.stringify(this.localBoard));
+      board.isStarred = !board.isStarred;
+      this.localBoard = board
       this.$emit("star", board);
     },
   },
@@ -41,8 +48,8 @@ export default {
     },
     boardClass() {
       return {
-        unstarred: !this.board.isStarred,
-        starred: this.board.isStarred,
+        unstarred: !this.localBoard.isStarred,
+        starred: this.localBoard.isStarred,
       }
     },
   },

@@ -3,7 +3,7 @@
     <div class="search-output">
       <ul class="output-list">
         <li v-for="board in recentBoards">
-          <RouterLink :to="'/details/' + board._id">
+          <RouterLink @click="closeModal" :to="'/details/' + board._id">
             <div class="row">
               <img :src="board.imgUrl" />
               <div class="text">
@@ -27,6 +27,11 @@ export default {
     recentBoards() {
       return this.$store.getters.recentBoards;
     },
+  },
+  methods: {
+    closeModal() {
+      this.$emit('closeModal')
+    }
   },
 };
 </script>

@@ -13,7 +13,6 @@
             </div>
           </RouterLink>
         </div>
-        
 
         <div class="recent">
           <div
@@ -25,11 +24,12 @@
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div v-if="isPickerModalRecent" class="recent-modal">
-            <RecentPicker v-click-outside="togglePickerModalRecent" />
+            <RecentPicker
+              @closeModal="isPickerModalRecent = false"
+              v-click-outside="togglePickerModalRecent"
+            />
           </div>
         </div>
-
-        
 
         <div class="starred">
           <div
@@ -41,25 +41,35 @@
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div v-if="isPickerModalStarred" class="starred-modal">
-            <StarredPicker v-click-outside="togglePickerModalStarred" />
+            <StarredPicker
+              @closeModal="isPickerModalStarred = false"
+              @star="starBoard"
+              v-click-outside="togglePickerModalStarred"
+            />
           </div>
         </div>
 
-        <div class="create-btn">
-          <Popper arrow placement="right">
-            <RouterLink to="#">Create</RouterLink>
-            <template #content>
-              <AddBoard @close="closeModal" @save="saveBoard" />
-            </template>
-          </Popper>
+        <div class="create-btn" @click="isCreateModal = !isCreateModal">
+          <!-- <Popper arrow placement="right bottom"> -->
+          <RouterLink to="#">Create</RouterLink>
+          <!-- <template #content> -->
+          <AddBoard
+            v-if="isCreateModal"
+            @close="closeModal"
+            @save="saveBoard"
+          />
+          <!-- </template> -->
+          <!-- </Popper> -->
         </div>
       </div>
 
       <div class="right">
         <BoardFilter @filterByTxt="filterByTxt" />
-          <span class="contrast"><img src="../assets/styles/img/contrast.png" alt=""></span>
-          <span class="user">SZ</span>
-        </div>
+        <span class="contrast"
+          ><img src="../assets/styles/img/contrast.png" alt=""
+        /></span>
+        <span class="user">SZ</span>
+      </div>
     </nav>
   </header>
 </template>
@@ -81,6 +91,7 @@ export default {
     return {
       isPickerModalStarred: false,
       isPickerModalRecent: false,
+      isCreateModal: false,
     };
   },
   methods: {
@@ -98,6 +109,15 @@ export default {
       }
     },
 
+    async starBoard(board) {
+      try {
+        await this.$store.dispatch({ type: "updateBoard", board });
+      } catch (err) {
+        console.log(err);
+        showErrorMsg("Cant star board");
+      }
+    },
+
     togglePickerModalRecent() {
       this.isPickerModalRecent = !this.isPickerModalRecent;
     },
@@ -110,7 +130,8 @@ export default {
     },
 
     closeModal() {
-      this.isAddBoard = false;
+      this.isCreateModal = false;
+      console.log(this.isCreateModal);
     },
   },
   computed: {
