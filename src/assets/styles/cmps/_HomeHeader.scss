@@ -1,14 +1,7 @@
 .home-header {
-    display: flex;
-    justify-content: space-between;
-
-    & > :first-child {
-        margin-inline-start: 100px;
-        
-    }
-    & > :last-child {
-        margin-inline-end: 100px;
-    }
+    display: grid;
+    grid-template-columns:1fr rem(700px) 1.35fr;
+   
     .logo {
         display: flex;
         align-items: baseline;
@@ -38,7 +31,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: rem(150px);
+            width: rem(250px);
             height: 100%;
             background-color: #0065ff;
             color: white;
@@ -50,6 +43,9 @@
         & :nth-child(1) {
             background-color: white;
             color: darkblue;
+        }
+        & :nth-child(2):hover {
+            background-color:  darken(#0065ff, 8%);
         }
     }
 }

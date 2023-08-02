@@ -41,6 +41,8 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                width: rem(185px);
+                height: rem(45px);
                 background-color: #0065ff;
                 color: white;
                 padding: 0.7em 2.1em;
@@ -59,7 +61,7 @@
             z-index: 999;
 
             img {
-                width: 113%;
+                width: 105%;
                 z-index: 999;
             }
         }
