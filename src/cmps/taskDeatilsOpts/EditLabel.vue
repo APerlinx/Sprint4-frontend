@@ -1,9 +1,9 @@
 <template>
   <div class="title">
-    <span class="perv-btn">></span>
+    <img @click="prevModal" class="prev" src="../../assets/styles/img/left.png" alt="" />
     <h2 v-if="labelToEdit">Edit label</h2>
     <h2 v-else>Create a label</h2>
-    <span class="close-btn">X</span>
+    <span @click="closeEditModal" class="close-btn"></span>
   </div>
 
   <div class="display">
@@ -29,7 +29,7 @@
   </div>
 
   <div class="remove-btn">
-    <h2>Remove</h2>
+    <h2 @click="label.color = '#e9ebee'" >Remove</h2>
   </div>
 
   <div class="line"></div>
@@ -38,8 +38,6 @@
     <div @click="updateLabel" class="save-btn"><h6>Save</h6></div>
     <div @click="removeLabel" class="delete-btn"><h6>Delete</h6></div>
   </div>
-
-  <!-- <h2>{{ labelToEdit }}</h2> -->
 </template>
 
 <script>
@@ -101,6 +99,12 @@ export default {
     removeLabel() {
       this.$emit("removeLabel", this.label);
     },
+    closeEditModal() {
+      this.$emit("closeEditModal");
+    },
+    prevModal() {
+      this.$emit("prevModal")
+    }
   },
   getters: {},
 };

@@ -2,15 +2,22 @@
   <div class="dynamic-modal-container">
     <section class="dynamic-modal-header">
       <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
-      <span class="dynamic-modal-close" @click="closeModal">X</span>
-      <!-- <pre>{{ board }}</pre> -->
+      <span class="dynamic-modal-close" @click="closeDynamicModal"></span>
     </section>
     <section>
-      console.log(lable);
-      console.log(lable);
-      <component v-if="actionCmpType" :board="board" :is="actionCmpType" :taskToEdit="taskToEdit" @updateLable="updateLable"
-        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @dueDate="addDueDate" @removeLabel="removeLabel"
-        @setBgColor="setBgColor">
+      <component
+        :board="board"
+        :is="actionCmpType"
+        :taskToEdit="taskToEdit"
+        @updateLable="updateLable"
+        @toggleMember="toggleMember"
+        @checklist="addChecklist"
+        @saveLabel="saveLabel"
+        @dueDate="addDueDate"
+        @removeLabel="removeLabel"
+        @setBgColor="setBgColor"
+        @closeEditModal="closeDynamicModal"
+      >
       </component>
     </section>
   </div>
@@ -29,16 +36,11 @@ export default {
     actionCmpName: String,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   methods: {
     setBgColor(color) {
       this.$emit("setBgColor", color);
-    },
-    closeModal() {
-      this.isDynamicModalClose = !this.isDynamicModalClose;
     },
     saveLabel(labelId) {
       this.$emit("saveLabel", labelId);
@@ -54,10 +56,13 @@ export default {
       this.$emit("dueDate", newDueDate);
     },
     updateLable(label) {
-      this.$emit("updateLable", label)
+      this.$emit("updateLable", label);
     },
     removeLabel(label) {
       this.$emit("removeLabel", label);
+    },
+    closeDynamicModal() {
+      this.$emit("closeDynamicModal");
     },
   },
   components: {

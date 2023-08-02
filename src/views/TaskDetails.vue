@@ -1,10 +1,7 @@
 <template>
     <div class="task-back-drop">
         <!-- <section v-if="taskToEdit" class="task-details"> -->
-        <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
-            closeModal()
-            editTask()
-        }">
+        <section v-if="taskToEdit" class="task-details" >
             <section class="task-details-header">
 
                 <div class="task-details-cover" v-if="coverColor" :style="{ backgroundColor: coverColor }">
@@ -107,11 +104,13 @@
                         <button class="btn" @click="set(cmp, idx)"> <span class="icon"
                                 :class="`icon ${dynamicIcons[idx]}`"></span>
                             {{ dynamicNames[idx] }} </button>
-
                     </div>
                     <template #content>
-                        <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
-                            :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
+                        <DynamicModal v-if="isDynamicModal"
+                         :actionCmpType="actionCmpType" 
+                         :taskToEdit="taskToEdit"
+                            :board="board" :actionCmpName="actionCmpName"
+                             @closeDynamicModal="closeDynamicModal"
                             @toggleMember="toggleMember"
                              @saveLabel="saveLabel" @checklist="addChecklist"
                              @removeLabel="removeLabel"
@@ -156,7 +155,7 @@ export default {
             hideBtn: false,
             isWatchActive: false,
             watch: "Watch",
-            // isDynamicModalOpen: true,
+            isDynamicModal: false,
             actionCmpType: null,
             actionCmpName: null,
             isCoverActive: false,
@@ -172,8 +171,7 @@ export default {
     },
     methods: {
         set(cmp, idx) {
-            console.log('cmp:', cmp)
-            console.log('idx:', idx)
+            this.isDynamicModal = true
             this.actionCmpType = cmp;
             this.actionCmpName = this.dynamicNames[idx];
         },
@@ -188,22 +186,13 @@ export default {
                 this.isCoverActive = true
             }
         },
-        removeLabel(lab) {
-            const board = JSON.parse(JSON.stringify(this.board));
-            const labIdx = board.labels.findIndex(label => label.id === lab.id)
-            board.labels.splice(labIdx, 1)
-            this.$store.dispatch({ type: "updateBoard", board });
-    },
-        updateLable (lab) {
-            const board = JSON.parse(JSON.stringify(this.board));
-
-            const labIdx = board.labels.findIndex(label => label.id === lab.id)
-            if (!labIdx) {
-                board.labels.push(lab)
-            } else {
-                board.labels.splice(labIdx, 1 ,lab)
-            }
-            this.$store.dispatch({ type: "updateBoard", board });
+        removeLabel(board) {
+         this.board = board
+         this.editTask()
+         }, 
+        updateLable (board) {
+         this.board = board
+         this.editTask()
         },
         addDueDate(date) {
             // console.log("🚀 ~ file: TaskDetails.vue:196 ~ addDueDate ~ date:", date)
@@ -293,8 +282,7 @@ export default {
             this.isCoverActive = !this.isCoverActive;
         },
         closeDynamicModal() {
-            // this.actionCmpType = null
-            // this.actionCmpName = null
+            this.isDynamicModal = false
         },
         closeModal() {
             this.$router.back();

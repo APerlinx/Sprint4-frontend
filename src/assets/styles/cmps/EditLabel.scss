@@ -21,12 +21,26 @@
     .title {
         display: flex;
         justify-content: space-between;
+        align-items: start;
         height: rem(40px);
+
+        img {
+            height: rem(14.5px);
+            cursor: pointer;
+        }
 
         h2 {
             font-size: rem(14px);
             font-weight: 600;
-            color: $lclr1;
+            color: #44556f;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans",
+                "Helvetica Neue", sans-serif;
+        }
+
+        .close-btn {
+            margin-block-start: -0.17em;
+            @include trello-icon($content: "\e91c", $type: sm, $color: #626f86);
+            cursor: pointer;
         }
     }
     .display {
@@ -59,6 +73,7 @@
     h6 {
         @include mini-title;
         margin-block: rem(16px);
+        color: #666666;
     }
 
     .label-title {
@@ -109,7 +124,7 @@
             font-weight: 400;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans",
                 "Helvetica Neue", sans-serif;
-            color: $lclr1;
+            color: #666666;
         }
     }
 
@@ -148,9 +163,17 @@
 
         .delete-btn {
             background-color: #ca3620;
+            cursor: pointer;
+            &:hover {
+                background-color: darken(#ca3620, 5%);
+            }
         }
         .save-btn {
             background-color: #0c66e4;
+            cursor: pointer;
+            &:hover {
+                background-color: darken(#0c66e4, 5%);
+            }
         }
     }
 }
