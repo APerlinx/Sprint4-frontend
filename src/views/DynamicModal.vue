@@ -15,7 +15,7 @@
         @saveLabel="saveLabel"
         @dueDate="addDueDate"
         @removeLabel="removeLabel"
-        @setBgColor="setBgColor"
+        @setCover="setCover"
         @closeEditModal="closeDynamicModal"
       >
       </component>
@@ -39,8 +39,8 @@ export default {
     return {};
   },
   methods: {
-    setBgColor(color) {
-      this.$emit("setBgColor", color);
+    setCover(cover) {
+      this.$emit("setCover", cover);
     },
     saveLabel(labelId) {
       this.$emit("saveLabel", labelId);

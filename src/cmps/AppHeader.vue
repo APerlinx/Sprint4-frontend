@@ -9,7 +9,7 @@
           <RouterLink to="/board">
             <div class="logo">
               <i class="fa fa-trello"></i>
-              <h2>Trello</h2>
+              <h2>Trio</h2>
             </div>
           </RouterLink>
         </div>
