@@ -6,7 +6,6 @@
     @mouseover="showEditIcon = true"
     @mouseleave="showEditIcon = false"
     @click="goToTaskDetails"
-    v-if="!quickEditDisplay"
   >
     <li v-if="task">
       <div class="labels" @click.stop>
@@ -85,11 +84,17 @@
     </li>
   </section>
 
-  <TaskQuickEdit
-    :task="task"
-    :quickEditDisplay="quickEditDisplay"
-    @close="quickEditDisplay = false"
-  />
+<TaskQuickEdit
+  :task="task"
+  :groupId="groupId"
+  :quickEditDisplay="quickEditDisplay"
+  :getLabel="getLabel"
+  :totalChecklists="totalChecklists"
+  :doneChecklists="doneChecklists"
+  :dueDateStatus="dueDateStatus"
+  :formatDate="formatDate"
+  @close="quickEditDisplay = false"
+/>
 </template>
 
 <script>
@@ -177,14 +182,12 @@ export default {
     getLabel(id) {
       return this.$store.getters.getLabelById(id) || {}
     },
-
     toggleLabel() {
       this.$store.commit('toggleLabelsVisibility')
     },
     openQuickEdit(e) {
       e.stopPropagation()
       this.quickEditDisplay = true
-      console.log('this.quickEditDisplay', this.quickEditDisplay);
 
       this.quickEditTop = e.clientY + 'px'
       this.quickEditLeft = e.clientX + 'px'

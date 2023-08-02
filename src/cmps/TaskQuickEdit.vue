@@ -1,16 +1,81 @@
 <template>
   <div v-if="quickEditDisplay">
     <section class="task-preview-container">
-      <div
-        @click.stop="quickEditDisplay = 'none'"
-        class="quickEditScreen"
-      ></div>
-      <div class="quickEdit" ref="quickEdit">
-        {{ task.title }}
+      <div @click.stop="quickEditDisplay = false" class="quickEditScreen"></div>
+      <div class="quickEdit" ref="quickEdit" :style="quickEditPosition">
+        <div class="labels" @click.stop>
+          <div
+            v-for="labelId in task.labels"
+            :key="labelId"
+            class="label"
+            :class="{ expanded: areLabelsVisible }"
+            :style="{
+              backgroundColor:
+                (getLabel(labelId) || {}).color || 'defaultColor',
+            }"
+            @click.stop="toggleLabel(labelId)"
+          >
+            <span v-if="areLabelsVisible">{{ getLabel(labelId).title }}</span>
+          </div>
+        </div>
+
+        <div class="title-edit">
+          <textarea v-model="localTask.title"></textarea>
+        </div>
+
+        <div class="tool-tip-edit">
+          <div v-if="task.members && task.members.length > 0">
+            <span class="icon member"></span>
+            <span class="member-counter">{{ task.members.length }}</span>
+          </div>
+
+          <div
+            class="date"
+            :class="`due-date ${dueDateStatus} ${task.status}`"
+            v-if="task.dueDate"
+            @click.stop="toggleStatus"
+          >
+            <span class="icon date"></span>
+            <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
+          </div>
+
+          <div v-if="task.attachments && task.attachments.length > 0">
+            <span class="icon attachment"></span>
+            <span class="attachment-counter">{{
+              task.attachments.length
+            }}</span>
+          </div>
+          <div v-if="task.description">
+            <span class="icon desc"></span>
+          </div>
+
+          <div v-if="task.comments && task.comments.length > 0">
+            <span class="icon comment"></span>
+            <span class="comment-counter">{{ task.comments.length }}</span>
+          </div>
+
+          <div
+            v-if="task.checklists && task.checklists.length > 0"
+            :class="{
+              'completed-checklist': doneChecklists === totalChecklists,
+            }"
+          >
+            <span class="icon checklist"></span>
+            <span class="checklist-counter"
+              >{{ doneChecklists }}<span class="slash">/</span
+              >{{ totalChecklists }}</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="save-button" ref="saveButton" :style="saveButtonPosition">
+        <button>Save</button>
       </div>
 
       <div
         class="action-buttons"
+        :class="actionButtonsClass"
         v-if="quickEditDisplay"
         :style="buttonPosition"
       >
@@ -27,9 +92,9 @@
           {{ btn.txt }}
         </button>
         <component :is="cmpType"> </component>
-        <!-- <div @click.stop="removeTask">
-        <span class="archive-icon"></span>Archive
-      </div> -->
+        <div @click.stop="removeTask">
+          <span class="archive-icon"></span>
+        </div>
       </div>
     </section>
   </div>
@@ -60,6 +125,30 @@ export default {
       type: Boolean,
       required: true,
     },
+    quickEditDisplay: {
+      type: Boolean,
+      required: true,
+    },
+    getLabel: {
+      type: Function,
+      required: true,
+    },
+    totalChecklists: {
+      type: Number,
+      required: true,
+    },
+    doneChecklists: {
+      type: Number,
+      required: true,
+    },
+    dueDateStatus: {
+      type: String,
+      required: true,
+    },
+    formatDate: {
+      type: Function,
+      required: true,
+    },
   },
   data() {
     return {
@@ -68,59 +157,96 @@ export default {
         { txt: 'Members', icon: 'members-icon', type: 'memberPicker' },
         { txt: 'Cover', icon: 'cover-icon', type: 'coverPicker' },
         { txt: 'Dates', icon: 'dates-icon', type: 'datePicker' },
+        { txt: 'Archive', icon: 'archive-icon', type: 'archive' },
       ],
       cmpType: null,
       buttonPosition: {},
-      isNearBottom: false, // New data property
+      isNearBottom: false,
+      saveButtonPosition: {},
+      rect: null,
+      containerPosition: {},
+      quickEditPosition: {},
+      quickEditDisplayStyle: {},
+      localTask: null,
+      actionButtonsClass: '',
     }
   },
-  methods: {},
- mounted() {
+  created() {
+    this.localTask = { ...this.task }
+  },
+  computed: {
+    areLabelsVisible() {
+      return this.$store.getters.areLabelsVisible
+    },
+  },
+  methods: {
+    toggleStatus() {
+      this.$store.dispatch('toggleStatus', {
+        groupId: this.groupId,
+        task: this.task,
+      })
+    },
+    openModal() {
+      console.log('openModal')
+    },
+    toggleLabel() {
+      this.$store.commit('toggleLabelsVisibility')
+    },
+  },
+  mounted() {
     watch(
       () => this.quickEditDisplay,
       (newVal, oldVal) => {
         if (newVal !== oldVal && newVal) {
           this.$nextTick(() => {
-            const rect = this.$refs.quickEdit.getBoundingClientRect()
+            this.rect = this.$refs.quickEdit.getBoundingClientRect()
 
-            // Calculate distance from bottom of viewport to bottom of button element
-            const distanceFromBottom = window.innerHeight - (rect.top + rect.height)
+            const distanceFromBottom =
+              window.innerHeight - (this.rect.top + this.rect.height)
 
-            // Calculate distance from right of viewport to right of button element
-            const distanceFromRight = window.innerWidth - (rect.left + rect.width)
+            const distanceFromRight =
+              window.innerWidth - (this.rect.left + this.rect.width)
 
-            // Change the position of the buttons if they are too close to the bottom or right
-            this.isNearBottom = distanceFromBottom < 100 // Adjust this value as needed
-            const isNearRight = distanceFromRight < 100 // Adjust this value as needed
+            this.isNearBottom = distanceFromBottom < 100
+            const isNearRight = distanceFromRight < 200
+            this.actionButtonsClass = isNearRight ? 'modal-left' : 'modal-right'
+            const adjustedTop = this.rect.top - 100
 
             if (this.isNearBottom && isNearRight) {
-              // Position buttons above and to the left of the modal
               this.buttonPosition = {
                 position: 'fixed',
-                top: `${rect.top - rect.height}px`,
-                left: `${rect.left - rect.width}px`,
+                top: `${adjustedTop - this.rect.height + 115}px`,
+                left: `${this.rect.left - this.rect.width + 125}px`,
               }
             } else if (this.isNearBottom) {
-              // Position buttons above the modal
               this.buttonPosition = {
                 position: 'fixed',
-                top: `${rect.top - rect.height}px`,
-                left: `${rect.left}px`,
+                top: `${adjustedTop - this.rect.height + 115}px`,
+                left: `${this.rect.left + 256}px`,
               }
             } else if (isNearRight) {
-              // Position buttons to the left of the modal
               this.buttonPosition = {
                 position: 'fixed',
-                top: `${rect.top}px`,
-                left: `${rect.left - rect.width}px`,
+                top: `${adjustedTop}px`,
+                left: `${this.rect.left - this.rect.width + 130}px`,
               }
             } else {
-              // Position buttons to the right of the modal
               this.buttonPosition = {
                 position: 'fixed',
-                top: `${rect.top}px`,
-                left: `${rect.left + rect.width}px`,
+                top: `${adjustedTop}px`,
+                left: `${this.rect.left + this.rect.width}px`,
               }
+            }
+            this.saveButtonPosition = {
+              position: 'fixed',
+              top: `${adjustedTop + this.rect.height}px`,
+              left: `${this.rect.left}px`,
+            }
+
+            this.quickEditPosition = {
+              position: 'fixed',
+              top: `${adjustedTop}px`,
+              left: `${this.rect.left}px`,
             }
           })
         }
@@ -134,177 +260,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.task-preview-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  .task-preview-img {
-    margin-bottom: em(-5px);
-  }
-
-  .quickEditScreen {
-    height: 100%;
-    width: 100%;
-    background-color: #0009;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 20;
-  }
-
-  .quickEdit {
-    background-color: white;
-    box-shadow: 0 1px 0 #091e4240;
-    z-index: 30;
-    width: 256px;
-    height: 140px;
-    overflow: visible;
-    border-radius: 8px;
-    position: fixed;
-
-    padding: 8px 8px 4px 12px;
-
-    .title-edit {
-      border-radius: 5px;
-      height: fit-content;
-      overflow: hidden;
-
-      textarea {
-        min-width: 255px;
-        padding-left: 8px;
-        padding-bottom: 50px;
-        overflow-y: hidden;
-        border: none;
-        color: #172b4d;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-          Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-
-        &:focus-visible {
-          outline: none;
-        }
-      }
-
-      h5 {
-        padding: 7px;
-      }
-    }
-  }
-
-  .action-buttons {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    z-index: 999;
-    width: 100%;
-    top: 0;
-    left: 580px;
-
-    button {
-      width: fit-content;
-      color: white;
-      background-color: #0009;
-      border: none;
-      padding: 6px 12px 6px 10px;
-      margin: 0 0 4px 8px;
-      border-radius: 3px;
-      font-size: 14px;
-      letter-spacing: 0.8px;
-      font-weight: 200;
-      transition: transform 0.2s, background-color 0.2s;
-      &:hover {
-        transform: translateX(8%);
-        background-color: rgba(0, 0, 0, 0.752);
-        cursor: pointer;
-      }
-
-      .card-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: 5px;
-        &::before {
-          content: '\e912';
-        }
-      }
-
-      .labels-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e93f';
-        }
-      }
-
-      .members-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e946';
-        }
-      }
-
-      .cover-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e914';
-        }
-      }
-
-      .dates-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e91b';
-        }
-      }
-
-      .archive-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e907';
-        }
-      }
-    }
-  }
-}
-
-.save-button {
-  position: absolute;
-  // top: 0;
-  z-index: 50;
-  &:hover {
-    background-color: transparent;
-    border: none;
-  }
-
-  button {
-    margin-top: 10px;
-    background-color: #0079bf;
-    border: none;
-    padding: 8.5px 24px;
-    font-size: 14px;
-    border-radius: 3px;
-    box-shadow: 0px 0px 1px black;
-    box-shadow: none;
-    color: #fff;
-    transition: background-color 0.2s;
-    &:hover {
-      background-color: #026aa7;
-      border: none;
-      box-shadow: none;
-      color: #fff;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
