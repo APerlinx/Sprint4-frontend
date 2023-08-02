@@ -498,8 +498,8 @@ const board1 = {
           title: 'Wireframing',
           priority: 'high',
           description: 'Create wireframes to visualize the layout and structure of the user interface.',
-          labels: ['l112', 'l102','l103'],
-                    cover: { color: '#d62828', imgUrl: '', isFull: false },
+          labels: ['l112', 'l102', 'l103'],
+          cover: { color: '#d62828', imgUrl: '', isFull: false },
           comments: [
             {
               id: 'C7',
@@ -632,7 +632,7 @@ const board1 = {
           id: 'c301',
           title: 'Set Up Project Environment',
           description: 'Create the development environment and set up project dependencies.',
-          labels: ['l108', 'l102','l103'],
+          labels: ['l108', 'l102', 'l103'],
           watching: false,
           cover: { color: '#d62828', imgUrl: '', isFull: false },
           comments: [
@@ -800,7 +800,7 @@ const board1 = {
           id: 'c305',
           title: 'Implement API Integration',
           description: 'Integrate with backend APIs to fetch and update data on the front-end.',
-          labels: ['l102','l103'],
+          labels: ['l102', 'l103'],
           dueDate: Date.now(),
           style: {
             bgColor: '#9c89b8',
@@ -823,7 +823,7 @@ const board1 = {
           id: 'c401',
           title: 'Assess Current Design',
           description: 'Evaluate the existing design for responsiveness and identify areas for improvement.',
-          labels: ['l102','l103','l110'],
+          labels: ['l102', 'l103', 'l110'],
           watching: false,
           cover: { color: '', imgUrl: '', isFull: false },
           comments: [
@@ -992,7 +992,7 @@ const board1 = {
           id: 'c601',
           title: 'Create HTML Structure',
           description: 'Build the basic HTML structure for the front-end application.',
-          labels: ['l114', 'l101','l112'],
+          labels: ['l114', 'l101', 'l112'],
           dueDate: Date.now(),
           watching: false,
           labels: ['l111', 'l101'],
@@ -1182,7 +1182,7 @@ const board1 = {
           id: 'c701',
           title: 'Create Base Styles',
           description: 'Set up the basic CSS styles and global styles for the front-end application.',
-          labels: ['l110', 'l106','l109'],
+          labels: ['l110', 'l106', 'l109'],
           watching: false,
           comments: [
             {
@@ -1513,7 +1513,7 @@ const board1 = {
           id: 'c505',
           title: 'Asynchronous Programming',
           description: 'Utilize asynchronous JavaScript for smoother user interactions and data fetching.',
-          labels: ['l103', 'l104','l101'],
+          labels: ['l103', 'l104', 'l101'],
           style: {
             bgColor: '#9c89b8',
           },

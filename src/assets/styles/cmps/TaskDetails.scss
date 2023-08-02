@@ -15,6 +15,10 @@
     overflow-y: auto;
 
     background-color: rgba(0, 0, 0, 0.3);
+
+    // h3 {
+    //     font-weight: 600;
+    // }
 }
 
 .task-details {
@@ -423,7 +427,11 @@
 }
 
 .details-description-container {
+
     // border: 1px solid red;
+    textarea {
+        color: #172b4d;
+    }
 
     .description-input {
         width: 100%;
@@ -433,7 +441,7 @@
         // margin: 9px 0 4px 0px;
         // padding: 8px 12px;
         padding: 0;
-        background-color: #e4e6ea;
+        background-color: #f1f2f4;
         text-decoration: none;
         font-family:
             -apple-system,

@@ -8,7 +8,8 @@
         <section v-if="taskToEdit" class="task-details">
             <section class="task-details-header">
 
-                <div class="task-details-cover" v-if="taskToEdit.cover?.color" :style="{ backgroundColor: taskToEdit.cover?.color }">
+                <div class="task-details-cover" v-if="taskToEdit.cover?.color"
+                    :style="{ backgroundColor: taskToEdit.cover?.color }">
                     <p class="task-details-cover-menu" @click="togglecover()">Cover</p>
                 </div>
 
@@ -114,7 +115,7 @@
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
                             @toggleMember="toggleMember" @saveLabel="saveLabel" @checklist="addChecklist"
                             @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
-                            @attachment="addAttachment"  @setCover="setCover" />
+                            @attachment="addAttachment" @setCover="setCover" />
                     </template>
                 </Popper>
                 <div class="action-btns-in-btns">
@@ -174,14 +175,13 @@ export default {
             this.actionCmpName = this.dynamicNames[idx];
         },
 
-       setCover(cover) {
-        if (this.taskToEdit.hasOwnProperty("cover")) {
-         this.taskToEdit.cover = cover;
-         } else {
-         this.taskToEdit = { ...this.taskToEdit, cover: cover };
-         }
-         this.editTask()
-
+        setCover(cover) {
+            if (this.taskToEdit.hasOwnProperty("cover")) {
+                this.taskToEdit.cover = cover;
+            } else {
+                this.taskToEdit = { ...this.taskToEdit, cover: cover };
+            }
+            this.editTask()
         },
 
         removeLabel(board) {
@@ -229,6 +229,7 @@ export default {
                 if (this.taskToEdit.members.some(member => member.id === clickedMember.id)) {
                     const idx = this.taskToEdit.members.findIndex(member => member.id === clickedMember.id);
                     this.taskToEdit.members.splice(idx, 1);
+
                 } else {
                     this.taskToEdit.members.push(clickedMember);
                 }

@@ -7,7 +7,7 @@
                 <!-- <h3 @click="hideBtn">{{ checklistToEdit.title }}</h3> -->
                 <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                     @focus="hideBtn = false"></textarea>
-                <div class="btns-hide-delete-container">
+                <div class="btns-hide-delete-container" v-if="hideDelateBtn">
                     <button class="btn btn-checklist-hide-show" v-if="isTodoChecked"
                         @click="isHideChecked = !isHideChecked">
                         {{ hideCheckedTxt }}</button>
@@ -16,13 +16,12 @@
             </div>
 
 
-            <div v-if="!hideBtn" class="btn-save-close">
+            <div v-if="!hideBtn1" class="btn-save-close">
                 <button class="btn" @click.stop="onTaskEdit">
                     Save
                 </button>
                 <button class="btn" @click="closeTodoTitle">Cancel</button>
             </div>
-
 
         </section>
 
@@ -40,19 +39,21 @@
                 </section>
             </div>
             <div v-if="hideTodoBtn">
-                <button class="btn btn-save-close" @click="updateChecklist">
+                <button class="btn btn-save-close" @click="updateChecklist" @blur="updateChecklist">
                     save
                 </button>
                 <button class="btn btn-save-close" @click="updateChecklist">
-                    x
+                    <span class="icon close"></span>
                 </button>
             </div>
 
-            <input v-model="newTodoTitle" placeholder="Add an item" class="new-todo-title" />
             <button class="btn is-add-todo" v-if="!isAddTodo" @click="isAddTodo = true">Add an item</button>
-            <div class="hide-add-todo-btns" v-else>
-                <button class="btn btn-blue add-todo" @click="addTodo">Add</button>
-                <button class="btn cancel-todo">Cancel</button>
+            <div v-else>
+                <input v-model="newTodoTitle" placeholder="Add an item" class="new-todo-title" />
+                <div class="hide-add-todo-btns">
+                    <button class="btn btn-blue add-todo" @click="addTodo">Add</button>
+                    <button class="btn cancel-todo">Cancel</button>
+                </div>
             </div>
 
 
@@ -90,8 +91,8 @@ export default {
 
         },
         addTodo() {
+            if (!this.newTodoTitle) return
             console.log('adding todo:')
-            // if (this.newTodoTitle) return
             const todo = {
                 _id: utilService.makeId(),
                 title: this.newTodoTitle,

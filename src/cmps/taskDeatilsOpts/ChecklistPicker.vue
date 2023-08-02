@@ -2,10 +2,10 @@
     <section class="modal-checklist">
         <h5></h5>
         <label for="checklist-input">Title</label>
-        <input type="text" v-model="checklistTitle" placeholder="Checklist" autofocus />
+        <input type="text" v-model="checklistTitle" placeholder="Checklist" autofocus v-focus v-focusDirective />
         <!-- placeholder="Checklist" v-focus id="checklist-input" /> -->
 
-        <label for="checklist-copy">Copy item from...</label>
+        <!-- <label for="checklist-copy">Copy item from...</label>
         <form>
             <select id="copyItem">
                 <option> (none) </option>
@@ -13,7 +13,7 @@
                 <option> for </option>
                 <option> now </option>
             </select>
-        </form>
+        </form> -->
         <button class="add-checklist" @click="addCheckList">Add</button>
     </section>
 </template>
