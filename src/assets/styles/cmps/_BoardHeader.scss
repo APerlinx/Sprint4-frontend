@@ -1,13 +1,15 @@
 .board-header {
-  background: rgb(23, 43, 77, 0.3);
+  background: rgba(39, 39, 39, 0.2);
+  backdrop-filter: blur(2px);
   width: 100%;
   height: rem(56px);
   border: none;
   padding: 12px 10px 12px 16px;
-
+  margin-bottom: 0.4rem;
+  
   .nav-bar {
     display: flex;
-    justify-content: space-between; /* Change this from 'center' */
+    justify-content: space-between; 
     align-items: center;
 
     > .title-tool-tip {
