@@ -56,7 +56,6 @@ export default {
     saveBoard() {
       if (!this.boardToEdit.title) return;
       this.$emit("save", this.boardToEdit);
-      console.log();
     },
     closeModal() {
       this.$emit("close");

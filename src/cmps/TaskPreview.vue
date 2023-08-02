@@ -73,14 +73,14 @@
           <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
         </div>
 
-        <div class="member-avatar">
+        <!-- <div class="member-avatar">
           <img
             v-for="member in task.members"
             :key="member.id"
             :src="member.imgUrl"
             class="avatar"
           />
-        </div>
+        </div> -->
       </div>
     </li>
   </section>
