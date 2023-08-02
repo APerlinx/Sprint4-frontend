@@ -1,4 +1,6 @@
 <template>
+  <div class="check" @click="isDarkColor('#fffff')">check</div>
+
   <div class="filter-label">
     <input
       type="text"
@@ -36,7 +38,10 @@
         class="label-picker-color"
         @click="toggleLabel(label.id)"
       >
-        <h5>{{ label.title }}</h5>
+        <h5 :style="{color: isDarkColor(label.color) ? 'white' : ''}"
+        >
+          {{ label.title }}
+        </h5>
       </div>
       <img
         @click="isEditMode(label)"
@@ -85,6 +90,9 @@ export default {
       }
       this.isEditModeModal = !this.isEditModeModal;
     },
+    check(hi) {
+      console.log(hi);
+    },
     updateLabel(label) {
       const labelId = label.id;
 
@@ -114,6 +122,17 @@ export default {
     },
     closeEditMode() {
       this.isEditModeModal = false;
+    },
+    isDarkColor(c) {
+      c = c.substring(1); // strip #
+      const rgb = parseInt(c, 16); // convert rrggbb to decimal
+      const r = (rgb >> 16) & 0xff; // extract red
+      const g = (rgb >> 8) & 0xff; // extract green
+      const b = (rgb >> 0) & 0xff; // extract blue
+      var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+
+      return luma < 100;
     },
   },
   computed: {
