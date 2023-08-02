@@ -1,10 +1,11 @@
 <template>
     <div class="task-back-drop">
         <!-- <section v-if="taskToEdit" class="task-details"> -->
-        <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
+        <!-- <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
             closeModal()
             editTask()
-        }">
+        }"> -->
+        <section v-if="taskToEdit" class="task-details">
             <section class="task-details-header">
 
                 <div class="task-details-cover" v-if="coverColor" :style="{ backgroundColor: coverColor }">
@@ -14,12 +15,12 @@
                 <div class="icon-title-container">
                     <span class="icon card-big"></span>
                     <input type="text" class="details-title" v-model="taskToEdit.title" />
-                    <span @click="closeModal(); editTask();" class="icon close close-task-details"></span>
+                    <span @click="closeModal(); editTask();" class="icon big-close close-task-details"></span>
                 </div>
 
                 <span class="task-in-list">
                     in list <span>&nbsp;</span><span class="group-ops"> {{ group.title
-                    }}</span><span>&nbsp;&nbsp;&nbsp;</span><span :class="{ watchActive: !isWatchActive }"
+                    }}</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span :class="{ watchActive: !isWatchActive }"
                         class="icon eye"></span>
                 </span>
             </section>
@@ -72,7 +73,7 @@
                         @focus="hideBtn = true" placeholder="Add a more detailed description..."></textarea>
                     <div v-if="hideBtn">
                         <div class="btn-save-close">
-                            <button class="btn">Save</button>
+                            <button class="btn btn-save">Save</button>
                             <!-- @click.stop="onTaskEdit" -->
                             <button class="btn" @click="closeTodoTitle">Cancel</button>
                         </div>
@@ -112,11 +113,9 @@
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
-                            @toggleMember="toggleMember"
-                             @saveLabel="saveLabel" @checklist="addChecklist"
-                             @removeLabel="removeLabel"
-                             @updateLable="updateLable"
-                            @addDueDate="addDueDate" @attachment="addAttachment" @setBgColor="setBgColor" />
+                            @toggleMember="toggleMember" @saveLabel="saveLabel" @checklist="addChecklist"
+                            @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
+                            @attachment="addAttachment" @setBgColor="setBgColor" />
                     </template>
                 </Popper>
                 <div class="action-btns-in-btns">
@@ -193,15 +192,15 @@ export default {
             const labIdx = board.labels.findIndex(label => label.id === lab.id)
             board.labels.splice(labIdx, 1)
             this.$store.dispatch({ type: "updateBoard", board });
-    },
-        updateLable (lab) {
+        },
+        updateLable(lab) {
             const board = JSON.parse(JSON.stringify(this.board));
 
             const labIdx = board.labels.findIndex(label => label.id === lab.id)
             if (!labIdx) {
                 board.labels.push(lab)
             } else {
-                board.labels.splice(labIdx, 1 ,lab)
+                board.labels.splice(labIdx, 1, lab)
             }
             this.$store.dispatch({ type: "updateBoard", board });
         },

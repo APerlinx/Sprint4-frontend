@@ -72,7 +72,7 @@ function getEmptyBoard(title = '', imgUrl = '') {
     id: utilService.makeId(),
     title,
     imgUrl,
-    bgColor:'',
+    bgColor: '',
     isStarred: false,
     archivedAt: Date.now,
     createdBy: {
@@ -129,7 +129,7 @@ function getEmptyTask(title) {
   }
 }
 
-function getEmptyActivity(activity,task = {} ,group = {}) {
+function getEmptyActivity(activity, task = {}, group = {}) {
   return {
     id: utilService.makeId(),
     txt: activity,

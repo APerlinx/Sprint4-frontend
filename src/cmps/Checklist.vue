@@ -1,5 +1,5 @@
 <template>
-    <div class="checklist">
+    <div class="checklist-container">
         <section class="checklist-title-container" v-if="checklist">
 
             <div class="icon-title-container-checklist">
@@ -7,10 +7,14 @@
                 <!-- <h3 @click="hideBtn">{{ checklistToEdit.title }}</h3> -->
                 <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                     @focus="hideBtn = false"></textarea>
+                <div class="btns-hide-delete-container">
+                    <button class="btn btn-checklist-hide-show" v-if="isTodoChecked"
+                        @click="isHideChecked = !isHideChecked">
+                        {{ hideCheckedTxt }}</button>
+                    <button class="btn btn-delete-chackbox" v-if="hideBtn" @click="deleteChecklist">Delete</button>
+                </div>
             </div>
 
-            <button class="btn btn-checklist-hide-show" v-if="isTodoChecked" @click="isHideChecked = !isHideChecked">
-                {{ hideCheckedTxt }}</button>
 
             <div v-if="!hideBtn" class="btn-save-close">
                 <button class="btn" @click.stop="onTaskEdit">
@@ -19,7 +23,6 @@
                 <button class="btn" @click="closeTodoTitle">Cancel</button>
             </div>
 
-            <button class="btn" v-if="hideBtn" @click="deleteChecklist">Delete</button>
 
         </section>
 
@@ -45,13 +48,14 @@
                 </button>
             </div>
 
+            <input v-model="newTodoTitle" placeholder="Add an item" class="new-todo-title" />
             <button class="btn is-add-todo" v-if="!isAddTodo" @click="isAddTodo = true">Add an item</button>
-
             <div class="hide-add-todo-btns" v-else>
-                <input v-model="newTodoTitle" placeholder="Add an item" class="new-todo-title" />
-                <button class="btn-blue add-todo" @click="addTodo">Add</button>
+                <button class="btn btn-blue add-todo" @click="addTodo">Add</button>
                 <button class="btn cancel-todo">Cancel</button>
             </div>
+
+
 
         </section>
     </div>
