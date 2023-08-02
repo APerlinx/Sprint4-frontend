@@ -86,6 +86,7 @@ function getEmptyBoard(title = '', imgUrl = '') {
     labels: _labelOptions(),
     members: _membersOptions(),
     cover: coverOptions(),
+    backGround: backgroundOptions(),
     groups: [],
     activities: []
   }

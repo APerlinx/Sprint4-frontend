@@ -1,14 +1,14 @@
 <template>
   <div class="title">
-    <span class="perv-btn">></span>
+    <img @click="prevModal" class="prev" src="../../assets/styles/img/left.png" alt="" />
     <h2 v-if="labelToEdit">Edit label</h2>
     <h2 v-else>Create a label</h2>
-    <span class="close-btn">X</span>
+    <span @click="closeEditModal" class="close-btn"></span>
   </div>
 
   <div class="display">
     <div class="label" :style="{ backgroundColor: label.color }">
-      <h2>{{ label.title }}</h2>
+      <h2 :style="{color: isDarkColor(label.color) ? 'white' : ''}" >{{ label.title }}</h2>
     </div>
   </div>
 
@@ -29,7 +29,7 @@
   </div>
 
   <div class="remove-btn">
-    <h2>Remove</h2>
+    <h2 @click="label.color = '#e9ebee'" >Remove</h2>
   </div>
 
   <div class="line"></div>
@@ -38,8 +38,6 @@
     <div @click="updateLabel" class="save-btn"><h6>Save</h6></div>
     <div @click="removeLabel" class="delete-btn"><h6>Delete</h6></div>
   </div>
-
-  <!-- <h2>{{ labelToEdit }}</h2> -->
 </template>
 
 <script>
@@ -100,6 +98,23 @@ export default {
     },
     removeLabel() {
       this.$emit("removeLabel", this.label);
+    },
+    closeEditModal() {
+      this.$emit("closeEditModal");
+    },
+    prevModal() {
+      this.$emit("prevModal")
+    },
+    isDarkColor(c) {
+      c = c.substring(1); // strip #
+      const rgb = parseInt(c, 16); // convert rrggbb to decimal
+      const r = (rgb >> 16) & 0xff; // extract red
+      const g = (rgb >> 8) & 0xff; // extract green
+      const b = (rgb >> 0) & 0xff; // extract blue
+      var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+
+      return luma < 100;
     },
   },
   getters: {},

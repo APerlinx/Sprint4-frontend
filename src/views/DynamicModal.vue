@@ -2,8 +2,7 @@
   <div class="dynamic-modal-container">
     <section class="dynamic-modal-header">
       <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
-      <span class="dynamic-modal-close" @click="closeModal">X</span>
-      <!-- <pre>{{ board }}</pre> -->
+      <span class="dynamic-modal-close" @click="closeDynamicModal"></span>
     </section>
     <section>
 
@@ -30,16 +29,11 @@ export default {
     actionCmpName: String,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   methods: {
     setBgColor(color) {
       this.$emit("setBgColor", color);
-    },
-    closeModal() {
-      this.isDynamicModalClose = !this.isDynamicModalClose;
     },
     saveLabel(labelId) {
       this.$emit("saveLabel", labelId);
@@ -60,10 +54,13 @@ export default {
       console.log("modal2 - date:", newDueDate);
     },
     updateLable(label) {
-      this.$emit("updateLable", label)
+      this.$emit("updateLable", label);
     },
     removeLabel(label) {
       this.$emit("removeLabel", label);
+    },
+    closeDynamicModal() {
+      this.$emit("closeDynamicModal");
     },
   },
   components: {
