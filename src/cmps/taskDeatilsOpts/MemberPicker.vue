@@ -19,13 +19,13 @@
                         </div>
 
                         <div>
-                            <span class="icon checked"></span>
+                            <!-- <span class="icon checked"></span> -->
                         </div>
                     </div>
                 </li>
             </ul>
         </div>
-        <button class="btn add-member">Show other Workspace members</button>
+        <button class="add-member">Show other Workspace members</button>
         <!-- <div class="memvers-not-on-board">
             <li v-for="member in members" @click="addMember">
                 <div class="member-container">
