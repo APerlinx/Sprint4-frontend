@@ -19,6 +19,8 @@ export default {
         backgroundColor: '',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center', // You can adjust this value to control the image position
+
       },
     }
   },
@@ -40,8 +42,10 @@ export default {
         this.boardStyle = {
           backgroundImage: newVal.backgroundImage || '',
           backgroundColor: newVal.backgroundColor || '',
-          backgroundSize: '100%',
+          backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center', // You can adjust this value to control the image position
+
         }
       },
     },

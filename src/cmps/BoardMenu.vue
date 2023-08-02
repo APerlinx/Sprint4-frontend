@@ -86,12 +86,9 @@ export default {
     return {
       backgroundPickerOpen: false,
       activityOpen: false,
-      showMenu: true, // Added showMenu property in data
+      showMenu: true, 
       background: this.getBackground(),
     }
-  },
-  created() {
-    console.log('this.boardActivity', this.boardActivity)
   },
   methods: {
     closeMenu() {

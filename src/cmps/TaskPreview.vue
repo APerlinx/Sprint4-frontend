@@ -6,23 +6,31 @@
     @mouseover="showEditIcon = true"
     @mouseleave="showEditIcon = false"
     @click="goToTaskDetails"
+    v-if="!quickEditDisplay"
   >
     <li v-if="task">
       <div class="labels" @click.stop>
-        <div v-for="labelId in task.labels" :key="labelId" class="label" :class="{ expanded: areLabelsVisible }" :style="{
-          backgroundColor: (getLabel(labelId) || {}).color || 'defaultColor',
-        }" @click.stop="toggleLabel(labelId)">
+        <div
+          v-for="labelId in task.labels"
+          :key="labelId"
+          class="label"
+          :class="{ expanded: areLabelsVisible }"
+          :style="{
+            backgroundColor: (getLabel(labelId) || {}).color || 'defaultColor',
+          }"
+          @click.stop="toggleLabel(labelId)"
+        >
           <span v-if="areLabelsVisible">{{ getLabel(labelId).title }}</span>
         </div>
       </div>
 
       <div class="task-header">
+        <p>{{ task.title }}</p>
         <i
           class="icon-pencil"
           v-show="showEditIcon"
           @click.stop="openQuickEdit"
         ></i>
-        <p>{{ task.title }}</p>
       </div>
 
       <div class="tool-tip">
@@ -39,7 +47,10 @@
           <span class="comment-counter">{{ task.comments.length }}</span>
         </div>
 
-        <div v-if="task.checklists && task.checklists.length > 0" :class="{ 'completed-checklist': checklistCompleted }">
+        <div
+          v-if="task.checklists && task.checklists.length > 0"
+          :class="{ 'completed-checklist': checklistCompleted }"
+        >
           <span class="icon checklist"></span>
           <span class="checklist-counter"
             >{{ doneChecklists }}<span class="slash">/</span
@@ -52,20 +63,31 @@
           <span class="attach-counter">{{ task.attachment.length }}</span>
         </div>
 
-        <div class="date" :class="`due-date ${dueDateStatus} ${task.status}`" v-if="task.dueDate"
-          @click.stop="toggleStatus">
+        <div
+          class="date"
+          :class="`due-date ${dueDateStatus} ${task.status}`"
+          v-if="task.dueDate"
+          @click.stop="toggleStatus"
+        >
           <span class="icon date"></span>
           <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
         </div>
 
-        <!-- <span class="icon member">M</span> -->
+        <div class="member-avatar">
+          <img
+            v-for="member in task.members"
+            :key="member.id"
+            :src="member.imgUrl"
+            class="avatar"
+          />
+        </div>
       </div>
     </li>
   </section>
 
   <TaskQuickEdit
     :task="task"
-    v-if="quickEditDisplay"
+    :quickEditDisplay="quickEditDisplay"
     @close="quickEditDisplay = false"
   />
 </template>
@@ -162,6 +184,10 @@ export default {
     openQuickEdit(e) {
       e.stopPropagation()
       this.quickEditDisplay = true
+      console.log('this.quickEditDisplay', this.quickEditDisplay);
+
+      this.quickEditTop = e.clientY + 'px'
+      this.quickEditLeft = e.clientX + 'px'
     },
   },
   components: {

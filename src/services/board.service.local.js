@@ -88,7 +88,7 @@ function getEmptyBoard(title = '', imgUrl = '') {
     cover: coverOptions(),
     backGround: backgroundOptions(),
     groups: [],
-    activities: []
+    activities: [],
   }
 }
 function getEmptyGroup(title) {
@@ -164,7 +164,8 @@ const board = {
     imgUrl: 'http://some-img',
   },
   style: {
-    backgroundImage: 'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/ocean.svg',
+    backgroundImage:
+      'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/ocean.svg',
   },
   labels: _labelOptions(),
   members: _membersOptions(),
@@ -906,16 +907,15 @@ const board = {
       ],
       style: {},
     },
-
     {
       id: 'g108',
-      title: 'Documentation',
+      title: 'HTML Markup Development',
       tasks: [
         {
           id: 'c115',
-          title: 'Write API documentation',
+          title: 'Develop HTML Structure',
           description:
-            'Document all the API endpoints with their respective request and response formats',
+            'Create the base HTML structure for the new web application, ensuring all necessary tags and elements are included',
           labels: ['l107', 'l106'],
           watching: true,
           cover: { color: '#264653', imgUrl: '', isFull: false },
@@ -925,8 +925,9 @@ const board = {
         },
         {
           id: 'c116',
-          title: 'Create User Guide',
-          description: 'Prepare a comprehensive user guide for the application',
+          title: 'HTML Semantics Implementation',
+          description:
+            'Implement the use of semantic HTML tags to structure the content appropriately for accessibility and SEO',
           labels: ['l108', 'l105'],
           watching: false,
           comments: [],
@@ -935,12 +936,11 @@ const board = {
         },
         {
           id: 'c117',
-          title: 'Update Release Notes',
+          title: 'Optimize HTML Loading Performance',
           description:
-            'Compile release notes for the latest version of the software',
+            'Refactor the HTML structure to minimize loading times, optimize rendering, and improve the overall performance of the website',
           labels: ['l103', 'l109'],
           watching: true,
-          cover: { color: '#2a9d8f', imgUrl: '', isFull: false },
           comments: [],
           checklists: [],
           dueDate: Date.now() + 12 * 60 * 60 * 1000,
@@ -1041,7 +1041,8 @@ const board = {
       byMember: {
         _id: 'u101',
         fullname: 'Alon Perlin',
-        imgUrl: 'https://ca.slack-edge.com/T04U05NLZ2M-U053T2NRWQL-ec8cffe84642-192',
+        imgUrl:
+          'https://ca.slack-edge.com/T04U05NLZ2M-U053T2NRWQL-ec8cffe84642-192',
       },
       task: {
         id: 'c101',
@@ -1055,7 +1056,8 @@ const board = {
       byMember: {
         _id: 'u101',
         fullname: 'Guy Dahan',
-        imgUrl: 'https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192',
+        imgUrl:
+          'https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192',
       },
       task: {
         id: 'c102',
@@ -2331,55 +2333,55 @@ function backgroundOptions() {
         id: 'g101',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/snow.svg',
-        emoji: '❄️'
+        emoji: '❄️',
       },
       {
         id: 'g102',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/ocean.svg',
-        emoji: '🌊'
+        emoji: '🌊',
       },
       {
         id: 'g103',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/crystal.svg',
-        emoji: '🔮'
+        emoji: '🔮',
       },
       {
         id: 'g104',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/rainbow.svg',
-        emoji: '🌈'
+        emoji: '🌈',
       },
       {
         id: 'g106',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/peach.svg',
-        emoji: '🍑'
+        emoji: '🍑',
       },
       {
         id: 'g107',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/flower.svg',
-        emoji: '🌸'
+        emoji: '🌸',
       },
       {
         id: 'g108',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/earth.svg',
-        emoji: '🌍'
+        emoji: '🌍',
       },
       {
         id: 'g109',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/alien.svg',
-        emoji: '👽'
+        emoji: '👽',
       },
       {
         id: 'g110',
         color:
           'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/volcano.svg',
-        emoji: '🌋'
+        emoji: '🌋',
       },
     ],
     colors: [

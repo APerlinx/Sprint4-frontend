@@ -175,25 +175,39 @@
     }
   }
 
-  > li > .task-header > p {
-    margin: 0 0 4px;
-    overflow: hidden;
-    text-align: start;
-    font-size: rem(12.6px);
-    word-spacing: rem(0.5px);
-    letter-spacing: rem(0.5px);
-    color: $task-title;
+  > li > .task-header {
+    display: flex;
+    justify-content: space-between;
+    position: relative; /* Add this line to make the .task-header container a positioned context */
+
+    .icon-pencil {
+      position: absolute;
+      top: 8%; 
+      right: -3%;
+      transform: translateY(-65%) translateX(-3%) scale(0.9); /* Adjust the scale value to make the icon smaller */
+      font-size: 0.8em; 
+      padding: 6px 8px; 
+      border-radius: 6px; 
+      @include trello-icon($content: "\e928", $type: sm, $color: #626f86);
+
+      &:hover {
+        background-color: darken($dynamic-button-highlighted, 2.5%);
+
+      }
+    }
+    > p {
+      margin: 0 0 4px;
+      padding-inline-end: 1em;
+      overflow: hidden;
+      text-align: start;
+      font-size: rem(12.6px);
+      word-spacing: rem(0.5px);
+      letter-spacing: rem(0.5px);
+      color: $task-title;
+    }
   }
 
   &:hover {
     background-color: rgba(160, 177, 190, 0.09);
   }
-}
-
-.icon-pencil {
-  font-size: 11px;
-  position: absolute;
-  right: 8px;
-  margin-block-start: -1em;
-  @include trello-icon($content: "\e928", $type: sm, $color: black);
 }
