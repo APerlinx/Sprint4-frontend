@@ -13,10 +13,11 @@
         @toggleMember="toggleMember"
         @checklist="addChecklist"
         @saveLabel="saveLabel"
-        @dueDate="addDueDate"
+        @addDueDate="addDueDate"
         @removeLabel="removeLabel"
         @setCover="setCover"
         @closeEditModal="closeDynamicModal"
+        @attachment="addAttachment"
       >
       </component>
     </section>
@@ -28,6 +29,8 @@ import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
 import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
 import DueDatePicker from "../cmps/taskDeatilsOpts/DueDatePicker.vue";
 import CoverPicker from "../cmps/taskDeatilsOpts/CoverPicker.vue";
+import AttachmentPicker from "../cmps/taskDeatilsOpts/AttachmentPicker.vue";
+
 export default {
   props: {
     taskToEdit: Object,
@@ -50,10 +53,15 @@ export default {
     },
     addChecklist(newChecklist) {
       this.$emit("checklist", newChecklist);
-      console.log("modal2 - newChecklist:", newChecklist);
+      // console.log("modal2 - newChecklist:", newChecklist);
     },
-    addDueDate() {
+    addAttachment(newAttachment) {
+      this.$emit("attachment", newAttachment);
+      // console.log("modal2 - newAttachment:", newAttachment);
+    },
+    addDueDate(newDueDate) {
       this.$emit("dueDate", newDueDate);
+      console.log("modal2 - date:", newDueDate);
     },
     updateLable(label) {
       this.$emit("updateLable", label);
@@ -71,6 +79,7 @@ export default {
     MemberPicker,
     DueDatePicker,
     CoverPicker,
+    AttachmentPicker,
   },
 };
 </script>

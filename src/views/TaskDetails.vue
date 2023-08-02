@@ -1,7 +1,11 @@
 <template>
     <div class="task-back-drop">
         <!-- <section v-if="taskToEdit" class="task-details"> -->
-        <section v-if="taskToEdit" class="task-details" >
+        <!-- <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
+            closeModal()
+            editTask()
+        }"> -->
+        <section v-if="taskToEdit" class="task-details">
             <section class="task-details-header">
 
                 <div class="task-details-cover" v-if="taskToEdit.cover?.color" :style="{ backgroundColor: taskToEdit.cover?.color }">
@@ -11,12 +15,12 @@
                 <div class="icon-title-container">
                     <span class="icon card-big"></span>
                     <input type="text" class="details-title" v-model="taskToEdit.title" />
-                    <span @click="closeModal(); editTask();" class="icon close close-task-details"></span>
+                    <span @click="closeModal(); editTask();" class="icon big-close close-task-details"></span>
                 </div>
 
                 <span class="task-in-list">
                     in list <span>&nbsp;</span><span class="group-ops"> {{ group.title
-                    }}</span><span>&nbsp;&nbsp;&nbsp;</span><span :class="{ watchActive: !isWatchActive }"
+                    }}</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span :class="{ watchActive: !isWatchActive }"
                         class="icon eye"></span>
                 </span>
             </section>
@@ -69,7 +73,7 @@
                         @focus="hideBtn = true" placeholder="Add a more detailed description..."></textarea>
                     <div v-if="hideBtn">
                         <div class="btn-save-close">
-                            <button class="btn">Save</button>
+                            <button class="btn btn-save">Save</button>
                             <!-- @click.stop="onTaskEdit" -->
                             <button class="btn" @click="closeTodoTitle">Cancel</button>
                         </div>
@@ -106,16 +110,11 @@
                             {{ dynamicNames[idx] }} </button>
                     </div>
                     <template #content>
-                        <DynamicModal v-if="isDynamicModal"
-                         :actionCmpType="actionCmpType" 
-                         :taskToEdit="taskToEdit"
-                            :board="board" :actionCmpName="actionCmpName"
-                             @closeDynamicModal="closeDynamicModal"
-                            @toggleMember="toggleMember"
-                             @saveLabel="saveLabel" @checklist="addChecklist"
-                             @removeLabel="removeLabel"
-                             @updateLable="updateLable"
-                            @addDueDate="addDueDate" @attachment="addAttachment" @setCover="setCover" />
+                        <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                            :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
+                            @toggleMember="toggleMember" @saveLabel="saveLabel" @checklist="addChecklist"
+                            @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
+                            @attachment="addAttachment"  @setCover="setCover" />
                     </template>
                 </Popper>
                 <div class="action-btns-in-btns">
@@ -186,12 +185,12 @@ export default {
         },
 
         removeLabel(board) {
-         this.board = board
-         this.editTask()
-         }, 
-        updateLable (board) {
-         this.board = board
-         this.editTask()
+            this.board = board
+            this.editTask()
+        },
+        updateLable(board) {
+            this.board = board
+            this.editTask()
         },
         addDueDate(date) {
             // console.log("🚀 ~ file: TaskDetails.vue:196 ~ addDueDate ~ date:", date)

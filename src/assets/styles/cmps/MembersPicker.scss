@@ -20,7 +20,8 @@
     border: none;
     justify-content: center;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
+    margin-top: 12px;
     outline: none;
     transition-duration: 85ms;
     transition-property: background-color, border-color, box-shadow;
@@ -45,6 +46,7 @@
     flex-direction: column;
 
     h3 {
+        margin-top: -2px;
         font-size: 12px;
     }
 }
@@ -55,6 +57,8 @@
     margin: 0 0 0 -40px;
     align-items: center;
     color: #172b4d;
+
+    padding: 4px;
 
     span {
         padding: 0;
@@ -79,4 +83,11 @@
         border: 1px solid white;
         background-color: rgb(168, 164, 164);
     }
+}
+
+
+.add-member {
+    width: 2300px;
+    justify-content: center;
+    text-align: center;
 }

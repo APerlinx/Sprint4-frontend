@@ -24,6 +24,7 @@
     line-height: 20px;
 
     .dynamic-modal-header {
+        // border: 1px solid red;
         align-items: center;
         display: grid;
         grid-template-columns: 32px 1fr 32px;
@@ -32,6 +33,7 @@
         text-align: center;
 
         .dynamic-modal-title {
+            // border: 1px solid red;
             box-shadow: none;
             height: 20px;
             grid-column: 2;
@@ -41,7 +43,7 @@
         }
 
         .dynamic-modal-close {
-            @include trello-icon($content: $icon-close, $type: sm, $color: #fff);
+            // border: 1px solid red;
             color: var(--ds-icon-subtle, #626f86);
             grid-column: 3;
             grid-row: 1;
