@@ -5,10 +5,20 @@
       <span class="dynamic-modal-close" @click="closeDynamicModal"></span>
     </section>
     <section>
-
-      <component v-if="actionCmpType" :board="board" :is="actionCmpType" :taskToEdit="taskToEdit"
-        @updateLable="updateLable" @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel"
-        @addDueDate="addDueDate" @removeLabel="removeLabel" @setBgColor="setBgColor" @attachment="addAttachment">
+      <component
+        :board="board"
+        :is="actionCmpType"
+        :taskToEdit="taskToEdit"
+        @updateLable="updateLable"
+        @toggleMember="toggleMember"
+        @checklist="addChecklist"
+        @saveLabel="saveLabel"
+        @addDueDate="addDueDate"
+        @removeLabel="removeLabel"
+        @setCover="setCover"
+        @closeEditModal="closeDynamicModal"
+        @attachment="addAttachment"
+      >
       </component>
     </section>
   </div>
@@ -32,8 +42,8 @@ export default {
     return {};
   },
   methods: {
-    setBgColor(color) {
-      this.$emit("setBgColor", color);
+    setCover(cover) {
+      this.$emit("setCover", cover);
     },
     saveLabel(labelId) {
       this.$emit("saveLabel", labelId);

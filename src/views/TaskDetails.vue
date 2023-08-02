@@ -8,7 +8,7 @@
         <section v-if="taskToEdit" class="task-details">
             <section class="task-details-header">
 
-                <div class="task-details-cover" v-if="coverColor" :style="{ backgroundColor: coverColor }">
+                <div class="task-details-cover" v-if="taskToEdit.cover?.color" :style="{ backgroundColor: taskToEdit.cover?.color }">
                     <p class="task-details-cover-menu" @click="togglecover()">Cover</p>
                 </div>
 
@@ -114,7 +114,7 @@
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
                             @toggleMember="toggleMember" @saveLabel="saveLabel" @checklist="addChecklist"
                             @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
-                            @attachment="addAttachment" @setBgColor="setBgColor" />
+                            @attachment="addAttachment"  @setCover="setCover" />
                     </template>
                 </Popper>
                 <div class="action-btns-in-btns">
@@ -162,7 +162,6 @@ export default {
             dynamicIcons: ["member", "label", "checklist", "date", "attachment", "cover", "date"],
             coverColor: '',
             currColor: '',
-            check: 'hello'
         };
     },
     created() {
@@ -175,16 +174,16 @@ export default {
             this.actionCmpName = this.dynamicNames[idx];
         },
 
-        setBgColor(color) {
-            if (this.color === this.currColor) {
-                this.preview = ''
-                this.currColor = color
-            } else {
-                this.currColor = color
-                this.coverColor = color
-                this.isCoverActive = true
-            }
+       setCover(cover) {
+        if (this.taskToEdit.hasOwnProperty("cover")) {
+         this.taskToEdit.cover = cover;
+         } else {
+         this.taskToEdit = { ...this.taskToEdit, cover: cover };
+         }
+         this.editTask()
+
         },
+
         removeLabel(board) {
             this.board = board
             this.editTask()
