@@ -22,11 +22,13 @@
     .fa-sharp .fa-solid .fa-pencil {
         font-size: 100px;
     }
+
     .sub-title {
         font-size: 0.95em;
         color: $lclr1;
         margin-block-end: 1em;
     }
+
     .label {
         display: flex;
         justify-content: space-between;
@@ -79,11 +81,12 @@
                 padding: 0.5em 1em;
                 font-size: 0.9em;
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans",
-                "Helvetica Neue", sans-serif;
+                    "Helvetica Neue", sans-serif;
                 font-weight: 500;
             }
         }
     }
+
     .create-label {
         @include modalBtn;
         color: $lclr1;

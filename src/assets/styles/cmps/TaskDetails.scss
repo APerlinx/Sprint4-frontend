@@ -423,6 +423,7 @@
 }
 
 .details-description-container {
+    // border: 1px solid red;
 
     .description-input {
         width: 100%;
@@ -449,7 +450,7 @@
         line-height: 20px;
         text-align: start;
         // margin-bottom: 21px;
-        margin-bottom: 4px;
+        margin-bottom: 0px;
         resize: none;
 
         &:focus {

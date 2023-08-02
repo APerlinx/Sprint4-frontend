@@ -25,7 +25,7 @@
                 </li>
             </ul>
         </div>
-        <button class="add-member">Show other Workspace members</button>
+        <button class="btn add-member">Show other Workspace members</button>
         <!-- <div class="memvers-not-on-board">
             <li v-for="member in members" @click="addMember">
                 <div class="member-container">
