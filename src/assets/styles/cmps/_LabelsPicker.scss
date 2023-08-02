@@ -89,7 +89,11 @@
     }
 
     .create-label {
+        margin: auto;
+        display: flex;
+        justify-content: center;
         @include modalBtn;
+        width: 100%;
         color: $lclr1;
         font-weight: 400;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans",

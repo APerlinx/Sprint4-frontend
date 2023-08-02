@@ -1,5 +1,4 @@
 <template>
-  <div class="check" @click="isDarkColor('#fffff')">check</div>
 
   <div class="filter-label">
     <input
