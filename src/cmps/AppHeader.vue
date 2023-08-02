@@ -9,7 +9,7 @@
           <RouterLink to="/board">
             <div class="logo">
               <i class="fa fa-trello"></i>
-              <h2>Trello</h2>
+              <h2>Trio</h2>
             </div>
           </RouterLink>
         </div>
@@ -49,17 +49,13 @@
           </div>
         </div>
 
-        <div class="create-btn" @click="isCreateModal = !isCreateModal">
-          <!-- <Popper arrow placement="right bottom"> -->
-          <RouterLink to="#">Create</RouterLink>
-          <!-- <template #content> -->
-          <AddBoard
-            v-if="isCreateModal"
-            @close="closeModal"
-            @save="saveBoard"
-          />
-          <!-- </template> -->
-          <!-- </Popper> -->
+        <div class="create-btn" @click="isCreateModal = true">
+          <Popper arrow placement="right">
+            <RouterLink to="#">Create</RouterLink>
+            <template #content>
+              <AddBoard @close="closeModal" @save="saveBoard" />
+            </template>
+          </Popper>
         </div>
       </div>
 
@@ -130,6 +126,7 @@ export default {
     },
 
     closeModal() {
+      //dont work - bug
       this.isCreateModal = false;
       console.log(this.isCreateModal);
     },

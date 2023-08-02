@@ -2,19 +2,28 @@
   <div class="dynamic-modal-container">
     <section class="dynamic-modal-header">
       <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
-      <span class="dynamic-modal-close" @click="closeModal"><span class="icon close"></span></span>
-      <!-- <pre>{{ board }}</pre> -->
+      <span class="dynamic-modal-close" @click="closeDynamicModal"></span>
     </section>
     <section>
-      <component v-if="actionCmpType" :board="board" :is="actionCmpType" :taskToEdit="taskToEdit"
-        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @addDueDate="addDueDate"
-        @setBgColor="setBgColor" @attachment="addAttachment">
+      <component
+        :board="board"
+        :is="actionCmpType"
+        :taskToEdit="taskToEdit"
+        @updateLable="updateLable"
+        @toggleMember="toggleMember"
+        @checklist="addChecklist"
+        @saveLabel="saveLabel"
+        @addDueDate="addDueDate"
+        @removeLabel="removeLabel"
+        @setCover="setCover"
+        @closeEditModal="closeDynamicModal"
+        @attachment="addAttachment"
+      >
       </component>
     </section>
   </div>
 </template>
 <script>
-
 import ChecklistPicker from "../cmps/taskDeatilsOpts/CheckListPicker.vue";
 import LabelsPicker from "../cmps/taskDeatilsOpts/LabelsPicker.vue";
 import MemberPicker from "../cmps/taskDeatilsOpts/MemberPicker.vue";
@@ -30,16 +39,11 @@ export default {
     actionCmpName: String,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   methods: {
-    setBgColor(color) {
-      this.$emit("setBgColor", color);
-    },
-    closeModal() {
-      this.isDynamicModalClose = !this.isDynamicModalClose;
+    setCover(cover) {
+      this.$emit("setCover", cover);
     },
     saveLabel(labelId) {
       this.$emit("saveLabel", labelId);
@@ -49,15 +53,24 @@ export default {
     },
     addChecklist(newChecklist) {
       this.$emit("checklist", newChecklist);
-      console.log("modal2 - newChecklist:", newChecklist);
+      // console.log("modal2 - newChecklist:", newChecklist);
     },
     addAttachment(newAttachment) {
       this.$emit("attachment", newAttachment);
-      console.log("modal2 - newAttachment:", newAttachment);
+      // console.log("modal2 - newAttachment:", newAttachment);
     },
-    addDueDate(date) {
-      this.$emit("addDueDate", date);
-      console.log("modal2 - date:", date);
+    addDueDate(newDueDate) {
+      this.$emit("dueDate", newDueDate);
+      console.log("modal2 - date:", newDueDate);
+    },
+    updateLable(label) {
+      this.$emit("updateLable", label);
+    },
+    removeLabel(label) {
+      this.$emit("removeLabel", label);
+    },
+    closeDynamicModal() {
+      this.$emit("closeDynamicModal");
     },
   },
   components: {

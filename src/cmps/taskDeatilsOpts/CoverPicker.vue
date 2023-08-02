@@ -1,7 +1,7 @@
 <template>
   <h6>Size</h6>
   <div class="layout">
-    <div class="layout1" :style="{ background: !isCover && !preview ? '#ececec' : preview }">
+    <div class="layout1" @click="setLayout(false)" :style="{ background: !isCover && !preview ? '#ececec' : coverToEdit.color }">
       <div class="bottom-section">
         <div class="line1" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
         <div class="line2" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="layout2" :style="{ background: !isCover ? '#ececec' : preview }">
+    <div class="layout2" @click="setLayout(true)" :style="{ background: !isCover ? '#ececec' : coverToEdit.color }">
       <div class="div"></div>
       <div class="bottom-section">
         <div class="line4" :style="{ background: !isCover && !preview ? 'white' : '' }"></div>
@@ -30,7 +30,7 @@
 
   <h6 class="colors-title">Colors</h6>
   <section class="color-pallate-wide">
-    <div v-for="(color, index) in colorOptions1" :key="index" @click="setBgColor(color)" :class="colorClass1[index]">
+    <div v-for="(color, index) in colorOptions" :key="index" @click="setBgColor(color)" :class="colorClass[index]">
     </div>
   </section>
 
@@ -49,12 +49,19 @@
 
 <script>
 export default {
+  props: {
+    taskToEdit: Object
+  },
   data() {
     return {
+      coverToEdit: {
+        color:'',
+        img:'',
+        isFull: false
+      },
       isCover: false,
-      preview: "",
       lastPick: "",
-      colorOptions1: [
+      colorOptions: [
         //green
         "#f87462",
 
@@ -86,7 +93,7 @@ export default {
         "#e85151",
       ],
 
-      colorClass1: [
+      colorClass: [
         "green",
         "gold",
         "orange",
@@ -110,11 +117,26 @@ export default {
   },
   methods: {
     setBgColor(color) {
-      this.isCover = !(this.lastPick === color && this.preview);
-      this.preview = this.isCover ? color : "";
+    if (this.lastPick === color && this.isCover) {
+      this.isCover = false;
+      this.lastPick = "";
+      this.coverToEdit.color = "";
+    } else {
+      this.isCover = true;
       this.lastPick = color;
-      this.$emit("setBgColor", color);
+      this.coverToEdit.color = color;
+    }
+
+    this.setCover();
+  },
+    setLayout(state) {
+      this.coverToEdit.isFull = state
+      this.setCover()
     },
+    
+    setCover() {
+      this.$emit("setCover", this.coverToEdit);
+    }
   },
 };
 </script>

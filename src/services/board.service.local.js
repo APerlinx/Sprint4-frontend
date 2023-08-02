@@ -67,17 +67,18 @@ async function addBoardMsg(boardId, txt) {
   return msg
 }
 
-function getEmptyBoard(title = '', imgUrl = '', bgColor = '') {
+function getEmptyBoard(title = '', imgUrl = '') {
   return {
     id: utilService.makeId(),
     title,
     imgUrl,
+    bgColor: '',
     isStarred: false,
     archivedAt: Date.now,
     createdBy: {
       _id: 'u101',
       fullname: 'Abi Abambi',
-      imgUrl: 'http://some-img',
+      imgUrl: '',
     },
     style: {
       backgroundImage: '',
@@ -85,6 +86,7 @@ function getEmptyBoard(title = '', imgUrl = '', bgColor = '') {
     labels: _labelOptions(),
     members: _membersOptions(),
     cover: coverOptions(),
+    backGround: backgroundOptions(),
     groups: [],
     activities: [],
   }
@@ -563,7 +565,7 @@ const board = {
           watching: true,
           cover: {
             color: '',
-            imgUrl: 'https://wallpaperaccess.com/full/1131217.jpg',
+            imgUrl: 'https://images.unsplash.com/photo-1576153192396-180ecef2a715?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
             isFull: true,
           },
           comments: [
@@ -1075,11 +1077,6 @@ const board = {
   ],
 }
 
-// ; (async () => {
-//   await storageService.post(STORAGE_KEY, board)
-//   await storageService.post(STORAGE_KEY, board2)
-// })()
-
 const board2 = {
   _id: 'b102',
   title: 'Alon,shay,guy',
@@ -1218,10 +1215,1250 @@ const board2 = {
   ],
 }
 
+const board3 = {
+  _id: 'b101',
+  title: 'Web Development',
+  imgUrl:
+    'https://images.unsplash.com/photo-1661956601031-4cf09efadfce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2376&q=80',
+  isStarred: false,
+  archivedAt: 1589983468418,
+  createdBy: {
+    _id: 'u101',
+    fullname: 'Abi Abambi',
+    imgUrl: 'http://some-img',
+  },
+  style: {
+    backgroundImage: 'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/ocean.svg',
+  },
+  labels: _labelOptions(),
+  members: _membersOptions(),
+  cover: coverOptions(),
+  backGround: backgroundOptions(),
+
+  groups: [
+    {
+      id: 'g101',
+      title: 'Requirement Gathering',
+      tasks: [
+        {
+          id: 'c107',
+          title: 'Identify Project Scope',
+          description: 'Analyze client requirements and define the scope of the website project.',
+          labels: ['l103', 'l104'],
+          watching: false,
+          cover: { color: '#d62828', imgUrl: '', isFull: false },
+          comments: [
+            {
+              id: 'C1',
+              txt: 'Great job on identifying the project scope! @DesignTeam Could you also take a look and provide your feedback?',
+              createdAt: 1674927618000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Website Designer',
+                imgUrl: 'http://example.com/designer.jpg',
+              },
+            },
+            {
+              id: 'C2',
+              txt: '@WebsiteDesigner Sure! I will review it tomorrow.',
+              createdAt: 1674968218000,
+              byMember: {
+                _id: 'u101',
+                fullname: 'Project Manager',
+                imgUrl: 'http://example.com/manager.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL1',
+              title: 'Requirement Gathering Checklist',
+              todos: [
+                {
+                  id: 'T1',
+                  title: 'Conduct client interviews',
+                  isDone: false,
+                },
+                {
+                  id: 'T2',
+                  title: 'Analyze competitor websites',
+                  isDone: true,
+                },
+                {
+                  id: 'T3',
+                  title: 'Identify target audience',
+                  isDone: true,
+                },
+                {
+                  id: 'T4',
+                  title: 'Create user personas',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c103',
+          title: 'Document Functional Requirements',
+          archivedAt: 1589983468418,
+          description: 'Document the functional requirements based on the gathered information.',
+          labels: ['l110', 'l107'],
+          style: {
+            bgColor: '#9c89b8',
+          },
+        },
+        {
+          id: 'c104',
+          title: 'Define Technical Requirements',
+          priority: 'high',
+          description: 'Define the technical requirements and constraints for the website development.',
+          labels: ['l110', 'l107'],
+          comments: [
+            {
+              id: 'C3',
+              txt: 'These technical requirements are essential and need immediate attention.',
+              createdAt: 1674968918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Website Developer',
+                imgUrl: 'http://example.com/developer.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL2',
+              title: 'Technical Requirements Checklist',
+              todos: [
+                {
+                  id: 'T5',
+                  title: 'Select appropriate programming languages',
+                  isDone: false,
+                },
+                {
+                  id: 'T6',
+                  title: 'Identify hosting and server requirements',
+                  isDone: true,
+                },
+                {
+                  id: 'T7',
+                  title: 'Choose database technology',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          memberIds: ['u101'],
+          labelIds: [],
+          dueDate: Date.now(),
+          byMember: {
+            _id: 'u101',
+            username: 'PM',
+            fullname: 'Project Manager',
+            imgUrl: 'http://example.com/manager.jpg',
+          },
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c105',
+          title: 'Perform Feasibility Study',
+          description: 'Evaluate the feasibility of the website development project.',
+          labels: ['l102', 'l103'],
+          watching: true,
+          comments: [
+            {
+              id: 'C4',
+              txt: 'I can help with the feasibility study! @PM',
+              createdAt: 1675030918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Business Analyst',
+                imgUrl: 'http://example.com/analyst.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL3',
+              title: 'Feasibility Study Checklist',
+              todos: [
+                {
+                  id: 'T8',
+                  title: 'Assess project budget and resources',
+                  isDone: true,
+                },
+                {
+                  id: 'T9',
+                  title: 'Identify potential risks and challenges',
+                  isDone: true,
+                },
+                {
+                  id: 'T10',
+                  title: 'Evaluate project timeline',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c106',
+          title: 'Create Requirement Specification Document',
+          description: 'Consolidate all the gathered requirements into a detailed specification document.',
+          labels: ['l104'],
+          style: {
+            bgColor: '#9c89b8',
+          },
+        },
+        {
+          id: 'c108',
+          title: 'Review and Validate Requirements',
+          description: 'Review and validate the documented requirements with the client.',
+          labels: ['l101', 'l105'],
+          checklists: [
+            {
+              id: 'CL4',
+              title: 'Requirements Review Checklist',
+              todos: [
+                {
+                  id: 'T11',
+                  title: 'Schedule meeting with the client',
+                  isDone: false,
+                },
+                {
+                  id: 'T12',
+                  title: 'Present requirements to the client',
+                  isDone: false,
+                },
+                {
+                  id: 'T13',
+                  title: 'Incorporate client feedback',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c109',
+          title: 'Obtain Client Approval',
+          description: 'Seek client approval on the finalized requirement specification document.',
+          labels: ['l101'],
+          style: {
+            bgColor: '#d62828',
+          },
+        },
+        {
+          id: 'c110',
+          title: 'Create Requirement Traceability Matrix',
+          description: 'Develop a traceability matrix to link requirements to design and development stages.',
+          labels: ['l103'],
+          style: {
+            bgColor: '#9c89b8',
+          },
+        },
+      ],
+      style: {},
+    },
+
+    {
+      id: '102',
+      title: 'UX/UI',
+      tasks: [
+        {
+          id: 'c107',
+          title: 'Identify Project Scope',
+          description: 'Analyze client requirements and define the scope of the UX/UI design project.',
+          labels: ['l103', 'l104'],
+          watching: false,
+          cover: { color: '#d62828', imgUrl: '', isFull: false },
+          comments: [
+            {
+              id: 'C1',
+              txt: 'Great job on identifying the project scope! @DesignTeam Could you also take a look and provide your feedback?',
+              createdAt: 1674927618000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Website Designer',
+                imgUrl: 'http://example.com/designer.jpg',
+              },
+            },
+            {
+              id: 'C2',
+              txt: '@WebsiteDesigner Sure! I will review it tomorrow.',
+              createdAt: 1674968218000,
+              byMember: {
+                _id: 'u101',
+                fullname: 'Project Manager',
+                imgUrl: 'http://example.com/manager.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL1',
+              title: 'Requirement Gathering Checklist',
+              todos: [
+                {
+                  id: 'T1',
+                  title: 'Conduct client interviews',
+                  isDone: false,
+                },
+                {
+                  id: 'T2',
+                  title: 'Analyze competitor websites',
+                  isDone: true,
+                },
+                {
+                  id: 'T3',
+                  title: 'Identify target audience',
+                  isDone: true,
+                },
+                {
+                  id: 'T4',
+                  title: 'Create user personas',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c103',
+          title: 'Document Functional Requirements',
+          archivedAt: 1589983468418,
+          description: 'Document the functional requirements based on the gathered information.',
+          labels: ['l110', 'l107'],
+          style: {
+            bgColor: '#9c89b8',
+          },
+        },
+        {
+          id: 'c104',
+          title: 'Define Technical Requirements',
+          priority: 'high',
+          description: 'Define the technical requirements and constraints for the UX/UI design.',
+          labels: ['l110', 'l107'],
+          comments: [
+            {
+              id: 'C3',
+              txt: 'These technical requirements are essential and need immediate attention.',
+              createdAt: 1674968918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Website Developer',
+                imgUrl: 'http://example.com/developer.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL2',
+              title: 'Technical Requirements Checklist',
+              todos: [
+                {
+                  id: 'T5',
+                  title: 'Select appropriate design tools',
+                  isDone: false,
+                },
+                {
+                  id: 'T6',
+                  title: 'Identify screen resolutions',
+                  isDone: true,
+                },
+                {
+                  id: 'T7',
+                  title: 'Determine design guidelines',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          memberIds: ['u101'],
+          labelIds: [],
+          dueDate: Date.now(),
+          byMember: {
+            _id: 'u101',
+            username: 'PM',
+            fullname: 'Project Manager',
+            imgUrl: 'http://example.com/manager.jpg',
+          },
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c105',
+          title: 'Perform Feasibility Study',
+          description: 'Evaluate the feasibility of the UX/UI design project.',
+          labels: ['l102', 'l103'],
+          watching: true,
+          comments: [
+            {
+              id: 'C4',
+              txt: 'I can help with the feasibility study! @PM',
+              createdAt: 1675030918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Business Analyst',
+                imgUrl: 'http://example.com/analyst.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL3',
+              title: 'Feasibility Study Checklist',
+              todos: [
+                {
+                  id: 'T8',
+                  title: 'Assess design resource availability',
+                  isDone: true,
+                },
+                {
+                  id: 'T9',
+                  title: 'Identify potential design constraints',
+                  isDone: true,
+                },
+                {
+                  id: 'T10',
+                  title: 'Evaluate design timeline',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c106',
+          title: 'Create Design Specification Document',
+          description: 'Consolidate all the gathered design requirements into a detailed specification document.',
+          labels: ['l104'],
+          style: {
+            bgColor: '#9c89b8',
+          },
+          cover: {
+            color: '',
+            imgUrl: 'https://images.unsplash.com/photo-1576153192396-180ecef2a715?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
+            isFull: true,
+          },
+        },
+        {
+          id: 'c108',
+          title: 'Review and Validate Design Requirements',
+          description: 'Review and validate the documented design requirements with the client.',
+          labels: ['l101', 'l105'],
+          checklists: [
+            {
+              id: 'CL4',
+              title: 'Design Requirements Review Checklist',
+              todos: [
+                {
+                  id: 'T11',
+                  title: 'Schedule meeting with the client',
+                  isDone: false,
+                },
+                {
+                  id: 'T12',
+                  title: 'Present design requirements to the client',
+                  isDone: false,
+                },
+                {
+                  id: 'T13',
+                  title: 'Incorporate client feedback',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c109',
+          title: 'Obtain Client Approval',
+          description: 'Seek client approval on the finalized design specification document.',
+          labels: ['l101'],
+          style: {
+            bgColor: '#d62828',
+          },
+        },
+        {
+          id: 'c110',
+          title: 'Create Design Prototypes',
+          description: 'Develop interactive design prototypes to demonstrate the user experience.',
+          labels: ['l103'],
+          style: {
+            bgColor: '#9c89b8',
+          },
+        },
+      ],
+      style: {},
+    },
+
+    {
+      id: '103',
+      title: 'Frontend Architecture',
+      tasks: [
+        {
+          id: 'c107',
+          title: 'Identify Project Scope',
+          description: 'Analyze client requirements and define the scope of the frontend architecture project.',
+          labels: ['l103', 'l104'],
+          watching: false,
+          cover: { color: '#d62828', imgUrl: '', isFull: false },
+          comments: [
+            {
+              id: 'C1',
+              txt: 'Great job on identifying the project scope! @FrontendTeam Could you also take a look and provide your feedback?',
+              createdAt: 1674927618000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Frontend Architect',
+                imgUrl: 'http://example.com/architect.jpg',
+              },
+            },
+            {
+              id: 'C2',
+              txt: '@FrontendArchitect Sure! I will review it tomorrow.',
+              createdAt: 1674968218000,
+              byMember: {
+                _id: 'u101',
+                fullname: 'Project Manager',
+                imgUrl: 'http://example.com/manager.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL1',
+              title: 'Requirement Gathering Checklist',
+              todos: [
+                {
+                  id: 'T1',
+                  title: 'Conduct client interviews',
+                  isDone: false,
+                },
+                {
+                  id: 'T2',
+                  title: 'Analyze existing frontend architecture',
+                  isDone: true,
+                },
+                {
+                  id: 'T3',
+                  title: 'Identify technical requirements',
+                  isDone: true,
+                },
+                {
+                  id: 'T4',
+                  title: 'Create architecture diagrams',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c103',
+          title: 'Document Functional Requirements',
+          archivedAt: 1589983468418,
+          description: 'Document the functional requirements based on the gathered information.',
+          labels: ['l110', 'l107'],
+          style: {
+            bgColor: '#9c89b8',
+          },
+        },
+        {
+          id: 'c104',
+          title: 'Define Technical Requirements',
+          priority: 'high',
+          description: 'Define the technical requirements and constraints for the frontend architecture.',
+          labels: ['l110', 'l107'],
+          comments: [
+            {
+              id: 'C3',
+              txt: 'These technical requirements are essential and need immediate attention.',
+              createdAt: 1674968918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Frontend Developer',
+                imgUrl: 'http://example.com/developer.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL2',
+              title: 'Technical Requirements Checklist',
+              todos: [
+                {
+                  id: 'T5',
+                  title: 'Select frontend technology stack',
+                  isDone: false,
+                },
+                {
+                  id: 'T6',
+                  title: 'Identify performance benchmarks',
+                  isDone: true,
+                },
+                {
+                  id: 'T7',
+                  title: 'Choose state management solution',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          memberIds: ['u101'],
+          labelIds: [],
+          dueDate: Date.now(),
+          byMember: {
+            _id: 'u101',
+            username: 'PM',
+            fullname: 'Project Manager',
+            imgUrl: 'http://example.com/manager.jpg',
+          },
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c105',
+          title: 'Perform Feasibility Study',
+          description: 'Evaluate the feasibility of the frontend architecture project.',
+          labels: ['l102', 'l103'],
+          watching: true,
+          comments: [
+            {
+              id: 'C4',
+              txt: 'I can help with the feasibility study! @PM',
+              createdAt: 1675030918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Business Analyst',
+                imgUrl: 'http://example.com/analyst.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL3',
+              title: 'Feasibility Study Checklist',
+              todos: [
+                {
+                  id: 'T8',
+                  title: 'Assess project budget and resources',
+                  isDone: true,
+                },
+                {
+                  id: 'T9',
+                  title: 'Identify potential risks and challenges',
+                  isDone: true,
+                },
+                {
+                  id: 'T10',
+                  title: 'Evaluate project timeline',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c106',
+          title: 'Create Architecture Specification Document',
+          description: 'Consolidate all the gathered requirements into a detailed specification document for the frontend architecture.',
+          labels: ['l104'],
+          style: {
+            bgColor: '#9c89b8',
+          },
+        },
+        {
+          id: 'c108',
+          title: 'Review and Validate Requirements',
+          description: 'Review and validate the documented requirements with the client.',
+          labels: ['l101', 'l105'],
+          checklists: [
+            {
+              id: 'CL4',
+              title: 'Requirements Review Checklist',
+              todos: [
+                {
+                  id: 'T11',
+                  title: 'Schedule meeting with the client',
+                  isDone: false,
+                },
+                {
+                  id: 'T12',
+                  title: 'Present requirements to the client',
+                  isDone: false,
+                },
+                {
+                  id: 'T13',
+                  title: 'Incorporate client feedback',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c109',
+          title: 'Obtain Client Approval',
+          description: 'Seek client approval on the finalized architecture specification document.',
+          labels: ['l101'],
+          style: {
+            bgColor: '#d62828',
+          },
+        },
+        {
+          id: 'c110',
+          title: 'Create Frontend Prototype',
+          description: 'Develop interactive prototypes to demonstrate frontend architecture concepts.',
+          labels: ['l103'],
+          style: {
+            bgColor: '#9c89b8',
+          },
+        },
+      ],
+      style: {},
+    },
+
+    {
+      id: 'g104',
+      title: 'Responsive Design: Make the website responsive',
+      tasks: [
+        {
+          id: 'c107',
+          title: 'Design homepage',
+          description: 'Create the design layout for the homepage',
+          labels: ['l103', 'l104'],
+          watching: false,
+          cover: { color: '#d62828', imgUrl: '', isFull: false },
+          comments: [
+            {
+              id: 'C1',
+              txt: 'Great job on the initial design! @JohnDoe Could you also take a look and provide your feedback?',
+              createdAt: 1674927618000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Alice Smith',
+                imgUrl: 'http://example.com/alice.jpg',
+              },
+            },
+            {
+              id: 'C2',
+              txt: '@AliceSmith Sure! I will review it tomorrow.',
+              createdAt: 1674968218000,
+              byMember: {
+                _id: 'u101',
+                fullname: 'John Doe',
+                imgUrl: 'http://example.com/john.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL1',
+              title: 'Design Checklist',
+              todos: [
+                {
+                  id: 'T1',
+                  title: 'Create wireframes',
+                  isDone: false,
+                },
+                {
+                  id: 'T2',
+                  title: 'Choose color scheme',
+                  isDone: true,
+                },
+                {
+                  id: 'T3',
+                  title: 'Select fonts',
+                  isDone: true,
+                },
+                {
+                  id: 'T4',
+                  title: 'Finalize layout',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c109',
+          title: 'Implement responsive design',
+          description: 'Make the website compatible with various devices',
+          labels: ['l104', 'l105'],
+          watching: false,
+          comments: [],
+          checklists: [
+            {
+              id: 'CL6',
+              title: 'Responsive Design Checklist',
+              todos: [
+                {
+                  id: 'T19',
+                  title: 'Test on mobile devices',
+                  isDone: false,
+                },
+                {
+                  id: 'T20',
+                  title: 'Apply media queries',
+                  isDone: false,
+                },
+                {
+                  id: 'T21',
+                  title: 'Adjust layout for different screen sizes',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#90be6d',
+          },
+        },
+        {
+          id: 'c118',
+          title: 'Optimize typography for mobile',
+          description: 'Adjust font sizes and spacing for better readability on small screens',
+          labels: ['l104', 'l109'],
+          watching: true,
+          comments: [
+            {
+              id: 'C5',
+              txt: 'I have some suggestions for the font sizes. @ResponsiveTeam',
+              createdAt: 1675098918000,
+              byMember: {
+                _id: 'u103',
+                fullname: 'Emma Johnson',
+                imgUrl: 'http://example.com/emma.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL8',
+              title: 'Typography Optimization Checklist',
+              todos: [
+                {
+                  id: 'T26',
+                  title: 'Analyze font size readability on mobile',
+                  isDone: false,
+                },
+                {
+                  id: 'T27',
+                  title: 'Adjust line-height and letter-spacing',
+                  isDone: false,
+                },
+                {
+                  id: 'T28',
+                  title: 'Test font legibility on various devices',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#f15bb5',
+          },
+        },
+        {
+          id: 'c121',
+          title: 'Enhance image responsiveness',
+          description: 'Optimize images and use responsive image techniques',
+          labels: ['l104', 'l106'],
+          watching: true,
+          comments: [
+            {
+              id: 'C6',
+              txt: 'We should also consider using webP format for better image compression. @ResponsiveTeam',
+              createdAt: 1675117318000,
+              byMember: {
+                _id: 'u103',
+                fullname: 'Emma Johnson',
+                imgUrl: 'http://example.com/emma.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL9',
+              title: 'Image Optimization Checklist',
+              todos: [
+                {
+                  id: 'T29',
+                  title: 'Compress images for faster loading',
+                  isDone: false,
+                },
+                {
+                  id: 'T30',
+                  title: 'Implement lazy loading for images',
+                  isDone: false,
+                },
+                {
+                  id: 'T31',
+                  title: 'Use responsive image tags',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#fdae61',
+          },
+        },
+      ],
+      style: {},
+    },
+
+    {
+      id: 'g201',
+      title: 'Cross-Browser and Device Testing: Perform thorough testing',
+      tasks: [
+        {
+          id: 'c203',
+          title: 'Test website on major browsers',
+          description: 'Perform testing on Chrome, Firefox, Safari, and Edge browsers',
+          labels: ['l207', 'l210'],
+          watching: false,
+          cover: { color: '#d62828', imgUrl: 'https://example.com/testing-chrome.png', isFull: true },
+          comments: [
+            {
+              id: 'C11',
+              txt: 'Testing completed on Chrome. @QAteam',
+              createdAt: 1675127618000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Alice Smith',
+                imgUrl: 'http://example.com/alice.jpg',
+              },
+            },
+            {
+              id: 'C12',
+              txt: '@AliceSmith Great job! Please proceed with testing on other browsers.',
+              createdAt: 1675168218000,
+              byMember: {
+                _id: 'u101',
+                fullname: 'John Doe',
+                imgUrl: 'http://example.com/john.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL11',
+              title: 'Browser Testing Checklist',
+              todos: [
+                {
+                  id: 'T43',
+                  title: 'Test website functionality on Chrome',
+                  isDone: true,
+                },
+                {
+                  id: 'T44',
+                  title: 'Verify compatibility on Firefox',
+                  isDone: false,
+                },
+                {
+                  id: 'T45',
+                  title: 'Check rendering on Safari',
+                  isDone: false,
+                },
+                {
+                  id: 'T46',
+                  title: 'Test user experience on Edge',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c209',
+          title: 'Test website on different devices',
+          description: 'Ensure compatibility on various devices - smartphones, tablets, and desktops',
+          labels: ['l207', 'l212'],
+          watching: false,
+          cover: { color: '#4d908e', imgUrl: 'https://example.com/testing-devices.png', isFull: true },
+          comments: [
+            {
+              id: 'C13',
+              txt: 'Devices testing in progress. @QAteam',
+              createdAt: 1675188918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Alice Smith',
+                imgUrl: 'http://example.com/alice.jpg',
+              },
+            },
+            {
+              id: 'C14',
+              txt: '@AliceSmith Thanks for the update! Let me know if you need any assistance.',
+              createdAt: 1675228218000,
+              byMember: {
+                _id: 'u101',
+                fullname: 'John Doe',
+                imgUrl: 'http://example.com/john.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL12',
+              title: 'Device Testing Checklist',
+              todos: [
+                {
+                  id: 'T47',
+                  title: 'Test website responsiveness on smartphones',
+                  isDone: true,
+                },
+                {
+                  id: 'T48',
+                  title: 'Verify usability on tablets',
+                  isDone: false,
+                },
+                {
+                  id: 'T49',
+                  title: 'Check layout on various desktop resolutions',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#90be6d',
+          },
+        },
+      ],
+      style: {},
+    },
+    {
+      id: 'g301',
+      title: 'Optimization and Performance: Improve website performance',
+      tasks: [
+        {
+          id: 'c303',
+          title: 'Minimize CSS and JavaScript files',
+          description: 'Reduce file sizes to improve loading speed',
+          labels: ['l310', 'l307'],
+          watching: false,
+          cover: { color: '#d62828', imgUrl: 'https://example.com/optimize-css-js.png', isFull: true },
+          comments: [
+            {
+              id: 'C21',
+              txt: 'CSS and JS files successfully minimized. @OptimizationTeam',
+              createdAt: 1675247318000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Alice Smith',
+                imgUrl: 'http://example.com/alice.jpg',
+              },
+            },
+            {
+              id: 'C22',
+              txt: '@AliceSmith Excellent work! Now let\'s focus on caching optimization.',
+              createdAt: 1675268218000,
+              byMember: {
+                _id: 'u101',
+                fullname: 'John Doe',
+                imgUrl: 'http://example.com/john.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL21',
+              title: 'CSS and JavaScript Optimization Checklist',
+              todos: [
+                {
+                  id: 'T63',
+                  title: 'Minify CSS files',
+                  isDone: true,
+                },
+                {
+                  id: 'T64',
+                  title: 'Compress JavaScript files',
+                  isDone: true,
+                },
+                {
+                  id: 'T65',
+                  title: 'Combine CSS and JS files',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#26de81',
+          },
+        },
+        {
+          id: 'c309',
+          title: 'Leverage browser caching',
+          description: 'Set caching headers to reduce server requests',
+          labels: ['l310', 'l307'],
+          watching: false,
+          cover: { color: '#4d908e', imgUrl: 'https://example.com/leverage-caching.png', isFull: true },
+          comments: [
+            {
+              id: 'C23',
+              txt: 'Caching headers applied successfully. @OptimizationTeam',
+              createdAt: 1675288918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Alice Smith',
+                imgUrl: 'http://example.com/alice.jpg',
+              },
+            },
+            {
+              id: 'C24',
+              txt: '@AliceSmith Great job! Let\'s also optimize image loading.',
+              createdAt: 1675308218000,
+              byMember: {
+                _id: 'u101',
+                fullname: 'John Doe',
+                imgUrl: 'http://example.com/john.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL22',
+              title: 'Caching Optimization Checklist',
+              todos: [
+                {
+                  id: 'T66',
+                  title: 'Set caching headers for CSS and JS files',
+                  isDone: true,
+                },
+                {
+                  id: 'T67',
+                  title: 'Enable caching for static assets',
+                  isDone: false,
+                },
+                {
+                  id: 'T68',
+                  title: 'Specify expiration time for cached resources',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#90be6d',
+          },
+        },
+        {
+          id: 'c315',
+          title: 'Optimize image loading',
+          description: 'Compress and lazy load images to reduce page size',
+          labels: ['l310', 'l306'],
+          watching: true,
+          cover: { color: '#f15bb5', imgUrl: 'https://example.com/optimize-images.png', isFull: true },
+          comments: [
+            {
+              id: 'C25',
+              txt: 'Image optimization completed. @OptimizationTeam',
+              createdAt: 1675328918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Alice Smith',
+                imgUrl: 'http://example.com/alice.jpg',
+              },
+            },
+            {
+              id: 'C26',
+              txt: '@AliceSmith Awesome! Now let\'s focus on code splitting.',
+              createdAt: 1675348218000,
+              byMember: {
+                _id: 'u101',
+                fullname: 'John Doe',
+                imgUrl: 'http://example.com/john.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL23',
+              title: 'Image Loading Optimization Checklist',
+              todos: [
+                {
+                  id: 'T69',
+                  title: 'Compress images for faster loading',
+                  isDone: true,
+                },
+                {
+                  id: 'T70',
+                  title: 'Implement lazy loading for images',
+                  isDone: true,
+                },
+                {
+                  id: 'T71',
+                  title: 'Optimize image formats (e.g., WebP)',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
+          style: {
+            bgColor: '#fdae61',
+          },
+        },
+      ],
+      style: {},
+    },
+  ]
+}
+
 // ; (async () => {
 //   await storageService.post(STORAGE_KEY, board)
 //   await storageService.post(STORAGE_KEY, board2)
+//   await storageService.post(STORAGE_KEY, board3)
 // })()
+
+
+
+
+
+
+
 
 function coverOptions() {
   return {

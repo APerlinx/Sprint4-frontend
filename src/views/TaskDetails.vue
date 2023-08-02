@@ -1,25 +1,26 @@
 <template>
     <div class="task-back-drop">
         <!-- <section v-if="taskToEdit" class="task-details"> -->
-        <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
+        <!-- <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
             closeModal()
             editTask()
-        }">
+        }"> -->
+        <section v-if="taskToEdit" class="task-details">
             <section class="task-details-header">
 
-                <div class="task-details-cover" v-if="coverColor" :style="{ backgroundColor: coverColor }">
+                <div class="task-details-cover" v-if="taskToEdit.cover?.color" :style="{ backgroundColor: taskToEdit.cover?.color }">
                     <p class="task-details-cover-menu" @click="togglecover()">Cover</p>
                 </div>
 
                 <div class="icon-title-container">
                     <span class="icon card-big"></span>
                     <input type="text" class="details-title" v-model="taskToEdit.title" />
-                    <span @click="closeModal(); editTask();" class="icon close close-task-details"></span>
+                    <span @click="closeModal(); editTask();" class="icon big-close close-task-details"></span>
                 </div>
 
                 <span class="task-in-list">
                     in list <span>&nbsp;</span><span class="group-ops"> {{ group.title
-                    }}</span><span>&nbsp;&nbsp;&nbsp;</span><span :class="{ watchActive: !isWatchActive }"
+                    }}</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span :class="{ watchActive: !isWatchActive }"
                         class="icon eye"></span>
                 </span>
             </section>
@@ -72,7 +73,7 @@
                         @focus="hideBtn = true" placeholder="Add a more detailed description..."></textarea>
                     <div v-if="hideBtn">
                         <div class="btn-save-close">
-                            <button class="btn">Save</button>
+                            <button class="btn btn-save">Save</button>
                             <!-- @click.stop="onTaskEdit" -->
                             <button class="btn" @click="closeTodoTitle">Cancel</button>
                         </div>
@@ -107,13 +108,13 @@
                         <button class="btn" @click="set(cmp, idx)"> <span class="icon"
                                 :class="`icon ${dynamicIcons[idx]}`"></span>
                             {{ dynamicNames[idx] }} </button>
-
                     </div>
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
                             @toggleMember="toggleMember" @saveLabel="saveLabel" @checklist="addChecklist"
-                            @addDueDate="addDueDate" @attachment="addAttachment" @setBgColor="setBgColor" />
+                            @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
+                            @attachment="addAttachment"  @setCover="setCover" />
                     </template>
                 </Popper>
                 <div class="action-btns-in-btns">
@@ -153,7 +154,7 @@ export default {
             hideBtn: false,
             isWatchActive: false,
             watch: "Watch",
-            // isDynamicModalOpen: true,
+            isDynamicModal: false,
             actionCmpType: null,
             actionCmpName: null,
             isCoverActive: false,
@@ -161,7 +162,6 @@ export default {
             dynamicIcons: ["member", "label", "checklist", "date", "attachment", "cover", "date"],
             coverColor: '',
             currColor: '',
-            check: 'hello'
         };
     },
     created() {
@@ -169,21 +169,28 @@ export default {
     },
     methods: {
         set(cmp, idx) {
-            console.log('cmp:', cmp)
-            console.log('idx:', idx)
+            this.isDynamicModal = true
             this.actionCmpType = cmp;
             this.actionCmpName = this.dynamicNames[idx];
         },
 
-        setBgColor(color) {
-            if (this.color === this.currColor) {
-                this.preview = ''
-                this.currColor = color
-            } else {
-                this.currColor = color
-                this.coverColor = color
-                this.isCoverActive = true
-            }
+       setCover(cover) {
+        if (this.taskToEdit.hasOwnProperty("cover")) {
+         this.taskToEdit.cover = cover;
+         } else {
+         this.taskToEdit = { ...this.taskToEdit, cover: cover };
+         }
+         this.editTask()
+
+        },
+
+        removeLabel(board) {
+            this.board = board
+            this.editTask()
+        },
+        updateLable(board) {
+            this.board = board
+            this.editTask()
         },
         addDueDate(date) {
             // console.log("🚀 ~ file: TaskDetails.vue:196 ~ addDueDate ~ date:", date)
@@ -273,8 +280,7 @@ export default {
             this.isCoverActive = !this.isCoverActive;
         },
         closeDynamicModal() {
-            // this.actionCmpType = null
-            // this.actionCmpName = null
+            this.isDynamicModal = false
         },
         closeModal() {
             this.$router.back();

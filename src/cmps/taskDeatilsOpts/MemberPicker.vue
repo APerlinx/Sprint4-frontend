@@ -19,7 +19,7 @@
                         </div>
 
                         <div>
-                            <span class="icon checked"></span>
+                            <!-- <span class="icon checked"></span> -->
                         </div>
                     </div>
                 </li>

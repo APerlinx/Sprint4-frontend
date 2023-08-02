@@ -20,7 +20,8 @@
     border: none;
     justify-content: center;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
+    margin-top: 12px;
     outline: none;
     transition-duration: 85ms;
     transition-property: background-color, border-color, box-shadow;
@@ -45,6 +46,7 @@
     flex-direction: column;
 
     h3 {
+        margin-top: -2px;
         font-size: 12px;
     }
 }
@@ -53,15 +55,21 @@
     display: flex;
     flex: 1;
     margin: 0 0 0 -40px;
+    border-radius: 4px;
     align-items: center;
     color: #172b4d;
+    transition-duration: 85ms;
+    transition-property: background-color, border-color, box-shadow;
+    transition-timing-function: ease;
+
+    padding: 4px;
 
     span {
         padding: 0;
     }
 
     &:hover {
-        background-color: #F1F2F4;
+        background-color: #d0d4db;
     }
 
     .member-name {
@@ -78,5 +86,37 @@
         border-radius: 50%;
         border: 1px solid white;
         background-color: rgb(168, 164, 164);
+    }
+}
+
+
+.add-member {
+    margin: 0px 0px 0px 10px;
+    border: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    box-shadow: none;
+    box-sizing: border-box;
+    height: 32px;
+    margin: 8px 20px 0 0;
+    width: 100%;
+    // padding: 0 16px 8px 8px;
+    max-width: 300px;
+    padding: 6px 12px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition-duration: 85ms;
+    transition-property: background-color, border-color, box-shadow;
+    transition-timing-function: ease;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #e4e6ea;
+    color: #172b4d;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #d0d4db;
     }
 }

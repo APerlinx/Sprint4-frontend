@@ -1,3 +1,4 @@
+import {focusDirective} from './directives.js'
 import { createApp } from 'vue'
 
 import { router } from './router.js'
@@ -19,6 +20,7 @@ app.use(ElementPlus)
 app.use(store)
 app.use(VCalendar, {})
 
+app.directive('focus', focusDirective)
 app.mount('#app')
 
 
