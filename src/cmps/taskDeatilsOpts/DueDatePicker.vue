@@ -2,7 +2,7 @@
     <div class="date-picker">
         <VDatePicker locale="en" v-model="date" mode="dateTime" is24hr hide-time-header />
     </div>
-    <button @click="saveDueDate" class="save">save</button>
+    <button @click="saveDueDate" class="btn-date-save">save</button>
 </template>
 
 <script>

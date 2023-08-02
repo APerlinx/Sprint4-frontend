@@ -80,3 +80,47 @@
 //         background-color: rgb(168, 164, 164);
 //     }
 // }
+
+
+.date-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-date-save {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+
+    margin: 0px 0px 0px 10px;
+    border: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    box-shadow: none;
+    box-sizing: border-box;
+    height: 32px;
+    margin: 8px 20px 0 0;
+    width: 100%;
+    // padding: 0 16px 8px 8px;
+    max-width: 300px;
+    padding: 6px 12px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition-duration: 85ms;
+    transition-property: background-color, border-color, box-shadow;
+    transition-timing-function: ease;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #e4e6ea;
+    color: #172b4d;
+    text-align: left;
+    cursor: pointer;
+    background-color: #0c66e4;
+    color: white;
+
+    &:hover {
+        background-color: #05c;
+    }
+}
