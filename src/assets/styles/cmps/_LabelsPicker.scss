@@ -15,6 +15,7 @@
 }
 
 .labels-container {
+    gap: 5px;
     margin-inline: 0.3em;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans",
         "Helvetica Neue", sans-serif;
@@ -35,7 +36,6 @@
         align-items: center;
         height: rem(36px);
         width: 100%;
-        margin-block-end: rem(5px);
 
         .pencil {
             height: rem(16px);
@@ -81,8 +81,8 @@
             h5 {
                 padding: 0.5em 1em;
                 font-size: 0.9em;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans",
-                    "Helvetica Neue", sans-serif;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
+                    "Droid Sans", "Helvetica Neue", sans-serif;
                 font-weight: 500;
             }
         }

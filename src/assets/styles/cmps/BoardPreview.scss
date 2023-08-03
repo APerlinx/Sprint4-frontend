@@ -2,23 +2,23 @@
   position: relative;
   height: 100px;
   width: 200px;
-  border-radius: em(3, 14);
   padding: 1em;
   // background-size: cover;
   text-shadow: 0 0 0.5px rgba(0, 0, 0, 0);
-  border-radius: em(3, 14);
+  border-radius: em(5, 14);
   overflow: hidden;
+  box-shadow: 5px 5px–––– 10px rgba(128, 128, 128, 0.13);
 
   .drop {
     position: absolute;
     inset: 0;
     border-radius: em(3px, 14px);
-    background-color: rgba(0, 0, 0, 0.17);
+    background-color: rgba(0, 0, 0, 0.239);
     z-index: 0;
   }
 
   &:hover .drop {
-    background-color: rgba(0, 0, 0, 0.23);
+    background-color: rgba(0, 0, 0, 0.339);
   }
   &:hover .btn-star {
     transform: translateX(0);
@@ -27,7 +27,7 @@
   h2 {
     color: white;
     font-size: 0.9rem;
-    padding: 0.6em;
+    padding: 0.9em 0.7em;
   }
   .btn-star {
     position: absolute;

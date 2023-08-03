@@ -311,7 +311,7 @@ const board1 = {
           id: 'c105',
           title: 'Perform Feasibility Study',
           description: 'Evaluate the feasibility of the website development project.',
-          labels: ['l102', 'l103'],
+          labels: ['l109'],
           watching: true,
           comments: [
             {
@@ -353,19 +353,56 @@ const board1 = {
           },
         },
         {
-          id: 'c106',
-          title: 'Create Requirement Specification Document',
-          description: 'Consolidate all the gathered requirements into a detailed specification document.',
-          labels: ['l104'],
+          id: 'c132s',
+          title: 'Create requirement',
+          description: 'Evaluate the feasibility of the website development project.',
+          labels: ['l102', 'l103'],
+          watching: true,
+          cover: { color: '', imgUrl: '', isFull: false },
+          comments: [
+            {
+              id: 'C4',
+              txt: 'I can help with the feasibility study! @PM',
+              createdAt: 1675030918000,
+              byMember: {
+                _id: 'u102',
+                fullname: 'Business Analyst',
+                imgUrl: 'http://example.com/analyst.jpg',
+              },
+            },
+          ],
+          checklists: [
+            {
+              id: 'CL3',
+              title: 'Feasibility Study Checklist',
+              todos: [
+                {
+                  id: 'T8',
+                  title: 'Assess project budget and resources',
+                  isDone: true,
+                },
+                {
+                  id: 'T9',
+                  title: 'Identify potential risks and challenges',
+                  isDone: true,
+                },
+                {
+                  id: 'T10',
+                  title: 'Evaluate project timeline',
+                  isDone: false,
+                },
+              ],
+            },
+          ],
           style: {
-            bgColor: '#9c89b8',
+            bgColor: '#26de81',
           },
         },
         {
           id: 'c108',
           title: 'Review and Validate Requirements',
           description: 'Review and validate the documented requirements with the client.',
-          labels: ['l101', 'l102', '103', '104'],
+          labels: [],
           cover: { color: '#8591a2', imgUrl: '', isFull: false },
           checklists: [
             {
@@ -486,7 +523,7 @@ const board1 = {
           title: 'Information Architecture',
           archivedAt: 1589983468418,
           description: 'Create a clear and organized information architecture for the user interface.',
-          labels: ['l210', 'l207'],
+          labels: [],
           cover: { color: '#faa73d', imgUrl: '', isFull: false },
           style: {
             bgColor: '#9c89b8',
@@ -498,7 +535,7 @@ const board1 = {
           title: 'Wireframing',
           priority: 'high',
           description: 'Create wireframes to visualize the layout and structure of the user interface.',
-          labels: ['l112', 'l102', 'l103'],
+          labels: ['l102', 'l103'],
           cover: { color: '#d62828', imgUrl: '', isFull: false },
           comments: [
             {
@@ -599,7 +636,7 @@ const board1 = {
           id: 'c205',
           title: 'Prototype and Interaction',
           description: 'Build interactive prototypes to test and validate user interactions.',
-          labels: ['l204', 'l210'],
+          labels: [],
           style: {
             bgColor: '#9c89b8',
           },
@@ -614,7 +651,7 @@ const board1 = {
           id: 'c206',
           title: 'Usability Testing',
           description: 'Conduct usability testing to evaluate the user experience and gather feedback.',
-          labels: ['l112'],
+          labels: [],
           cover: { color: '#61c7d2', imgUrl: '', isFull: false },
           style: {
             bgColor: '#9c89b8',
@@ -690,7 +727,7 @@ const board1 = {
           title: 'Create Main Layout',
           archivedAt: 1589983468418,
           description: 'Build the main layout structure for the front-end application.',
-          labels: ['l310', 'l307'],
+          labels: [],
           style: {
             bgColor: '#9c89b8',
           },
@@ -755,7 +792,7 @@ const board1 = {
           id: 'c304',
           title: 'Build UI Components',
           description: 'Develop reusable UI components for the front-end application.',
-          labels: ['l302', 'l303'],
+          labels: [],
           watching: true,
           comments: [
             {
@@ -871,7 +908,7 @@ const board1 = {
           title: 'Mobile Optimization',
           archivedAt: 1589983468418,
           description: 'Optimize the front-end application for a seamless mobile experience.',
-          labels: ['l410', 'l407'],
+          labels: [],
           style: {
             bgColor: '#9c89b8',
           },
@@ -882,7 +919,7 @@ const board1 = {
           title: 'Tablet Support',
           priority: 'high',
           description: 'Ensure proper support and display for tablet devices.',
-          labels: ['l410', 'l407'],
+          labels: [],
           comments: [
             {
               id: 'C13',
@@ -970,7 +1007,7 @@ const board1 = {
           id: 'c405',
           title: 'Performance Optimization',
           description: 'Optimize front-end performance to ensure faster loading and smoother interactions.',
-          labels: ['l115', 'l105'],
+          labels: [],
           style: {
             bgColor: '#9c89b8',
           },
@@ -1050,7 +1087,7 @@ const board1 = {
           title: 'Semantic HTML Elements',
           archivedAt: 1589983468418,
           description: 'Utilize semantic HTML elements for better accessibility and SEO.',
-          labels: ['l610', 'l607'],
+          labels: [],
           cover: { color: '#9f905f', imgUrl: '', isFull: false },
           style: {
             bgColor: '#e85151',
@@ -1061,7 +1098,7 @@ const board1 = {
           title: 'Forms and Inputs',
           priority: 'high',
           description: 'Create forms and implement various input elements for user interactions.',
-          labels: ['l610', 'l607'],
+          labels: [],
           comments: [
             {
               id: 'C19',
@@ -1114,7 +1151,7 @@ const board1 = {
           id: 'c604',
           title: 'Responsive Images',
           description: 'Implement responsive images for various screen sizes and resolutions.',
-          labels: ['l602', 'l603'],
+          labels: ['l102'],
           cover: { color: '#9f90ef', imgUrl: '', isFull: false },
           watching: true,
           comments: [
@@ -1160,7 +1197,7 @@ const board1 = {
           id: 'c605',
           title: 'HTML Accessibility',
           description: 'Ensure proper HTML accessibility to make the application usable for everyone.',
-          labels: ['l602'],
+          labels: ['l105'],
           style: {
             bgColor: '#9c89b8',
           },
@@ -1228,7 +1265,7 @@ const board1 = {
           title: 'Layout Styling',
           archivedAt: 1589983468418,
           description: 'Apply styles to the layout elements and create responsive layouts.',
-          labels: ['l710', 'l707'],
+          labels: ['l102', 'l108'],
           style: {
             bgColor: '#9c89b8',
           },
@@ -1238,7 +1275,7 @@ const board1 = {
           title: 'Typography',
           priority: 'high',
           description: 'Define and apply typography styles for better readability and aesthetics.',
-          labels: ['l03', 'l102'],
+          labels: ['l103', 'l102'],
           comments: [
             {
               id: 'C22',
@@ -1290,7 +1327,7 @@ const board1 = {
           id: 'c704',
           title: 'Buttons and Forms',
           description: 'Style buttons and form elements for better user interactions and aesthetics.',
-          labels: ['l702', 'l703'],
+          labels: [],
           watching: true,
           comments: [
             {
@@ -1335,7 +1372,7 @@ const board1 = {
           id: 'c705',
           title: 'Animations and Transitions',
           description: 'Implement animations and transitions for better user engagement and interactivity.',
-          labels: ['l114'],
+          labels: ['l108'],
           dueDate: Date.now(),
           cover: { color: '#e1b304', imgUrl: '', isFull: false },
           style: {
@@ -1359,7 +1396,7 @@ const board1 = {
           id: 'c501',
           title: 'Implement Core Functionality',
           description: 'Develop the core functionality and logic of the front-end application using JavaScript.',
-          labels: ['l503', 'l504'],
+          labels: ['l109', 'l104'],
           watching: false,
           cover: { color: '#d62828', imgUrl: '', isFull: false },
           comments: [
@@ -1406,7 +1443,7 @@ const board1 = {
           title: 'Data Manipulation',
           archivedAt: 1589983468418,
           description: 'Handle data manipulation and interactions with backend APIs using JavaScript.',
-          labels: ['l510', 'l507'],
+          labels: [],
           style: {
             bgColor: '#9c89b8',
           },
@@ -1416,7 +1453,7 @@ const board1 = {
           title: 'Form Validation',
           priority: 'high',
           description: 'Implement form validation to ensure data integrity and user input validation.',
-          labels: ['l510', 'l507'],
+          labels: [],
           comments: [
             {
               id: 'C16',
@@ -1468,7 +1505,7 @@ const board1 = {
           id: 'c504',
           title: 'Client-Side Data Storage',
           description: 'Implement client-side data storage using local storage or cookies.',
-          labels: ['l502', 'l503'],
+          labels: [],
           watching: true,
           comments: [
             {

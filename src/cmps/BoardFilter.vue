@@ -17,6 +17,7 @@
 
             <ul class="output-list">
               <li v-for="board in filteredBoards" :key="board._id">
+                <img :src="board.imgUrl" alt="">
                 <RouterLink :to="'/details/' + board._id">
                   <div class="board-select">
                     <img v-if="board.imgUrl" :src="board.imgUrl" alt="B" />

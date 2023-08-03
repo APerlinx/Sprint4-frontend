@@ -10,7 +10,7 @@
 
                 <div class="task-details-cover" v-if="taskToEdit.cover?.color"
                     :style="{ backgroundColor: taskToEdit.cover?.color }">
-                    <p class="task-details-cover-menu" @click="togglecover()">Cover</p>
+                    <p v-if="haveCover" class="task-details-cover-menu" @click="togglecover()">Cover</p>
                 </div>
 
                 <div class="icon-title-container">
@@ -33,7 +33,8 @@
                     <!-- <Members v-for="member in taskToEdit.members" :key="member.id" :member="member" /> -->
                     <Members :task="taskToEdit" :board="board" />
 
-                    <Labels :task="taskToEdit" :board="board" />
+                    <Labels :task="taskToEdit" :board="board" @saveLabel="saveLabel" @removeLabel="removeLabel"
+                        @updateLable="updateLable" />
 
                     <div class="notifications-container">
                         <h5>Notifications</h5>
@@ -81,6 +82,7 @@
                     </div>
                 </div>
 
+
                 <div class="icon-title-container-description">
                     <span class="icon attachment-big"></span>
                     <h3 class="details-title-big">Attachment</h3>
@@ -105,8 +107,12 @@
 
 
 
-                <Attachment v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
-                    @updateChecklist="updateChecklist" />
+                <!-- <section class="td-section" v-if="taskData.task?.attachments?.length">
+                    <attachments :attachments="taskData.task?.attachments" />
+                </section> -->
+                <!-- <Attachment v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
+                    @updateChecklist="updateChecklist" /> -->
+
                 <!-- <Checklist /> -->
                 <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
                     @updateChecklist="updateChecklist" />
@@ -136,6 +142,9 @@
                                 :class="`icon ${dynamicIcons[idx]}`"></span>
                             {{ dynamicNames[idx] }} </button>
                     </div>
+
+                    <!-- v-if="!isCover || cmp !== 'CoverPicker'" -->
+
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
@@ -165,7 +174,7 @@ import DynamicModal from "./DynamicModal.vue";
 import Checklist from "../cmps/Checklist.vue"
 import Members from "../cmps/Members.vue";
 import Labels from "../cmps/Labels.vue";
-import AttachmentList from "../cmps/AttachmentList.vue"
+import Attachment from "../cmps/AttachmentPreview.vue"
 import Dates from "../cmps/Dates.vue"
 import { boardService } from "../services/board.service.local.js";
 
@@ -184,7 +193,7 @@ export default {
             isDynamicModal: false,
             actionCmpType: null,
             actionCmpName: null,
-            isCoverActive: false,
+            isCover: false,
             dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachment", "Cover", "Custom Fields"],
             dynamicIcons: ["member", "label", "checklist", "date", "attachment", "cover", "date"],
             coverColor: '',
@@ -331,6 +340,17 @@ export default {
         cmpOrder() {
             return this.$store.getters.cmpsOrder;
         },
+        haveCover() {
+            if (this.taskToEdit.cover?.color) {
+                this.isCover = true
+            }
+            return this.taskToEdit.cover?.color
+        },
+        showCoverButton() {
+            return this.cmpOrder.map((cmp, idx) => {
+                return !cmp.isCover;
+            });
+        },
     },
     unmounted() {
         // this.$store.commit({ type: 'setCurrTask', task: null })
@@ -342,7 +362,7 @@ export default {
         Popper,
         defineComponent,
         Labels,
-        AttachmentList,
+        Attachment,
         Dates,
     },
     directives: {
