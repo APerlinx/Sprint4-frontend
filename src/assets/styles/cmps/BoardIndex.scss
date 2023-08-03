@@ -1,9 +1,8 @@
 .index-layout {
   display: grid;
-  grid-template-columns: 1fr 1400px 1fr;
+  grid-template-columns: 1fr 1150px 1fr;
   .board-container {
     grid-column: 2;
-    padding: 2em 10em;
 
     .workspace-title {
       margin-block-start: rem(55px);
@@ -96,7 +95,7 @@
       font-weight: 600;
       margin: em(11, 14) 0;
     }
-    .create-board {
+    .index-create-board {
       position: relative;
       @include board;
       display: flex;
@@ -104,6 +103,11 @@
       align-items: center;
       background-color: #f1f2f4;
       cursor: pointer;
+
+      .index-container {
+        transform: translate(35px, -60px);
+
+      }
 
       .board-title {
         font-weight: 200;

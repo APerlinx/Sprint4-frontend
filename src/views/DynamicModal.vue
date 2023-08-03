@@ -17,7 +17,7 @@
         @removeLabel="removeLabel"
         @setCover="setCover"
         @closeEditModal="closeDynamicModal"
-        @attachment="addAttachment"
+        @attachment="addAttachment" 
       >
       </component>
     </section>

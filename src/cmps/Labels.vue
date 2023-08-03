@@ -3,26 +3,45 @@
     <h5>Labels</h5>
     <div class="labels">
       <div v-for="labelId in task.labels" :key="labelId">
-        <div
-          class="label"
-          :style="{ backgroundColor: getLabel(labelId).color }"
-        >
-          <h6 :style="{color: isDarkColor(getLabel(labelId).color) ? 'white' : ''} ">{{ getLabelTitle(labelId) }}</h6>
+        <div class="label" :style="{ backgroundColor: getLabelColor(labelId) }">
+          <h6
+            :style="{
+              color: isDarkColor(getLabelColor(labelId)) ? 'white' : '',
+            }"
+          >
+            {{ getLabelTitle(labelId) }}
+          </h6>
         </div>
       </div>
-      <button class="add-label"><span class="icon plus"></span></button>
+      <button @click="isLabelModal = !isLabelModal" class="add-label">
+        <span class="icon plus"> </span>
+        <div v-if="isLabelModal" class="label-modal">
+          <DynamicModal
+            :actionCmpType="'LabelsPicker'"
+            :actionCmpName="'Labels'"
+            :taskToEdit="taskToEdit"
+            :board="board"
+            @saveLabel="saveLabel"
+            @removeLabel="removeLabel"
+            @updateLable="updateLable"
+          />
+        </div>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import DynamicModal from "../views/DynamicModal.vue";
 export default {
   props: {
     task: Object,
     board: Object,
   },
   data() {
-    return {};
+    return {
+      isLabelModal: false,
+    };
   },
   methods: {
     getLabel(id) {
@@ -38,6 +57,15 @@ export default {
 
       return luma < 100;
     },
+    saveLabel(labelId) {
+      this.$emit("saveLabel", labelId);
+    },
+    updateLable(board) {
+      this.$emit("updateLable", board);
+    },
+    removeLabel(board) {
+      this.$emit("removeLabel", board);
+    },
   },
   computed: {
     getLabelTitle() {
@@ -46,6 +74,16 @@ export default {
         return label ? label.title : "";
       };
     },
+    getLabelColor() {
+      return (id) => {
+        const label = this.board.labels.find((label) => label.id === id);
+        return label ? label.color : "";
+      };
+    },
+  },
+  components: {
+    // LabelsPicker,
+    DynamicModal,
   },
 };
 </script>

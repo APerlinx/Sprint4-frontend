@@ -9,7 +9,8 @@
             <section class="task-details-header">
 
                 <div class="task-details-cover" v-if="taskToEdit.cover?.color" :style="{ backgroundColor: taskToEdit.cover?.color }">
-                    <p class="task-details-cover-menu" @click="togglecover()">Cover</p>
+                    <p v-if="haveCover"
+                    class="task-details-cover-menu" @click="togglecover()">Cover</p>
                 </div>
 
                 <div class="icon-title-container">
@@ -32,7 +33,11 @@
                     <!-- <Members v-for="member in taskToEdit.members" :key="member.id" :member="member" /> -->
                     <Members :task="taskToEdit" :board="board" />
 
-                    <Labels :task="taskToEdit" :board="board" />
+                    <Labels :task="taskToEdit" :board="board" 
+                    @saveLabel="saveLabel"
+                    @removeLabel="removeLabel"
+                    @updateLable="updateLable"
+                    />
 
                     <div class="notifications-container">
                         <h5>Notifications</h5>
@@ -109,6 +114,9 @@
                                 :class="`icon ${dynamicIcons[idx]}`"></span>
                             {{ dynamicNames[idx] }} </button>
                     </div>
+
+                    <!-- v-if="!isCover || cmp !== 'CoverPicker'" -->
+
                     <template #content>
                         <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
                             :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
@@ -125,6 +133,7 @@
                     <button class="btn"><span class="icon archive"></span>Archive</button>
                     <button class="btn"><span class="icon share"></span>Share</button>
                 </div>
+                <pre>{{ isCover }}</pre>
 
             </section>
         </section>
@@ -157,7 +166,7 @@ export default {
             isDynamicModal: false,
             actionCmpType: null,
             actionCmpName: null,
-            isCoverActive: false,
+            isCover:false,
             dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachment", "Cover", "Custom Fields"],
             dynamicIcons: ["member", "label", "checklist", "date", "attachment", "cover", "date"],
             coverColor: '',
@@ -305,6 +314,17 @@ export default {
         cmpOrder() {
             return this.$store.getters.cmpsOrder;
         },
+        haveCover() {
+            if(this.taskToEdit.cover?.color) {
+                this.isCover = true
+            }
+            return this.taskToEdit.cover?.color
+        },
+        showCoverButton() {
+             return this.cmpOrder.map((cmp, idx) => {
+             return !cmp.isCover;
+             });
+  },
     },
     unmounted() {
         // this.$store.commit({ type: 'setCurrTask', task: null })

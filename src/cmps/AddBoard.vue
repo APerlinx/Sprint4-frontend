@@ -2,7 +2,7 @@
   <div class="add-modal">
     <div class="action">
       <div class="check"></div>
-      <h3 class="title">Create boarding</h3>
+      <h3 class="title">Create board</h3>
       <span class="close-icon" @click="closeModal"></span>
     </div>
 
@@ -12,9 +12,9 @@
     </div>
 
     <h6 class="background-title">Background</h6>
-    <!-- <div class="img-picker">
+    <div class="img-picker">
       <ImgPicker @setBgImg="setBgImg" />
-    </div> -->
+    </div>
 
     <div class="bg-picker">
       <ColorPicker @setBgColor="setBgColor" />
@@ -53,7 +53,7 @@ export default {
   methods: {
     closeModal() {
       this.$emit('closeModal')
-    }
+    },
     saveBoard() {
       if (!this.boardToEdit.title) return;
       this.$emit("save", this.boardToEdit);
