@@ -50,7 +50,7 @@
           <AddBoard
             v-if="isAddBoard"
             @save="saveBoard"
-            @closeModal="isAddBoard=false"
+            @closeModal="isAddBoard = false"
             v-click-outside="closeModals"
           />
         </div>
@@ -58,13 +58,13 @@
 
       <div class="right">
         <div class="filter-container">
-          <img src="../assets/styles/img/search.svg" alt="">
-          <span class="search-icon" ></span>
           <BoardFilter @filterByTxt="filterByTxt" />
+          <div class="search-icon">
+            <img class="search-icon-img" src="../assets/styles/img/search.svg" alt="" />
+          </div>
         </div>
-        <span class="contrast"
-          ><img src="../assets/styles/img/contrast.png" alt=""
-        /></span>
+
+        <img src="../assets/styles/img/contrast.png" alt="" />
         <span class="user">SZ</span>
       </div>
     </nav>

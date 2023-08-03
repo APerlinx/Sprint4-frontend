@@ -175,7 +175,6 @@ const board1 = {
   backGround: backgroundOptions(),
 
   groups: [
-    //requirment
     {
       id: 'g101',
       title: 'Requirement Gathering',
@@ -452,7 +451,6 @@ const board1 = {
       ],
       style: {},
     },
-    //UX/UI
     {
       id: '105',
       title: 'UX/UI',
@@ -660,7 +658,6 @@ const board1 = {
       ],
       style: {},
     },
-    //frontend
     {
       id: '106',
       title: 'Frontend Development',
@@ -851,7 +848,7 @@ const board1 = {
       ],
       style: {},
     },
-    //responsive
+
     {
       id: '110',
       title: 'Responsive Design',
@@ -1020,7 +1017,6 @@ const board1 = {
       ],
       style: {},
     },
-    //HTML
     {
       id: '111',
       title: 'HTML Development',
@@ -1210,7 +1206,6 @@ const board1 = {
       ],
       style: {},
     },
-    // CSS
     {
       id: '114',
       title: 'CSS Development',
@@ -1387,7 +1382,6 @@ const board1 = {
       ],
       style: {},
     },
-    //javaScript
     {
       id: '113',
       title: 'JavaScript Development',

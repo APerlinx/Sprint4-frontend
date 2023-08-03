@@ -149,7 +149,8 @@ import Members from "../cmps/Members.vue";
 import Labels from "../cmps/Labels.vue";
 import AttachmentList from "../cmps/AttachmentList.vue"
 import Dates from "../cmps/Dates.vue"
-import { boardService } from "../services/board.service.local.js";
+// import { boardService } from "../services/board.service.local.js";
+import { boardService } from "../services/board.service.js";
 
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";

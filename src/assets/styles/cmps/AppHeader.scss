@@ -83,12 +83,15 @@
             position: relative;
             width: max-content;
 
-            img {
-                height: 16px;
+            .search-icon {
                 position: absolute;
                 left: 3%;
                 top: 50%;
                 transform:translateY(-50%) ;
+
+                .search-icon-img {
+                    height: 13px;
+                }
             }
         }
 
