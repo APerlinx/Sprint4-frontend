@@ -1,4 +1,5 @@
 <template>
+  <div class="index-layout" ref="indexLayout"></div>
   <div class="index-layout">
     <section class="board-container">
       <div v-if="starredBoards.length > 0" class="starred">
@@ -24,7 +25,7 @@
         <h3>YOUR WORKSPACE</h3>
         <div class="sub-workspace">
           <div class="user-title">S</div>
-          <h3>Shay Zigdon's workspace</h3>
+          <h3>Your boards</h3>
         </div>
       </div>
       <div class="workspace">
@@ -32,11 +33,16 @@
           <BoardList :boards="boards" @remove="removeBoard" @star="starBoard" />
         </div>
 
-        <div class="create-board">
+        <div class="index-create-board">
           <Popper arrow placement="right">
-            <div class="board-title">Create new board</div>
+            <div @click="" class="board-title">Create new board</div>
             <template #content>
-              <AddBoard @close="" @save="saveBoard" />
+              <div class="index-container">
+                <AddBoard
+                  @close="scrollWindowToIndexLayout()"
+                  @save="saveBoard"
+                />
+              </div>
             </template>
           </Popper>
         </div>
@@ -94,6 +100,19 @@ export default {
       } catch (err) {
         console.log(err);
         showErrorMsg("Cant add board");
+      }
+    },
+    scrollWindowToIndexLayout() {
+      const indexLayoutElement = this.$refs.indexLayout;
+
+      if (indexLayoutElement) {
+        const scrollOptions = {
+          top: indexLayoutElement.offsetTop,
+          behavior: "smooth", // Use "auto" for immediate scroll
+        };
+
+        // Scroll the window to the index layout element
+        window.scrollTo(scrollOptions);
       }
     },
   },

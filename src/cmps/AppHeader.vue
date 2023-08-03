@@ -2,68 +2,69 @@
   <header class="app-header">
     <nav>
       <div class="left">
-        <div class="menu">
-          <img src="../assets/styles/img/menu.png" alt="" />
-        </div>
-        <div class="logo-container">
-          <RouterLink to="/board">
-            <div class="logo">
-              <i class="fa fa-trello"></i>
-              <h2>Trio</h2>
-            </div>
-          </RouterLink>
-        </div>
+        <RouterLink to="/board">
+          <div class="logo">
+            <i class="fa fa-trello"></i>
+            <h2>Trio</h2>
+          </div>
+        </RouterLink>
 
         <div class="recent">
           <div
+            @click="isPickerModalRecent = !isPickerModalRecent"
             class="header-btn"
             :class="{ checked: isPickerModalRecent }"
-            @click="togglePickerModalRecent"
           >
             Recent
             <i class="fa-solid fa-chevron-down"></i>
           </div>
-          <div v-if="isPickerModalRecent" class="recent-modal">
-            <RecentPicker
-              @closeModal="isPickerModalRecent = false"
-              v-click-outside="togglePickerModalRecent"
-            />
+          <div class="recent-modal">
+            <RecentPicker v-if="isPickerModalRecent" />
           </div>
         </div>
 
         <div class="starred">
           <div
             class="header-btn"
+            @click="isPickerModalStarred = !isPickerModalStarred"
             :class="{ checked: isPickerModalStarred }"
-            @click="togglePickerModalStarred"
           >
             Starred
             <i class="fa-solid fa-chevron-down"></i>
           </div>
-          <div v-if="isPickerModalStarred" class="starred-modal">
-            <StarredPicker
-              @closeModal="isPickerModalStarred = false"
-              @star="starBoard"
-              v-click-outside="togglePickerModalStarred"
-            />
+          <div class="starred-modal">
+            <StarredPicker v-if="isPickerModalStarred" @star="starBoard" />
           </div>
         </div>
 
-        <div class="create-btn" @click="isCreateModal = true">
-          <Popper arrow placement="right">
-            <RouterLink to="#">Create</RouterLink>
-            <template #content>
-              <AddBoard @close="closeModal" @save="saveBoard" />
-            </template>
-          </Popper>
+        <div
+          class="create-btn"
+          :style="{ backgroundColor: isAddBoard ? '#e9f3ff' : '' }"
+        >
+          <button
+            @click="isAddBoard = !isAddBoard"
+            :style="{ color: isAddBoard ? '#0c66e4' : '' }"
+          >
+            Create
+          </button>
+          <AddBoard
+            v-if="isAddBoard"
+            @save="saveBoard"
+            @closeModal="isAddBoard = false"
+            v-click-outside="closeModals"
+          />
         </div>
       </div>
 
       <div class="right">
-        <BoardFilter @filterByTxt="filterByTxt" />
-        <span class="contrast"
-          ><img src="../assets/styles/img/contrast.png" alt=""
-        /></span>
+        <div class="filter-container">
+          <BoardFilter @filterByTxt="filterByTxt" />
+          <div class="search-icon">
+            <img class="search-icon-img" src="../assets/styles/img/search.svg" alt="" />
+          </div>
+        </div>
+
+        <img src="../assets/styles/img/contrast.png" alt="" />
         <span class="user">SZ</span>
       </div>
     </nav>
@@ -87,7 +88,7 @@ export default {
     return {
       isPickerModalStarred: false,
       isPickerModalRecent: false,
-      isCreateModal: false,
+      isAddBoard: false,
     };
   },
   methods: {
@@ -98,10 +99,10 @@ export default {
           board,
         });
         this.isAddBoard = false;
-        this.$router.push("/details/" + this.savedBoard._id);
+        this.closeModal();
+        // this.$router.push("/details/" + this.savedBoard._id);
       } catch (err) {
         console.log(err);
-        showErrorMsg("Cant add board");
       }
     },
 
@@ -114,21 +115,22 @@ export default {
       }
     },
 
+    closeModals() {
+      this.isPickerModalRecent = false;
+      this.isPickerModalRecent = false;
+      this.isAddBoard = false;
+    },
+
     togglePickerModalRecent() {
       this.isPickerModalRecent = !this.isPickerModalRecent;
     },
+
     togglePickerModalStarred() {
       this.isPickerModalStarred = !this.isPickerModalStarred;
     },
 
     filterByTxt(filterBy) {
       this.$store.commit({ type: "setFilterBy", filterBy });
-    },
-
-    closeModal() {
-      //dont work - bug
-      this.isCreateModal = false;
-      console.log(this.isCreateModal);
     },
   },
   computed: {

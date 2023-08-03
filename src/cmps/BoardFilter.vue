@@ -18,9 +18,9 @@
             <ul class="output-list">
               <li v-for="board in filteredBoards" :key="board._id">
                 <RouterLink :to="'/details/' + board._id">
-                  <div class="check">
-                    <img v-if="board.imgUrl" :src="board.imgUrl" />
-                    <div class="color" v-else :style="{ background: board.bgColor }"></div>
+                  <div class="board-select">
+                    <img v-if="board.imgUrl" :src="board.imgUrl" alt="B" />
+                    <div v-else class="color" :src="board.bgColor"></div>
                     <h2>{{ board.title }}</h2>
                   </div>
                 </RouterLink>

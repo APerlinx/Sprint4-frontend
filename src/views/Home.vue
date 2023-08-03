@@ -12,7 +12,7 @@
           isn’t.
         </h6>
         <RouterLink to="/board">
-          <button>Let's trio!</button>
+          <button>Let's Trio</button>
         </RouterLink>
       </div>
 

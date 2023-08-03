@@ -1,7 +1,7 @@
 .recent {
   .recent-modal {
     position: absolute;
-    transform: translate(0, 6px);
+    transform: translate(-24px, 14px);
     z-index: 999;
     .search-output {
       background-color: white;
@@ -17,26 +17,24 @@
       .output-list {
         display: flex;
         flex-direction: column;
-        gap: 0.3em;
+        gap: 0.4em;
         list-style: none;
         padding: 0;
 
         .row {
           display: flex;
           align-items: center;
-          // justify-content: space-between;
           gap: 0.6em;
           padding-inline-start: 1em;
-          padding-block-start: 0.3em;
 
           img {
+            display: block;
             height: rem(32px);
             width: rem(40px);
             border-radius: 0.3em;
           }
 
           .text {
-            // margin-inline-start: -7.5em;
             h2 {
               font-weight: 300;
               font-size: 1em;
@@ -44,10 +42,10 @@
               font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans,
                 Helvetica Neue, sans-serif;
               font-weight: 600;
+              padding-block-start: 0.3em;
             }
             p {
               font-size: 0.9em;
-              margin-block-start: -0.08em;
               font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans,
                 Helvetica Neue, sans-serif;
               color: rgb(106, 106, 106);

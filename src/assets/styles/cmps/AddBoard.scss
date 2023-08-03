@@ -1,11 +1,18 @@
 .add-modal {
     position: absolute;
-    transform: translate(-17px, 20px);
+    transform: translate(0, 8px);
+    top: 100%;
+    left: 0;
     z-index: 999;
     @include modal;
     padding-inline: rem(12px);
 
+    .close-icon {
+        @include trello-icon($content: $icon-close, $type: sm, $color: #182b4d);
+    }
+
     .title {
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
         font-weight: 600;
     }
 
@@ -33,7 +40,7 @@
         }
         margin: 0;
         h2 {
-           @include mini-title;
+            @include mini-title;
             margin-block-start: 1em;
             margin-block-end: 0.3em;
         }

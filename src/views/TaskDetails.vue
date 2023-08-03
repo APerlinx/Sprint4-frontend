@@ -5,15 +5,13 @@
             closeModal()
             editTask()
         }"> -->
-    <section v-if="taskToEdit" class="task-details">
-      <section class="task-details-header">
-        <div
-          class="task-details-cover"
-          v-if="taskToEdit.cover?.color"
-          :style="{ backgroundColor: taskToEdit.cover?.color }"
-        >
-          <p class="task-details-cover-menu" @click="togglecover()">Cover</p>
-        </div>
+        <section v-if="taskToEdit" class="task-details">
+            <section class="task-details-header">
+
+                <div class="task-details-cover" v-if="taskToEdit.cover?.color" :style="{ backgroundColor: taskToEdit.cover?.color }">
+                    <p v-if="haveCover"
+                    class="task-details-cover-menu" @click="togglecover()">Cover</p>
+                </div>
 
         <div class="icon-title-container">
           <span class="icon card-big"></span>
@@ -41,7 +39,7 @@
           <!-- <Members v-for="member in taskToEdit.members" :key="member.id" :member="member" /> -->
           <Members :task="taskToEdit" :board="board" />
 
-          <Labels :task="taskToEdit" :board="board" />
+                    <Labels :task="taskToEdit" :board="board" />
 
           <div class="notifications-container">
             <h5>Notifications</h5>
@@ -142,114 +140,83 @@
         <!-- v-model="taskToEdit.description" -->
       </section>
 
-      <section class="action-btns-container">
-        <div class="suggested-container">
-          <h3 class="details-title-small">Suggested</h3>
-          <button class="btn"><span class="icon member"></span>Join</button>
-        </div>
-        <h3 class="details-title-small">Add to card</h3>
-        <Popper arrow placement="right">
-          <div v-for="(cmp, idx) in cmpOrder" :key="idx">
-            <button class="btn" @click="set(cmp, idx)">
-              <span class="icon" :class="`icon ${dynamicIcons[idx]}`"></span>
-              {{ dynamicNames[idx] }}
-            </button>
-          </div>
-          <template #content>
-            <DynamicModal
-              v-if="actionCmpType"
-              :actionCmpType="actionCmpType"
-              :taskToEdit="taskToEdit"
-              :board="board"
-              :actionCmpName="actionCmpName"
-              @closeDynamicModal="closeDynamicModal"
-              @toggleMember="toggleMember"
-              @saveLabel="saveLabel"
-              @checklist="addChecklist"
-              @removeLabel="removeLabel"
-              @updateLable="updateLable"
-              @DueDate="addDueDate"
-              @attachment="addAttachment"
-              @setCover="setCover"
-            />
-          </template>
-        </Popper>
-        <div class="action-btns-in-btns">
-          <h3 class="details-title-small">Actions</h3>
-          <button class="btn">
-            <span class="icon arrow-right"></span>Move
-          </button>
-          <button class="btn"><span class="icon copy"></span>Copy</button>
-          <button class="btn">
-            <span class="icon card"></span>Make template
-          </button>
-          <button class="btn"><span class="icon archive"></span>Archive</button>
-          <button class="btn"><span class="icon share"></span>Share</button>
-        </div>
-      </section>
-    </section>
-  </div>
+            <section class="action-btns-container">
+                <div class="suggested-container">
+                    <h3 class="details-title-small">Suggested</h3>
+                    <button class="btn"><span class="icon member"></span>Join</button>
+                </div>
+                <h3 class="details-title-small">Add to card</h3>
+                <Popper arrow placement="right">
+                    <div v-for="( cmp, idx ) in  cmpOrder " :key="idx">
+                        <button class="btn" @click="set(cmp, idx)"> <span class="icon"
+                                :class="`icon ${dynamicIcons[idx]}`"></span>
+                            {{ dynamicNames[idx] }} </button>
+                    </div>
+                    <template #content>
+                        <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                            :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
+                            @toggleMember="toggleMember" @saveLabel="saveLabel" @checklist="addChecklist"
+                            @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
+                            @attachment="addAttachment"  @setCover="setCover" />
+                    </template>
+                </Popper>
+                <div class="action-btns-in-btns">
+                    <h3 class="details-title-small">Actions</h3>
+                    <button class="btn"><span class="icon arrow-right"></span>Move</button>
+                    <button class="btn"><span class="icon copy"></span>Copy</button>
+                    <button class="btn"><span class="icon card"></span>Make template</button>
+                    <button class="btn"><span class="icon archive"></span>Archive</button>
+                    <button class="btn"><span class="icon share"></span>Share</button>
+                </div>
+
+            </section>
+        </section>
+    </div>
 </template>
 
 <script>
 import { focusDirective, clickOutsideDirective } from '../directives/index.js'
 
-import DynamicModal from './DynamicModal.vue'
-import Checklist from '../cmps/Checklist.vue'
-import Members from '../cmps/Members.vue'
-import Labels from '../cmps/Labels.vue'
-import AttachmentList from '../cmps/AttachmentList.vue'
-import Dates from '../cmps/Dates.vue'
-import { boardService } from '../services/board.service.local.js'
-import { eventBus } from '../services/event-bus.service'
+import DynamicModal from "./DynamicModal.vue";
+import Checklist from "../cmps/Checklist.vue"
+import Members from "../cmps/Members.vue";
+import Labels from "../cmps/Labels.vue";
+import AttachmentList from "../cmps/AttachmentList.vue"
+import Dates from "../cmps/Dates.vue"
+// import { boardService } from "../services/board.service.local.js";
+import { boardService } from "../services/board.service.js";
 
 import { defineComponent } from 'vue'
 import Popper from 'vue3-popper'
 
 export default {
-  data() {
-    return {
-      taskToEdit: null,
-      group: null,
-      board: null,
-      hideBtn: false,
-      isWatchActive: false,
-      watch: 'Watch',
-      isDynamicModal: false,
-      actionCmpType: null,
-      actionCmpName: null,
-      isCoverActive: false,
-      dynamicNames: [
-        'Members',
-        'Labels',
-        'Checklist',
-        'Dates',
-        'Attachment',
-        'Cover',
-        'Custom Fields',
-      ],
-      dynamicIcons: [
-        'member',
-        'label',
-        'checklist',
-        'date',
-        'attachment',
-        'cover',
-        'date',
-      ],
-      coverColor: '',
-      currColor: '',
-    }
-  },
-  created() {
-    this.setTask()
-  },
-  methods: {
-    set(cmp, idx) {
-      this.isDynamicModal = true
-      this.actionCmpType = cmp
-      this.actionCmpName = this.dynamicNames[idx]
+    data() {
+        return {
+            taskToEdit: null,
+            group: null,
+            board: null,
+            hideBtn: false,
+            isWatchActive: false,
+            watch: "Watch",
+            isDynamicModal: false,
+            actionCmpType: null,
+            actionCmpName: null,
+            isCover:false,
+            dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachment", "Cover", "Custom Fields"],
+            dynamicIcons: ["member", "label", "checklist", "date", "attachment", "cover", "date"],
+            coverColor: '',
+            currColor: '',
+        };
     },
+    created() {
+        this.setTask();
+    },
+    methods: {
+        set(cmp, idx) {
+            this.isDynamicModal = true
+            this.actionCmpType = cmp;
+            this.actionCmpName = this.dynamicNames[idx];
+        },
 
     setCover(cover) {
       if (this.taskToEdit.hasOwnProperty('cover')) {
@@ -337,67 +304,68 @@ export default {
         const groupId = this.$route.params.groupId
         // console.log("groupId:", groupId);
 
-        this.board = JSON.parse(JSON.stringify(board))
-        this.group = this.board.groups.find((group) => group.id === groupId)
-        this.taskToEdit = this.group.tasks.find((task) => task.id === taskId)
-      } catch (err) {
-        console.log('error in setTask')
-      }
+                this.board = JSON.parse(JSON.stringify(board));
+                this.group = this.board.groups.find((group) => group.id === groupId);
+                this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
+                console.log("🚀 ~ file: TaskDetails.vue:259 ~ setTask ~ this.taskToEdit:", this.taskToEdit)
+            } catch (err) {
+                console.log("error in setTask");
+            }
+        },
+        toggleWatch() {
+            this.isWatchActive = !this.isWatchActive;
+            this.watch = this.isWatchActive ? "Watching" : "Watch";
+        },
+        // toggleOpenModal() {
+        //     // need to check if the specific action-btn that clicked, is the last clicked button. => Y? close modal. N? open the modal with new content from the other action-btn.
+        //     this.isDynamicModalOpen = !this.isDynamicModalOpen
+        // },
+        togglecover() {
+            this.isCoverActive = !this.isCoverActive;
+        },
+        closeDynamicModal() {
+            this.isDynamicModal = false
+        },
+        closeModal() {
+            this.$router.back();
+        },
+        editTask() {
+            console.log("edit task:");
+            const editedTask = JSON.parse(JSON.stringify(this.taskToEdit));
+            // console.log("editedTask:", editedTask)
+            const taskIdx = this.group.tasks.findIndex(
+                task => task.id === this.taskToEdit.id
+            );
+            // replace task with editTask
+            this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
+            this.$store.dispatch({ type: "updateBoard", board: this.board });
+        },
+        closeComponent() {
+            this.taskTitle = ''
+            this.$emit('close')
+        },
     },
-    toggleWatch() {
-      this.isWatchActive = !this.isWatchActive
-      this.watch = this.isWatchActive ? 'Watching' : 'Watch'
+    computed: {
+        cmpOrder() {
+            return this.$store.getters.cmpsOrder;
+        },
     },
-    // toggleOpenModal() {
-    //     // need to check if the specific action-btn that clicked, is the last clicked button. => Y? close modal. N? open the modal with new content from the other action-btn.
-    //     this.isDynamicModalOpen = !this.isDynamicModalOpen
-    // },
-    togglecover() {
-      this.isCoverActive = !this.isCoverActive
+    unmounted() {
+        // this.$store.commit({ type: 'setCurrTask', task: null })
     },
-    closeDynamicModal() {
-      this.isDynamicModal = false
+    components: {
+        DynamicModal,
+        Checklist,
+        Members,
+        Popper,
+        defineComponent,
+        Labels,
+        AttachmentList,
+        Dates,
     },
-    closeModal() {
-      this.$router.back()
+    directives: {
+        focus: focusDirective,
+        clickOutside: clickOutsideDirective,
     },
-    editTask() {
-      console.log('edit task:')
-      const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
-      // console.log("editedTask:", editedTask)
-      const taskIdx = this.group.tasks.findIndex(
-        (task) => task.id === this.taskToEdit.id
-      )
-      // replace task with editTask
-      this.group.tasks.splice(taskIdx, 1, this.taskToEdit)
-      this.$store.dispatch({ type: 'updateBoard', board: this.board })
-    },
-    closeComponent() {
-      this.taskTitle = ''
-      this.$emit('close')
-    },
-  },
-  computed: {
-    cmpOrder() {
-      return this.$store.getters.cmpsOrder
-    },
-  },
-  unmounted() {
-    // this.$store.commit({ type: 'setCurrTask', task: null })
-  },
-  components: {
-    DynamicModal,
-    Checklist,
-    Members,
-    Popper,
-    defineComponent,
-    Labels,
-    AttachmentList,
-    Dates,
-  },
-  directives: {
-    focus: focusDirective,
-    clickOutside: clickOutsideDirective,
-  },
-}
+};
 </script>

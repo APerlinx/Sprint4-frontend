@@ -1,37 +1,73 @@
 <template>
+  <h2>{{ taskToEdit.cover.color }}</h2>
   <h6>Size</h6>
   <div class="layout">
-    <div class="layout1" @click="setLayout(false)" :style="{ background: !isCover && !preview ? '#ececec' : coverToEdit.color }">
+    <div
+      class="layout1"
+      @click="setLayout(false)"
+      :style="{ background: hasCover ? taskToEdit.cover?.color : '#ececec' }"
+    >
       <div class="bottom-section">
-        <div class="line1" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
-        <div class="line2" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
+        <div
+          class="line1"
+          :style="{ background: hasCover ? '#ececec' : '' }"
+        ></div>
+        <div
+          class="line2"
+          :style="{ background: hasCover ? '#ececec' : '' }"
+        ></div>
         <div class="bottom-line">
-          <div class="line3" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
-          <div class="line3" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
-          <div class="circle" :style="{ background: !isCover && !preview ? '#ececec' : '' }"></div>
+          <div
+            class="line3"
+            :style="{ background: hasCover ? '#ececec' : '' }"
+          ></div>
+          <div
+            class="line3"
+            :style="{ background: hasCover ? '#ececec' : '' }"
+          ></div>
+          <div
+            class="circle"
+            :style="{ background: hasCover ? '#ececec' : '' }"
+          ></div>
         </div>
       </div>
     </div>
 
-    <div class="layout2" @click="setLayout(true)" :style="{ background: !isCover ? '#ececec' : coverToEdit.color }">
+    <div
+      class="layout2"
+      @click="setLayout(true)"
+      :style="{ background: hasCover ? taskToEdit.cover?.color : '#ececec' }"
+    >
       <div class="div"></div>
       <div class="bottom-section">
-        <div class="line4" :style="{ background: !isCover && !preview ? 'white' : '' }"></div>
-        <div class="line5" :style="{ background: !isCover && !preview ? 'white' : '' }"></div>
+        <div
+          class="line4"
+          :style="{ background: hasCover ? 'white' : '' }"
+        ></div>
+        <div
+          class="line5"
+          :style="{ background: hasCover ? 'white' : '' }"
+        ></div>
       </div>
     </div>
   </div>
 
   <div v-if="isCover" class="remove-cover">
-    <button @click="(isCover = false), (preview = ''), (lastPick = '')">
+    <button
+      @click="(isCover = false), (coverToEdit.color = ''), (lastPick = '')"
+    >
       Remove cover
     </button>
   </div>
 
   <h6 class="colors-title">Colors</h6>
   <section class="color-pallate-wide">
-    <div v-for="(color, index) in colorOptions" :key="index" @click="setBgColor(color)" :class="colorClass[index]">
-    </div>
+    <div
+      v-for="(color, index) in colorOptions"
+      :key="index"
+      @click="setBgColor(color)"
+      :class="colorClass[index]"
+    ></div>
   </section>
 
   <h6>Attachment</h6>
@@ -42,15 +78,26 @@
 
   <h6>Photos from unsplash</h6>
 
-  <section class="img-pallte">
-    <div v-for="(img, index) in imgOptions" :key="index" @click="setBgImg(img)" :class="imgClass[index]"></div>
-  </section>
+  <!-- <section class="img-pallte">
+    <div
+      v-for="(imgUrl, index) in imgUrls"
+      :key="index"
+      @click="setBgImg(img)"
+      :class="imgClass[index]"
+    >
+   <pre>{{ imgUrl }}</pre>
+  </div>
+  </section> -->
+
 </template>
 
 <script>
 export default {
   props: {
-    taskToEdit: Object
+    taskToEdit: Object,
+  },
+  created() {
+    this.fetchListOfPhotos(this.query)
   },
   data() {
     return {
@@ -59,6 +106,9 @@ export default {
         img:'',
         isFull: false
       },
+      accesKey: 'MW3WlTYHFpvQZJwkJp360WPZFpDiNui3_1sdi4VjuhY',
+      imgUrls: [],
+      query: 'dogs',
       isCover: false,
       lastPick: "",
       colorOptions: [
@@ -116,6 +166,28 @@ export default {
     };
   },
   methods: {
+    async fetchListOfPhotos(query = this.query) {
+      console.log(query);
+      // try {
+      //   const response = await fetch(
+      //     `https://api.unsplash.com/search/photos?client_id=${this.accesKey}&query=${query}`
+      //   )
+      //   const json = await response.json()
+
+      //   console.log(json);
+
+        // const imageUrls = json.results.map((img) => img.urls.regular)
+
+        // if (imageUrls.length > 12) {
+        //   this.imageUrls = imageUrls.slice(0, 12)
+        // } else {
+        //   this.imageUrls = imageUrls
+        // }
+      // } catch (err) {
+      //   console.log('Cannot load photos', err)
+      //   throw err
+      // }
+    },
     setBgColor(color) {
     if (this.lastPick === color && this.isCover) {
       this.isCover = false;
@@ -133,10 +205,15 @@ export default {
       this.coverToEdit.isFull = state
       this.setCover()
     },
-    
+
     setCover() {
       this.$emit("setCover", this.coverToEdit);
     }
   },
+  computed:{
+    hasCover(){
+      return this.taskToEdit.cover?.color
+    }
+  }
 };
 </script>

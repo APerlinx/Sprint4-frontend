@@ -77,7 +77,7 @@ export default {
       this.$emit('saveLabel', labelId)
     },
     isLabelChecked(labelId) {
-      return this.taskToEdit.labels?.includes(labelId)
+      return this.taskToEdit?.labels.includes(labelId);
     },
     isEditMode(label) {
       if (!label) {
@@ -131,8 +131,8 @@ export default {
   },
   computed: {
     filteredLabels() {
-      const byName = new RegExp(this.filterBy, 'i')
-      return this.board.labels.filter((label) => byName.test(label.title))
+      const byName = new RegExp(this.filterBy, "i");
+      return this.board?.labels.filter((label) => byName.test(label.title));
     },
   },
   components: {

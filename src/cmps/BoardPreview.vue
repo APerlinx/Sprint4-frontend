@@ -21,20 +21,16 @@ export default {
 
   data() {
     return {
-      localBoard: null
     };
   },
-  created() {
-    this.localBoard = this.board
-  },
+  
   methods: {
     removeBoard(boardId) {
       this.$emit("remove", boardId);
     },
     toggleStar() {
-      const board = JSON.parse(JSON.stringify(this.localBoard));
+      const board = JSON.parse(JSON.stringify(this.board));
       board.isStarred = !board.isStarred;
-      this.localBoard = board
       this.$emit("star", board);
     },
   },
@@ -48,8 +44,8 @@ export default {
     },
     boardClass() {
       return {
-        unstarred: !this.localBoard.isStarred,
-        starred: this.localBoard.isStarred,
+        unstarred: !this.board.isStarred,
+        starred: this.board.isStarred,
       }
     },
   },
