@@ -1,6 +1,6 @@
 <template >
     <li class="attachment-container">
-        <div v-for="(attachment, idx) in attachments" :idx="idx" class="attachment flex align-center"
+        <div v-for="attachment in attachments" :idx="idx" class="attachment flex align-center"
             @click="goTo(attachment.link)">
             <div class="icon-title-container-description">
                 <span class="icon attachment-big"></span>
@@ -27,56 +27,23 @@
 </template>
 
 <script>
-import moment from 'moment';
 
 export default {
     props: {
         attachments: Array,
     },
-    // methods: {
-    //     removeAttachment(attachmentId) {
-    //         this.$emit('removeAttachment', attachmentId)
-    //     },
-    // },
-    // computed: {
-    //     createdAt() {
-    //         return moment(this.attachment.createdAt).startOf('hour').fromNow();
-    //         // return moment(this.attachment.createdAt).startOf('day').fromNow();
-    //     }
-    // },
     methods: {
-        goTo(url) {
-            window.open(url, '_blank')
+        removeAttachment(attachmentId) {
+            const idx = this.attachments.findIndex(attachment => attachmentId === attachment.id)
+            this.attachments.splice(idx, 1);
+            this.updateAttachments(JSON.parse(JSON.stringify(this.attachments)))
         },
-        removeAttachment(idx) {
-            const activity = {
-                txt: 'removed an attachment',
-                createdAt: Date.now(),
-                byMember: this.$store.getters.loggedinUser,
-                task: this.taskData.task,
-            }
-            this.$store.commit({ type: 'newActivity', activity })
-
-            this.$store.dispatch({
-                type: 'setState',
-                action: 'removeAttachment',
-                groupId: this.taskData.group.id,
-                taskId: this.taskData.task.id,
-                idx
-            })
+        updateAttachments(attachments) {
+            this.$emit('updateAttachments', { type: 'attachments', val: attachments })
         },
-        isImage(link) {
-            return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(link)
-        },
-
-
     },
     computed: {
-        taskData() {
-            return this.$store.getters.currTaskData
-        },
+
     },
-    unmounted() { },
-    components: {},
 }
 </script >

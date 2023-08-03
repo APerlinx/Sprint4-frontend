@@ -1,5 +1,5 @@
 <template>
-    <div class="task-back-drop">
+    <div class="task-details-container">
         <!-- <section v-if="taskToEdit" class="task-details"> -->
         <!-- <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
             closeModal()
@@ -62,7 +62,7 @@
                         </button>
                     </div>
 
-                    <Dates :task="taskToEdit" />
+                    <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatus" />
 
                 </div>
 
@@ -81,7 +81,9 @@
                         </div>
                     </div>
                 </div>
-
+                <pre>
+                    {{ taskToEdit.attachments }}
+                </pre>
                 <!-- <Checklist /> -->
                 <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
                     @updateChecklist="updateChecklist" />
@@ -105,8 +107,8 @@
                     <button class="btn"><span class="icon member"></span>Join</button>
                 </div>
                 <h3 class="details-title-small">Add to card</h3>
-                <Popper arrow placement="right">
-                    <div v-for="( cmp, idx ) in  cmpOrder " :key="idx">
+                <Popper arrow placement="right" v-for="( cmp, idx ) in  cmpOrder " :key="idx">
+                    <div>
                         <button class="btn" @click="set(cmp, idx)"> <span class="icon"
                                 :class="`icon ${dynamicIcons[idx]}`"></span>
                             {{ dynamicNames[idx] }} </button>
@@ -135,6 +137,7 @@
             </section>
         </section>
     </div>
+    <div class="task-back-drop" @click=" closeModal()"></div>
 </template>
 
 <script>
@@ -144,7 +147,7 @@ import DynamicModal from "./DynamicModal.vue";
 import Checklist from "../cmps/Checklist.vue"
 import Members from "../cmps/Members.vue";
 import Labels from "../cmps/Labels.vue";
-import AttachmentList from "../cmps/AttachmentList.vue"
+import Attachment from "../cmps/AttachmentPreview.vue"
 import Dates from "../cmps/Dates.vue"
 import { boardService } from "../services/board.service.local.js";
 
@@ -174,6 +177,13 @@ export default {
         this.setTask();
     },
     methods: {
+        updateTaskStatus(isCompleted) {
+            console.log("🚀 ~ file: TaskDetails.vue:180 ~ updateTaskStatus ~ isCompleted:", isCompleted)
+            if (isCompleted) this.taskToEdit.status = 'completed'
+            else this.taskToEdit.status = ''
+            this.editTask()
+
+        },
         set(cmp, idx) {
             this.isDynamicModal = true
             this.actionCmpType = cmp;
@@ -218,7 +228,7 @@ export default {
             // console.log('newAttachment:', newAttachment)
             if (!this.taskToEdit.attachments) this.taskToEdit.attachments = [];
             this.taskToEdit.attachments.push(newAttachment);
-            this.onTaskEdit();
+            this.editTask();
         },
         addChecklist(newChecklist) {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
@@ -333,7 +343,7 @@ export default {
         Popper,
         defineComponent,
         Labels,
-        AttachmentList,
+        Attachment,
         Dates,
     },
     directives: {
@@ -342,3 +352,13 @@ export default {
     },
 };
 </script>
+
+<style>
+.task-details-container {
+    transform: translate(-50%, -50%);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+}
+</style>
