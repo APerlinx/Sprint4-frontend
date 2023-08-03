@@ -6,7 +6,9 @@
     </div>
 
     <div class="user">
-      <div class="btn-header">Log in</div>
+      <router-link :to="'./login'" >
+        <div class="btn-header">Log in</div>
+      </router-link>
       <div class="btn-header">Get Trio for free</div>
     </div>
   </div>
