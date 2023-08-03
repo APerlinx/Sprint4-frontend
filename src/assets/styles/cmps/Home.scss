@@ -41,6 +41,8 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                width: rem(185px);
+                height: rem(45px);
                 background-color: #0065ff;
                 color: white;
                 padding: 0.7em 2.1em;
@@ -50,6 +52,12 @@
                 margin-block-start: rem(24px);
                 margin-block-end: rem(30px);
                 font-family: charlie;
+                transition: 0.3s;
+
+                &:hover {
+                    background-color:  darken(#0065ff, 8%)
+                }
+
             }
         }
         .right-hero-container {
@@ -59,7 +67,7 @@
             z-index: 999;
 
             img {
-                width: 113%;
+                width: 105%;
                 z-index: 999;
             }
         }

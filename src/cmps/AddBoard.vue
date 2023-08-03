@@ -2,8 +2,8 @@
   <div class="add-modal">
     <div class="action">
       <div class="check"></div>
-      <h3 class="title">Create board</h3>
-      <div @click="closeModal" class="close">x</div>
+      <h3 class="title">Create boarding</h3>
+      <span class="close-icon" @click="closeModal"></span>
     </div>
 
     <div class="board-layout" :style="{ background: preview, 'background-size': 'cover', 'background-position': 'center' }">
@@ -12,9 +12,9 @@
     </div>
 
     <h6 class="background-title">Background</h6>
-    <div class="img-picker">
+    <!-- <div class="img-picker">
       <ImgPicker @setBgImg="setBgImg" />
-    </div>
+    </div> -->
 
     <div class="bg-picker">
       <ColorPicker @setBgColor="setBgColor" />
@@ -46,19 +46,17 @@ import ImgPicker from "../cmps/ImgPicker.vue";
 export default {
   data() {
     return {
-      isTitle: false,
       boardToEdit: boardService.getEmptyBoard(),
       preview: "",
-      isModal: false
     };
   },
   methods: {
+    closeModal() {
+      this.$emit('closeModal')
+    }
     saveBoard() {
       if (!this.boardToEdit.title) return;
       this.$emit("save", this.boardToEdit);
-    },
-    closeModal() {
-      this.$emit("close");
     },
     setBgColor(color) {
       this.preview = color;

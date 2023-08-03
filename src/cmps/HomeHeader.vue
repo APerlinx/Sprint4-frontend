@@ -6,8 +6,8 @@
     </div>
 
     <div class="user">
-      <div class="btn-header">Login</div>
-      <div class="btn-header">Sign up</div>
+      <div class="btn-header">Log in</div>
+      <div class="btn-header">Get Trio for free</div>
     </div>
   </div>
 

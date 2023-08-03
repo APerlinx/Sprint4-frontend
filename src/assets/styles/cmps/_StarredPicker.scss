@@ -6,6 +6,7 @@
         .search-output {
             background-color: white;
             width: rem(304px);
+            height: max-content;
             box-shadow: 5px 5px 11px rgba(0, 0, 0, 0.092);
             border: 1px solid rgb(238, 236, 236);
             border-radius: 0.7em;
@@ -29,29 +30,38 @@
                     padding-inline-start: 1em;
                     padding-block-start: 0.3em;
 
-                    img {
-                        height: rem(32px);
-                        width: rem(40px);
-                        border-radius: 0.3em;
-                    }
+                    .board-recent {
+                        display: flex;
+                        align-items: center;
+                        gap: rem(7px);
+                        padding: 0;
+                        img {
+                            height: rem(30px);
+                            width: rem(38px);
+                            border-radius: 0.3em;
+                            margin-block-start: -0.3em;
+                        }
 
-                    .text {
-                        margin-inline-start: -7.5em;
-                        h2 {
-                            font-weight: 300;
-                            font-size: 1em;
-                            color: #182b4d;
-                            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu,
-                                Droid Sans, Helvetica Neue, sans-serif;
-                            font-weight: 600;
+                        .info {
+                            display: flex;
+                            flex-direction: column;
+
+                            .board-title {
+                                font-size: 1em;
+                                color: #182b4d;
+                                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu,
+                                    Droid Sans, Helvetica Neue, sans-serif;
+                                font-weight: 600;
+                                padding: 0;
+                            }
+                            p {
+                                font-size: 0.9em;
+                                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu,
+                                    Droid Sans, Helvetica Neue, sans-serif;
+                                color: rgb(106, 106, 106);
+                            }
                         }
-                        p {
-                            font-size: 0.9em;
-                            margin-block-start: -0.08em;
-                            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu,
-                                Droid Sans, Helvetica Neue, sans-serif;
-                            color: rgb(106, 106, 106);
-                        }
+                        
                     }
 
                     .btn-star {
