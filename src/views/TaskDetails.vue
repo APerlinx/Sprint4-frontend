@@ -81,6 +81,32 @@
                     </div>
                 </div>
 
+                <div class="icon-title-container-description">
+                    <span class="icon attachment-big"></span>
+                    <h3 class="details-title-big">Attachment</h3>
+                </div>
+                <div class="img-container">
+                    <img alt="../assets/styles/img/grid.png" />
+                </div>
+                <article class="attachment-details">
+                    <h4>123</h4>
+                    <div class="main-actions">
+                        Added
+                        <span>123&#x2022 </span>
+                        <span class="attachment-action">Comment</span> &#x2022
+                        <span class="attachment-action" @click="removeAttachment(attachment.id)">Delete</span> &#x2022
+                        <span class="attachment-action">Edit</span>
+                    </div>
+                    <div>
+                        <span class="attachment-action">Make Cover</span>
+                    </div>
+                </article>
+
+
+
+
+                <Attachment v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
+                    @updateChecklist="updateChecklist" />
                 <!-- <Checklist /> -->
                 <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
                     @updateChecklist="updateChecklist" />
@@ -229,7 +255,6 @@ export default {
                 if (this.taskToEdit.members.some(member => member.id === clickedMember.id)) {
                     const idx = this.taskToEdit.members.findIndex(member => member.id === clickedMember.id);
                     this.taskToEdit.members.splice(idx, 1);
-
                 } else {
                     this.taskToEdit.members.push(clickedMember);
                 }

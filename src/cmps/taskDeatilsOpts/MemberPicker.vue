@@ -14,7 +14,9 @@
                         </div>
 
                         <div>
-                            <!-- <span class="icon checked"></span> -->
+                            <span v-if="taskMembers?.includes(member.id)">
+                                <span class="icon checked">סבבה</span>
+                            </span>
                         </div>
                     </div>
                 </li>
@@ -45,6 +47,7 @@ export default {
     data() {
         return {
             filterString: '',
+            taskMembers: this.board.members
         }
     },
     methods: {
@@ -56,22 +59,13 @@ export default {
                 imgUrl,
                 backgroundColor,
             }
-            // console.log('member:', member)
+            console.log("🚀 ~ file: MemberPicker.vue:51 ~ data ~ taskMembers:", this.taskMembers)
+            console.log('member:', member)
             this.$emit('toggleMember', member);
 
         },
-        // addV(member) {
-
-        // },
-        closeMembers() {
-            this.$emit('close')
-        },
     },
     computed: {
-        // boardMembers() {
-        //     // console.log('this.taskToEdit', this.taskToEdit)
-        //     // return this.taskToEdit.members
-        // },
         filteredMembers() {
             const byName = new RegExp(this.filterString, 'i')
             return this.board.members.filter(member => byName.test(member.fullname))

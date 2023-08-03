@@ -1,5 +1,9 @@
 <template >
     <li class="attachment-container">
+        <div class="icon-title-container-description">
+            <span class="icon attachment-big"></span>
+            <h3 class="details-title-big">Attachment</h3>
+        </div>
         <div class="img-container">
             <img :src="attachment.url" alt />
         </div>
@@ -24,18 +28,52 @@ import moment from 'moment';
 
 export default {
     props: {
-        attachment: Object,
+        attachments: Array,
     },
+    // methods: {
+    //     removeAttachment(attachmentId) {
+    //         this.$emit('removeAttachment', attachmentId)
+    //     },
+    // },
+    // computed: {
+    //     createdAt() {
+    //         return moment(this.attachment.createdAt).startOf('hour').fromNow();
+    //         // return moment(this.attachment.createdAt).startOf('day').fromNow();
+    //     }
+    // },
     methods: {
-        removeAttachment(attachmentId) {
-            this.$emit('removeAttachment', attachmentId)
+        goTo(url) {
+            window.open(url, '_blank')
         },
+        removeAttachment(idx) {
+            const activity = {
+                txt: 'removed an attachment',
+                createdAt: Date.now(),
+                byMember: this.$store.getters.loggedinUser,
+                task: this.taskData.task,
+            }
+            this.$store.commit({ type: 'newActivity', activity })
+
+            this.$store.dispatch({
+                type: 'setState',
+                action: 'removeAttachment',
+                groupId: this.taskData.group.id,
+                taskId: this.taskData.task.id,
+                idx
+            })
+        },
+        isImage(link) {
+            return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(link)
+        },
+
+
     },
     computed: {
-        createdAt() {
-            return moment(this.attachment.createdAt).startOf('hour').fromNow();
-            // return moment(this.attachment.createdAt).startOf('day').fromNow();
-        }
-    }
+        taskData() {
+            return this.$store.getters.currTaskData
+        },
+    },
+    unmounted() { },
+    components: {},
 }
-</script>
+</script >

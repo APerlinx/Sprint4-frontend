@@ -582,8 +582,12 @@
     // justify-self: center;
     padding: 8px 0;
     text-align: left;
+
     // align-content: center;
     // border: 1px solid red;
+    .full-checked-big {
+        margin-top: 50px;
+    }
 
 }
 
@@ -738,6 +742,10 @@
 
     &.attachment {
         @include trello-icon($content: "\e908", $type: sm, $color: #626f86);
+    }
+
+    &.attachment-big {
+        @include trello-icon($content: "\e908", $type: lg, $color: #626f86);
     }
 
     &.cover {

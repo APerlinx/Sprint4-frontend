@@ -113,7 +113,11 @@
     // align-items: center;
 
     &:hover {
-        background-color: #ebecf0;
+        background-color: #E4E6EA;
+
+        // textarea {
+        //     &:hover: background-color: #E4E6EA;
+        // }
     }
 
     input {
@@ -188,11 +192,11 @@
             // transition: 0.6s;
             background-color: #E4E6EA;
 
-            textarea {
-                // transition: 0.6s;
-                background-color: #E4E6EA;
-                // padding: 0;
-            }
+            // textarea {
+            //     // transition: 0.6s;
+            //     background-color: #E4E6EA;
+            //     // padding: 0;
+            // }
         }
     }
 }
