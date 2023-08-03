@@ -23,6 +23,7 @@
         z-index: 30;
         width: 256px;
         min-height: 100px;
+        max-height: 168px;
         overflow: visible;
         border-radius: 8px;
         position: fixed;
@@ -35,7 +36,7 @@
             textarea {
                 min-width: 255px;
                 padding-left: 0;
-                padding-bottom: 50px;
+                padding-bottom: 16px;
                 overflow-y: hidden;
                 border: none;
                 color: #172b4d;
@@ -72,16 +73,16 @@
         justify-content: flex-start;
 
         &.modal-right {
-            align-items: flex-start;  
+            align-items: flex-start;
             button:hover {
-                transform: translateX(8%);  // Hover animation to the right
+                transform: translateX(8%); // Hover animation to the right
             }
         }
 
         &.modal-left {
-            align-items: flex-end;  
+            align-items: flex-end;
             button:hover {
-                transform: translateX(-8%);  // Hover animation to the left
+                transform: translateX(-8%); // Hover animation to the left
             }
         }
 
@@ -100,7 +101,6 @@
                 transform 0.2s,
                 background-color 0.2s;
             &:hover {
-      
                 background-color: rgba(0, 0, 0, 0.752);
                 cursor: pointer;
             }
@@ -235,7 +235,6 @@
     opacity: 1;
     visibility: visible;
 }
-
 
 .tool-tip-edit {
     display: flex;
@@ -388,4 +387,14 @@
     &.member {
         // Members circles
     }
+}
+
+textarea::selection {
+    background: #0c66e4;
+    color: #ffffff;
+}
+
+textarea::-moz-selection {
+    background: #0c66e4;
+    color: #ffffff;
 }

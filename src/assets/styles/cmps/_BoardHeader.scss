@@ -2,7 +2,7 @@
   background: rgba(39, 39, 39, 0.2);
   backdrop-filter: blur(2px);
   width: 100%;
-  height: rem(56px);
+  height: 56px;
   border: none;
   padding: 12px 10px 12px 16px;
   margin-bottom: 0.4rem;
@@ -10,11 +10,27 @@
   .nav-bar {
     display: flex;
     justify-content: space-between; 
-    align-items: center;
+    flex-wrap: wrap;
 
-    > .title-tool-tip {
+    .title-container {
+      flex: 1 1 auto;
       display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      justify-content: start;
+      text-align: start;
+      
+      .title-tool-tip {
+        display: flex;
+        justify-content: start;
+
+      }
     }
+    .navbar-container {
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: flex-end;
+
     > .tool-tip {
       display: flex;
       align-items: center;
@@ -89,32 +105,35 @@
         }
       }
     }
-    > div > input {
+  }
+     div > input {
       background-color: $group-background-input;
       box-shadow: $border-focused 0px 0px 0px 2px inset;
-      padding: 4px;
+      padding-inline-start: 0.5em;
       font-weight: bold;
-      line-height: rem(32px);
-      text-overflow: ellipsis;
+      line-height: 32px;
       border: none;
-      font-size: rem(18px);
+      font-size: 20px;
       color: $list-text-color;
-      flex-grow: 1;
-      margin-right: 10px;
+      width: max-content;
+      margin-inline-end: 0.24em;
+      max-height: 32px;
+      max-width: 165px;
     }
 
-    > div > .board-title {
+    div > .board-title {
       color: $dynamic-text;
       font-weight: bold;
-      line-height: rem(32px);
-      font-size: rem(20px);
+      line-height: 32px; 
+      font-size: 20px;
       margin: 0;
-      margin-inline: 1em;
+      margin-inline-end: 1.2em;
     }
 
-    > div > .star-icon {
+    div > .star-icon {
       cursor: pointer;
       padding: rem(6px);
+      vertical-align: middle;
       border-radius: 3px;
       &.full-star {
         @include trello-icon($content: "\e967", $type: sm, $color: #fff);
@@ -134,6 +153,25 @@
   }
 }
 
-// > .icon {
-//   @include trello-icon($content: "\e952", $type: sm, $color: $list-title-color);
-// }
+@media (max-width: 520px) {
+  .board-header {
+    height: auto;
+
+    // .nav-bar {
+    //   .navbar-container {
+    //     flex: 1 0 100%;
+    //     justify-content: center;
+    //   }
+    // }
+  }
+}
+
+input::selection {
+  background: #0c66e4;
+  color: #ffffff;
+}
+
+input::-moz-selection {
+  background: #0c66e4;
+  color: #ffffff;
+}

@@ -5,7 +5,7 @@
     :class="{ 'with-cover': task.cover }"
     @mouseover="showEditIcon = true"
     @mouseleave="showEditIcon = false"
-    @click="goToTaskDetails"
+    @click.stop="goToTaskDetails"
   >
     <li v-if="task">
       <div class="labels" @click.stop>
@@ -33,74 +33,82 @@
       </div>
 
       <div class="tool-tip">
-        <div v-if="task.watching">
-          <span class="icon watch"></span>
-        </div>
+        <div class="tool-tip-icons">
+          <div v-if="task.watching">
+            <span class="icon watch"></span>
+          </div>
 
-        <div v-if="task.description">
-          <span class="icon desc"></span>
-        </div>
+          <div v-if="task.description">
+            <span class="icon desc"></span>
+          </div>
 
-        <div v-if="task.comments && task.comments.length > 0">
-          <span class="icon comment"></span>
-          <span class="comment-counter">{{ task.comments.length }}</span>
-        </div>
+          <div v-if="task.comments && task.comments.length > 0">
+            <span class="icon comment"></span>
+            <span class="comment-counter">{{ task.comments.length }}</span>
+          </div>
 
-        <div
-          v-if="task.checklists && task.checklists.length > 0"
-          :class="{ 'completed-checklist': checklistCompleted }"
-        >
-          <span class="icon checklist"></span>
-          <span class="checklist-counter"
-            >{{ doneChecklists }}<span class="slash">/</span
-            >{{ totalChecklists }}</span
+          <div
+            v-if="task.checklists && task.checklists.length > 0"
+            :class="{ 'completed-checklist': checklistCompleted }"
           >
+            <span class="icon checklist"></span>
+            <span class="checklist-counter"
+              >{{ doneChecklists }}<span class="slash">/</span
+              >{{ totalChecklists }}</span
+            >
+          </div>
+
+          <div v-if="task.attachment && task.attachment.length > 0">
+            <span class="icon attach"></span>
+            <span class="attach-counter">{{ task.attachment.length }}</span>
+          </div>
+
+          <div
+            class="date"
+            :class="`due-date ${dueDateStatus} ${task.status}`"
+            v-if="task.dueDate"
+            @click.stop="toggleStatus"
+          >
+            <span class="icon date"></span>
+            <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
+          </div>
         </div>
 
-        <div v-if="task.attachment && task.attachment.length > 0">
-          <span class="icon attach"></span>
-          <span class="attach-counter">{{ task.attachment.length }}</span>
-        </div>
-
-        <div
-          class="date"
-          :class="`due-date ${dueDateStatus} ${task.status}`"
-          v-if="task.dueDate"
-          @click.stop="toggleStatus"
-        >
-          <span class="icon date"></span>
-          <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
-        </div>
-
-        <div class="member-avatar">
+        <div class="avatar-container">
+        <div class="member-avatar" v-if="task.members">
           <img
             v-for="member in task.members"
             :key="member.id"
             :src="member.imgUrl"
             class="avatar"
+            alt="Avatar"
           />
         </div>
+        </div>
+
       </div>
     </li>
   </section>
 
-<TaskQuickEdit
-  :task="task"
-  :groupId="groupId"
-  :quickEditDisplay="quickEditDisplay"
-  :getLabel="getLabel"
-  :totalChecklists="totalChecklists"
-  :doneChecklists="doneChecklists"
-  :dueDateStatus="dueDateStatus"
-  :formatDate="formatDate"
-  @close="quickEditDisplay = false"
-/>
+  <TaskQuickEdit
+    :task="task"
+    :groupId="groupId"
+    :quickEditDisplay="quickEditDisplay"
+    :getLabel="getLabel"
+    :totalChecklists="totalChecklists"
+    :doneChecklists="doneChecklists"
+    :dueDateStatus="dueDateStatus"
+    :formatDate="formatDate"
+    @close="quickEditDisplay = false"
+    @status-toggled="toggleStatus"
+  />
 </template>
 
 <script>
 import { format } from 'date-fns'
 import TaskCover from './TaskCover.vue'
 import TaskQuickEdit from './TaskQuickEdit.vue'
+
 export default {
   props: {
     groupId: {
@@ -116,9 +124,17 @@ export default {
     return {
       quickEditDisplay: false,
       showEditIcon: false,
+      boardMembers: null,
     }
   },
   computed: {
+    taskMembers() {
+      if (!this.task.members || !this.boardMembers) return []
+
+      return this.task.members.map((memberId) =>
+        this.boardMembers.find((boardMember) => boardMember.id === memberId)
+      )
+    },
     board() {
       const boardId = this.$store.getters.getCurrBoard?._id
       return boardId
@@ -165,6 +181,10 @@ export default {
     },
   },
   methods: {
+    fetchBoardMembers() {
+      const board = this.$store.getters.getCurrBoard
+      this.boardMembers = board.members
+    },
     goToTaskDetails() {
       this.$router.push(
         `/details/${this.board}/group/${this.groupId}/task/${this.task.id}`
@@ -192,6 +212,14 @@ export default {
       this.quickEditTop = e.clientY + 'px'
       this.quickEditLeft = e.clientX + 'px'
     },
+  },
+  watch: {
+    board() {
+      this.fetchBoardMembers()
+    },
+  },
+  mounted() {
+    this.fetchBoardMembers()
   },
   components: {
     TaskCover,

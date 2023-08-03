@@ -1,8 +1,10 @@
 <template>
   <div v-if="quickEditDisplay">
     <section class="task-preview-container">
-      <div @click.stop="quickEditDisplay = false" class="quickEditScreen"></div>
+      <div @click.stop="closeQuickEdit" class="quickEditScreen"></div>
       <div class="quickEdit" ref="quickEdit" :style="quickEditPosition">
+        <TaskCover :task="task" />
+
         <div class="labels" @click.stop>
           <div
             v-for="labelId in task.labels"
@@ -20,7 +22,7 @@
         </div>
 
         <div class="title-edit">
-          <textarea v-model="localTask.title"></textarea>
+          <textarea v-model="localTask.title" autofocus  ref="titleInput"></textarea>
         </div>
 
         <div class="tool-tip-edit">
@@ -33,7 +35,7 @@
             class="date"
             :class="`due-date ${dueDateStatus} ${task.status}`"
             v-if="task.dueDate"
-            @click.stop="toggleStatus"
+            @click.stop.prevent="toggleStatus"
           >
             <span class="icon date"></span>
             <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
@@ -91,29 +93,48 @@
           <span :class="btn.icon"></span>
           {{ btn.txt }}
         </button>
-        <component :is="cmpType"> </component>
         <div @click.stop="removeTask">
           <span class="archive-icon"></span>
         </div>
+        <DynamicModal
+          v-if="cmpType"
+          :actionCmpType="cmpType"
+          :taskToEdit="localTask"
+          :actionCmpName="CmpName"
+          @closeDynamicModal="closeDynamicModal"
+          @toggleMember="toggleMember"
+          @saveLabel="saveLabel"
+          @checklist="addChecklist"
+          @removeLabel="removeLabel"
+          @updateLable="updateLable"
+          @DueDate="addDueDate"
+          @attachment="addAttachment"
+          @setCover="setCover"
+        />
       </div>
     </section>
   </div>
 </template>
 
 <script>
-// import labelPicker from '../components/label-picker.vue'
-// import memberPicker from '../components/member-picker.vue'
-// import datePicker from '../components/date-picker.vue'
-// import coverPicker from '../components/cover-picker.vue'
-// import taskPreviewDetails from '../components/task-preview-details.vue'
+import DynamicModal from '../views/DynamicModal.vue'
+import TaskCover from './TaskCover.vue'
+
 // import { utilService } from '../../services/util-service.js'
 // import { socketService, SOCKET_EMIT_MEMBER_ACTION } from '../../services/socket.service'
 // import { userService } from '../../services/user-service'
 import { watch } from 'vue'
-import { clickOutsideDirective } from '../directives/index.js'
+import { eventBus } from '../services/event-bus.service'
+
+import Popper from 'vue3-popper'
 
 export default {
   name: 'task-preview',
+  components: {
+    DynamicModal,
+    Popper,
+    TaskCover,
+  },
   props: {
     task: {
       type: Object,
@@ -153,13 +174,14 @@ export default {
   data() {
     return {
       actionBtns: [
-        { txt: 'Labels', icon: 'labels-icon', type: 'labelPicker' },
-        { txt: 'Members', icon: 'members-icon', type: 'memberPicker' },
-        { txt: 'Cover', icon: 'cover-icon', type: 'coverPicker' },
-        { txt: 'Dates', icon: 'dates-icon', type: 'datePicker' },
+        { txt: 'Edit labels', icon: 'labels-icon', type: 'LabelsPicker' },
+        { txt: 'Change members', icon: 'members-icon', type: 'MemberPicker' },
+        { txt: 'Change cover', icon: 'cover-icon', type: 'CoverPicker' },
+        { txt: 'Edit dates', icon: 'dates-icon', type: 'DueDatePicker' },
         { txt: 'Archive', icon: 'archive-icon', type: 'archive' },
       ],
       cmpType: null,
+      cmpName: '',
       buttonPosition: {},
       isNearBottom: false,
       saveButtonPosition: {},
@@ -169,28 +191,182 @@ export default {
       quickEditDisplayStyle: {},
       localTask: null,
       actionButtonsClass: '',
+      taskToEdit: null,
+      group: null,
+      board: null,
+      hideBtn: false,
+      isWatchActive: false,
+      watch: 'Watch',
+      isDynamicModal: false,
+      actionCmpType: null,
+      actionCmpName: null,
+      isCoverActive: false,
+      coverColor: '',
+      currColor: '',
     }
   },
   created() {
     this.localTask = { ...this.task }
+    this.setTask()
   },
   computed: {
     areLabelsVisible() {
       return this.$store.getters.areLabelsVisible
     },
+    cmpOrder() {
+      return this.$store.getters.cmpsOrder
+    },
   },
   methods: {
-    toggleStatus() {
-      this.$store.dispatch('toggleStatus', {
-        groupId: this.groupId,
-        task: this.task,
-      })
+    set(cmp, idx) {
+      this.isDynamicModal = true
+      this.actionCmpType = cmp
+      this.actionCmpName = this.dynamicNames[idx]
     },
-    openModal() {
-      console.log('openModal')
+
+    setCover(cover) {
+      if (this.taskToEdit.hasOwnProperty('cover')) {
+        this.taskToEdit.cover = cover
+      } else {
+        this.taskToEdit = { ...this.taskToEdit, cover: cover }
+      }
+      this.editTask()
+    },
+
+    removeLabel(board) {
+      this.board = board
+      this.editTask()
+    },
+    updateLable(board) {
+      this.board = board
+      this.editTask()
+    },
+    addDueDate(date) {
+      this.taskToEdit.dueDate = date
+
+      this.editTask()
+    },
+    saveLabel(labelId) {
+      const idx = this.taskToEdit.labels?.findIndex(
+        (label) => label === labelId
+      )
+      if (idx >= 0) this.taskToEdit.labels?.splice(idx, 1)
+      else {
+        this.taskToEdit.labels.push(labelId)
+      }
+      this.$store.dispatch({ type: 'updateBoard', board: this.board })
+    },
+    addAttachment(newAttachment) {
+      if (!this.taskToEdit.attachments) this.taskToEdit.attachments = []
+      this.taskToEdit.attachments.push(newAttachment)
+      this.onTaskEdit()
+    },
+    addChecklist(newChecklist) {
+      if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
+      this.taskToEdit.checklists.push(newChecklist)
+      this.editTask()
+    },
+    toggleMember(clickedMember) {
+      if (!this.taskToEdit.members) {
+        this.taskToEdit.members = []
+        this.taskToEdit.members.push(clickedMember)
+      } else {
+        if (
+          this.taskToEdit.members.some(
+            (member) => member.id === clickedMember.id
+          )
+        ) {
+          const idx = this.taskToEdit.members.findIndex(
+            (member) => member.id === clickedMember.id
+          )
+          this.taskToEdit.members.splice(idx, 1)
+        } else {
+          this.taskToEdit.members.push(clickedMember)
+        }
+      }
+    },
+    async setTask() {
+      try {
+        const boardId = this.$route.params.boardId
+        const board = await boardService.getById(boardId)
+        const taskId = this.$route.params.taskId
+        const groupId = this.$route.params.groupId
+        // console.log("groupId:", groupId);
+
+        this.board = JSON.parse(JSON.stringify(board))
+        this.group = this.board.groups.find((group) => group.id === groupId)
+        this.taskToEdit = this.group.tasks.find((task) => task.id === taskId)
+      } catch (err) {
+        console.log('error in setTask')
+      }
+    },
+    togglecover() {
+      this.isCoverActive = !this.isCoverActive
+    },
+    closeDynamicModal() {
+      this.isDynamicModal = false
+    },
+    closeModal() {
+      this.$router.back()
+    },
+    editTask() {
+      console.log('edit task:')
+      const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
+      // console.log("editedTask:", editedTask)
+      const taskIdx = this.group.tasks.findIndex(
+        (task) => task.id === this.taskToEdit.id
+      )
+      // replace task with editTask
+      this.group.tasks.splice(taskIdx, 1, this.taskToEdit)
+      this.$store.dispatch({ type: 'updateBoard', board: this.board })
+    },
+    closeComponent() {
+      this.taskTitle = ''
+      this.$emit('close')
+    },
+    openModal(type) {
+      switch (type) {
+        case 'LabelsPicker':
+          this.cmpType = 'LabelsPicker'
+          this.CmpName = 'Edit labels'
+          break
+        case 'MemberPicker':
+          this.cmpType = 'MemberPicker'
+          this.CmpName = 'Change Members'
+
+          break
+        case 'CoverPicker':
+          this.cmpType = 'CoverPicker'
+          this.CmpName = 'Change cover'
+
+          break
+        case 'DueDatePicker':
+          this.cmpType = 'DueDatePicker'
+          this.CmpName = 'Edit dates'
+
+          break
+        default:
+          this.cmpType = null
+          // handle the archive action or other actions that do not correspond to a modal.
+          break
+      }
+    },
+    toggleStatus() {
+      this.$emit('status-toggled')
     },
     toggleLabel() {
       this.$store.commit('toggleLabelsVisibility')
+    },
+    closeQuickEdit(e) {
+      console.log('closeQuickEdit was called')
+      if (e.target.classList.contains('quickEditScreen')) {
+        this.$emit('close')
+      }
+    },
+    goToTaskDetails() {
+      this.$router.push(
+        `/details/${this.board}/group/${this.groupId}/task/${this.task.id}`
+      )
     },
   },
   mounted() {
@@ -211,7 +387,8 @@ export default {
             const isNearRight = distanceFromRight < 200
             this.actionButtonsClass = isNearRight ? 'modal-left' : 'modal-right'
             const adjustedTop = this.rect.top - 100
-
+            this.$refs.titleInput.focus();
+            this.$refs.titleInput.select();
             if (this.isNearBottom && isNearRight) {
               this.buttonPosition = {
                 position: 'fixed',
@@ -253,9 +430,6 @@ export default {
       },
       { immediate: true }
     )
-  },
-  directives: {
-    clickOutside: clickOutsideDirective,
   },
 }
 </script>

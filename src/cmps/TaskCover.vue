@@ -28,11 +28,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.task-cover {
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 8px 8px 0 0;
-}
-</style>

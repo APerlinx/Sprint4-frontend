@@ -288,7 +288,6 @@ const board = {
               ],
             },
           ],
-          memberIds: ['u101'],
           labelIds: [],
           dueDate: Date.now(),
           byMember: {
@@ -2452,12 +2451,6 @@ const board3 = {
 //   await storageService.post(STORAGE_KEY, board2)
 //   await storageService.post(STORAGE_KEY, board3)
 // })()
-
-
-
-
-
-
 
 
 function coverOptions() {

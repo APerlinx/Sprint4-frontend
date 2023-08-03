@@ -4,7 +4,7 @@
         <div class="members-container">
             <h3>Board members</h3>
             <ul>
-                <li v-for="member in board.members" @click="toggleMember(member)" class="list">
+                <li v-for="member in board.members" @click="toggleMember(member)" :key="member.id" class="list">
                     <div class="single-member-container">
                         <!-- <div class="member-pic" :style="{ backgroundColor: member.backgroundColor }"> -->
                         <div class="member-pic">
@@ -48,6 +48,9 @@ export default {
         board: Object,
     },
     data() {
+        return {
+
+        }
     },
     methods: {
         toggleMember({ id, username, fullname, imgUrl, backgroundColor }) {

@@ -39,7 +39,15 @@ export const boardStore = {
     dropResults: [],
     areLabelsVisible: false,
 
-    cmpsOrder: ['MemberPicker', 'LabelsPicker', 'ChecklistPicker', 'DueDatePicker', "AttachmentPicker", 'CoverPicker', "Custom Fields"],
+    cmpsOrder: [
+      'MemberPicker',
+      'LabelsPicker',
+      'ChecklistPicker',
+      'DueDatePicker',
+      'AttachmentPicker',
+      'CoverPicker',
+      'Custom Fields',
+    ],
   },
   getters: {
     boards({ boards }) {
@@ -86,6 +94,9 @@ export const boardStore = {
     areLabelsVisible: (state) => state.areLabelsVisible,
   },
   mutations: {
+    saveTitle(state, { title }) {
+      state.currentBoard.title = title
+    },
     setBoards(state, { boards }) {
       state.boards = boards
     },
@@ -455,7 +466,7 @@ export const boardStore = {
       try {
         commit('setBoardBgClr', payload)
         await boardService.save(state.currentBoard)
-      } catch (err) { }
+      } catch (err) {}
     },
     async changeBoardBgGrad({ state, commit }, payload) {
       try {
@@ -468,12 +479,20 @@ export const boardStore = {
     async addActivity({ commit, state }, { activity, task = {}, group = {} }) {
       try {
         const newActivity = boardService.getEmptyActivity(activity, task, group)
-        console.log('newActivity', newActivity)
         commit('addActivity', { newActivity })
 
         await boardService.save(state.currentBoard)
       } catch (err) {
         throw err
+      }
+    },
+    async saveTitle({ commit, state, dispatch }, title) {
+      try {
+        commit('saveTitle', title)
+        await boardService.save(state.currentBoard)
+        dispatch('addActivity', {activity: 'Changed board title'})
+      } catch (err) {
+          throw err
       }
     },
   },
