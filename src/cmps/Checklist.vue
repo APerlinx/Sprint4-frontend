@@ -7,21 +7,20 @@
                 <!-- <h3 @click="hideBtn">{{ checklistToEdit.title }}</h3> -->
                 <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                     @focus="hideBtn = false"></textarea>
-                <div class="btns-hide-delete-container" v-if="hideDelateBtn">
-                    <button class="btn btn-checklist-hide-show" v-if="isTodoChecked"
-                        @click="isHideChecked = !isHideChecked">
+                <div class="btns-hide-delete-container" v-if="hideBtn">
+                    <button class="btn-checklist-hide-show" v-if="isTodoChecked" @click="isHideChecked = !isHideChecked">
                         {{ hideCheckedTxt }}</button>
                     <button class="btn btn-delete-chackbox" v-if="hideBtn" @click="deleteChecklist">Delete</button>
                 </div>
             </div>
 
 
-            <div v-if="!hideBtn1" class="btn-save-close">
+            <!-- <div v-if="!hideBtn1" class="btn-save-close">
                 <button class="btn" @click.stop="onTaskEdit">
                     Save
                 </button>
                 <button class="btn" @click="closeTodoTitle">Cancel</button>
-            </div>
+            </div> -->
 
         </section>
 
@@ -38,14 +37,14 @@
                         @blur="hideTodoBtn = false" @focus="hideTodoBtn = true"></textarea>
                 </section>
             </div>
-            <div v-if="hideTodoBtn">
+            <!-- <div v-if="hideTodoBtn">
                 <button class="btn btn-save-close" @click="updateChecklist" @blur="updateChecklist">
                     save
                 </button>
                 <button class="btn btn-save-close" @click="updateChecklist">
                     <span class="icon close"></span>
                 </button>
-            </div>
+            </div> -->
 
             <button class="btn is-add-todo" v-if="!isAddTodo" @click="isAddTodo = true">Add an item</button>
             <div v-else>

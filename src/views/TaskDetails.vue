@@ -82,37 +82,6 @@
                     </div>
                 </div>
 
-
-                <div class="icon-title-container-description">
-                    <span class="icon attachment-big"></span>
-                    <h3 class="details-title-big">Attachment</h3>
-                </div>
-                <div class="img-container">
-                    <img alt="../assets/styles/img/grid.png" />
-                </div>
-                <article class="attachment-details">
-                    <h4>123</h4>
-                    <div class="main-actions">
-                        Added
-                        <span>123&#x2022 </span>
-                        <span class="attachment-action">Comment</span> &#x2022
-                        <span class="attachment-action" @click="removeAttachment(attachment.id)">Delete</span> &#x2022
-                        <span class="attachment-action">Edit</span>
-                    </div>
-                    <div>
-                        <span class="attachment-action">Make Cover</span>
-                    </div>
-                </article>
-
-
-
-
-                <!-- <section class="td-section" v-if="taskData.task?.attachments?.length">
-                    <attachments :attachments="taskData.task?.attachments" />
-                </section> -->
-                <!-- <Attachment v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
-                    @updateChecklist="updateChecklist" /> -->
-
                 <!-- <Checklist /> -->
                 <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
                     @updateChecklist="updateChecklist" />
@@ -156,11 +125,12 @@
                 <div class="action-btns-in-btns">
                     <h3 class="details-title-small">Actions</h3>
                     <button class="btn"><span class="icon arrow-right"></span>Move</button>
-                    <button class="btn"><span class="icon copy"></span>Copy</button>
-                    <button class="btn"><span class="icon card"></span>Make template</button>
+                    <!-- <button class="btn"><span class="icon copy"></span>Copy</button> -->
+                    <!-- <button class="btn"><span class="icon card"></span>Make template</button> -->
                     <button class="btn"><span class="icon archive"></span>Archive</button>
-                    <button class="btn"><span class="icon share"></span>Share</button>
+                    <!-- <button class="btn"><span class="icon share"></span>Share</button> -->
                 </div>
+                <!-- <pre>{{ isCover }}</pre> -->
 
             </section>
         </section>
@@ -174,7 +144,7 @@ import DynamicModal from "./DynamicModal.vue";
 import Checklist from "../cmps/Checklist.vue"
 import Members from "../cmps/Members.vue";
 import Labels from "../cmps/Labels.vue";
-import Attachment from "../cmps/AttachmentPreview.vue"
+import AttachmentList from "../cmps/AttachmentList.vue"
 import Dates from "../cmps/Dates.vue"
 import { boardService } from "../services/board.service.local.js";
 
@@ -217,6 +187,7 @@ export default {
                 this.taskToEdit = { ...this.taskToEdit, cover: cover };
             }
             this.editTask()
+
         },
 
         removeLabel(board) {
@@ -362,7 +333,7 @@ export default {
         Popper,
         defineComponent,
         Labels,
-        Attachment,
+        AttachmentList,
         Dates,
     },
     directives: {

@@ -2,7 +2,7 @@
     <section class="modal-checklist">
         <h5></h5>
         <label for="checklist-input">Title</label>
-        <input type="text" v-model="checklistTitle" placeholder="Checklist" autofocus v-focus v-focusDirective />
+        <input type="text" v-model="checklistTitle" placeholder="Checklist" v-focus />
         <!-- placeholder="Checklist" v-focus id="checklist-input" /> -->
 
         <!-- <label for="checklist-copy">Copy item from...</label>
