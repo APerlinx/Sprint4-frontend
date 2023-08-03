@@ -52,6 +52,12 @@
                 margin-block-start: rem(24px);
                 margin-block-end: rem(30px);
                 font-family: charlie;
+                transition: 0.3s;
+
+                &:hover {
+                    background-color:  darken(#0065ff, 8%)
+                }
+
             }
         }
         .right-hero-container {

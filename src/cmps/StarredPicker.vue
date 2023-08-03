@@ -5,10 +5,12 @@
         <li v-if="starredBoards" v-for="board in starredBoards">
           <RouterLink @click="closeModal" :to="'/details/' + board._id">
             <div class="row">
-              <img :src="board.imgUrl" />
-              <div class="text">
-                <h2>{{ board.title }}</h2>
-                <p>User work space</p>
+              <div class="board-recent">
+                <img :src="board.imgUrl" />
+                <div class="info">
+                  <h2 class="board-title">{{ board.title }}</h2>
+                  <p>User work space</p>
+                </div>
               </div>
               <div
                 @click.stop.prevent="toggleStar(board)"
