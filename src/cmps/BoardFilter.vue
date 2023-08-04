@@ -1,14 +1,7 @@
 <template>
   <section class="filter">
     <Popper arrow placement="bottom">
-      <input
-        class="search-bar"
-        v-model="filterBy"
-        @input="onSetFilterBy"
-        type="text"
-        placeholder="Search"
-        v-focus
-      />
+      <input class="search-bar" v-model="filterBy" @input="onSetFilterBy" type="text" placeholder="Search" v-focus />
 
       <template #content>
         <div class="open">
@@ -16,11 +9,11 @@
             <h5>RECENT BOARDS</h5>
 
             <ul class="output-list">
-              <li v-for="board in filteredBoards" :key="board._id">
+              <li v-for="board in  filteredBoards " :key="board._id">
                 <RouterLink :to="'/details/' + board._id">
                   <div class="board-select">
                     <img v-if="board.imgUrl" :src="board.imgUrl" alt="B" />
-                    <div v-else class="color" :src="board.bgColor"></div>
+                    <div v-else class="color" :style="{ background: board.bgColor }"></div>
                     <h2>{{ board.title }}</h2>
                   </div>
                 </RouterLink>

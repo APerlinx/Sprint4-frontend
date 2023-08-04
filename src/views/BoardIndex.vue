@@ -59,12 +59,14 @@ import Popper from "vue3-popper";
 
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
+
 export default {
   data() {
     return {};
   },
 
-  created() {},
+  created() {
+  },
 
   methods: {
     async removeBoard(boardId) {
@@ -81,6 +83,7 @@ export default {
 
     async starBoard(board) {
       try {
+        console.log(board.isStarred);
         await this.$store.dispatch({ type: "updateBoard", board });
       } catch (err) {
         console.log(err);
@@ -133,9 +136,7 @@ export default {
       return this.$store.getters.recentBoards;
     },
     loggedInUser() {
-      return this.$store.getters.loggedinUser?.fullname.charAt(0)
-    
-    
+      return this.$store.getters.loggedinUser?.fullname.charAt(0);
     },
   },
   components: {

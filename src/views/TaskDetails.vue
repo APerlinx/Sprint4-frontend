@@ -144,10 +144,10 @@
 </template>
 
 <script>
-import { focusDirective, clickOutsideDirective } from '../directives/index.js'
+import { focusDirective, clickOutsideDirective } from "../directives/index.js";
 
 import DynamicModal from "./DynamicModal.vue";
-import Checklist from "../cmps/Checklist.vue"
+import Checklist from "../cmps/Checklist.vue";
 import Members from "../cmps/Members.vue";
 import Labels from "../cmps/Labels.vue";
 import Attachment from "../cmps/AttachmentPreview.vue"
@@ -156,8 +156,8 @@ import Comments from "../cmps/Comments.vue"
 // import { boardService } from "../services/board.service.local.js";
 import { boardService } from "../services/board.service.js";
 
-import { defineComponent } from 'vue'
-import Popper from 'vue3-popper'
+import { defineComponent } from "vue";
+import Popper from "vue3-popper";
 
 export default {
     data() {

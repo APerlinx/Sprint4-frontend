@@ -39,7 +39,8 @@
 </template>
 
 <script>
-import { boardService } from "../services/board.service.local";
+// import { boardService } from "../services/board.service.local";
+import { boardService } from "../services/board.service.js";
 import ColorPicker from "../cmps/ColorPicker.vue";
 import ImgPicker from "../cmps/ImgPicker.vue";
 
@@ -56,15 +57,17 @@ export default {
     },
     saveBoard() {
       if (!this.boardToEdit.title) return;
+      this.boardToEdit.createdBy = this.getLoggendInUser
+      console.log(this.boardToEdit);
       this.$emit("save", this.boardToEdit);
     },
     setBgColor(color) {
       this.preview = color;
-      this.boardToEdit.bgColor = color;
+      this.boardToEdit.style.backgroundColor = color;
     },
     setBgImg(img) {
       this.preview = `url(${img})`;
-      this.boardToEdit.imgUrl = img;
+      this.boardToEdit.style.backgroundImage = img;
     },
   },
   computed: {
@@ -74,6 +77,9 @@ export default {
     imgUrl() {
       return `url(${this.preview})` || "";
     },
+    getLoggendInUser() {
+      this.$store.getters.getLoggendInUser
+    }
   },
   components: {
     ColorPicker,

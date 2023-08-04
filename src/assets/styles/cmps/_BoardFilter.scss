@@ -8,6 +8,7 @@
             padding: 0.5em 2em;
             border-radius: 0.35em;
             border: 1px solid lightgrey;
+            height: rem(32px);
 
             &:focus {
                 width: rem(500px);
@@ -49,9 +50,9 @@
                 .output-list {
                     display: flex;
                     flex-direction: column;
-                    gap: 1em;
                     list-style: none;
                     padding: 0;
+                    padding-block-end: 1.5em;
 
                     .board-select {
                         display: flex;

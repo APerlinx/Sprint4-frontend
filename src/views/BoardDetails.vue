@@ -9,6 +9,10 @@
 <script>
 import GroupList from '../cmps/GroupList.vue'
 import BoardHeader from '../cmps/BoardHeader.vue'
+import {
+  socketService,
+  SOCKET_EMIT_SET_TOPIC,
+} from "../services/socket.service.js";
 
 export default {
   components: { GroupList, BoardHeader },
@@ -29,6 +33,7 @@ export default {
     const { boardId } = this.$route.params
     await this.$store.dispatch('loadCurrentBoard', { boardId })
     await this.$store.dispatch('addBoardToRecent', { boardId })
+    socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId);
   },
   computed: {
     board() {
