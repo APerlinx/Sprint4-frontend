@@ -167,7 +167,7 @@ const board1 = {
     imgUrl: 'http://some-img',
   },
   style: {
-    backgroundImage: 'https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/ocean.svg',
+    backgroundImage: 'url(https://images.unsplash.com/photo-1484807352052-23338990c6c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)',
   },
   labels: _labelOptions(),
   members: _membersOptions(),
@@ -185,7 +185,7 @@ const board1 = {
           description: 'Analyze client requirements and define the scope of the website project.',
           labels: ['l103', 'l104'],
           watching: false,
-          cover: { color: '#f87462', imgUrl: '', isFull: false },
+          cover: { color: '#f87462', imgUrl: '', isFull: true },
           comments: [
             {
               id: 'C1',
@@ -1011,7 +1011,7 @@ const board1 = {
           cover: {
             color: '',
             imgUrl: '',
-            isFull: true,
+            isFull: false,
           },
         },
       ],

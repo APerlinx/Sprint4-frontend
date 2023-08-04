@@ -48,8 +48,8 @@
       >
         <button class="list-btn">
           <span class="icon"></span> Add another list
-          <pre>{{ msgs }}</pre>
-          <pre>{{ groups }}</pre>
+          <!-- <pre>{{ msgs }}</pre>
+          <pre>{{ groups }}</pre> -->
         </button>
       </li>
       <li
@@ -59,7 +59,7 @@
       >
         <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
-      <button @click="saveMsg">check</button>
+      <button @click="saveMsg" style="padding: 0px">.</button>
     </ul>
   </section>
 </template>

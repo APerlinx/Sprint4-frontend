@@ -12,7 +12,7 @@ import BoardHeader from '../cmps/BoardHeader.vue'
 import {
   socketService,
   SOCKET_EMIT_SET_TOPIC,
-} from "../services/socket.service.js";
+} from '../services/socket.service.js'
 
 export default {
   components: { GroupList, BoardHeader },
@@ -23,8 +23,7 @@ export default {
         backgroundColor: '',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center', // You can adjust this value to control the image position
-
+        backgroundPosition: 'center',
       },
     }
   },
@@ -33,7 +32,7 @@ export default {
     const { boardId } = this.$route.params
     await this.$store.dispatch('loadCurrentBoard', { boardId })
     await this.$store.dispatch('addBoardToRecent', { boardId })
-    socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId);
+    socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
   },
   computed: {
     board() {
@@ -49,8 +48,7 @@ export default {
           backgroundColor: newVal.backgroundColor || '',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center', // You can adjust this value to control the image position
-
+          backgroundPosition: 'center',
         }
       },
     },

@@ -1,11 +1,9 @@
 .task-preview {
   display: flex;
   flex-direction: column;
-  // width: 256px;
   border-radius: 8px;
   margin-bottom: 7px;
   padding: 8px 8px 4px 12px;
-  // box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
   box-shadow: $task-shadow-raised;
   border: 0.1px solid rgb(212, 212, 212);
   background-color: $task-bg-clr;
@@ -21,7 +19,7 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      
+
       .tool-tip-icons {
         display: flex;
         justify-content: start;
@@ -162,7 +160,7 @@
           display: flex;
           flex-direction: row;
           cursor: pointer;
-          margin-right: -1.2px; 
+          margin-right: -1.2px;
           margin-bottom: 4px;
           gap: 2px;
           .avatar {
@@ -170,12 +168,10 @@
             height: 24px;
             object-fit: cover;
             border-radius: 50%;
-            margin-right:2px; 
-
+            margin-right: 2px;
           }
         }
       }
-
 
       .icon {
         &.watch {
@@ -234,5 +230,53 @@
   &:hover {
     background-color: rgba(160, 177, 190, 0.09);
   }
+
+  .task-header.full-cover-task {
+    margin-top: 1.3em;
+
+    > p {
+      font-weight: 500;
+      font-size: 16px;
+      color: rgb(23, 43, 77);
+      line-height: 20px;
+      padding-bottom: 4px;
+    }
+  }
+
+  .task-header.full-cover-image-task {
+    margin-top: 15.7em;
+
+    > p {
+      font-weight: 500;
+      font-size: 16px;
+      color: rgb(23, 43, 77);
+      line-height: 20px;
+      padding-bottom: 4px;
+    }
+  }
+
+  .full-cover-image-task {
+    position: relative;
+    background: linear-gradient(180deg, #ffffff80, #fff);
+    overflow: visible;
+    width: 100%;
+    padding: 8px 8px 4px 12px;
+    border-radius: 8px;
+  }
+
+  .full-cover-image-task::before {
+    background: linear-gradient(180deg, rgba(255, 252, 252, 0), rgba(255, 255, 255, 0.5));
+    content: "";
+    height: 32px;
+    left: 0;
+    mix-blend-mode: normal;
+    position: absolute;
+    right: 0;
+    top: -32px;
+    width: 100%;
+  }
 }
 
+.no-padding {
+  padding: 0;
+}

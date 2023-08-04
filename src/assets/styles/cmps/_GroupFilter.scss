@@ -1,0 +1,20 @@
+
+.group-filter-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2em;
+
+    .title {
+        font-size: 14px;
+        line-height: 20px;
+        color: #44546F;
+        font-weight: 600;
+    }
+
+}
+
+.close-icon {
+    @include trello-icon($content: "\e91c", $type: sm, $color: #626F86);
+    cursor: pointer;
+}
+
