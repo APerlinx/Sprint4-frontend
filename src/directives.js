@@ -1,7 +1,7 @@
 export const focusDirective = {
     mounted(el) {
         console.log(el)
-        setTimeout(()=> el.focus(), 100)
-        
+        setTimeout(() => el.focus(), 100)
+
     }
 }

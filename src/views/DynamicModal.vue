@@ -5,20 +5,10 @@
       <span class="dynamic-modal-close" @click="closeDynamicModal"></span>
     </section>
     <section>
-      <component
-        :board="boardToUpdate"
-        :is="actionCmpType"
-        :taskToEdit="taskToEdit"
-        @updateLable="updateLable"
-        @toggleMember="toggleMember"
-        @checklist="addChecklist"
-        @saveLabel="saveLabel"
-        @addDueDate="addDueDate"
-        @removeLabel="removeLabel"
-        @setCover="setCover"
-        @closeEditModal="closeDynamicModal"
-        @attachment="addAttachment" 
-      >
+      <component :board="boardToUpdate" :is="actionCmpType" :taskToEdit="taskToEdit" @updateLable="updateLable"
+        @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @addDueDate="addDueDate"
+        @removeLabel="removeLabel" @setCover="setCover" @closeEditModal="closeDynamicModal"
+        @addAttachment="addAttachment">
       </component>
     </section>
   </div>

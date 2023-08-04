@@ -45,19 +45,27 @@ export default {
         },
         updateTask() {
             //need to add
+        },
+        addMember() {
+            this.$emit('toggleMember')
         }
     },
-    computed: {
-
-
-    },
+    // computed: {
+    // getLabelTitle() {
+    //     return (id) => {
+    //         const label = this.board.labels.find((label) => label.id === id);
+    //         return label ? label.title : "";
+    //     };
+    // },
+    // },
     computed: {
         members() {
             return this.task.members;
+
         },
-    },
-    components: {
-        MemberDetails,
-    },
+        components: {
+            MemberDetails,
+        },
+    }
 }
 </script>

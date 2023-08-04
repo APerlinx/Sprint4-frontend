@@ -2,7 +2,7 @@
     <div class="due-date-container" v-if="task.dueDate">
         <h5>Due-date</h5>
         <div class="due-date-checkbox">
-            <input type="checkbox" v-model="dueDateStatus" @change="checkDueDate" />
+            <input type="checkbox" v-model="dateStatus" @change="checkDueDate" />
             <button class=" btn due-date-long-date" @click="openDueDate">
                 <span>{{ formatDate(task.dueDate) }}&nbsp</span>
                 at
@@ -12,8 +12,9 @@
                     <!-- <span class="icon date"></span> -->
                     <!-- <span class="date-counter"></span> -->
 
-                    <span class="status" :class="{ completed: status === 'completed', overdue: status === 'overdue' }">{{
-                        status }}</span>
+                    <span class="status"
+                        :class="{ completed: task.status === 'completed', overdue: task.status === 'overdue' }">{{
+                            dueDateStatus }}</span>
                 </div>
             </button>
 
@@ -47,33 +48,37 @@ export default {
         formatTime(timestamp) {
             return format(new Date(timestamp), 'h:mm aa')
         },
-        // openDueDate() {
-        //     this.$emit('addDueDate')
-        //     this.dueDateStatus()
-        // },
-        // checkDueDate() {
-        //     this.task.status === !this.task.status
-        //     this.dueDateStatus()
-        // },
-        // dueDateStatus() {
-        //     if (!this.task.dueDate) return 'no-due-date'
-        //     if (this.task.status) return 'conpleted'
+        openDueDate() {
+            this.$emit('addDueDate')
+        },
+        checkDueDate() {
 
-        //     const now = Date.now()
-        //     const dueDate = new Date(this.task.dueDate).getTime()
-        //     const diffHours = (dueDate - now) / 1000 / 60 / 60
+            this.dateStatus = !!this.dateStatus
 
-        //     if (diffHours < -48) return 'overdue-long'
-        //     if (diffHours < 0) return 'overdue-short'
-        //     if (diffHours < 24) return 'due-soon'
-        //     return 'normal'
-        // },
-        // toggleStatus() {
-        //     this.$store.dispatch('toggleStatus', {
-        //         groupId: this.groupId,
-        //         task: this.task,
-        //     })
-        // },
+            this.$emit('updateTaskStatus', this.dateStatus)
+
+        },
+        toggleStatus() {
+            this.$store.dispatch('toggleStatus', {
+                groupId: this.groupId,
+                task: this.task,
+            })
+        },
     },
+    computed: {
+        dueDateStatus() {
+            if (!this.task.dueDate) return 'no-due-date'
+            if (this.task.status) return 'completed'
+
+            const now = Date.now()
+            const dueDate = new Date(this.task.dueDate).getTime()
+            const diffHours = (dueDate - now) / 1000 / 60 / 60
+
+            if (diffHours < -48) return 'overdue-long'
+            if (diffHours < 0) return 'Overdue'
+            if (diffHours < 24) return 'DueSoon'
+            return 'normal'
+        },
+    }
 }
 </script>

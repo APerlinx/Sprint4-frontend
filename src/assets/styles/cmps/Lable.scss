@@ -35,7 +35,10 @@
         .label {
             text-overflow: clip;
             margin-right: 7px;
-            margin: 0 7px 0 1px;
+            margin: 0px 7px 0 1px;
+            text-align: center;
+            justify-content: center;
+
         }
 
         .add-label {
@@ -47,8 +50,9 @@
         h6 {
             font-size: 0.95em;
             color: #182b4d;
-            margin-block-end: 1em;
+            margin-block-end: 0;
         }
+
         .label-modal {
             position: absolute;
             transform: translate(15px, 6px);
