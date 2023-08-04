@@ -1,3 +1,4 @@
+// import { log } from 'console'
 import { httpService } from './http.service'
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'

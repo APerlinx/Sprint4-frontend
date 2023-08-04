@@ -11,26 +11,27 @@
     <!-- Members section -->
     <section class="filter-section">
       <p class="section-label">Members</p>
-      <label>
+      <label class="button">
         <input type="checkbox" v-model="noMembers" class="hidden-checkbox" />
         <span class="icon-checkbox">
           <span class="icon-empty-checked"></span>
           <span class="icon-full-checked"> </span>
         </span>
-        No members
+        <p class="btn-txt">No members</p>
       </label>
+
       <label>
         <input type="checkbox" v-model="assignedToMe" class="hidden-checkbox" />
         <span class="icon-checkbox">
           <span class="icon-empty-checked"></span>
           <span class="icon-full-checked"></span>
         </span>
-        Assigned to me
+        <p class="btn-txt">Assigned to me</p>
       </label>
       <select v-model="selectedMember">
         <option disabled value="">Please select a member</option>
         <option v-for="member in members" :key="member.id" :value="member.id">
-          {{ member.name }}
+          {{ member.username }}
         </option>
       </select>
     </section>
@@ -43,7 +44,7 @@
           <span class="icon-empty-checked"></span>
           <span class="icon-full-checked"></span>
         </span>
-        No date
+        <p class="btn-txt">No date</p>
       </label>
       <label>
         <input type="checkbox" v-model="overdue" class="hidden-checkbox" />
@@ -51,7 +52,7 @@
           <span class="icon-empty-checked"></span>
           <span class="icon-full-checked"></span>
         </span>
-        Overdue
+        <p class="btn-txt">Overdue</p>
       </label>
       <label>
         <input type="checkbox" v-model="dueInNextDay" class="hidden-checkbox" />
@@ -59,7 +60,7 @@
           <span class="icon-empty-checked"></span>
           <span class="icon-full-checked"></span>
         </span>
-        Due in the next day
+        <p class="btn-txt">Due in the next day</p>
       </label>
     </section>
 
@@ -72,7 +73,7 @@
           <span class="icon-empty-checked"></span>
           <span class="icon-full-checked"></span>
         </span>
-        No labels
+        <p class="btn-txt">No labels</p>
       </label>
       <label v-for="label in visibleLabels" :key="label.id">
         <input
@@ -84,12 +85,17 @@
           <span class="icon-empty-checked"></span>
           <span class="icon-full-checked"></span>
         </span>
-        {{ label.name }}
+        <div
+          class="btn-txt filter-label"
+          :style="{ backgroundColor: label.color }"
+        >
+          {{ label.title }}
+        </div>
       </label>
       <select v-model="selectedLabel">
         <option disabled value="">Please select a label</option>
         <option v-for="label in hiddenLabels" :key="label.id" :value="label.id">
-          {{ label.name }}
+          {{ label.title }}
         </option>
       </select>
     </section>
@@ -97,6 +103,8 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
+
 export default {
   props: {
     members: {
@@ -118,23 +126,45 @@ export default {
       overdue: false,
       dueInNextDay: false,
       noLabels: false,
-      selectedLabel: '',
+      selectedLabels: [], // Will hold the selected labels
+      allLabels: [], // Should contain all the labels
     }
   },
   computed: {
     visibleLabels() {
-      // This will only return the first three labels
       return this.labels.slice(0, 3)
     },
     hiddenLabels() {
-      // This will return all the labels after the third one
       return this.labels.slice(3)
     },
+  },
+  methods: {
+    toggleLabel(label) {
+      label.selected = !label.selected
+    },
+  },
+  components: {
+    Multiselect,
   },
 }
 </script>
 
 <style scoped>
+.filter-label {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border-radius: 3px;
+  max-width: 100%;
+  height: 32px;
+  text-align: start;
+  padding: 0 12px;
+  line-height: 32px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
 .filter {
   z-index: 10;
   position: absolute;
@@ -142,10 +172,11 @@ export default {
   left: 72%;
   background-color: white;
   padding: 15px;
+  padding-inline-start: 19.9px;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   width: 384px;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   border-radius: 8px;
 }
 
@@ -209,14 +240,19 @@ input::placeholder {
 
 .hidden-checkbox {
   position: absolute;
-  opacity: 0; /* Hide the checkbox */
+  opacity: 0;
 }
 
 .icon-checkbox {
+  display: flex;
   position: relative;
-  padding-left: 35px;
   cursor: pointer;
   font-size: 1.5rem;
+}
+
+.btn-txt {
+  margin-inline-start: 2em;
+  align-self: center; /* This will vertically align the text in the middle */
 }
 
 .icon-checkbox:before {
@@ -229,16 +265,39 @@ input::placeholder {
   border: 2px solid rgb(228, 228, 228);
   border-radius: 4px;
   background: white;
+  transition: background 0.2s ease-in-out, border 0.1s ease-in-out; /* Adjust this line */
+}
+.hidden-checkbox:focus:not(:checked) + .icon-checkbox:before {
+  border: 2px solid black;
+}
+
+.hidden-checkbox:active + .icon-checkbox:before {
+  background: #0c66e4;
+  border: 1px solid #0c66e4;
+}
+
+.hidden-checkbox:checked + .icon-checkbox:before {
+  background: #0c66e4;
+  border: 2px solid black;
+}
+
+.hidden-checkbox:checked:focus + .icon-checkbox:before {
+  border: 2px solid black;
+}
+
+.hidden-checkbox:checked:not(:focus) + .icon-checkbox:before {
+  border: none;
+  border: 2px solid #0c66e4;
+  border-radius: 2px;
 }
 
 .icon-checkbox:after {
   content: '\e916';
   font-family: 'trellicons';
-  color: #FFFFFF;
-  /* background-color: #0c66e4; */
-  font-size: 1rem;
+  color: #ffffff;
+  font-size: 0.8rem;
   position: absolute;
-  left: 0px;
+  left: 2px;
   top: -2px;
   width: 12px;
   height: 12px;
@@ -246,8 +305,6 @@ input::placeholder {
   border-radius: 4px;
   transition: all 0.2s;
   opacity: 0;
-  /* border: 2px solid black; */
-  
 }
 
 .hidden-checkbox:checked + .icon-checkbox:after {

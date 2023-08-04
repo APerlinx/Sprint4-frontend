@@ -119,6 +119,8 @@
 
 <script>
 import { format } from 'date-fns'
+import Multiselect from 'vue-multiselect'
+
 import TaskCover from './TaskCover.vue'
 import TaskQuickEdit from './TaskQuickEdit.vue'
 
@@ -299,7 +301,7 @@ export default {
   color: black;
   font-size: 0; /* hide the text initially */
   transition: all 0.5s; /* apply to all properties */
-
+  font-weight: 500;
 }
 
 .label.expanded {
@@ -311,7 +313,6 @@ export default {
 
 .label-text {
   opacity: 0;
-  font-weight: 500;
   transition: opacity 0.5s, font-size 0.5s;
   text-align: left;
   margin-bottom: 0.2em;
