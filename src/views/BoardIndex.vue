@@ -83,6 +83,7 @@ export default {
 
     async starBoard(board) {
       try {
+        console.log(board.isStarred);
         await this.$store.dispatch({ type: "updateBoard", board });
       } catch (err) {
         console.log(err);
