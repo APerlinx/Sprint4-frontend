@@ -22,9 +22,8 @@
         <BoardList @star="starBoard" :boards="recentBoards" />
       </div>
       <div class="workspace-title">
-        <h3>YOUR WORKSPACE</h3>
         <div class="sub-workspace">
-          <div class="user-title">S</div>
+          <div class="user-title">{{ loggedInUser }}</div>
           <h3>Your boards</h3>
         </div>
       </div>
@@ -132,6 +131,11 @@ export default {
     },
     recentBoards() {
       return this.$store.getters.recentBoards;
+    },
+    loggedInUser() {
+      return this.$store.getters.loggedinUser?.fullname.charAt(0)
+    
+    
     },
   },
   components: {

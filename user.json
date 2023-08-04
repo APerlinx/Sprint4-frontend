@@ -1,0 +1,44 @@
+[
+  {
+    "username": "guydahan41",
+    "fullname": "Guy Dahan",
+    "password": "123",
+    "imgUrl": "https://ca.slack-edge.com/T04U05NLZ2M-U05794DRP98-f7c5750aa2dd-192",
+    "backgroundColor": "#e63946",
+    "isAdmin": true
+  },
+  {
+    "username": "Shayzig",
+    "fullname": "Shay Zigdon",
+    "password": "123",
+    "imgUrl": "https://ca.slack-edge.com/T04U05NLZ2M-U04UNLA704D-abc56285845d-72",
+    "backgroundColor": "#2a9d8f",
+    "isAdmin": true
+  },
+  {
+    "username": "alonp11",
+    "fullname": "Alon Perlin",
+    "password": "123",
+    "imgUrl": "https://ca.slack-edge.com/T04U05NLZ2M-U053T2NRWQL-ec8cffe84642-192",
+    "backgroundColor": "#e9c46a",
+    "isAdmin": true
+  },
+  {
+    "id": "m104",
+    "username": "dimapolo1",
+    "fullname": "Dima Polo",
+    "password": "123",
+    "imgUrl": "https://ca.slack-edge.com/T04U05NLZ2M-U056VBMJLKG-51a0b5aa8bbe-512",
+    "backgroundColor": "#48cae4",
+    "isAdmin": false
+},
+{
+    "id": "m105",
+    "username": "adambercovich",
+    "fullname": "Adam Bercovich",
+    "password": "123",
+    "imgUrl": "https://ca.slack-edge.com/T04U05NLZ2M-U04UB8KDZH6-0fbe87aa89af-72",
+    "backgroundColor": "#adc178",
+    "isAdmin": false
+  }
+]

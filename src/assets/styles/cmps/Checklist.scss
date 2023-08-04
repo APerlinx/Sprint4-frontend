@@ -1,11 +1,27 @@
 .checklist-container {
-    margin-top: -18px;
+    // margin-top: -18px;
+
+    textarea {
+        color: #172b4d;
+
+        &:focus {
+            background-color: white;
+            border: none;
+            outline: none;
+            // box-shadow: inset 0 0 0 2px #388bff;
+
+            &:hover {
+                background-color: white;
+            }
+        }
+    }
 }
 
 .checklist-title-container {
     display: flex;
+    flex-direction: column;
     margin-bottom: -12px;
-    width: 100%;
+    width: 552px;
     align-content: space-between;
     color: #172b4d;
     text-align: left;
@@ -14,7 +30,9 @@
 }
 
 .hide-add-todo-btns {
+    position: relative;
     display: flex;
+    flex-direction: row;
 
     .btn {
         margin-right: 4px;
@@ -31,12 +49,36 @@
     }
 }
 
-.btn-checklist-hide-show {
-    padding: 6px 12px;
-    min-width: 145px;
+.checklist-title {
+    margin: 0 0 14px 0px;
+    width: 100%;
+    border: 0;
+    height: 45px;
+    padding: 6px 10px;
+    background-color: #F1F2F4;
+    display: flex;
+    flex-direction: column;
+    resize: none;
+    // align-items: center;
+    // justify-content: center;
+
+    &:focus {
+        margin-left: 10px;
+        padding-left: 0;
+        border: none;
+        outline: none;
+        width: 516px;
+        min-height: 85px;
+        background-color: white;
+        display: flex;
+        // box-shadow: inset 0 0 0 2px #388bff;
+        border-color: #091e4224;
+        box-shadow: inset 0 0 0 1px #091e4224;
+
+        // margin-bottom: 4px;
+    }
 }
 
-.checklist-title,
 .todo-title {
     margin: 0 0 4px 0px;
     width: 450px;
@@ -62,6 +104,11 @@
     }
 }
 
+.full-checked-big {
+    justify-content: start;
+    margin: 0 0px 0 -1px
+}
+
 .icon-title-container-checklist {
     display: flex;
     flex-direction: row;
@@ -69,24 +116,40 @@
     align-content: space-between;
 }
 
-.checklist-title {
-    border: 0;
+.btn-checklist-hide-show,
+.btn-delete-chackbox {
+    justify-content: center;
+    border: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    box-shadow: none;
+    box-sizing: border-box;
+    height: 32px;
+    margin: 10px 0px 0px 5px;
+    // width: 168px;
+    // padding: 0 16px 8px 8px;
+    max-width: 300px;
+    padding: 6px 12px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition-duration: 85ms;
+    transition-property: background-color, border-color, box-shadow;
+    transition-timing-function: ease;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 6px 12px;
     display: flex;
-    flex: 1;
-    background-color: #F1F2F4;
-    height: 36px;
-    line-height: 20px;
-    width: 460px;
-    // font-size: 1rem;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-    padding: 0px;
-    margin-bottom: 2px;
+    height: 32px;
+    border-radius: 5px;
 
-    &:focus {
-        margin-left: 10px;
-        background-color: white;
-        height: 70px;
-        padding: 10px;
+    background-color: #e4e6ea;
+    color: #172b4d;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #d0d4db;
     }
 }
 
@@ -111,7 +174,11 @@
     // align-items: center;
 
     &:hover {
-        background-color: #ebecf0;
+        background-color: #E4E6EA;
+
+        // textarea {
+        //     &:hover: background-color: #E4E6EA;
+        // }
     }
 
     input {
@@ -175,10 +242,10 @@
                 flex-direction: column;
             }
 
-            .btn-save-close {
-                display: flex;
-                flex-direction: row;
-            }
+            // .btn-save-close {
+            //     display: flex;
+            //     flex-direction: row;
+            // }
         }
 
 
@@ -186,11 +253,11 @@
             // transition: 0.6s;
             background-color: #E4E6EA;
 
-            textarea {
-                // transition: 0.6s;
-                background-color: #E4E6EA;
-                // padding: 0;
-            }
+            // textarea {
+            //     // transition: 0.6s;
+            //     background-color: #E4E6EA;
+            //     // padding: 0;
+            // }
         }
     }
 }
@@ -289,3 +356,31 @@
     font-size: 11px;
 
 }
+
+
+
+
+
+
+
+
+// .checklist-title {
+//     border: 0;
+//     display: flex;
+//     flex: 1;
+//     background-color: #F1F2F4;
+//     height: 36px;
+//     line-height: 20px;
+//     width: 460px;
+//     // font-size: 1rem;
+//     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+//     padding: 0px;
+//     margin-bottom: 2px;
+
+//     &:focus {
+//         margin-left: 10px;
+//         background-color: white;
+//         height: 70px;
+//         padding: 10px;
+//     }
+// }
