@@ -2,11 +2,7 @@
   <RouterLink :to="'/details/' + board._id">
     <div class="board">
       <div class="drop">
-        <div
-          @click.stop.prevent="toggleStar"
-          class="btn-star"
-          :class="boardClass"
-        ></div>
+        <div @click.stop.prevent="toggleStar" class="btn-star" :class="boardClass"></div>
         <h2>{{ board.title.toUpperCase() }}</h2>
       </div>
     </div>
@@ -23,7 +19,7 @@ export default {
     return {
     };
   },
-  
+
   methods: {
     removeBoard(boardId) {
       this.$emit("remove", boardId);
@@ -36,10 +32,10 @@ export default {
   },
   computed: {
     imgUrl() {
-      if (this.board.imgUrl) {
-        return `url(${this.board.imgUrl})`;
+      if (this.board.style.backgroundImage) {
+        return `url(${this.board.style.backgroundImage})`;
       } else {
-        return this.board.bgColor;
+        return this.board.style.backgroundColor;
       }
     },
     boardClass() {

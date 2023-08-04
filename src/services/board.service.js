@@ -1,6 +1,6 @@
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
-// import { userService } from './user.service.js'
+import { userService } from './user.service.js'
 
 export const boardService = {
     query,
@@ -16,8 +16,8 @@ export const boardService = {
 
 window.cs = boardService // for console usage
 
-async function query(filterBy = { txt: '', price: 0 }) {
-    return httpService.get('board', filterBy)
+async function query() {
+    return httpService.get('board')
 }
 
 function getById(boardId) {
@@ -61,12 +61,13 @@ function getEmptyBoard(title = '', imgUrl = '') {
         isStarred: false,
         archivedAt: Date.now,
         createdBy: {
-            _id: 'u101',
-            fullname: 'Abi Abambi',
+            _id: '',
+            fullname: '',
             imgUrl: '',
         },
         style: {
             backgroundImage: '',
+            backgroundColor:'',
         },
         labels: _labelOptions(),
         members: _membersOptions(),
