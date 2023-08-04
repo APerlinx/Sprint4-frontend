@@ -39,7 +39,8 @@
 </template>
 
 <script>
-import { boardService } from "../services/board.service.local";
+// import { boardService } from "../services/board.service.local";
+import { boardService } from "../services/board.service.js";
 import ColorPicker from "../cmps/ColorPicker.vue";
 import ImgPicker from "../cmps/ImgPicker.vue";
 

@@ -48,6 +48,8 @@
       >
         <button class="list-btn">
           <span class="icon"></span> Add another list
+          <pre>{{ msgs }}</pre>
+          <pre>{{ groups }}</pre>
         </button>
       </li>
       <li
@@ -57,27 +59,35 @@
       >
         <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
+      <button @click="saveMsg">check</button>
     </ul>
   </section>
 </template>
 
 <script>
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
-import { boardService } from '../services/board.service.local.js'
-import { clickOutsideDirective } from '../directives/index.js'
-import { Container, Draggable } from 'vue3-smooth-dnd'
-import { scrollHorizontalDirective } from '../directives/index.js'
-import { applyDrag } from '../services/util.service.js'
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
+import { boardService } from "../services/board.service.local.js";
+import { clickOutsideDirective } from "../directives/index.js";
+import { Container, Draggable } from "vue3-smooth-dnd";
+import { scrollHorizontalDirective } from "../directives/index.js";
+import { applyDrag } from "../services/util.service.js";
+import {
+  socketService,
+  SOCKET_EVENT_ADD_MSG,
+  SOCKET_EMIT_SEND_MSG,
+} from "../services/socket.service.js";
 
-import GroupPreview from './GroupPreview.vue'
-import AddGroup from './AddGroup.vue'
-import AddTask from './AddTask.vue'
+import GroupPreview from "./GroupPreview.vue";
+import AddGroup from "./AddGroup.vue";
+import AddTask from "./AddTask.vue";
 
 export default {
-  name: 'group-list',
+  name: "group-list",
   data() {
     return {
-      title: '',
+      // msgs: [],
+      // msg: "hi",
+      title: "",
       toggleAddForm: false,
       currentGroupId: null,
       showTaskForm: false,
@@ -85,145 +95,153 @@ export default {
       currBoard: {},
       groupsStack: [],
       upperDropPlaceholderOptions: {
-        className: 'cards-drop-preview',
-        animationDuration: '0',
+        className: "cards-drop-preview",
+        animationDuration: "0",
         showOnTop: false,
       },
-    }
+    };
   },
   computed: {
     loggedInUser() {
-      return this.$store.getters.loggedinUser
+      return this.$store.getters.loggedinUser;
     },
     groupList() {
-      const boardId = this.$route.params.boardId
-      this.groups = this.$store.getters.getGroupsByBoardId(boardId)
-      this.groups = JSON.parse(JSON.stringify(this.groups))
-      return this.groups
+      const boardId = this.$route.params.boardId;
+      this.groups = this.$store.getters.getGroupsByBoardId(boardId);
+      this.groups = JSON.parse(JSON.stringify(this.groups));
+      return this.groups;
     },
   },
   async created() {
-    this.groups = JSON.parse(JSON.stringify(this.groups))
-    this.currBoard = this.$store.getters.getCurrBoard
+    this.groups = JSON.parse(JSON.stringify(this.groups));
+    this.currBoard = this.$store.getters.getCurrBoard;
+    // socketService.on(SOCKET_EVENT_ADD_MSG, this.addMsg);
   },
   methods: {
     getGroupPayload(index) {
-      return this.groups[index]
+      return this.groups[index];
     },
     onDrop(dropRes) {
-      this.groups = applyDrag(this.groups, dropRes)
+      this.groups = applyDrag(this.groups, dropRes);
       this.$store.dispatch({
-        type: 'saveGroups',
+        type: "saveGroups",
         groups: this.groups,
         currBoard: this.currBoard,
-      })
+      });
     },
     updateGroups({ info }) {
-      info.group.tasks = info.tasks
-      this.groupsStack.push(info.group)
+      info.group.tasks = info.tasks;
+      this.groupsStack.push(info.group);
 
       if (this.groupsStack.length === this.currBoard.groups.length) {
-        let boardToUpdate = JSON.parse(JSON.stringify(this.currBoard))
-        boardToUpdate.groups = this.groupsStack
+        let boardToUpdate = JSON.parse(JSON.stringify(this.currBoard));
+        boardToUpdate.groups = this.groupsStack;
 
         this.$store.dispatch({
-          type: 'saveBoard',
+          type: "saveBoard",
           board: boardToUpdate,
-        })
+        });
 
-        this.groupsStack = []
+        this.groupsStack = [];
       }
     },
+    // addMsg(msg) {
+    //   this.msgs.push(msg);
+    // },
+    // saveMsg() {
+    // },
+
     async addGroup(title) {
       try {
-        const groupToAdd = boardService.getEmptyGroup()
-        groupToAdd.title = title
-        await this.$store.dispatch({
-          type: 'addGroup',
-          group: groupToAdd,
-        })
-        showSuccessMsg('Group added')
+        const groupToAdd = boardService.getEmptyGroup();
+        groupToAdd.title = title;
 
-        this.unscrollOnAction()
+        await this.$store.dispatch({
+          type: "addGroup",
+          group: groupToAdd,
+        });
+        showSuccessMsg("Group added");
+
+        this.unscrollOnAction();
       } catch {
-        showErrorMsg('Cannot add group')
+        showErrorMsg("Cannot add group");
       }
     },
     async removeGroup(groupId) {
       try {
         await this.$store.dispatch({
-          type: 'removeGroup',
+          type: "removeGroup",
           groupId,
-        })
-        showSuccessMsg('Group removed')
-        this.unscrollOnAction()
+        });
+        showSuccessMsg("Group removed");
+        this.unscrollOnAction();
       } catch (err) {
-        console.log(err)
-        showErrorMsg('Cannot remove group')
+        console.log(err);
+        showErrorMsg("Cannot remove group");
       }
     },
     async updateGroup(group, changes) {
       try {
-        group = { ...group, ...changes }
-        await this.$store.dispatch(getActionUpdateGroup(group))
-        showSuccessMsg('Group updated')
+        group = { ...group, ...changes };
+        await this.$store.dispatch(getActionUpdateGroup(group));
+        showSuccessMsg("Group updated");
       } catch (err) {
-        console.log(err)
-        showErrorMsg('Cannot update group')
+        console.log(err);
+        showErrorMsg("Cannot update group");
       }
     },
     async addTask({ groupId, taskTitle, openedFromModal }) {
       try {
-        this.showTaskForm = true
+        this.showTaskForm = true;
         await this.$store.dispatch({
-          type: 'addTask',
+          type: "addTask",
           groupId,
           task: { title: taskTitle },
           board: this.currBoard,
           openedFromModal,
-        })
+        });
         // this.unscrollOnAction() // TODO : FIX JUMPING SCROLL
-        this.scrollToBottomOnAction()
+        this.scrollToBottomOnAction();
       } catch (err) {
-        console.log(err)
-        showErrorMsg('Cannot add task')
+        console.log(err);
+        showErrorMsg("Cannot add task");
       }
     },
     async duplicateGroup(groupId) {
       try {
-        this.$store.dispatch('duplicateGroup', { groupId })
-        showSuccessMsg('Group duplicated')
+        this.$store.dispatch("duplicateGroup", { groupId });
+        showSuccessMsg("Group duplicated");
       } catch {
-        showErrorMsg('Cannot duplicate Group ')
+        showErrorMsg("Cannot duplicate Group ");
       }
     },
     watchGroup(groupId) {
       try {
-        this.$store.dispatch('watchGroup', { groupId })
+        this.$store.dispatch("watchGroup", { groupId });
       } catch {}
     },
     closeTaskForm() {
-      this.showTaskForm = false
+      this.showTaskForm = false;
     },
     handleCloseComponent() {
-      this.toggleAddForm = false
+      this.toggleAddForm = false;
     },
     showAddTaskForm(groupId) {
-      this.currentGroupId = groupId
-      this.showTaskForm = true
-      this.scrollToBottomOnAction()
+      this.currentGroupId = groupId;
+      this.showTaskForm = true;
+      this.scrollToBottomOnAction();
     },
     unscrollOnAction() {
       this.$nextTick(() => {
-        const container = document.querySelector('.group-list-section')
-        container.scrollLeft = container.scrollWidth
-      })
+        const container = document.querySelector(".group-list-section");
+        container.scrollLeft = container.scrollWidth;
+      });
     },
     scrollToBottomOnAction() {
       this.$nextTick(() => {
-        const container = document.getElementById(this.currentGroupId)
-        if (container) container.scrollTop = container.scrollHeight
-      })
+        const container = document.getElementById(this.currentGroupId);
+        if (container) container.scrollTop = container.scrollHeight;
+      });
     },
   },
   components: {
@@ -237,7 +255,7 @@ export default {
     clickOutside: clickOutsideDirective,
     scrollHorizontal: scrollHorizontalDirective,
   },
-}
+};
 </script>
 
 <style>
