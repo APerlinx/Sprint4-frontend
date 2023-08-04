@@ -60,12 +60,16 @@
         <div class="filter-container">
           <BoardFilter @filterByTxt="filterByTxt" />
           <div class="search-icon">
-            <img class="search-icon-img" src="../assets/styles/img/search.svg" alt="" />
+            <img
+              class="search-icon-img"
+              src="../assets/styles/img/search.svg"
+              alt=""
+            />
           </div>
         </div>
 
         <img src="../assets/styles/img/contrast.png" alt="" />
-        <span class="user">SZ</span>
+        <span class="user">{{ loggedInUser }}</span>
       </div>
     </nav>
   </header>
@@ -135,7 +139,14 @@ export default {
   },
   computed: {
     loggedInUser() {
-      return this.$store.getters.loggedinUser;
+      const user =  this.$store.getters.loggedinUser?.fullname;
+      if (!user) return "";
+      const names = user.split(" ");
+      if (names.length === 1) {
+        return names[0].charAt(0);
+      } else {
+        return `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}`;
+      }
     },
     savedBoard() {
       return this.$store.getters.savedBoard;

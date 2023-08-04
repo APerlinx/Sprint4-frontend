@@ -48,6 +48,7 @@ async function login(userCred) {
 
 async function signup(userCred) {
     if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
+    if (!userCred.backgroundColor) userCred.backGroundColor = '#fffff'
     const user = await httpService.post('auth/signup', userCred)
     socketService.login(user._id)
     return saveLocalUser(user)
