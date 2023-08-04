@@ -6,9 +6,9 @@
     left: 50%;
     z-index: 10;
     align-items: start;
-    // overflow-y: scroll;
-    padding-top: 48px;
-    padding-bottom: 48px;
+    overflow: auto;
+    // padding-top: 48px;
+    // padding-bottom: 48px;
 }
 
 .task-back-drop {
@@ -24,8 +24,8 @@
     display: flex;
     padding-top: 48px;
     padding-bottom: 48px;
-    align-items: start;
-    overflow-y: auto;
+    // align-items: start;
+    // overflow-y: auto;
 
     background-color: rgba(0, 0, 0, 0.3);
 

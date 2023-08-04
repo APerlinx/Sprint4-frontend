@@ -77,16 +77,17 @@
                         </div>
                     </div>
                 </div>
-                <!-- <pre>{{ taskToEdit.attachments }}</pre> -->
-                <div class="icon-title-container-description" v-if="taskToEdit.attachments">
-                    <span class="icon attachment-big"></span>
-                    <h3 class="details-title-big">Attachments</h3>
+                <div v-if="taskToEdit.attachments">
+                    <!-- <pre>{{ taskToEdit.attachments }}</pre> -->
+                    <div class="icon-title-container-description attachment-title">
+                        <span class="icon attachment-big"></span>
+                        <h3 class="details-title-big">Attachments</h3>
+                    </div>
+                    <Attachment v-for="attachment in taskToEdit.attachments" :key="attachment._id" :attachments="attachment"
+                        @updateChecklist="updateChecklist" />
+                    <button class="btn">Add an attachment</button>
                 </div>
-                <Attachment v-for="attachment in taskToEdit.attachments" :key="attachment._id" :attachments="attachment"
-                    @updateChecklist="updateChecklist" />
-                <div>
 
-                </div>
                 <!-- <Checklist /> -->
                 <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
                     @updateChecklist="updateChecklist" />
@@ -101,6 +102,8 @@
                     </div>
                     <input type="text" class="details-activity-comment" placeholder="Write a comment..." />
                 </div>
+                <!-- <pre>{{ taskToEdit.comments }}</pre> -->
+                <Comments v-for="comment in taskToEdit.comments" :key="comment._id" :comments="comment" />
                 <!-- v-model="taskToEdit.description" -->
             </section>
 
@@ -149,6 +152,7 @@ import Members from "../cmps/Members.vue";
 import Labels from "../cmps/Labels.vue";
 import Attachment from "../cmps/AttachmentPreview.vue"
 import Dates from "../cmps/Dates.vue"
+import Comments from "../cmps/Comments.vue"
 // import { boardService } from "../services/board.service.local.js";
 import { boardService } from "../services/board.service.js";
 
@@ -345,6 +349,7 @@ export default {
         Labels,
         Attachment,
         Dates,
+        Comments,
     },
     directives: {
         focus: focusDirective,
