@@ -1,3 +1,16 @@
+.task-details-container {
+    transform: translate(-50%, -50%);
+    position: fixed;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    align-items: start;
+    // overflow-y: scroll;
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
 .task-back-drop {
     position: fixed;
     display: flex;
@@ -405,6 +418,7 @@
 
 //////////////////////   DESCRIPTION   //////////////////////
 .icon-title-container-activity,
+// .icon-title-container-attachment,
 .icon-title-container-checklist,
 .icon-title-container-description {
     margin: -6px 0 -12px -36px;

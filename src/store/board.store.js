@@ -466,7 +466,7 @@ export const boardStore = {
       try {
         commit('setBoardBgClr', payload)
         await boardService.save(state.currentBoard)
-      } catch (err) {}
+      } catch (err) { }
     },
     async changeBoardBgGrad({ state, commit }, payload) {
       try {
@@ -490,9 +490,9 @@ export const boardStore = {
       try {
         commit('saveTitle', title)
         await boardService.save(state.currentBoard)
-        dispatch('addActivity', {activity: 'Changed board title'})
+        dispatch('addActivity', { activity: 'Changed board title' })
       } catch (err) {
-          throw err
+        throw err
       }
     },
   },

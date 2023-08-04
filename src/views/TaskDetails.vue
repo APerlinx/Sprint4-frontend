@@ -77,10 +77,16 @@
                         </div>
                     </div>
                 </div>
+                <!-- <pre>{{ taskToEdit.attachments }}</pre> -->
+                <div class="icon-title-container-description" v-if="taskToEdit.attachments">
+                    <span class="icon attachment-big"></span>
+                    <h3 class="details-title-big">Attachments</h3>
+                </div>
+                <Attachment v-for="attachment in taskToEdit.attachments" :key="attachment._id" :attachments="attachment"
+                    @updateChecklist="updateChecklist" />
+                <div>
 
-                <pre>
-            {{ taskToEdit.attachments }}
-        </pre>
+                </div>
                 <!-- <Checklist /> -->
                 <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
                     @updateChecklist="updateChecklist" />
@@ -348,11 +354,11 @@ export default {
 </script>
 
 <style>
-.task-details-container {
+/* .task-details-container {
     transform: translate(-50%, -50%);
     position: fixed;
     top: 50%;
     left: 50%;
     z-index: 10;
-}
+} */
 </style>
