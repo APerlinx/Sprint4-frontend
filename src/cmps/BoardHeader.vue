@@ -33,7 +33,11 @@
         <div class="navbar-container">
           <div class="tool-tip-menu"></div>
           <div class="tool-tip text-item">
-            <button class="filter text-item">
+            <button
+              class="filter text-item"
+              @click="toggleFilter"
+              ref="filterButton"
+            >
               <span class="filter-icon text-item">
                 <svg
                   class="text-item"
@@ -54,6 +58,7 @@
               </span>
               Filter
             </button>
+
             <span class="line text-item"></span>
 
             <div class="members text-item">
@@ -82,14 +87,26 @@
       :boardActivity="board.activities"
       @closeMenu="menuOpen = false"
     />
+    <GroupFilter
+      class="filter"
+      ref="filterMenu"
+      v-show="isFilterOpen"
+      :labels="board.labels"
+      :members="board.members"
+    />
   </div>
 </template>
 
 <script>
 import { clickOutsideDirective } from '../directives/index.js'
-import BoardMenu from './BoardMenu.vue'
 import { Draggable, Container } from 'vue3-smooth-dnd'
 import { FastAverageColor } from 'fast-average-color'
+import { defineComponent } from 'vue'
+
+import Popper from 'vue3-popper'
+
+import BoardMenu from './BoardMenu.vue'
+import GroupFilter from './GroupFilter.vue'
 
 export default {
   props: {
@@ -109,6 +126,9 @@ export default {
       menuOpen: false,
       darkClr: '#172B4D',
       LightClr: '#FFFFFF',
+      isFilterOpen: false,
+      popperInstance: null,
+      filterStyle: {},
     }
   },
   created() {
@@ -117,8 +137,25 @@ export default {
   },
   mounted() {
     this.calculateAndApplyColor()
+    this.setPosition()
+    window.addEventListener('resize', this.setPosition)
   },
   methods: {
+    setPosition() {
+      const button = this.$refs.filterButton
+      const rect = button.getBoundingClientRect()
+
+      const maxHeight = window.innerHeight - rect.bottom - 20
+
+      this.filterStyle = {
+        top: `${rect.bottom}px`,
+        left: `${rect.left}px`,
+        maxHeight: `${maxHeight}px`,
+      }
+    },
+    toggleFilter() {
+      this.isFilterOpen = !this.isFilterOpen
+    },
     handleFocus(event) {
       this.$nextTick(() => event.target.select())
     },
@@ -203,6 +240,18 @@ export default {
     BoardMenu,
     Draggable,
     Container,
+    Popper,
+    GroupFilter,
+    defineComponent,
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.setPosition)
   },
 }
 </script>
+
+<style scoped>
+#popper-1 {
+  z-index: 999;
+}
+</style>
