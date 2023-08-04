@@ -11,17 +11,17 @@ export const userStore = {
     getters: {
         users({ users }) { return users },
         loggedinUser({ loggedinUser }) { return loggedinUser },
-        usersExcludeMe({users, loggedinUser}) {
+        usersExcludeMe({ users, loggedinUser }) {
             return users.filter(u => u._id !== loggedinUser._id)
         },
-        usersIsLoading({isLoading}) {
+        usersIsLoading({ isLoading }) {
             return isLoading
         }
     },
     mutations: {
         setLoggedinUser(state, { user }) {
             // Yaron: needed this workaround as score not reactive from birth
-            state.loggedinUser = (user)? {...user} : null
+            state.loggedinUser = (user) ? { ...user } : null
         },
         setUsers(state, { users }) {
             state.users = users
@@ -68,16 +68,16 @@ export const userStore = {
             }
         },
         async loadUsers({ commit }) {
-            commit({type: 'setIsLoading', isLoading: true})
+            commit({ type: 'setIsLoading', isLoading: true })
             try {
                 const users = await userService.getUsers()
                 commit({ type: 'setUsers', users })
-                commit({type: 'setIsLoading', isLoading: false})
+                commit({ type: 'setIsLoading', isLoading: false })
             } catch (err) {
                 console.log('userStore: Error in loadUsers', err)
                 throw err
             }
-        },        
+        },
         async removeUser({ commit }, { userId }) {
             try {
                 await userService.remove(userId)
