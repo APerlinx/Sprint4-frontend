@@ -55,8 +55,8 @@ export default {
       default: false,
     },
     openedFromModal: {
-      type: Boolean, 
-      default: false, 
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -92,7 +92,7 @@ export default {
       this.$emit('closeTaskForm')
     },
   },
-  
+
   components: {
     taskPreview,
     AddTask,

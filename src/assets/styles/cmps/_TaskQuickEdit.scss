@@ -1,0 +1,400 @@
+.task-preview-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .task-preview-img {
+        margin-bottom: em(-5px);
+    }
+
+    .quickEditScreen {
+        height: 100%;
+        width: 100%;
+        background-color: #0009;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 20;
+    }
+
+    .quickEdit {
+        background-color: white;
+        box-shadow: 0 1px 0 #091e4240;
+        z-index: 30;
+        width: 256px;
+        min-height: 100px;
+        max-height: 168px;
+        overflow: visible;
+        border-radius: 8px;
+        position: fixed;
+        padding: 8px 8px 4px 12px;
+        .title-edit {
+            border-radius: 5px;
+            height: fit-content;
+            overflow: hidden;
+
+            textarea {
+                min-width: 255px;
+                padding-left: 0;
+                padding-bottom: 16px;
+                overflow-y: hidden;
+                border: none;
+                color: #172b4d;
+                font-family:
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    Segoe UI,
+                    Roboto,
+                    Noto Sans,
+                    Ubuntu,
+                    Droid Sans,
+                    Helvetica Neue,
+                    sans-serif;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 20px;
+
+                &:focus-visible {
+                    outline: none;
+                }
+            }
+
+            h5 {
+                padding: 7px;
+            }
+        }
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        z-index: 999;
+        width: max-content;
+        justify-content: flex-start;
+
+        &.modal-right {
+            align-items: flex-start;
+            button:hover {
+                transform: translateX(8%); // Hover animation to the right
+            }
+        }
+
+        &.modal-left {
+            align-items: flex-end;
+            button:hover {
+                transform: translateX(-8%); // Hover animation to the left
+            }
+        }
+
+        button {
+            width: fit-content;
+            color: white;
+            background-color: #0009;
+            border: none;
+            padding: 6px 12px 6px 10px;
+            margin: 0 0 4px 8px;
+            border-radius: 3px;
+            font-size: 14px;
+            letter-spacing: 0.8px;
+            font-weight: 200;
+            transition:
+                transform 0.2s,
+                background-color 0.2s;
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.752);
+                cursor: pointer;
+            }
+
+            .card-icon {
+                font-family: trellicons;
+                font-size: em(16px);
+                padding-right: 5px;
+                &::before {
+                    content: "\e912";
+                }
+            }
+
+            .labels-icon {
+                font-family: trellicons;
+                font-size: em(16px);
+                padding-right: em(5px);
+                &::before {
+                    content: "\e93f";
+                }
+            }
+
+            .members-icon {
+                font-family: trellicons;
+                font-size: em(16px);
+                padding-right: em(5px);
+                &::before {
+                    content: "\e946";
+                }
+            }
+
+            .cover-icon {
+                font-family: trellicons;
+                font-size: em(16px);
+                padding-right: em(5px);
+                &::before {
+                    content: "\e914";
+                }
+            }
+
+            .dates-icon {
+                font-family: trellicons;
+                font-size: em(16px);
+                padding-right: em(5px);
+                &::before {
+                    content: "\e91b";
+                }
+            }
+
+            .archive-icon {
+                font-family: trellicons;
+                font-size: em(16px);
+                padding-right: em(5px);
+                &::before {
+                    content: "\e907";
+                }
+            }
+        }
+    }
+}
+
+.save-button {
+    position: absolute;
+    //   top: 110px;
+    //   left: -0.1px;
+    margin-top: 8px;
+    z-index: 50;
+    &:hover {
+        background-color: transparent;
+        border: none;
+    }
+
+    button {
+        background-color: #0c66e4;
+        border: none;
+        padding: 6px 24px 6px 24px;
+        font-size: 14px;
+        border-radius: 3px;
+        box-shadow: 0px 0px 1px black;
+        box-shadow: none;
+        color: #ffffff;
+        transition: background-color 0.2s;
+        &:hover {
+            background-color: #0055cc;
+            border: none;
+            box-shadow: none;
+            color: #ffffff;
+        }
+    }
+}
+
+.labels {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.label {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: start;
+    width: 40px;
+    height: 8px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 10px;
+    color: black;
+    transition:
+        width 0.3s ease-in-out,
+        height 0.3s ease-in-out;
+}
+
+.label.expanded {
+    min-width: 56px;
+    width: max-content;
+    height: 16px;
+    padding: 0 8px;
+}
+
+.label-text {
+    opacity: 0;
+    visibility: hidden;
+    font-weight: 500;
+    transition:
+        opacity 2s,
+        visibility 5s;
+}
+
+.label.expanded .label-text {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tool-tip-edit {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 0.33em;
+    > div {
+        display: flex;
+        margin-right: 1em;
+        align-items: center;
+        justify-content: center;
+
+        .checklist-counter {
+            margin-top: -0.05rem;
+            // vertical-align: middle;
+            > .slash {
+                scale: (1.1);
+            }
+        }
+    }
+    .icon.member {
+        margin-left: auto;
+    }
+    > div > .icon {
+        display: flex;
+        align-items: center;
+        &.member {
+            margin-right: auto;
+        }
+        & + span {
+            font-size: rem(12px);
+            vertical-align: middle;
+            margin-left: 0.3em;
+            color: $text-subtle;
+        }
+    }
+
+    .completed-checklist {
+        background-color: $background-success-bold;
+        border-radius: 3px;
+        padding: 2px 4px 2px 4px;
+
+        .icon.checklist {
+            color: $dynamic-text;
+        }
+
+        > .checklist-counter {
+            color: $dynamic-text;
+        }
+    }
+
+    .due-date {
+        align-self: center;
+
+        &.overdue-long {
+            background-color: $background-danger;
+            border-radius: 3px;
+            padding: 2px 4px 2px 4px;
+
+            .icon.date {
+                color: $ds-icon-danger;
+            }
+
+            .date-counter {
+                color: $ds-text-danger;
+            }
+
+            &:hover {
+                background-color: $ds-background-danger-hovered;
+                .icon.date {
+                    @include trello-icon($content: "\e919", $type: sm, $color: $ds-icon-danger);
+                }
+            }
+        }
+
+        &.overdue-short {
+            background-color: $ds-background-danger-bold;
+            color: $dynamic-text;
+            border-radius: 3px;
+            padding: 2px 4px 2px 4px;
+
+            .icon.date {
+                color: white;
+            }
+
+            .date-counter {
+                color: white;
+            }
+
+            &:hover {
+                background-color: $ds-background-danger-bold-hovered;
+                .icon.date {
+                    @include trello-icon($content: "\e919", $type: sm, $color: $dynamic-text);
+                }
+            }
+        }
+
+        &.due-soon {
+            background-color: $ds-background-warning-bold;
+            color: $ds-text-warning-inverse;
+            border-radius: 3px;
+            padding: 2px 4px 2px 4px;
+
+            .icon.date {
+                color: $ds-text-warning-inverse;
+            }
+
+            .date-counter {
+                color: $ds-text-warning-inverse;
+                margin-top: 0.021rem;
+            }
+            &:hover {
+                background-color: $ds-background-warning-bold-hovered;
+                .icon.date {
+                    @include trello-icon($content: "\e919", $type: sm, $color: $ds-text-warning-inverse);
+                }
+            }
+        }
+
+        &.done {
+            background-color: $background-success-bold;
+            &:hover {
+                background-color: $background-success-bold-hovered;
+                .icon.date {
+                    @include trello-icon($content: "\e918", $type: sm, $color: $dynamic-text);
+                }
+            }
+        }
+    }
+}
+.icon {
+    &.watch {
+        @include trello-icon($content: "\e969", $type: sm, $color: #626f86);
+    }
+    &.desc {
+        @include trello-icon($content: "\e922", $type: sm, $color: #626f86);
+    }
+    &.checklist {
+        @include trello-icon($content: "\e918", $type: sm, $color: #626f86);
+    }
+    &.comment {
+        @include trello-icon($content: "\e91e", $type: md, $color: #626f86);
+    }
+    &.date {
+        @include trello-icon($content: "\e91b", $type: sm, $color: #626f86);
+    }
+    &.attach {
+        @include trello-icon($content: "\e908", $type: sm, $color: #626f86);
+    }
+    &.member {
+        // Members circles
+    }
+}
+
+textarea::selection {
+    background: #0c66e4;
+    color: #ffffff;
+}
+
+textarea::-moz-selection {
+    background: #0c66e4;
+    color: #ffffff;
+}

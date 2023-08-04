@@ -1,16 +1,83 @@
 <template>
   <div v-if="quickEditDisplay">
     <section class="task-preview-container">
-      <div
-        @click.stop="quickEditDisplay = 'none'"
-        class="quickEditScreen"
-      ></div>
-      <div class="quickEdit" ref="quickEdit">
-        {{ task.title }}
+      <div @click.stop="closeQuickEdit" class="quickEditScreen"></div>
+      <div class="quickEdit" ref="quickEdit" :style="quickEditPosition">
+        <TaskCover :task="task" />
+
+        <div class="labels" @click.stop>
+          <div
+            v-for="labelId in task.labels"
+            :key="labelId"
+            class="label"
+            :class="{ expanded: areLabelsVisible }"
+            :style="{
+              backgroundColor:
+                (getLabel(labelId) || {}).color || 'defaultColor',
+            }"
+            @click.stop="toggleLabel(labelId)"
+          >
+            <span v-if="areLabelsVisible">{{ getLabel(labelId).title }}</span>
+          </div>
+        </div>
+
+        <div class="title-edit">
+          <textarea v-model="localTask.title" autofocus  ref="titleInput"></textarea>
+        </div>
+
+        <div class="tool-tip-edit">
+          <div v-if="task.members && task.members.length > 0">
+            <span class="icon member"></span>
+            <span class="member-counter">{{ task.members.length }}</span>
+          </div>
+
+          <div
+            class="date"
+            :class="`due-date ${dueDateStatus} ${task.status}`"
+            v-if="task.dueDate"
+            @click.stop.prevent="toggleStatus"
+          >
+            <span class="icon date"></span>
+            <span class="date-counter">{{ formatDate(task.dueDate) }}</span>
+          </div>
+
+          <div v-if="task.attachments && task.attachments.length > 0">
+            <span class="icon attachment"></span>
+            <span class="attachment-counter">{{
+              task.attachments.length
+            }}</span>
+          </div>
+          <div v-if="task.description">
+            <span class="icon desc"></span>
+          </div>
+
+          <div v-if="task.comments && task.comments.length > 0">
+            <span class="icon comment"></span>
+            <span class="comment-counter">{{ task.comments.length }}</span>
+          </div>
+
+          <div
+            v-if="task.checklists && task.checklists.length > 0"
+            :class="{
+              'completed-checklist': doneChecklists === totalChecklists,
+            }"
+          >
+            <span class="icon checklist"></span>
+            <span class="checklist-counter"
+              >{{ doneChecklists }}<span class="slash">/</span
+              >{{ totalChecklists }}</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="save-button" ref="saveButton" :style="saveButtonPosition">
+        <button>Save</button>
       </div>
 
       <div
         class="action-buttons"
+        :class="actionButtonsClass"
         v-if="quickEditDisplay"
         :style="buttonPosition"
       >
@@ -26,29 +93,48 @@
           <span :class="btn.icon"></span>
           {{ btn.txt }}
         </button>
-        <component :is="cmpType"> </component>
-        <!-- <div @click.stop="removeTask">
-        <span class="archive-icon"></span>Archive
-      </div> -->
+        <div @click.stop="removeTask">
+          <span class="archive-icon"></span>
+        </div>
+        <DynamicModal
+          v-if="cmpType"
+          :actionCmpType="cmpType"
+          :taskToEdit="localTask"
+          :actionCmpName="CmpName"
+          @closeDynamicModal="closeDynamicModal"
+          @toggleMember="toggleMember"
+          @saveLabel="saveLabel"
+          @checklist="addChecklist"
+          @removeLabel="removeLabel"
+          @updateLable="updateLable"
+          @DueDate="addDueDate"
+          @attachment="addAttachment"
+          @setCover="setCover"
+        />
       </div>
     </section>
   </div>
 </template>
 
 <script>
-// import labelPicker from '../components/label-picker.vue'
-// import memberPicker from '../components/member-picker.vue'
-// import datePicker from '../components/date-picker.vue'
-// import coverPicker from '../components/cover-picker.vue'
-// import taskPreviewDetails from '../components/task-preview-details.vue'
+import DynamicModal from '../views/DynamicModal.vue'
+import TaskCover from './TaskCover.vue'
+
 // import { utilService } from '../../services/util-service.js'
 // import { socketService, SOCKET_EMIT_MEMBER_ACTION } from '../../services/socket.service'
 // import { userService } from '../../services/user-service'
 import { watch } from 'vue'
-import { clickOutsideDirective } from '../directives/index.js'
+import { eventBus } from '../services/event-bus.service'
+
+import Popper from 'vue3-popper'
 
 export default {
   name: 'task-preview',
+  components: {
+    DynamicModal,
+    Popper,
+    TaskCover,
+  },
   props: {
     task: {
       type: Object,
@@ -60,67 +146,284 @@ export default {
       type: Boolean,
       required: true,
     },
+    quickEditDisplay: {
+      type: Boolean,
+      required: true,
+    },
+    getLabel: {
+      type: Function,
+      required: true,
+    },
+    totalChecklists: {
+      type: Number,
+      required: true,
+    },
+    doneChecklists: {
+      type: Number,
+      required: true,
+    },
+    dueDateStatus: {
+      type: String,
+      required: true,
+    },
+    formatDate: {
+      type: Function,
+      required: true,
+    },
   },
   data() {
     return {
       actionBtns: [
-        { txt: 'Labels', icon: 'labels-icon', type: 'labelPicker' },
-        { txt: 'Members', icon: 'members-icon', type: 'memberPicker' },
-        { txt: 'Cover', icon: 'cover-icon', type: 'coverPicker' },
-        { txt: 'Dates', icon: 'dates-icon', type: 'datePicker' },
+        { txt: 'Edit labels', icon: 'labels-icon', type: 'LabelsPicker' },
+        { txt: 'Change members', icon: 'members-icon', type: 'MemberPicker' },
+        { txt: 'Change cover', icon: 'cover-icon', type: 'CoverPicker' },
+        { txt: 'Edit dates', icon: 'dates-icon', type: 'DueDatePicker' },
+        { txt: 'Archive', icon: 'archive-icon', type: 'archive' },
       ],
       cmpType: null,
+      cmpName: '',
       buttonPosition: {},
-      isNearBottom: false, // New data property
+      isNearBottom: false,
+      saveButtonPosition: {},
+      rect: null,
+      containerPosition: {},
+      quickEditPosition: {},
+      quickEditDisplayStyle: {},
+      localTask: null,
+      actionButtonsClass: '',
+      taskToEdit: null,
+      group: null,
+      board: null,
+      hideBtn: false,
+      isWatchActive: false,
+      watch: 'Watch',
+      isDynamicModal: false,
+      actionCmpType: null,
+      actionCmpName: null,
+      isCoverActive: false,
+      coverColor: '',
+      currColor: '',
     }
   },
-  methods: {},
- mounted() {
+  created() {
+    this.localTask = { ...this.task }
+    this.setTask()
+  },
+  computed: {
+    areLabelsVisible() {
+      return this.$store.getters.areLabelsVisible
+    },
+    cmpOrder() {
+      return this.$store.getters.cmpsOrder
+    },
+  },
+  methods: {
+    set(cmp, idx) {
+      this.isDynamicModal = true
+      this.actionCmpType = cmp
+      this.actionCmpName = this.dynamicNames[idx]
+    },
+
+    setCover(cover) {
+      if (this.taskToEdit.hasOwnProperty('cover')) {
+        this.taskToEdit.cover = cover
+      } else {
+        this.taskToEdit = { ...this.taskToEdit, cover: cover }
+      }
+      this.editTask()
+    },
+
+    removeLabel(board) {
+      this.board = board
+      this.editTask()
+    },
+    updateLable(board) {
+      this.board = board
+      this.editTask()
+    },
+    addDueDate(date) {
+      this.taskToEdit.dueDate = date
+
+      this.editTask()
+    },
+    saveLabel(labelId) {
+      const idx = this.taskToEdit.labels?.findIndex(
+        (label) => label === labelId
+      )
+      if (idx >= 0) this.taskToEdit.labels?.splice(idx, 1)
+      else {
+        this.taskToEdit.labels.push(labelId)
+      }
+      this.$store.dispatch({ type: 'updateBoard', board: this.board })
+    },
+    addAttachment(newAttachment) {
+      if (!this.taskToEdit.attachments) this.taskToEdit.attachments = []
+      this.taskToEdit.attachments.push(newAttachment)
+      this.onTaskEdit()
+    },
+    addChecklist(newChecklist) {
+      if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
+      this.taskToEdit.checklists.push(newChecklist)
+      this.editTask()
+    },
+    toggleMember(clickedMember) {
+      if (!this.taskToEdit.members) {
+        this.taskToEdit.members = []
+        this.taskToEdit.members.push(clickedMember)
+      } else {
+        if (
+          this.taskToEdit.members.some(
+            (member) => member.id === clickedMember.id
+          )
+        ) {
+          const idx = this.taskToEdit.members.findIndex(
+            (member) => member.id === clickedMember.id
+          )
+          this.taskToEdit.members.splice(idx, 1)
+        } else {
+          this.taskToEdit.members.push(clickedMember)
+        }
+      }
+    },
+    async setTask() {
+      try {
+        const boardId = this.$route.params.boardId
+        const board = await boardService.getById(boardId)
+        const taskId = this.$route.params.taskId
+        const groupId = this.$route.params.groupId
+        // console.log("groupId:", groupId);
+
+        this.board = JSON.parse(JSON.stringify(board))
+        this.group = this.board.groups.find((group) => group.id === groupId)
+        this.taskToEdit = this.group.tasks.find((task) => task.id === taskId)
+      } catch (err) {
+        console.log('error in setTask')
+      }
+    },
+    togglecover() {
+      this.isCoverActive = !this.isCoverActive
+    },
+    closeDynamicModal() {
+      this.isDynamicModal = false
+    },
+    closeModal() {
+      this.$router.back()
+    },
+    editTask() {
+      console.log('edit task:')
+      const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
+      // console.log("editedTask:", editedTask)
+      const taskIdx = this.group.tasks.findIndex(
+        (task) => task.id === this.taskToEdit.id
+      )
+      // replace task with editTask
+      this.group.tasks.splice(taskIdx, 1, this.taskToEdit)
+      this.$store.dispatch({ type: 'updateBoard', board: this.board })
+    },
+    closeComponent() {
+      this.taskTitle = ''
+      this.$emit('close')
+    },
+    openModal(type) {
+      switch (type) {
+        case 'LabelsPicker':
+          this.cmpType = 'LabelsPicker'
+          this.CmpName = 'Edit labels'
+          break
+        case 'MemberPicker':
+          this.cmpType = 'MemberPicker'
+          this.CmpName = 'Change Members'
+
+          break
+        case 'CoverPicker':
+          this.cmpType = 'CoverPicker'
+          this.CmpName = 'Change cover'
+
+          break
+        case 'DueDatePicker':
+          this.cmpType = 'DueDatePicker'
+          this.CmpName = 'Edit dates'
+
+          break
+        default:
+          this.cmpType = null
+          // handle the archive action or other actions that do not correspond to a modal.
+          break
+      }
+    },
+    toggleStatus() {
+      this.$emit('status-toggled')
+    },
+    toggleLabel() {
+      this.$store.commit('toggleLabelsVisibility')
+    },
+    closeQuickEdit(e) {
+      console.log('closeQuickEdit was called')
+      if (e.target.classList.contains('quickEditScreen')) {
+        this.$emit('close')
+      }
+    },
+    goToTaskDetails() {
+      this.$router.push(
+        `/details/${this.board}/group/${this.groupId}/task/${this.task.id}`
+      )
+    },
+  },
+  mounted() {
     watch(
       () => this.quickEditDisplay,
       (newVal, oldVal) => {
         if (newVal !== oldVal && newVal) {
           this.$nextTick(() => {
-            const rect = this.$refs.quickEdit.getBoundingClientRect()
+            this.rect = this.$refs.quickEdit.getBoundingClientRect()
 
-            // Calculate distance from bottom of viewport to bottom of button element
-            const distanceFromBottom = window.innerHeight - (rect.top + rect.height)
+            const distanceFromBottom =
+              window.innerHeight - (this.rect.top + this.rect.height)
 
-            // Calculate distance from right of viewport to right of button element
-            const distanceFromRight = window.innerWidth - (rect.left + rect.width)
+            const distanceFromRight =
+              window.innerWidth - (this.rect.left + this.rect.width)
 
-            // Change the position of the buttons if they are too close to the bottom or right
-            this.isNearBottom = distanceFromBottom < 100 // Adjust this value as needed
-            const isNearRight = distanceFromRight < 100 // Adjust this value as needed
-
+            this.isNearBottom = distanceFromBottom < 100
+            const isNearRight = distanceFromRight < 200
+            this.actionButtonsClass = isNearRight ? 'modal-left' : 'modal-right'
+            const adjustedTop = this.rect.top - 100
+            this.$refs.titleInput.focus();
+            this.$refs.titleInput.select();
             if (this.isNearBottom && isNearRight) {
-              // Position buttons above and to the left of the modal
               this.buttonPosition = {
                 position: 'fixed',
-                top: `${rect.top - rect.height}px`,
-                left: `${rect.left - rect.width}px`,
+                top: `${adjustedTop - this.rect.height + 115}px`,
+                left: `${this.rect.left - this.rect.width + 125}px`,
               }
             } else if (this.isNearBottom) {
-              // Position buttons above the modal
               this.buttonPosition = {
                 position: 'fixed',
-                top: `${rect.top - rect.height}px`,
-                left: `${rect.left}px`,
+                top: `${adjustedTop - this.rect.height + 115}px`,
+                left: `${this.rect.left + 256}px`,
               }
             } else if (isNearRight) {
-              // Position buttons to the left of the modal
               this.buttonPosition = {
                 position: 'fixed',
-                top: `${rect.top}px`,
-                left: `${rect.left - rect.width}px`,
+                top: `${adjustedTop}px`,
+                left: `${this.rect.left - this.rect.width + 130}px`,
               }
             } else {
-              // Position buttons to the right of the modal
               this.buttonPosition = {
                 position: 'fixed',
-                top: `${rect.top}px`,
-                left: `${rect.left + rect.width}px`,
+                top: `${adjustedTop}px`,
+                left: `${this.rect.left + this.rect.width}px`,
               }
+            }
+            this.saveButtonPosition = {
+              position: 'fixed',
+              top: `${adjustedTop + this.rect.height}px`,
+              left: `${this.rect.left}px`,
+            }
+
+            this.quickEditPosition = {
+              position: 'fixed',
+              top: `${adjustedTop}px`,
+              left: `${this.rect.left}px`,
             }
           })
         }
@@ -128,183 +431,7 @@ export default {
       { immediate: true }
     )
   },
-  directives: {
-    clickOutside: clickOutsideDirective,
-  },
 }
 </script>
 
-<style lang="scss">
-.task-preview-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  .task-preview-img {
-    margin-bottom: em(-5px);
-  }
-
-  .quickEditScreen {
-    height: 100%;
-    width: 100%;
-    background-color: #0009;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 20;
-  }
-
-  .quickEdit {
-    background-color: white;
-    box-shadow: 0 1px 0 #091e4240;
-    z-index: 30;
-    width: 256px;
-    height: 140px;
-    overflow: visible;
-    border-radius: 8px;
-    position: fixed;
-
-    padding: 8px 8px 4px 12px;
-
-    .title-edit {
-      border-radius: 5px;
-      height: fit-content;
-      overflow: hidden;
-
-      textarea {
-        min-width: 255px;
-        padding-left: 8px;
-        padding-bottom: 50px;
-        overflow-y: hidden;
-        border: none;
-        color: #172b4d;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-          Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-
-        &:focus-visible {
-          outline: none;
-        }
-      }
-
-      h5 {
-        padding: 7px;
-      }
-    }
-  }
-
-  .action-buttons {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    z-index: 999;
-    width: 100%;
-    top: 0;
-    left: 580px;
-
-    button {
-      width: fit-content;
-      color: white;
-      background-color: #0009;
-      border: none;
-      padding: 6px 12px 6px 10px;
-      margin: 0 0 4px 8px;
-      border-radius: 3px;
-      font-size: 14px;
-      letter-spacing: 0.8px;
-      font-weight: 200;
-      transition: transform 0.2s, background-color 0.2s;
-      &:hover {
-        transform: translateX(8%);
-        background-color: rgba(0, 0, 0, 0.752);
-        cursor: pointer;
-      }
-
-      .card-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: 5px;
-        &::before {
-          content: '\e912';
-        }
-      }
-
-      .labels-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e93f';
-        }
-      }
-
-      .members-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e946';
-        }
-      }
-
-      .cover-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e914';
-        }
-      }
-
-      .dates-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e91b';
-        }
-      }
-
-      .archive-icon {
-        font-family: trellicons;
-        font-size: em(16px);
-        padding-right: em(5px);
-        &::before {
-          content: '\e907';
-        }
-      }
-    }
-  }
-}
-
-.save-button {
-  position: absolute;
-  // top: 0;
-  z-index: 50;
-  &:hover {
-    background-color: transparent;
-    border: none;
-  }
-
-  button {
-    margin-top: 10px;
-    background-color: #0079bf;
-    border: none;
-    padding: 8.5px 24px;
-    font-size: 14px;
-    border-radius: 3px;
-    box-shadow: 0px 0px 1px black;
-    box-shadow: none;
-    color: #fff;
-    transition: background-color 0.2s;
-    &:hover {
-      background-color: #026aa7;
-      border: none;
-      box-shadow: none;
-      color: #fff;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
