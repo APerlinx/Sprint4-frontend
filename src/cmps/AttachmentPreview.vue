@@ -29,6 +29,7 @@ export default {
     methods: {
         removeAttachment(attachmentId) {
             const idx = this.attachments.findIndex(attachment => attachmentId === attachment.id)
+            console.log('id:', id)
             this.attachments.splice(idx, 1);
             this.updateAttachments(JSON.parse(JSON.stringify(this.attachments)))
         },

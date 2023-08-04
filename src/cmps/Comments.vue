@@ -4,7 +4,7 @@
             <!-- <pre>{{ comments }}</pre> -->
             <div class="comment-list">
                 <!-- <div class="image-warpper"></div> -->
-                <img v-if="comments.byMember.fullname !== 'Guest'" :src="comments.byMember?.imgUrl" />
+                <img v-if="comments.byMember.fullname !== 'Guest'" :src="comments.byMember?.imgUrl" alt="" />
                 <div v-else class="active-user">G</div>
                 <div class="comment-details">
                     <span class="comment-member-name">
