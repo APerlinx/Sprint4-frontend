@@ -435,6 +435,7 @@ hr {
             > .bg-text {
                 text-align: center;
                 width: 100%;
+                font-weight: 400;
             }
         }
     }
@@ -451,7 +452,7 @@ hr {
         margin-inline-start: 0.5rem;
         background-color: rgba(220, 219, 224, 0.418);
         > .bg-icon {
-            @include trello-icon($content: "\e901", $type: md, $color: $ds-icon);
+            @include trello-icon($content: "\e901", $type: lg, $color: $ds-icon);
         }
 
         &:hover {

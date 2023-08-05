@@ -6,8 +6,8 @@
         class="group-container" v-if="groups" group-name="col">
         <Draggable v-for="group in groupList" :key="group._id">
           <GroupPreview :group="group" :key="group.id" :showTaskForm="showTaskForm" :currentGroupId="currentGroupId"
-            @update-title="updateGroup" @removeGroup="removeGroup" @duplicateGroup="duplicateGroup" @watch="watchGroup"
-            @updateGroup="updateGroups" @addTask="addTask" @closeTaskForm="closeTaskForm">
+            @update-title="updateGroup" @removeGroup="removeGroupBySocket" @duplicateGroup="duplicateGroup"
+            @watch="watchGroup" @updateGroup="updateGroups" @addTask="addTaskBySocket" @closeTaskForm="closeTaskForm">
             <template #actions>
               <div class="group-actions">
                 <button v-if="!(showTaskForm && currentGroupId === group.id)" @click="showAddTaskForm(group.id)"
@@ -26,24 +26,28 @@
         </button>
       </li>
       <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
-        <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
+        <AddGroup @addGroup="addGroupBySocket" @close="handleCloseComponent" />
       </li>
+      <button @click="saveMsg" style="padding: 0px">.</button>
     </ul>
   </section>
 </template>
 
 <script>
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
-import { boardService } from "../services/board.service.local.js";
+// import { boardService } from "../services/board.service.local.js";
+import { boardService } from "../services/board.service.js";
 import { clickOutsideDirective } from "../directives/index.js";
 import { Container, Draggable } from "vue3-smooth-dnd";
 import { scrollHorizontalDirective } from "../directives/index.js";
 import { applyDrag } from "../services/util.service.js";
-// import {
-//   socketService,
-//   SOCKET_EVENT_ADD_MSG,
-//   SOCKET_EMIT_SEND_MSG,
-// } from "../services/socket.service.js";
+import {
+  socketService,
+  SOCKET_EVENT_ADD_MSG,
+  SOCKET_EMIT_SEND_MSG,
+  SOCKET_EVENT_REMOVE_MSG,
+  SOCKET_EVENT_ADDTASK_MSG
+} from "../services/socket.service.js";
 
 import GroupPreview from "./GroupPreview.vue";
 import AddGroup from "./AddGroup.vue";
@@ -80,13 +84,28 @@ export default {
   },
   created() {
     this.groups = JSON.parse(JSON.stringify(this.groups));
+    console.log(this.groups);
     this.currBoard = this.$store.getters.getCurrBoard;
-    // socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroupToArray);
+
+    socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroup);
+    socketService.on(SOCKET_EVENT_REMOVE_MSG, this.removeGroup);
+    socketService.on(SOCKET_EVENT_ADDTASK_MSG, this.addTask);
   },
   methods: {
-    // addGroupToArray(groupToAdd) {
-    //   this.groups.push(groupToAdd)
-    // },
+
+    addGroupBySocket(title) {
+      const groupToAdd = boardService.getEmptyGroup();
+      groupToAdd.title = title;
+      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'add', payload: groupToAdd })
+    },
+    removeGroupBySocket(groupId) {
+      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'remove', payload: groupId })
+    },
+    addTaskBySocket({groupId, taskTitle, openedFromModal}) {
+      this.showTaskForm = true;
+      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'addtask', payload: {groupId, taskTitle, openedFromModal} })
+    },
+
 
     getGroupPayload(index) {
       return this.groups[index];
@@ -116,32 +135,31 @@ export default {
       }
     },
 
-    async addGroup(title) {
+    async addGroup(groupToAdd) {
       try {
-        const groupToAdd = boardService.getEmptyGroup();
-        groupToAdd.title = title;
-        
+
+        // const groupToAdd = boardService.getEmptyGroup();
+        // groupToAdd.title = title;
+
         await this.$store.dispatch({
           type: "addGroup",
           group: groupToAdd,
         });
-        
-        // socketService.emit(SOCKET_EMIT_SEND_MSG, groupToAdd)
-
-
-        showSuccessMsg("Group added");
 
         this.unscrollOnAction();
-      } catch {
-        showErrorMsg("Cannot add group");
+      } catch (err) {
+        console.log(err);
       }
     },
+
     async removeGroup(groupId) {
       try {
+        console.log('happen');
         await this.$store.dispatch({
           type: "removeGroup",
           groupId,
         });
+
         showSuccessMsg("Group removed");
         this.unscrollOnAction();
       } catch (err) {
@@ -149,6 +167,7 @@ export default {
         showErrorMsg("Cannot remove group");
       }
     },
+
     async updateGroup(group, changes) {
       try {
         group = { ...group, ...changes };
@@ -161,7 +180,7 @@ export default {
     },
     async addTask({ groupId, taskTitle, openedFromModal }) {
       try {
-        this.showTaskForm = true;
+        // this.showTaskForm = true;
         await this.$store.dispatch({
           type: "addTask",
           groupId,

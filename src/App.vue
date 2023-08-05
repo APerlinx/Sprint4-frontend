@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="display: flex; flex-direction: column; height: 100%;">
     <HomeHeader v-if="showHomeHeader" />
     <AppHeader v-else />
     <RouterView />
