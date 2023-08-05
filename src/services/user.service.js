@@ -13,7 +13,8 @@ export const userService = {
     getById,
     remove,
     update,
-    changeScore
+    changeScore,
+    getEmptyNotification
 }
 
 window.userService = userService
@@ -33,7 +34,7 @@ function remove(userId) {
 
 async function update(user) {
     user = await httpService.put(`user/${user._id}`, user)
-  
+
     // Handle case in which admin updates other user's details
     if (getLoggedinUser()._id === user._id) saveLocalUser(user)
     return user
@@ -71,11 +72,20 @@ async function changeScore(by) {
 
 
 function saveLocalUser(user) {
-    user = {_id: user._id, fullname: user.fullname, imgUrl: user.imgUrl, score: user.score}
+    user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl, score: user.score }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
     return user
 }
 
 function getLoggedinUser() {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+}
+
+function getEmptyNotification() {
+    return {
+        byUser: '',
+        toUser: '',
+        action: '',
+        createdAt: Date.now,
+    }
 }

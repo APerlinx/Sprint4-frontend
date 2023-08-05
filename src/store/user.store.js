@@ -105,6 +105,18 @@ export const userStore = {
                 console.log('userStore: Error in increaseScore', err)
                 throw err
             }
+        },
+        async updateUserNot({ commit, state }, { notification }) {
+            try {
+                console.log(notification);
+                const user = state.users.find(user => console.log(user))
+                console.log(user);
+                // commit({ type: 'setUserScore', score })
+            } catch (err) {
+                console.log('userStore: Error in increaseScore', err)
+                throw err
+            }
         }
+        
     }
 }
