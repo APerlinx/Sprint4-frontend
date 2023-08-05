@@ -1,122 +1,33 @@
-.members-search {
-    -webkit-appearance: none;
-    box-shadow: inset 0 0 0 2px #091e4224;
-    // display: block;
-    display: flex;
+// .attachment-title {
+//     margin-bottom: 20px;
+// }
 
-    height: 37px;
-    width: 100%;
-    line-height: 20px;
-    padding: 8px 12px;
-    outline: none;
-    resize: none;
-    // margin: -6px -10px;
-    min-height: 24px;
-    border-radius: 4px;
-    background-color: #fff;
-    line-height: 20px;
-    font-size: 14px;
-    font-weight: 400;
-    border: none;
-    justify-content: center;
-    align-items: center;
+.attachment-container {
     margin-bottom: 20px;
-    margin-top: 12px;
-    outline: none;
-    transition-duration: 85ms;
-    transition-property: background-color, border-color, box-shadow;
-    transition-timing-function: ease;
-    color: #172b4d;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
-
-    &:focus {
-        background-color: white;
-        border: none;
-        outline: none;
-        box-shadow: inset 0 0 0 2px #388bff;
-
-        // &:hover {
-        //     // background-color: #F1F2F4;
-        // }
-    }
-}
-
-.members-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 
-    h3 {
-        margin-top: -2px;
-        font-size: 12px;
+
+    .attachment-img-container {
+        background-color: #091e420a;
+        border-radius: 3px;
+
+        img {
+            border-radius: 3px;
+            width: 112px;
+            height: 80px;
+            object-position: center;
+            object-fit: cover;
+            margin-right: 14px;
+        }
     }
-}
 
-.single-member-container {
-    display: flex;
-    flex: 1;
-    margin: 0 0 0 -40px;
-    border-radius: 4px;
-    align-items: center;
-    color: #172b4d;
-    transition-duration: 85ms;
-    transition-property: background-color, border-color, box-shadow;
-    transition-timing-function: ease;
-
-    padding: 4px;
-
-    span {
-        padding: 0;
+    .attachment-action {
+        text-decoration: underline;
+        cursor: pointer;
     }
 
     &:hover {
-        background-color: #d0d4db;
-    }
-
-    .member-name {
-        padding-left: 5px;
-    }
-}
-
-.member-pic {
-    position: relative;
-
-    img {
-        height: 32px;
-        width: 32px;
-        border-radius: 50%;
-        border: 1px solid white;
-        background-color: rgb(168, 164, 164);
-    }
-}
-
-
-.add-member {
-    margin: 0px 0px 0px 10px;
-    border: none;
-    white-space: nowrap;
-    border-radius: 3px;
-    box-shadow: none;
-    box-sizing: border-box;
-    height: 32px;
-    margin: 8px 20px 0 0;
-    width: 100%;
-    // padding: 0 16px 8px 8px;
-    max-width: 300px;
-    padding: 6px 12px;
-    text-decoration: none;
-    text-overflow: ellipsis;
-    transition-duration: 85ms;
-    transition-property: background-color, border-color, box-shadow;
-    transition-timing-function: ease;
-    user-select: none;
-    font-size: 14px;
-    font-weight: 400;
-    background-color: #e4e6ea;
-    color: #172b4d;
-    text-align: left;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #d0d4db;
+        background-color: #eaecf0;
     }
 }
