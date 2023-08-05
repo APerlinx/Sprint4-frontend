@@ -6,7 +6,8 @@ export const userStore = {
     state: {
         loggedinUser: null,
         users: [],
-        isLoading: false
+        isLoading: false,
+
     },
     getters: {
         users({ users }) { return users },
@@ -35,11 +36,17 @@ export const userStore = {
         setUserScore(state, { score }) {
             state.loggedinUser.score = score
         },
+        setUser(state, { savedUser }) {
+            const userId = savedUser._id
+            const idx = state.users.findIndex(user => user._id === userId)
+            state.users.splice(idx, 1, savedUser)
+        },
     },
     actions: {
         async login({ commit }, { userCred }) {
             try {
                 const user = await userService.login(userCred)
+                console.log(user);
                 commit({ type: 'setLoggedinUser', user })
                 return user
             } catch (err) {
@@ -108,15 +115,21 @@ export const userStore = {
         },
         async updateUserNot({ commit, state }, { notification }) {
             try {
-                console.log(notification);
-                const user = state.users.find(user => console.log(user))
-                console.log(user);
-                // commit({ type: 'setUserScore', score })
+                console.log('note', notification);
+
+                const user = state.users.find(user => user.fullname === notification.toUser)
+                const userCopy = JSON.parse(JSON.stringify(user))
+                userCopy.notifications.push(notification)
+
+
+                const savedUser = await userService.update(userCopy)
+
+                commit({ type: 'setUser', savedUser })
             } catch (err) {
                 console.log('userStore: Error in increaseScore', err)
                 throw err
             }
         }
-        
+
     }
 }

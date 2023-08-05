@@ -1,10 +1,9 @@
 <template>
   <TaskCover
     :task="task"
-  
     v-if="!task.cover?.isFull"
-  />
-  <!-- @coverFull="handleCoverFull" -->
+    />
+    <!-- @coverFull="handleCoverFull" -->
   <section
     class="task-preview"
     :class="[

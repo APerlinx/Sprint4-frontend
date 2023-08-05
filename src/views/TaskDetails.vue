@@ -265,11 +265,13 @@ export default {
 
             const notification = {
                 byUser: this.loggedinUser.fullname,
-                toUser: clickedMember,
+                toUser: clickedMember.fullname,
                 createdAt: Date.now(),
-                action: ''
+                action: '',
+                task: this.taskToEdit.title,
+                board: this.board.title
             };
-
+            
             if (!this.taskToEdit.members) {
                 this.taskToEdit.members = [];
                 this.taskToEdit.members.push(clickedMember);
@@ -284,7 +286,6 @@ export default {
                     notification.action = "added you"
                 }
                 
-
                 this.$store.dispatch({ type: "updateUserNot", notification });
 
                 this.editTask();

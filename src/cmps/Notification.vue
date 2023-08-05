@@ -8,17 +8,17 @@
         <div class="not-line"></div>
 
         <div class="notification-container">
-            <div class="not">
+            <div v-for="not in loggedinUser.notifications" class="not">
                 <div class="not-top">
-                        <div class="not-preview">
-                            <p>avarag color</p>
-                            <div class="date">
-                                <span class="time-icon"></span> <span class="not-date">Aug 25</span>
-                            </div>
+                    <div class="not-preview">
+                        <p>avarag color</p>
+                        <div class="date">
+                            <span class="time-icon"></span> <span class="not-date">Aug 25</span>
                         </div>
-                        <div class="board-title">
-                            <p>board title</p>
-                        </div>
+                    </div>
+                    <div class="board-title">
+                        <p>board title</p>
+                    </div>
                 </div>
                 <div class="not-bottom">
 
@@ -30,7 +30,6 @@
                     <div class="not-actions">
                         <p> Added a dur date of Aug 25 at 11:43 <span>aug 3 at 1:43 pm</span></p>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -54,6 +53,9 @@ export default {
                 width: "100%",
                 borderRadius: "0.5em"
             }
+        },
+        loggedinUser() {
+            return this.$store.getters.loggedinUser
         }
     }
 }
