@@ -34,7 +34,7 @@
 
         <div class="index-create-board">
           <Popper arrow placement="right">
-            <div @click="" class="board-title">Create new board</div>
+            <div class="board-title">Create new board</div>
             <template #content>
               <div class="index-container">
                 <AddBoard
