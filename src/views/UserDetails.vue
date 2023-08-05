@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { SOCKET_EMIT_USER_WATCH, SOCKET_EVENT_USER_UPDATED, socketService } from '../services/socket.service'
+// import { SOCKET_EMIT_USER_WATCH, SOCKET_EVENT_USER_UPDATED, socketService } from '../services/socket.service'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { userService } from '../services/user.service.local'
 
@@ -52,10 +52,10 @@ export default {
       if (!this.userId) return
       try {
         const user = await userService.getById(this.userId)
-        socketService.off(SOCKET_EVENT_USER_UPDATED, this.onUserUpdate)
+        // socketService.off(SOCKET_EVENT_USER_UPDATED, this.onUserUpdate)
         
-        socketService.emit(SOCKET_EMIT_USER_WATCH, this.userId)
-        socketService.on(SOCKET_EVENT_USER_UPDATED, this.onUserUpdate)
+        // socketService.emit(SOCKET_EMIT_USER_WATCH, this.userId)
+        // socketService.on(SOCKET_EVENT_USER_UPDATED, this.onUserUpdate)
         this.user = user
       } catch(err) {
         showErrorMsg('Cannot load user: ' + this.userId)
@@ -68,7 +68,7 @@ export default {
       this.user = updatedUser
     },
     unmounted() {
-      socketService.off(SOCKET_EVENT_USER_UPDATED, this.onUserUpdate)
+      // socketService.off(SOCKET_EVENT_USER_UPDATED, this.onUserUpdate)
     },
   }
 }
