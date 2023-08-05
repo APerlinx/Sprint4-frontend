@@ -1,10 +1,6 @@
 <template>
- <!-- @coverFull="handleCoverFull" -->
-  <TaskCover
-    :task="task"
-   
-    v-if="!task.cover?.isFull"
-  />
+  <!-- @coverFull="handleCoverFull" -->
+  <TaskCover :task="task" v-if="!task.cover?.isFull" />
   <section
     class="task-preview"
     :class="[
@@ -39,12 +35,12 @@
         class="task-header"
         :class="['task-header', getTaskTextStyleClass()]"
       >
-        <p>{{ task.title }}</p>
         <i
           class="icon-pencil"
           v-show="showEditIcon"
           @click.stop="openQuickEdit"
         ></i>
+        <p>{{ task.title }}</p>
       </div>
 
       <div class="tool-tip" v-if="!task.cover?.isFull">

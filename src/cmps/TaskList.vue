@@ -73,6 +73,7 @@ export default {
     tasks: {
       immediate: true,
       handler(newVal) {
+        // if(!newVal) return
         this.items = JSON.parse(JSON.stringify(newVal))
       },
     },

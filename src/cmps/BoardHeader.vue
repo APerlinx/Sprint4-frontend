@@ -122,7 +122,7 @@ export default {
   data() {
     return {
       isEditingTitle: false,
-      boardTitle: 'Trello dev team',
+      boardTitle: 'WEB DEVELOPMENT',
       inputWidth: 0,
       isStarred: false,
       menuOpen: false,

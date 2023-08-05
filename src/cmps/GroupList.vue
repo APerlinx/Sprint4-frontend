@@ -119,12 +119,10 @@ export default {
     },
   },
   created() {
-      console.log("Initial groups:", this.initialGroups);
   const boardId = this.$route.params.boardId
   if (!this.groups.length && boardId) {
     this.groups = this.$store.getters.getGroupsByBoardId(boardId)
   }
-  console.log("Computed groups:", this.groups);
 
     this.groups = JSON.parse(JSON.stringify(this.groups))
     this.currBoard = this.$store.getters.getCurrBoard

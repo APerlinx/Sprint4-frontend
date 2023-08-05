@@ -405,7 +405,7 @@ export default {
               this.buttonPosition = {
                 position: 'fixed',
                 top: `${adjustedTop}px`,
-                left: `${this.rect.left - this.rect.width + 130}px`,
+                left: `${this.rect.left - this.rect.width + 80}px`,
               }
             } else {
               this.buttonPosition = {
