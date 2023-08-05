@@ -45,9 +45,16 @@
           <div class="search-icon">
             <img class="search-icon-img" src="../assets/styles/img/search.svg" alt="" />
           </div>
+
         </div>
 
-        <img src="../assets/styles/img/contrast.png" alt="" />
+        <div class="notifiction-icon" @click="isNotifiction = !isNotifiction">
+          <i class="fa-regular fa-bell fa-lg"></i>
+        </div>
+          <Notification v-if="isNotifiction" />
+
+
+        <img class="mode" src="../assets/styles/img/contrast.png" alt="" />
         <span class="user">{{ loggedInUser }}</span>
       </div>
     </nav>
@@ -60,6 +67,7 @@ import AddBoard from "../cmps/addboard.vue";
 import BoardFilter from "../cmps/BoardFilter.vue";
 import RecentPicker from "../cmps/RecentPicker.vue";
 import StarredPicker from "../cmps/StarredPicker.vue";
+import Notification from "../cmps/Notification.vue";
 
 import { clickOutsideDirective } from "../directives/index.js";
 
@@ -72,6 +80,7 @@ export default {
       isPickerModalStarred: false,
       isPickerModalRecent: false,
       isAddBoard: false,
+      isNotifiction: false
     };
   },
   methods: {
@@ -141,6 +150,7 @@ export default {
     defineComponent,
     RecentPicker,
     StarredPicker,
+    Notification
   },
 };
 </script>

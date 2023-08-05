@@ -2,9 +2,9 @@
  <!-- @coverFull="handleCoverFull" -->
   <TaskCover
     :task="task"
-   
     v-if="!task.cover?.isFull"
-  />
+    />
+    <!-- @coverFull="handleCoverFull" -->
   <section
     class="task-preview"
     :class="[
