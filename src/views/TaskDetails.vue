@@ -62,7 +62,7 @@
                             </button>
                         </div>
 
-                        <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatus" />
+                        <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatusBySocket" />
                     </div>
 
                     <div class="details-description-container">
@@ -110,35 +110,35 @@
                     <!-- v-model="taskToEdit.description" -->
                 </section>
 
-                <section class="action-btns-container">
-                    <div class="suggested-container">
-                        <h3 class="details-title-small">Suggested</h3>
-                        <button class="btn"><span class="icon member"></span>Join</button>
+            <section class="action-btns-container">
+                <div class="suggested-container">
+                    <h3 class="details-title-small">Suggested</h3>
+                    <button class="btn"><span class="icon member"></span>Join</button>
+                </div>
+                <h3 class="details-title-small">Add to card</h3>
+                <Popper arrow placement="right" v-for="( cmp, idx ) in  cmpOrder " :key="idx">
+                    <div>
+                        <button class="btn" @click="set(cmp, idx)"> <span class="icon"
+                                :class="`icon ${dynamicIcons[idx]}`"></span>
+                            {{ dynamicNames[idx] }} </button>
                     </div>
-                    <h3 class="details-title-small">Add to card</h3>
-                    <Popper arrow placement="right" v-for="( cmp, idx ) in  cmpOrder " :key="idx">
-                        <div>
-                            <button class="btn" @click="set(cmp, idx)"> <span class="icon"
-                                    :class="`icon ${dynamicIcons[idx]}`"></span>
-                                {{ dynamicNames[idx] }} </button>
-                        </div>
-                        <template #content>
-                            <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
-                                :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
-                                @toggleMember="toggleMember" @saveLabel="saveLabel" @checklist="addChecklist"
-                                @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
-                                @attachment="addAttachment" @setCover="setCover" />
-                        </template>
-                    </Popper>
-                    <div class="action-btns-in-btns">
-                        <h3 class="details-title-small">Actions</h3>
-                        <button class="btn"><span class="icon arrow-right"></span>Move</button>
-                        <button class="btn"><span class="icon copy"></span>Copy</button>
-                        <button class="btn"><span class="icon card"></span>Make template</button>
-                        <button class="btn"><span class="icon archive"></span>Archive</button>
-                        <button class="btn"><span class="icon share"></span>Share</button>
-                    </div>
-                    <!-- <pre>{{ isCover }}</pre> -->
+                    <template #content>
+                        <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                            :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
+                            @toggleMember="toggleMemberBySocket" @saveLabel="saveLabel" @checklist="addChecklist"
+                            @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
+                            @attachment="addAttachment" @setCover="setCover" />
+                    </template>
+                </Popper>
+                <div class="action-btns-in-btns">
+                    <h3 class="details-title-small">Actions</h3>
+                    <button class="btn"><span class="icon arrow-right"></span>Move</button>
+                    <!-- <button class="btn"><span class="icon copy"></span>Copy</button> -->
+                    <!-- <button class="btn"><span class="icon card"></span>Make template</button> -->
+                    <button class="btn"><span class="icon archive"></span>Archive</button>
+                    <!-- <button class="btn"><span class="icon share"></span>Share</button> -->
+                </div>
+                <!-- <pre>{{ isCover }}</pre> -->
 
                 </section>
                 <!-- </section> -->
@@ -158,6 +158,15 @@ import Labels from "../cmps/Labels.vue";
 import Attachment from "../cmps/AttachmentPreview.vue"
 import Dates from "../cmps/Dates.vue"
 import Comments from "../cmps/Comments.vue"
+import {
+    socketService,
+    SOCKET_EMIT_SET_TOPIC,
+    SOCKET_EVENT_MEMBER_MSG,
+    SOCKET_EVENT_STATUS_MSG,
+    SOCKET_EMIT_SEND_MSG,
+
+} from "../services/socket.service.js";
+
 // import { boardService } from "../services/board.service.local.js";
 import { boardService } from "../services/board.service.js";
 
@@ -184,12 +193,21 @@ export default {
         };
     },
     created() {
+        socketService.on(SOCKET_EVENT_MEMBER_MSG, this.toggleMember);
+        socketService.on(SOCKET_EVENT_STATUS_MSG, this.updateTaskStatus);
         this.setTask();
     },
     methods: {
+        toggleMemberBySocket(clickedMember) {
+        socketService.emit(SOCKET_EMIT_SEND_MSG,{action: 'member', payload: clickedMember})
+        },
+
+        updateTaskStatusBySocket(isCompleted) {
+        socketService.emit(SOCKET_EMIT_SEND_MSG,{action: 'status', payload: isCompleted})
+        },
+
         updateTaskStatus(isCompleted) {
-            console.log("🚀 ~ file: TaskDetails.vue:180 ~ updateTaskStatus ~ isCompleted:", isCompleted)
-            if (isCompleted) this.taskToEdit.status = 'completed'
+            if (isCompleted) this.taskToEdit.status = 'done'
             else this.taskToEdit.status = ''
             this.editTask()
 
@@ -199,29 +217,24 @@ export default {
             this.actionCmpType = cmp;
             this.actionCmpName = this.dynamicNames[idx];
         },
-
         setCover(cover) {
             if (this.taskToEdit.hasOwnProperty('cover')) {
                 this.taskToEdit.cover = cover
             } else {
                 this.taskToEdit = { ...this.taskToEdit, cover: cover }
             }
-            this.editTask()
+            this.editTaskBySocket()
         },
-
         removeLabel(board) {
             this.board = board
-            this.editTask()
+            this.editTaskBySocket()
         },
         updateLable(board) {
             this.board = board
-            this.editTask()
+            this.editTaskBySocket()
         },
         addDueDate(date) {
-            // console.log("🚀 ~ file: TaskDetails.vue:196 ~ addDueDate ~ date:", date)
             this.taskToEdit.dueDate = date
-            console.log("🚀 ~ file: TaskDetails.vue:191 ~ addDueDate ~ this.taskToEdit.dueDate.item:", this.taskToEdit.dueDate)
-
             this.editTask()
         },
         saveLabel(labelId) {
@@ -231,6 +244,7 @@ export default {
             else {
                 this.taskToEdit.labels.push(labelId);
             }
+            // this.editTaskBySocket()
             this.$store.dispatch({ type: "updateBoard", board: this.board });
         },
         addAttachment(newAttachment) {
@@ -246,7 +260,6 @@ export default {
             this.editTask()
         },
         toggleMember(clickedMember) {
-            // console.log('TaskDeatails - newMember:', clickedMember)
             if (!this.taskToEdit.members) {
                 this.taskToEdit.members = []
                 this.taskToEdit.members.push(clickedMember)
@@ -257,9 +270,8 @@ export default {
                 } else {
                     this.taskToEdit.members.push(clickedMember);
                 }
+                this.editTask()
             }
-            this.editTask()
-            // console.log('TaskDeatails - members:', this.taskToEdit.members)
         },
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)
@@ -277,19 +289,18 @@ export default {
         async setTask() {
             try {
                 const boardId = this.$route.params.boardId;
-                // console.log("🚀 ~ file: TaskDetails.vue:192 ~ setTask ~ boardId:", boardId)
 
                 const board = await boardService.getById(boardId);
-                // console.log("🚀 ~ file: TaskDetails.vue:205 ~ setTask ~ board:", board)
 
                 const taskId = this.$route.params.taskId;
                 const groupId = this.$route.params.groupId;
-                // console.log("groupId:", groupId);
 
                 this.board = JSON.parse(JSON.stringify(board));
                 this.group = this.board.groups.find((group) => group.id === groupId);
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
-                console.log("🚀 ~ file: TaskDetails.vue:259 ~ setTask ~ this.taskToEdit:", this.taskToEdit)
+
+                socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskToEdit.id);
+                
             } catch (err) {
                 console.log("error in setTask");
             }
@@ -312,13 +323,10 @@ export default {
             this.$router.back();
         },
         editTask() {
-            console.log("edit task:");
             const editedTask = JSON.parse(JSON.stringify(this.taskToEdit));
-            // console.log("editedTask:", editedTask)
             const taskIdx = this.group.tasks.findIndex(
                 task => task.id === this.taskToEdit.id
             );
-            // replace task with editTask
             this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
             this.$store.dispatch({ type: "updateBoard", board: this.board });
         },

@@ -2,18 +2,21 @@ import io from 'socket.io-client'
 import { userService } from './user.service'
 
 export const SOCKET_EVENT_ADD_MSG = 'chat-add-msg'
+export const SOCKET_EVENT_REMOVE_MSG = 'chat-remove-msg'
+export const SOCKET_EVENT_ADDTASK_MSG = 'chat-addtask-msg'
+export const SOCKET_EVENT_MEMBER_MSG = 'chat-member-msg'
+export const SOCKET_EVENT_STATUS_MSG = 'chat-status-msg'
+
 export const SOCKET_EMIT_SEND_MSG = 'chat-send-msg'
+
 export const SOCKET_EMIT_SET_TOPIC = 'chat-set-topic'
-export const SOCKET_EMIT_USER_WATCH = 'user-watch'
-export const SOCKET_EVENT_USER_UPDATED = 'user-updated'
-export const SOCKET_EVENT_REVIEW_ADDED = 'review-added'
-export const SOCKET_EVENT_REVIEW_ABOUT_YOU = 'review-about-you'
+export const SOCKET_EVENT_USER_IS_TYPING = 'chat-user-is-typing'
+export const SOCKET_EMIT_USER_IS_TYPING = 'chat-set-user-is-typing'
 
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 
-
-const baseUrl = (process.env.NODE_ENV === 'production') ? '' : '//localhost:3031'
+const baseUrl = process.env.NODE_ENV === 'production' ? '' : '//localhost:3031'
 export const socketService = createSocketService()
 // export const socketService = createDummySocketService()
 
@@ -21,7 +24,6 @@ export const socketService = createSocketService()
 window.socketService = socketService
 
 socketService.setup()
-
 
 function createSocketService() {
   var socket = null
@@ -34,6 +36,7 @@ function createSocketService() {
       }, 500)
     },
     on(eventName, cb) {
+      // console.log(socket)
       socket.on(eventName, cb)
     },
     off(eventName, cb = null) {
@@ -54,7 +57,6 @@ function createSocketService() {
     terminate() {
       socket = null
     },
-
   }
   return socketService
 }
@@ -70,44 +72,48 @@ function createDummySocketService() {
     terminate() {
       this.setup()
     },
-    login() {
-    },
-    logout() {
-    },
+    login() { },
+    logout() { },
     on(eventName, cb) {
-      listenersMap[eventName] = [...(listenersMap[eventName]) || [], cb]
+      listenersMap[eventName] = [...(listenersMap[eventName] || []), cb]
     },
     off(eventName, cb) {
       if (!listenersMap[eventName]) return
       if (!cb) delete listenersMap[eventName]
-      else listenersMap[eventName] = listenersMap[eventName].filter(l => l !== cb)
+      else
+        listenersMap[eventName] = listenersMap[eventName].filter(
+          (l) => l !== cb
+        )
     },
     emit(eventName, data) {
       var listeners = listenersMap[eventName]
-      // This is dummy socket behavior
-      // When someone send-msg, we notify add-msg subscribers
       if (eventName === SOCKET_EMIT_SEND_MSG) {
         listeners = listenersMap[SOCKET_EVENT_ADD_MSG]
       }
 
       if (!listeners) return
 
-      listeners.forEach(listener => {
+      listeners.forEach((listener) => {
         listener(data)
       })
     },
     // Functions for easy testing of pushed data
     testChatMsg() {
-      this.emit(SOCKET_EVENT_ADD_MSG, { from: 'Someone', txt: 'Aha it worked!' })
+      this.emit(SOCKET_EVENT_ADD_MSG, {
+        from: 'Someone',
+        txt: 'Aha it worked!',
+      })
     },
     testUserUpdate() {
-      this.emit(SOCKET_EVENT_USER_UPDATED, { ...userService.getLoggedinUser(), score: 555 })
+      this.emit(SOCKET_EVENT_USER_UPDATED, {
+        ...userService.getLoggedinUser(),
+        score: 555,
+      })
     },
   }
   window.listenersMap = listenersMap
   return socketService
 }
-
 
 // Basic Tests
 // function cb(x) {console.log('Socket Test - Expected Puk, Actual:', x)}

@@ -7,11 +7,11 @@
                 <!-- <h3 @click="hideBtn">{{ checklistToEdit.title }}</h3> -->
                 <textarea class="checklist-title details-title-big" v-model="checklistToEdit.title" @blur="hideBtn = true"
                     @focus="hideBtn = false"></textarea>
-                <div class="btns-hide-delete-container" v-if="hideBtn">
-                    <button class="btn-checklist-hide-show" v-if="isTodoChecked" @click="isHideChecked = !isHideChecked">
-                        {{ hideCheckedTxt }}</button>
-                    <button class="btn btn-delete-chackbox" v-if="hideBtn" @click="deleteChecklist">Delete</button>
-                </div>
+            </div>
+            <div class="btns-hide-delete-container" v-if="hideBtn">
+                <button class="btn-checklist-hide-show" v-if="isTodoChecked" @click="isHideChecked = !isHideChecked">
+                    {{ hideCheckedTxt }}</button>
+                <button class="btn btn-delete-chackbox" v-if="hideBtn" @click="deleteChecklist">Delete</button>
             </div>
 
 

@@ -4,7 +4,7 @@
         <div class="due-date-checkbox">
             <input type="checkbox" v-model="dateStatus" @change="checkDueDate" />
             <button class=" btn due-date-long-date" @click="openDueDate">
-                <span>{{ formatDate(task.dueDate) }}&nbsp</span>
+                <span>{{ formatDate(task.dueDate) }}</span>
                 at
                 <span>&nbsp{{ formatTime(task.dueDate) }}</span>
                 <div class="due-date-status" :class="`due-date ${dueDateStatus} ${task.status}`" v-if="task.dueDate"
@@ -13,7 +13,7 @@
                     <!-- <span class="date-counter"></span> -->
 
                     <span class="status"
-                        :class="{ completed: task.status === 'completed', overdue: task.status === 'overdue' }">{{
+                        :class="{ done: task.status === 'done', overdue: task.status === 'overdue' }">{{
                             dueDateStatus }}</span>
                 </div>
             </button>
@@ -36,7 +36,7 @@ export default {
         }
     },
     created() {
-        if (this.task.status === 'completed') this.dateStatus = true
+        if (this.task.status === 'done') this.dateStatus = true
     },
     methods: {
         setDueDate() {
@@ -68,7 +68,7 @@ export default {
     computed: {
         dueDateStatus() {
             if (!this.task.dueDate) return 'no-due-date'
-            if (this.task.status) return 'completed'
+            if (this.task.status) return 'done'
 
             const now = Date.now()
             const dueDate = new Date(this.task.dueDate).getTime()
