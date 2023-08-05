@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <header class="app-header">
     <nav>
       <div class="left">
@@ -143,4 +143,4 @@ export default {
     StarredPicker,
   },
 };
-</script>
+</script> -->

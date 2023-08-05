@@ -19,9 +19,11 @@
 
 .checklist-title-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+
     margin-bottom: -12px;
-    width: 552px;
+    // width: 552px;
+    width: 100%;
     align-content: space-between;
     color: #172b4d;
     text-align: left;
@@ -67,7 +69,8 @@
         padding-left: 0;
         border: none;
         outline: none;
-        width: 516px;
+        // width: 516px;
+        width: 100%;
         min-height: 85px;
         background-color: white;
         display: flex;
@@ -81,7 +84,8 @@
 
 .todo-title {
     margin: 0 0 4px 0px;
-    width: 450px;
+    width: 100%;
+    // width: 450px;
     border: 0;
     padding: 6px 10px;
     background-color: #F1F2F4;
@@ -357,6 +361,25 @@
 
 }
 
+@media (max-width: 768px) {
+    .checklist-title-container {
+
+        width: 100%;
+        display: flex;
+        // flex-wrap: wrap;
+        flex-direction: column;
+
+        .icon-title-container-checklist {
+            min-width: 300px;
+
+        }
+
+        .btns-hide-delete-container {
+            right: 0;
+        }
+
+    }
+}
 
 
 

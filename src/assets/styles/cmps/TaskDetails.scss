@@ -124,7 +124,7 @@
     .icon {
         margin-left: -1px;
         // margin-top: 0px;
-        padding-top: 2px;
+        padding-top: 6px;
     }
 }
 
@@ -163,8 +163,8 @@
     border-radius: 8px 8px 0 0;
     margin: 0 36px 0 -36px;
     // background-color: green;
-    top: 0;
-    left: 0;
+    // top: 0;
+    // left: 0;
 }
 
 .task-details-cover-menu {
@@ -503,25 +503,18 @@
 
 
 //////////////////////   ACTIVITY   //////////////////////
-.task-details-activity {
+.details-activity {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    // margin-top: 20px;
+    // margin-bottom: 20px;
 
-    .checklist-header {
-        display: flex;
-        flex-direction: column;
-        align-content: space-between;
-
-        .toggle-show-details {
-            margin: 0 0 0 8px;
-        }
+    .activity-show-details {
+        margin-bottom: 4px;
     }
 
-    .icon-title-container {
-        .member {}
-
-        .activity-textarea {}
+    .details-activity-comment {
+        margin-bottom: 4px;
     }
 }
 
@@ -734,31 +727,64 @@
 
 @media (max-width: 768px) {
     .task-details {
-        width: 100%;
+        margin: 0 0 0 2%;
+        padding-left: 26px;
+        width: 96%;
         display: flex;
         flex-direction: column;
+        overflow-x: hidden;
 
         .task-details-cover {
-            margin: 0 0px 0 0px;
+            margin: 0 0px 0 -36px;
+        }
 
-            .action-btns-container {
-                &>div {
-                    display: flex;
-                    flex-wrap: wrap;
-                    max-width: 300px;
+        .action-btns-container {
+            // .btn {
+            //     display: inline-block;
+            //     margin-right: 8px;
+            //     width: calc(50% - 8px);
 
-                    //   gap: 3px;
-                    &>h3 {
-                        width: 100%;
-                    }
+            //     background-color: var(--ds-background-neutral, #091e420f);
+            //     border: none;
+            //     border-radius: 3px;
+            //     box-shadow: none;
+            //     box-sizing: border-box;
+            //     color: var(--ds-text, #172b4d);
+            //     cursor: pointer;
+            //     display: block;
+            //     height: 32px;
+            //     margin-top: 8px;
+            //     max-width: 300px;
+            //     overflow: hidden;
+            //     padding: 6px 12px;
+            //     position: relative;
+            //     text-decoration: none;
+            //     text-overflow: ellipsis;
+            //     transition-duration: 85ms;
+            //     transition-property: background-color, border-color, box-shadow;
+            //     transition-timing-function: ease;
+            //     -webkit-user-select: none;
+            //     user-select: none;
+            //     white-space: nowrap;
+            // }
 
-                    &>* {
-                        margin-right: 8px;
-                        width: calc(50% - 8px);
-                    }
+            &>div {
+                // display: flex;
+                flex-wrap: wrap;
+                // max-width: 300px;
+
+                //   gap: 3px;
+                &>h3 {
+                    width: 100%;
+                }
+
+                &>* {
+                    margin-right: 8px;
+                    width: calc(50% - 8px);
                 }
             }
         }
+
     }
 }
 
