@@ -5,6 +5,7 @@ export const SOCKET_EVENT_ADD_MSG = 'chat-add-msg'
 export const SOCKET_EVENT_REMOVE_MSG = 'chat-remove-msg'
 export const SOCKET_EVENT_ADDTASK_MSG = 'chat-addtask-msg'
 export const SOCKET_EVENT_MEMBER_MSG = 'chat-member-msg'
+export const SOCKET_EVENT_STATUS_MSG = 'chat-status-msg'
 
 export const SOCKET_EMIT_SEND_MSG = 'chat-send-msg'
 

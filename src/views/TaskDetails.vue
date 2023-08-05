@@ -62,7 +62,7 @@
                             </button>
                         </div>
 
-                        <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatus" />
+                        <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatusBySocket" />
                     </div>
 
                     <div class="details-description-container">
@@ -162,7 +162,9 @@ import {
     socketService,
     SOCKET_EMIT_SET_TOPIC,
     SOCKET_EVENT_MEMBER_MSG,
-    SOCKET_EMIT_SEND_MSG
+    SOCKET_EVENT_STATUS_MSG,
+    SOCKET_EMIT_SEND_MSG,
+
 } from "../services/socket.service.js";
 
 // import { boardService } from "../services/board.service.local.js";
@@ -192,6 +194,7 @@ export default {
     },
     created() {
         socketService.on(SOCKET_EVENT_MEMBER_MSG, this.toggleMember);
+        socketService.on(SOCKET_EVENT_STATUS_MSG, this.updateTaskStatus);
         this.setTask();
     },
     methods: {
@@ -199,9 +202,12 @@ export default {
         socketService.emit(SOCKET_EMIT_SEND_MSG,{action: 'member', payload: clickedMember})
         },
 
+        updateTaskStatusBySocket(isCompleted) {
+        socketService.emit(SOCKET_EMIT_SEND_MSG,{action: 'status', payload: isCompleted})
+        },
+
         updateTaskStatus(isCompleted) {
-            console.log("🚀 ~ file: TaskDetails.vue:180 ~ updateTaskStatus ~ isCompleted:", isCompleted)
-            if (isCompleted) this.taskToEdit.status = 'completed'
+            if (isCompleted) this.taskToEdit.status = 'done'
             else this.taskToEdit.status = ''
             this.editTask()
 

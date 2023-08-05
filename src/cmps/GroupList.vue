@@ -146,10 +146,9 @@ export default {
           group: groupToAdd,
         });
 
-        showSuccessMsg("Group added");
         this.unscrollOnAction();
-      } catch {
-        showErrorMsg("Cannot add group");
+      } catch (err) {
+        console.log(err);
       }
     },
 
