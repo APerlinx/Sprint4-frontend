@@ -1,6 +1,12 @@
 // import { boardService } from '../services/board.service.local'
 import { boardService } from '../services/board.service'
 import { utilService } from '../services/util.service.js'
+import {
+  socketService,
+  SOCKET_EVENT_ADD_MSG,
+  SOCKET_EMIT_SEND_MSG,
+} from "../services/socket.service.js";
+
 export function getActionRemoveBoard(boardId) {
   return {
     type: 'removeBoard',
@@ -281,7 +287,10 @@ export const boardStore = {
         const updatedBoard = { ...state.currentBoard, groups: newGroups }
 
         const savedBoard = await boardService.save(updatedBoard)
+
         commit({ type: 'addGroup', boardId: savedBoard._id, group })
+
+
         dispatch('addActivity', {
           activity: `Added ${group.title} to this board`,
         })
@@ -466,7 +475,7 @@ export const boardStore = {
       try {
         commit('setBoardBgClr', payload)
         await boardService.save(state.currentBoard)
-      } catch (err) {}
+      } catch (err) { }
     },
     async changeBoardBgGrad({ state, commit }, payload) {
       try {
@@ -490,9 +499,9 @@ export const boardStore = {
       try {
         commit('saveTitle', title)
         await boardService.save(state.currentBoard)
-        dispatch('addActivity', {activity: 'Changed board title'})
+        dispatch('addActivity', { activity: 'Changed board title' })
       } catch (err) {
-          throw err
+        throw err
       }
     },
   },

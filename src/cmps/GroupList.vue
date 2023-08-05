@@ -1,38 +1,17 @@
 <template>
   <section class="group-list-section">
     <ul class="group-list">
-      <Container
-        :get-child-payload="getGroupPayload"
-        @drop="onDrop($event)"
-        orientation="horizontal"
-        drag-class="card-ghost"
-        drop-class="card-ghost-drop"
-        :drop-placeholder="upperDropPlaceholderOptions"
-        class="group-container"
-        v-if="groups"
-        group-name="col"
-      >
+      <Container :get-child-payload="getGroupPayload" @drop="onDrop($event)" orientation="horizontal"
+        drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="upperDropPlaceholderOptions"
+        class="group-container" v-if="groups" group-name="col">
         <Draggable v-for="group in groupList" :key="group._id">
-          <GroupPreview
-            :group="group"
-            :key="group.id"
-            :showTaskForm="showTaskForm"
-            :currentGroupId="currentGroupId"
-            @update-title="updateGroup"
-            @removeGroup="removeGroup"
-            @duplicateGroup="duplicateGroup"
-            @watch="watchGroup"
-            @updateGroup="updateGroups"
-            @addTask="addTask"
-            @closeTaskForm="closeTaskForm"
-          >
+          <GroupPreview :group="group" :key="group.id" :showTaskForm="showTaskForm" :currentGroupId="currentGroupId"
+            @update-title="updateGroup" @removeGroup="removeGroup" @duplicateGroup="duplicateGroup" @watch="watchGroup"
+            @updateGroup="updateGroups" @addTask="addTask" @closeTaskForm="closeTaskForm">
             <template #actions>
               <div class="group-actions">
-                <button
-                  v-if="!(showTaskForm && currentGroupId === group.id)"
-                  @click="showAddTaskForm(group.id)"
-                  class="group-btn"
-                >
+                <button v-if="!(showTaskForm && currentGroupId === group.id)" @click="showAddTaskForm(group.id)"
+                  class="group-btn">
                   <span class="icon"></span> Add a card
                 </button>
               </div>
@@ -41,25 +20,14 @@
         </Draggable>
       </Container>
 
-      <li
-        class="list-btn-wrapper"
-        v-if="!toggleAddForm"
-        @click="toggleAddForm = !toggleAddForm"
-      >
+      <li class="list-btn-wrapper" v-if="!toggleAddForm" @click="toggleAddForm = !toggleAddForm">
         <button class="list-btn">
           <span class="icon"></span> Add another list
-          <pre>{{ msgs }}</pre>
-          <pre>{{ groups }}</pre>
         </button>
       </li>
-      <li
-        class="open-form-wrapper"
-        v-if="toggleAddForm"
-        v-click-outside="handleCloseComponent"
-      >
+      <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
         <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
-      <button @click="saveMsg">check</button>
     </ul>
   </section>
 </template>
@@ -71,11 +39,11 @@ import { clickOutsideDirective } from "../directives/index.js";
 import { Container, Draggable } from "vue3-smooth-dnd";
 import { scrollHorizontalDirective } from "../directives/index.js";
 import { applyDrag } from "../services/util.service.js";
-import {
-  socketService,
-  SOCKET_EVENT_ADD_MSG,
-  SOCKET_EMIT_SEND_MSG,
-} from "../services/socket.service.js";
+// import {
+//   socketService,
+//   SOCKET_EVENT_ADD_MSG,
+//   SOCKET_EMIT_SEND_MSG,
+// } from "../services/socket.service.js";
 
 import GroupPreview from "./GroupPreview.vue";
 import AddGroup from "./AddGroup.vue";
@@ -85,8 +53,6 @@ export default {
   name: "group-list",
   data() {
     return {
-      // msgs: [],
-      // msg: "hi",
       title: "",
       toggleAddForm: false,
       currentGroupId: null,
@@ -112,12 +78,16 @@ export default {
       return this.groups;
     },
   },
-  async created() {
+  created() {
     this.groups = JSON.parse(JSON.stringify(this.groups));
     this.currBoard = this.$store.getters.getCurrBoard;
-    // socketService.on(SOCKET_EVENT_ADD_MSG, this.addMsg);
+    // socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroupToArray);
   },
   methods: {
+    // addGroupToArray(groupToAdd) {
+    //   this.groups.push(groupToAdd)
+    // },
+
     getGroupPayload(index) {
       return this.groups[index];
     },
@@ -145,21 +115,20 @@ export default {
         this.groupsStack = [];
       }
     },
-    // addMsg(msg) {
-    //   this.msgs.push(msg);
-    // },
-    // saveMsg() {
-    // },
 
     async addGroup(title) {
       try {
         const groupToAdd = boardService.getEmptyGroup();
         groupToAdd.title = title;
-
+        
         await this.$store.dispatch({
           type: "addGroup",
           group: groupToAdd,
         });
+        
+        // socketService.emit(SOCKET_EMIT_SEND_MSG, groupToAdd)
+
+
         showSuccessMsg("Group added");
 
         this.unscrollOnAction();
@@ -218,7 +187,7 @@ export default {
     watchGroup(groupId) {
       try {
         this.$store.dispatch("watchGroup", { groupId });
-      } catch {}
+      } catch { }
     },
     closeTaskForm() {
       this.showTaskForm = false;

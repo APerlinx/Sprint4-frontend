@@ -23,7 +23,8 @@ export default {
         backgroundColor: '',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center', // You can adjust this value to control the image position
+        backgroundPosition: 'center', // You can adjust this value to control the image position
+
 
       },
     }
@@ -35,6 +36,7 @@ export default {
     await this.$store.dispatch('addBoardToRecent', { boardId })
     socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId);
   },
+
   computed: {
     board() {
       return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard))
@@ -49,7 +51,7 @@ export default {
           backgroundColor: newVal.backgroundColor || '',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center', // You can adjust this value to control the image position
+          backgroundPosition: 'center', // You can adjust this value to control the image position
 
         }
       },
