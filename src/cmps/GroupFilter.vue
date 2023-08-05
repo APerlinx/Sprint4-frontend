@@ -5,100 +5,178 @@
       <span class="title">Filter</span>
       <span class="close-icon"></span>
     </header>
-    <label class="input-label">Keyword</label>
-    <input type="text" v-model="searchTerm" placeholder="Enter a keyword..." />
-    <p class="input-text">Search cards, members, labels, and more.</p>
-    <!-- Members section -->
-    <section class="filter-section">
-      <p class="section-label">Members</p>
-      <label class="button">
-        <input type="checkbox" v-model="noMembers" class="hidden-checkbox" />
-        <span class="icon-checkbox">
-          <span class="icon-empty-checked"></span>
-          <span class="icon-full-checked"> </span>
-        </span>
-        <p class="btn-txt">No members</p>
-      </label>
 
-      <label>
-        <input type="checkbox" v-model="assignedToMe" class="hidden-checkbox" />
-        <span class="icon-checkbox">
-          <span class="icon-empty-checked"></span>
-          <span class="icon-full-checked"></span>
-        </span>
-        <p class="btn-txt">Assigned to me</p>
-      </label>
-      <select v-model="selectedMember">
-        <option disabled value="">Please select a member</option>
-        <option v-for="member in members" :key="member.id" :value="member.id">
-          {{ member.username }}
-        </option>
-      </select>
-    </section>
+    <div class="content-wrapper">
+      <label class="input-label">Keyword</label>
+      <input
+        type="text"
+        v-model="searchTerm"
+        placeholder="Enter a keyword..."
+      />
+      <p class="input-text">Search cards, members, labels, and more.</p>
+      <!-- Members section -->
+      <section class="filter-section">
+        <p class="section-label">Members</p>
+        <label class="button">
+          <input type="checkbox" v-model="noMembers" class="hidden-checkbox" />
+          <span class="icon-checkbox">
+            <span class="icon-empty-checked"></span>
+            <span class="icon-full-checked"> </span>
+          </span>
+          <div class="flex-container">
+            <div class="member-icon-container">
+              <span class="member-icon"></span>
+            </div>
+            <p class="clock-txt">No members</p>
+          </div>
+        </label>
 
-    <section class="filter-section">
-      <p class="section-label">Due date</p>
-      <label>
-        <input type="checkbox" v-model="noDate" class="hidden-checkbox" />
+        <label>
+          <input
+            type="checkbox"
+            v-model="assignedToMe"
+            class="hidden-checkbox"
+          />
+          <span class="icon-checkbox">
+            <span class="icon-empty-checked"></span>
+            <span class="icon-full-checked"></span>
+          </span>
+          <div class="flex-container">
+            <img
+              src="https://trello-members.s3.amazonaws.com/64b55a9abb6b91d763eca936/30b05cbe63e8f05a17f831c0a551765f/50.png"
+              class="avatar-filter"
+            />
+            <p class="clock-txt">Cards assigned to me</p>
+          </div>
+        </label>
         <span class="icon-checkbox">
           <span class="icon-empty-checked"></span>
           <span class="icon-full-checked"></span>
         </span>
-        <p class="btn-txt">No date</p>
-      </label>
-      <label>
-        <input type="checkbox" v-model="overdue" class="hidden-checkbox" />
-        <span class="icon-checkbox">
-          <span class="icon-empty-checked"></span>
-          <span class="icon-full-checked"></span>
-        </span>
-        <p class="btn-txt">Overdue</p>
-      </label>
-      <label>
-        <input type="checkbox" v-model="dueInNextDay" class="hidden-checkbox" />
-        <span class="icon-checkbox">
-          <span class="icon-empty-checked"></span>
-          <span class="icon-full-checked"></span>
-        </span>
-        <p class="btn-txt">Due in the next day</p>
-      </label>
-    </section>
+        <select v-model="selectedMember">
+          <option disabled value="">Select members</option>
+          <option v-for="member in members" :key="member.id" :value="member.id">
+            {{ member.username }}
+          </option>
+        </select>
+      </section>
 
-    <!-- Labels section -->
-    <section class="filter-section">
-      <p class="section-label">Labels</p>
-      <label>
-        <input type="checkbox" v-model="noLabels" class="hidden-checkbox" />
+      <section class="filter-section">
+        <p class="section-label">Due date</p>
+        <label>
+          <input type="checkbox" v-model="noDate" class="hidden-checkbox" />
+          <span class="icon-checkbox">
+            <span class="icon-empty-checked"></span>
+            <span class="icon-full-checked"></span>
+          </span>
+          <div class="flex-container">
+            <div class="date-icon">
+              <svg
+                width="16"
+                height="16"
+                role="presentation"
+                focusable="false"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M6 4V5H4.995C3.892 5 3 5.893 3 6.994V19.006C3 20.106 3.893 21 4.995 21H19.005C20.108 21 21 20.107 21 19.006V6.994C21 5.895 20.107 5 19.005 5H18V4C18 3.448 17.552 3 17 3C16.448 3 16 3.448 16 4V5H8V4C8 3.448 7.552 3 7 3C6.448 3 6 3.448 6 4ZM5.25 9.571V17.718C5.25 18.273 5.694 18.714 6.243 18.714H17.758C18.3 18.714 18.75 18.268 18.75 17.718V9.571H5.25ZM9 13V10.999H7V13H9ZM17 10.999V13H15V10.999H17ZM11 13H13.001V10.999H11V13ZM7 17V15H9V17H7ZM11 17H13.001V15H11V17ZM17 15V17H15V15H17Z"
+                  fill="rgb(68, 84, 111)"
+                ></path>
+              </svg>
+            </div>
+            <p class="clock-txt">No date</p>
+          </div>
+        </label>
+
+        <label>
+          <input type="checkbox" v-model="overdue" class="hidden-checkbox" />
+          <span class="icon-checkbox">
+            <span class="icon-empty-checked"></span>
+            <span class="icon-full-checked"></span>
+          </span>
+          <div class="flex-container">
+            <div class="icon-container-danger">
+              <span class="clock-icon"></span>
+            </div>
+            <p class="clock-txt">Overdue</p>
+          </div>
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            v-model="dueInNextDay"
+            class="hidden-checkbox"
+          />
+          <span class="icon-checkbox">
+            <span class="icon-empty-checked"></span>
+            <span class="icon-full-checked"></span>
+          </span>
+          <div class="flex-container">
+            <div class="icon-container-overdue">
+              <span class="clock-icon"></span>
+            </div>
+            <p class="clock-txt">Due in the next day</p>
+          </div>
+          <span class="expan-options-dropdown"
+            >Show more options <span class="arrow-down-icon"></span
+          ></span>
+        </label>
+      </section>
+
+      <!-- Labels section -->
+      <section class="filter-section">
+        <p class="section-label">Labels</p>
+        <label>
+          <input type="checkbox" v-model="noLabels" class="hidden-checkbox" />
+          <span class="icon-checkbox">
+            <span class="icon-empty-checked"></span>
+            <span class="icon-full-checked"></span>
+          </span>
+          <div class="flex-container">
+            <div class="label-icon-container">
+              <span class="label-icon"></span>
+            </div>
+            <p class="clock-txt">No labels</p>
+          </div>
+        </label>
+
+        <label v-for="label in visibleLabels" :key="label.id">
+          <input
+            type="checkbox"
+            v-model="label.checked"
+            class="hidden-checkbox"
+          />
+          <span class="icon-checkbox">
+            <span class="icon-empty-checked"></span>
+            <span class="icon-full-checked"></span>
+          </span>
+          <div
+            class="btn-txt filter-label"
+            :style="{ backgroundColor: label.color }"
+          >
+            {{ label.title }}
+          </div>
+        </label>
         <span class="icon-checkbox">
           <span class="icon-empty-checked"></span>
           <span class="icon-full-checked"></span>
         </span>
-        <p class="btn-txt">No labels</p>
-      </label>
-      <label v-for="label in visibleLabels" :key="label.id">
-        <input
-          type="checkbox"
-          v-model="label.checked"
-          class="hidden-checkbox"
-        />
-        <span class="icon-checkbox">
-          <span class="icon-empty-checked"></span>
-          <span class="icon-full-checked"></span>
-        </span>
-        <div
-          class="btn-txt filter-label"
-          :style="{ backgroundColor: label.color }"
-        >
-          {{ label.title }}
-        </div>
-      </label>
-      <select v-model="selectedLabel">
-        <option disabled value="">Please select a label</option>
-        <option v-for="label in hiddenLabels" :key="label.id" :value="label.id">
-          {{ label.title }}
-        </option>
-      </select>
-    </section>
+        <select v-model="selectedLabel">
+          <option disabled value="">Selecet labels</option>
+          <option
+            v-for="label in hiddenLabels"
+            :key="label.id"
+            :value="label.id"
+          >
+            {{ label.title }}
+          </option>
+        </select>
+      </section>
+    </div>
   </section>
 </template>
 
@@ -122,13 +200,20 @@ export default {
       noMembers: false,
       assignedToMe: false,
       selectedMember: '',
+      selectedLabel: '',
       noDate: false,
       overdue: false,
       dueInNextDay: false,
       noLabels: false,
-      selectedLabels: [], // Will hold the selected labels
-      allLabels: [], // Should contain all the labels
+      selectedMembers: [],
+      selectedLabels: null,
     }
+  },
+  created() {
+    document.body.style.overflow = 'hidden'
+  },
+  destroyed() {
+    document.body.style.overflow = 'auto'
   },
   computed: {
     visibleLabels() {
@@ -150,6 +235,11 @@ export default {
 </script>
 
 <style scoped>
+.content-wrapper {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
 .filter-label {
   display: flex;
   justify-content: start;
@@ -167,25 +257,33 @@ export default {
 
 .filter {
   z-index: 10;
-  position: absolute;
-  top: 14%;
-  left: 72%;
+  position: fixed;
+  top: 51%;
+  left: 89.5%;
+  transform: translate(-50%, -50%);
   background-color: white;
   padding: 15px;
-  padding-inline-start: 19.9px;
+  padding-inline-start: 11.8px;
+  padding-top: 14px;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   width: 384px;
-  /* overflow-y: auto; */
   border-radius: 8px;
 }
 
 .filter input[type='text'] {
   width: 100%;
-  padding: 8px;
+  padding: 6px;
+  padding-inline-start: 10px;
   border: 2px solid #ddd;
   border-radius: 4px;
-  margin-block-start: 0.5em;
+  margin-block-start: 0em;
+  box-sizing: border-box;
+}
+.filter input[type='text']:focus {
+  border: 2px solid #388bff;
+  outline: none;
+  box-shadow: none;
 }
 
 input::placeholder {
@@ -235,7 +333,7 @@ input::placeholder {
   font-weight: 600;
   line-height: 16px;
   margin-top: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .hidden-checkbox {
@@ -248,10 +346,11 @@ input::placeholder {
   position: relative;
   cursor: pointer;
   font-size: 1.5rem;
+  margin-inline-start: 0.4em;
 }
 
 .btn-txt {
-  margin-inline-start: 2em;
+  margin-inline-start: 3em;
   align-self: center; /* This will vertically align the text in the middle */
 }
 

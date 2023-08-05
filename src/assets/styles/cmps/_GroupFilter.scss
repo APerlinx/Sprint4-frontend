@@ -1,20 +1,156 @@
-
 .group-filter-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 
+    position: sticky;
+    top: 0;
     .title {
         font-size: 14px;
         line-height: 20px;
-        color: #44546F;
+        color: #44546f;
         font-weight: 600;
     }
-
 }
 
 .close-icon {
-    @include trello-icon($content: "\e91c", $type: sm, $color: #626F86);
+    @include trello-icon($content: "\e91c", $type: md, $color: #626f86);
+    font-size: 1.3em;
     cursor: pointer;
 }
 
+.clock-icon {
+    @include trello-icon($content: "\e91b", $type: sm, $color: $dynamic-text);
+}
+
+label {
+    display: flex;
+    align-items: center;
+}
+
+.icon-container-danger {
+    display: flex;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.5em;
+    padding: 4px;
+    vertical-align: middle;
+    background-color: $ds-background-danger-bold;
+    margin-left: 2em;
+    cursor: pointer;
+
+}
+
+.icon-container-overdue {
+    display: flex;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    margin-left: 0.5em;
+    padding: 4px;
+    vertical-align: middle;
+    align-items: center;
+    background-color: $ds-background-warning-bold;
+    margin-left: 2em;
+    cursor: pointer;
+
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-inline-start: 0.94em;
+    margin-bottom: 1em;
+}
+
+.clock-txt {
+    margin-left: 0.5em;
+}
+
+.date-icon {
+    display: flex;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    margin-left: 0.5em;
+    padding: 4px;
+    vertical-align: middle;
+    background-color: #091e420f;
+    margin-left: 2em;
+    cursor: pointer;
+    
+}
+
+.label-icon-container {
+    display: flex;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    margin-left: 0.5em;
+    padding: 4px;
+    vertical-align: middle;
+    background-color: #091e420f;
+    margin-left: 2em;
+    align-items: center;
+    
+    cursor: pointer;
+    .label-icon {
+        @include trello-icon($content: "\e93f", $type: sm, $color: rgb(68, 84, 111));
+
+    }
+}
+
+.member-icon-container {
+    display: flex;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    margin-left: 0.5em;
+    padding: 4px;
+    vertical-align: middle;
+    background-color: #091e420f;
+    margin-left: 2em;
+    align-items: center;
+    cursor: pointer;
+    .member-icon {
+        @include trello-icon($content: "\e946", $type: sm, $color: rgb(68, 84, 111));
+    }
+}
+
+.avatar-filter {
+    width: 24px;
+    margin-left: 2em;
+}
+
+.expan-options-dropdown {
+    color: $link;
+    margin-left: 3em;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+
+    .arrow-down-icon {
+        @include trello-icon($content: "\e924", $type: sm, $color: $link);
+        vertical-align: top;
+    }
+}
+
+.filter {
+    select {
+        background-color: #f0f0f0;
+        color: #626F86;
+        margin-inline-start: 3em;
+        max-width: 315.2px;
+        border: 2px solid #ddd;
+
+    }
+}
