@@ -1,11 +1,11 @@
 <template>
     <div class="task-back-drop">
         <div class="task-details-container">
-            <!-- <section v-if="taskToEdit" class="task-details"> -->
-            <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
+            <section v-if="taskToEdit" class="task-details">
+                <!-- <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
                 closeModal()
                 editTask()
-            }">
+            }"> -->
                 <!-- <section v-if="taskToEdit" class="task-details"> -->
                 <section class="task-details-header">
 
@@ -63,6 +63,7 @@
                         </div>
 
                         <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatusBySocket" />
+                        <!-- <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatus" /> -->
                     </div>
 
                     <div class="details-description-container">
@@ -110,35 +111,35 @@
                     <!-- v-model="taskToEdit.description" -->
                 </section>
 
-            <section class="action-btns-container">
-                <div class="suggested-container">
-                    <h3 class="details-title-small">Suggested</h3>
-                    <button class="btn"><span class="icon member"></span>Join</button>
-                </div>
-                <h3 class="details-title-small">Add to card</h3>
-                <Popper arrow placement="right" v-for="( cmp, idx ) in  cmpOrder " :key="idx">
-                    <div>
-                        <button class="btn" @click="set(cmp, idx)"> <span class="icon"
-                                :class="`icon ${dynamicIcons[idx]}`"></span>
-                            {{ dynamicNames[idx] }} </button>
+                <section class="action-btns-container">
+                    <div class="suggested-container">
+                        <h3 class="details-title-small">Suggested</h3>
+                        <button class="btn"><span class="icon member"></span>Join</button>
                     </div>
-                    <template #content>
-                        <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
-                            :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
-                            @toggleMember="toggleMemberBySocket" @saveLabel="saveLabel" @checklist="addChecklist"
-                            @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
-                            @attachment="addAttachment" @setCover="setCover" />
-                    </template>
-                </Popper>
-                <div class="action-btns-in-btns">
-                    <h3 class="details-title-small">Actions</h3>
-                    <button class="btn"><span class="icon arrow-right"></span>Move</button>
-                    <!-- <button class="btn"><span class="icon copy"></span>Copy</button> -->
-                    <!-- <button class="btn"><span class="icon card"></span>Make template</button> -->
-                    <button class="btn"><span class="icon archive"></span>Archive</button>
-                    <!-- <button class="btn"><span class="icon share"></span>Share</button> -->
-                </div>
-                <!-- <pre>{{ isCover }}</pre> -->
+                    <h3 class="details-title-small">Add to card</h3>
+                    <Popper arrow placement="right" v-for="( cmp, idx ) in  cmpOrder " :key="idx">
+                        <div>
+                            <button class="btn" @click="set(cmp, idx)"> <span class="icon"
+                                    :class="`icon ${dynamicIcons[idx]}`"></span>
+                                {{ dynamicNames[idx] }} </button>
+                        </div>
+                        <template #content>
+                            <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                                :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
+                                @toggleMember="toggleMemberBySocket" @saveLabel="saveLabel" @checklist="addChecklist"
+                                @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
+                                @attachment="addAttachment" @setCover="setCover" />
+                        </template>
+                    </Popper>
+                    <div class="action-btns-in-btns">
+                        <h3 class="details-title-small">Actions</h3>
+                        <button class="btn"><span class="icon arrow-right"></span>Move</button>
+                        <button class="btn"><span class="icon copy"></span>Copy</button>
+                        <button class="btn"><span class="icon card"></span>Make template</button>
+                        <button class="btn"><span class="icon archive"></span>Archive</button>
+                        <button class="btn"><span class="icon share"></span>Share</button>
+                    </div>
+                    <!-- <pre>{{ isCover }}</pre> -->
 
                 </section>
                 <!-- </section> -->
@@ -199,11 +200,11 @@ export default {
     },
     methods: {
         toggleMemberBySocket(clickedMember) {
-        socketService.emit(SOCKET_EMIT_SEND_MSG,{action: 'member', payload: clickedMember})
+            socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'member', payload: clickedMember })
         },
 
         updateTaskStatusBySocket(isCompleted) {
-        socketService.emit(SOCKET_EMIT_SEND_MSG,{action: 'status', payload: isCompleted})
+            socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'status', payload: isCompleted })
         },
 
         updateTaskStatus(isCompleted) {
@@ -270,8 +271,8 @@ export default {
                 } else {
                     this.taskToEdit.members.push(clickedMember);
                 }
-                this.editTask()
             }
+            this.editTask()
         },
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)
@@ -300,7 +301,7 @@ export default {
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
 
                 socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskToEdit.id);
-                
+
             } catch (err) {
                 console.log("error in setTask");
             }

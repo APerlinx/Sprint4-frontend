@@ -6,15 +6,13 @@
             <button class=" btn due-date-long-date" @click="openDueDate">
                 <span>{{ formatDate(task.dueDate) }}</span>
                 at
-                <span>&nbsp{{ formatTime(task.dueDate) }}</span>
+                <span>&nbsp;{{ formatTime(task.dueDate) }}</span>
                 <div class="due-date-status" :class="`due-date ${dueDateStatus} ${task.status}`" v-if="task.dueDate"
                     @click.stop="toggleStatus">
                     <!-- <span class="icon date"></span> -->
                     <!-- <span class="date-counter"></span> -->
-
-                    <span class="status"
-                        :class="{ done: task.status === 'done', overdue: task.status === 'overdue' }">{{
-                            dueDateStatus }}</span>
+                    <span class="status" :class="{ done: task.status === 'done', overdue: task.status === 'overdue' }">{{
+                        dueDateStatus }}</span>
                 </div>
             </button>
 
@@ -68,13 +66,15 @@ export default {
     computed: {
         dueDateStatus() {
             if (!this.task.dueDate) return 'no-due-date'
-            if (this.task.status) return 'done'
+            if (this.task.status === 'done') return 'Completed'
+            console.log("🚀 ~ file: Dates.vue:73 ~ dueDateStatus ~ this.task.status:", this.task.status)
+            console.log(this.task.status)
 
             const now = Date.now()
             const dueDate = new Date(this.task.dueDate).getTime()
             const diffHours = (dueDate - now) / 1000 / 60 / 60
 
-            if (diffHours < -48) return 'overdue-long'
+            if (diffHours < -48) return 'Overdue-long'
             if (diffHours < 0) return 'Overdue'
             if (diffHours < 24) return 'DueSoon'
             return 'normal'

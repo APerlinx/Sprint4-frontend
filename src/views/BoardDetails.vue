@@ -1,19 +1,11 @@
 <template>
   <section class="board-details" v-if="!isLoadingBoard && board" :style="this.boardStyle">
-    <BoardHeader
-      :board="board"
-      @searchTermChanged="handleSearchTermChange"
-      @checkboxChanged="handleCheckboxChangeEvent"
-    />
-    <GroupList
-      v-if="boardsLoaded && groups && groups.length > 0"
-      :initialGroups="groups"
-      :key="groups"
-    />
+    <BoardHeader :board="board" @searchTermChanged="handleSearchTermChange"
+      @checkboxChanged="handleCheckboxChangeEvent" />
+    <GroupList v-if="boardsLoaded && groups && groups.length > 0" :initialGroups="groups" :key="groups" />
     <RouterView />
   </section>
-    <div v-if="isLoadingBoard">Loading...</div>
-
+  <div v-if="isLoadingBoard">Loading...</div>
 </template>
 
 <script>
@@ -49,9 +41,9 @@ export default {
   },
 
   computed: {
-      isLoadingBoard() {
-    return this.$store.getters.isLoadingBoard
-  },
+    isLoadingBoard() {
+      return this.$store.getters.isLoadingBoard
+    },
     board() {
       return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard))
     },
@@ -61,7 +53,7 @@ export default {
         this.checkboxValues,
         boardId
       )
-      console.log('newGroups', newGroups)
+      // console.log('newGroups', newGroups)
       return newGroups
     },
   },
@@ -93,9 +85,9 @@ export default {
       },
     },
     groups(newGroups, oldGroups) {
-      console.log('groups updated in GroupList')
-      console.log('newGroups: ', newGroups)
-      console.log('oldGroups: ', oldGroups)
+      // console.log('groups updated in GroupList')
+      // console.log('newGroups: ', newGroups)
+      // console.log('oldGroups: ', oldGroups)
     },
     '$route.params.boardId': {
       immediate: true, // also run the watcher when the component is created
