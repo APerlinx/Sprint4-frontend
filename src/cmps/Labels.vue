@@ -4,11 +4,9 @@
     <div class="labels">
       <div v-for="labelId in task.labels" :key="labelId">
         <div class="label" :style="{ backgroundColor: getLabelColor(labelId) }">
-          <h6
-            :style="{
-              color: isDarkColor(getLabelColor(labelId)) ? 'white' : '',
-            }"
-          >
+          <h6 :style="{
+            color: isDarkColor(getLabelColor(labelId)) ? 'white' : '',
+          }">
             {{ getLabelTitle(labelId) }}
           </h6>
         </div>
@@ -16,15 +14,8 @@
       <button @click="isLabelModal = !isLabelModal" class="add-label">
         <span class="icon plus"> </span>
         <div v-if="isLabelModal" class="label-modal">
-          <DynamicModal
-            :actionCmpType="'LabelsPicker'"
-            :actionCmpName="'Labels'"
-            :taskToEdit="taskToEdit"
-            :board="board"
-            @saveLabel="saveLabel"
-            @removeLabel="removeLabel"
-            @updateLable="updateLable"
-          />
+          <DynamicModal :actionCmpType="'LabelsPicker'" :actionCmpName="'Labels'" :taskToEdit="taskToEdit" :board="board"
+            @saveLabel="saveLabel" @removeLabel="removeLabel" @updateLable="updateLable" />
         </div>
       </button>
     </div>
