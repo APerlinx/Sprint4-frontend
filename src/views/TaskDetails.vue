@@ -1,111 +1,114 @@
 <template>
-    <div class="task-details-container">
-        <!-- <section v-if="taskToEdit" class="task-details"> -->
-        <!-- <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
-            closeModal()
-            editTask()
-        }"> -->
-        <section v-if="taskToEdit" class="task-details">
-            <section class="task-details-header">
+    <div class="task-back-drop">
+        <div class="task-details-container">
+            <!-- <section v-if="taskToEdit" class="task-details"> -->
+            <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
+                closeModal()
+                editTask()
+            }">
+                <!-- <section v-if="taskToEdit" class="task-details"> -->
+                <section class="task-details-header">
 
-                <div class="task-details-cover" v-if="taskToEdit.cover?.color"
-                    :style="{ backgroundColor: taskToEdit.cover?.color }">
-                    <p v-if="haveCover" class="task-details-cover-menu" @click="togglecover()">Cover</p>
-                </div>
+                    <div class="task-details-cover" v-if="taskToEdit.cover?.color"
+                        :style="{ backgroundColor: taskToEdit.cover?.color }">
+                        <p v-if="haveCover" class="task-details-cover-menu" @click="togglecover()">Cover</p>
+                    </div>
 
-                <div class="icon-title-container">
-                    <span class="icon card-big"></span>
-                    <input type="text" class="details-title" v-model="taskToEdit.title" />
-                    <span @click="closeModal(); editTask()" class="icon big-close close-task-details"></span>
-                </div>
+                    <div class="icon-title-container">
+                        <span class="icon card-big"></span>
+                        <input type="text" class="details-title" v-model="taskToEdit.title" />
+                        <span @click="closeModal(); editTask()" class="icon big-close close-task-details"></span>
+                    </div>
 
-                <span class="task-in-list">
-                    in list <span>&nbsp;</span><span class="group-ops"> {{ group.title
-                    }}</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span :class="{ watchActive: !isWatchActive }"
-                        class="icon eye"></span>
-                </span>
-            </section>
+                    <span class="task-in-list">
+                        in list <span>&nbsp;</span><span class="group-ops"> {{ group.title
+                        }}</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span :class="{ watchActive: !isWatchActive }"
+                            class="icon eye"></span>
+                    </span>
+                </section>
 
-            <section class="task-details-main">
-                <div class="task-alerts">
-                    <!-- <Members /> -->
-                    <!-- <Members v-for="member in taskToEdit.members" :key="member.id" :member="member" /> -->
-                    <Members :task="taskToEdit" :board="board" />
-                    <Labels :task="taskToEdit" :board="board" @saveLabel="saveLabel" @removeLabel="removeLabel"
-                        @updateLable="updateLable" />
-                    <div class="notifications-container">
-                        <h5>Notifications</h5>
-                        <button class="btn btn-watch" @click="toggleWatch">
-                            <span class="icon eye"></span><span class="word-watch">{{ watch }}</span>
-                            <span class="svg-checkbox" :class="{ watchActive: !isWatchActive }"><svg width="35px"
-                                    height="35px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                                        <title>ic_fluent_checkbox_checked_24_filled</title>
-                                        <desc>Created with Sketch.</desc>
-                                        <g id="🔍-Product-Icons" stroke="none" stroke-width="1" fill="none"
-                                            fill-rule="evenodd">
-                                            <g id="ic_fluent_checkbox_checked_24_filled" fill="#626f86" fill-rule="nonzero">
-                                                <path
-                                                    d="M18,3 C19.6568542,3 21,4.34314575 21,6 L21,18 C21,19.6568542 19.6568542,21 18,21 L6,21 C4.34314575,21 3,19.6568542 3,18 L3,6 C3,4.34314575 4.34314575,3 6,3 L18,3 Z M16.4696699,7.96966991 L10,14.4393398 L7.53033009,11.9696699 C7.23743687,11.6767767 6.76256313,11.6767767 6.46966991,11.9696699 C6.1767767,12.2625631 6.1767767,12.7374369 6.46966991,13.0303301 L9.46966991,16.0303301 C9.76256313,16.3232233 10.2374369,16.3232233 10.5303301,16.0303301 L17.5303301,9.03033009 C17.8232233,8.73743687 17.8232233,8.26256313 17.5303301,7.96966991 C17.2374369,7.6767767 16.7625631,7.6767767 16.4696699,7.96966991 Z"
-                                                    id="🎨-Color"></path>
+                <section class="task-details-main">
+                    <div class="task-alerts">
+                        <!-- <Members /> -->
+                        <!-- <Members v-for="member in taskToEdit.members" :key="member.id" :member="member" /> -->
+                        <Members :task="taskToEdit" :board="board" />
+                        <Labels :task="taskToEdit" :board="board" @saveLabel="saveLabel" @removeLabel="removeLabel"
+                            @updateLable="updateLable" />
+                        <div class="notifications-container">
+                            <h5>Notifications</h5>
+                            <button class="btn btn-watch" @click="toggleWatch">
+                                <span class="icon eye"></span><span class="word-watch">{{ watch }}</span>
+                                <span class="svg-checkbox" :class="{ watchActive: !isWatchActive }"><svg width="35px"
+                                        height="35px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                            <title>ic_fluent_checkbox_checked_24_filled</title>
+                                            <desc>Created with Sketch.</desc>
+                                            <g id="🔍-Product-Icons" stroke="none" stroke-width="1" fill="none"
+                                                fill-rule="evenodd">
+                                                <g id="ic_fluent_checkbox_checked_24_filled" fill="#626f86"
+                                                    fill-rule="nonzero">
+                                                    <path
+                                                        d="M18,3 C19.6568542,3 21,4.34314575 21,6 L21,18 C21,19.6568542 19.6568542,21 18,21 L6,21 C4.34314575,21 3,19.6568542 3,18 L3,6 C3,4.34314575 4.34314575,3 6,3 L18,3 Z M16.4696699,7.96966991 L10,14.4393398 L7.53033009,11.9696699 C7.23743687,11.6767767 6.76256313,11.6767767 6.46966991,11.9696699 C6.1767767,12.2625631 6.1767767,12.7374369 6.46966991,13.0303301 L9.46966991,16.0303301 C9.76256313,16.3232233 10.2374369,16.3232233 10.5303301,16.0303301 L17.5303301,9.03033009 C17.8232233,8.73743687 17.8232233,8.26256313 17.5303301,7.96966991 C17.2374369,7.6767767 16.7625631,7.6767767 16.4696699,7.96966991 Z"
+                                                        id="🎨-Color"></path>
+                                                </g>
                                             </g>
                                         </g>
-                                    </g>
-                                </svg></span>
-                        </button>
+                                    </svg></span>
+                            </button>
+                        </div>
+
+                        <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatus" />
                     </div>
 
-                    <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatus" />
-                </div>
-
-                <div class="details-description-container">
-                    <div class="icon-title-container-description">
-                        <span class="icon description-big"></span>
-                        <h3 class="details-title-big">Description</h3>
-                    </div>
-                    <textarea class="description-input" v-model="taskToEdit.description" @blur="hideBtn = false"
-                        @focus="hideBtn = true" placeholder="Add a more detailed description..."></textarea>
-                    <div v-if="hideBtn">
-                        <div class="btn-save-close">
-                            <button class="btn btn-save">Save</button>
-                            <!-- @click.stop="onTaskEdit" -->
-                            <button class="btn" @click="closeTodoTitle">Cancel</button>
+                    <div class="details-description-container">
+                        <div class="icon-title-container-description">
+                            <span class="icon description-big"></span>
+                            <h3 class="details-title-big">Description</h3>
+                        </div>
+                        <textarea class="description-input" v-model="taskToEdit.description" @blur="hideBtn = false"
+                            @focus="hideBtn = true" placeholder="Add a more detailed description..."></textarea>
+                        <div v-if="hideBtn">
+                            <div class="btn-save-close">
+                                <button class="btn btn-save">Save</button>
+                                <!-- @click.stop="onTaskEdit" -->
+                                <button class="btn" @click="closeTodoTitle">Cancel</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div v-if="taskToEdit.attachments">
-                    <!-- <pre>{{ taskToEdit.attachments }}</pre> -->
-                    <div class="icon-title-container-description attachment-title">
-                        <span class="icon attachment-big"></span>
-                        <h3 class="details-title-big">Attachments</h3>
+                    <div v-if="taskToEdit.attachments">
+                        <!-- <pre>{{ taskToEdit.attachments }}</pre> -->
+                        <div class="icon-title-container-description attachment-title">
+                            <span class="icon attachment-big"></span>
+                            <h3 class="details-title-big">Attachments</h3>
+                        </div>
+                        <Attachment v-for="attachment in taskToEdit.attachments" :key="attachment._id"
+                            :attachments="attachment" @updateChecklist="updateChecklist" />
+                        <button class="btn">Add an attachment</button>
                     </div>
-                    <Attachment v-for="attachment in taskToEdit.attachments" :key="attachment._id" :attachments="attachment"
+
+                    <!-- <Checklist /> -->
+                    <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
                         @updateChecklist="updateChecklist" />
-                    <button class="btn">Add an attachment</button>
-                </div>
 
-                <!-- <Checklist /> -->
-                <Checklist v-for="checklist in taskToEdit.checklists" :key="checklist._id" :checklist="checklist"
-                    @updateChecklist="updateChecklist" />
-
-                <div class="details-activity">
-                    <div class="activity-show-details">
-                        <div class="icon-title-container-activity">
-                            <span class="icon activity-big"></span>
-                            <h3 class="details-title-big">Activity</h3>
+                    <div class="details-activity">
+                        <div class="activity-show-details">
+                            <div class="icon-title-container-activity">
+                                <span class="icon activity-big"></span>
+                                <h3 class="details-title-big">Activity</h3>
+                            </div>
+                            <button class="btn toggle-show-details">Show details</button>
                         </div>
-                        <button class="btn toggle-show-details">Show details</button>
+                        <input type="text" class="details-activity-comment" placeholder="Write a comment..." />
                     </div>
-                    <input type="text" class="details-activity-comment" placeholder="Write a comment..." />
-                </div>
-                <!-- <pre>{{ taskToEdit.comments }}</pre> -->
-                <Comments v-for="comment in taskToEdit.comments" :key="comment._id" :comments="comment" />
-                <!-- v-model="taskToEdit.description" -->
-            </section>
+                    <!-- <pre>{{ taskToEdit.comments }}</pre> -->
+                    <Comments v-for="comment in taskToEdit.comments" :key="comment._id" :comments="comment" />
+                    <!-- v-model="taskToEdit.description" -->
+                </section>
 
             <section class="action-btns-container">
                 <div class="suggested-container">
@@ -137,10 +140,12 @@
                 </div>
                 <!-- <pre>{{ isCover }}</pre> -->
 
+                </section>
+                <!-- </section> -->
             </section>
-        </section>
+        </div>
     </div>
-    <div class="task-back-drop" @click=" closeModal()"></div>
+    <!-- <div class="task-back-drop" @click=" closeModal()"></div> -->
 </template>
 
 <script>
@@ -273,7 +278,7 @@ export default {
             if (type === "editChecklist") checklists.splice(idx, 1, newChecklist);
             // if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
             else checklists.splice(idx, 1);
-            this.editTask();
+            this.editTask()
         },
         async setTask() {
             try {

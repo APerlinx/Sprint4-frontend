@@ -15,7 +15,7 @@
 
     <details>
       <summary>Full JSON</summary>
-      <pre>{{ user }}</pre>
+      <!-- <pre>{{ user }}</pre> -->
     </details>
   </section>
 </template>

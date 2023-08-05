@@ -28,6 +28,7 @@
       <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
         <AddGroup @addGroup="addGroupBySocket" @close="handleCloseComponent" />
       </li>
+      <button @click="saveMsg" style="padding: 0px">.</button>
     </ul>
   </section>
 </template>

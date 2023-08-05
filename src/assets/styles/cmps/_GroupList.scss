@@ -25,21 +25,27 @@
       border: none;
       color: $button-color;
       margin: 0;
-      padding: 7px 8px 4px 6px;
+      padding: 4px 8px 4px 6px;
       width: 100%;
       text-align: start;
       margin-inline-start: 0.2em;
+      margin-top: 0.1em;
       display: flex;
       align-items: center;
+      margin-inline: 8px;
+      margin-bottom: 0.4em;
+      margin-top: 0.3em;
       > .icon {
         @include trello-icon($content: "\e901", $type: sm, $color: $text-subtle);
-        margin-inline-end: 0.5em;
+        margin-inline-end: 0.55em;
+        margin-inline-start: 1.3px;
       }
     }
 
     .group-btn:hover {
       @include button-hover-style;
-      border-radius: 10px;
+      border-radius: 8px;
+      
     }
 
     .list-btn-wrapper {
@@ -117,9 +123,10 @@
 .smooth-dnd-container.horizontal {
   .smooth-dnd-draggable-wrapper {
     transition-duration: 0ms;
+    
   }
 }
 
-// .smooth-dnd-draggable-wrapper:not(.draggable-item) {
-//   transition-duration: 0ms !important;
-// }
+.smooth-dnd-container.horizontal {
+  // position: static;
+}

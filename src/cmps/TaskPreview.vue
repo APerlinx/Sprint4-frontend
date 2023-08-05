@@ -1,14 +1,25 @@
 <template>
-  <TaskCover :task="task" />
+  <TaskCover
+    :task="task"
+    @coverFull="handleCoverFull"
+    v-if="!task.cover?.isFull"
+  />
   <section
     class="task-preview"
-    :class="{ 'with-cover': task.cover }"
+    :class="[
+      getTaskPreviewClass(),
+      {
+        'with-cover':
+          !task.cover?.isFull && (task.cover?.color || task.cover?.imgUrl),
+      },
+    ]"
     @mouseover="showEditIcon = true"
     @mouseleave="showEditIcon = false"
     @click.stop="goToTaskDetails"
+    :style="getTaskPreviewStyle()"
   >
     <li v-if="task">
-      <div class="labels" @click.stop>
+      <div class="labels" @click.stop v-if="!task.cover?.isFull">
         <div
           v-for="labelId in task.labels"
           :key="labelId"
@@ -23,7 +34,10 @@
         </div>
       </div>
 
-      <div class="task-header">
+      <div
+        class="task-header"
+        :class="['task-header', getTaskTextStyleClass()]"
+      >
         <p>{{ task.title }}</p>
         <i
           class="icon-pencil"
@@ -32,7 +46,7 @@
         ></i>
       </div>
 
-      <div class="tool-tip">
+      <div class="tool-tip" v-if="!task.cover?.isFull">
         <div class="tool-tip-icons">
           <div v-if="task.watching">
             <span class="icon watch"></span>
@@ -75,17 +89,16 @@
         </div>
 
         <div class="avatar-container">
-        <div class="member-avatar" v-if="task.members">
-          <img
-            v-for="member in task.members"
-            :key="member.id"
-            :src="member.imgUrl"
-            class="avatar"
-            alt="Avatar"
-          />
+          <div class="member-avatar" v-if="task.members">
+            <img
+              v-for="member in task.members"
+              :key="member.id"
+              :src="member.imgUrl"
+              class="avatar"
+              alt="Avatar"
+            />
+          </div>
         </div>
-        </div>
-
       </div>
     </li>
   </section>
@@ -106,6 +119,8 @@
 
 <script>
 import { format } from 'date-fns'
+import Multiselect from 'vue-multiselect'
+
 import TaskCover from './TaskCover.vue'
 import TaskQuickEdit from './TaskQuickEdit.vue'
 
@@ -125,6 +140,7 @@ export default {
       quickEditDisplay: false,
       showEditIcon: false,
       boardMembers: null,
+      fullCoverStyle: {},
     }
   },
   computed: {
@@ -181,6 +197,40 @@ export default {
     },
   },
   methods: {
+    getTaskPreviewStyle() {
+      if (this.task.cover?.isFull) {
+        if (this.task.cover.imgUrl) {
+          return {
+            backgroundImage: `url(${this.task.cover.imgUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            height: '260px',
+          }
+        } else {
+          return {
+            backgroundColor: this.task.cover.color,
+            height: '56px',
+          }
+        }
+      }
+      return {}
+    },
+    getTaskTextStyleClass() {
+      if (this.task.cover?.isFull) {
+        if (this.task.cover.imgUrl) {
+          return 'full-cover-image-task'
+        } else {
+          return 'full-cover-task'
+        }
+      }
+      return ''
+    },
+    getTaskPreviewClass() {
+      if (this.task.cover?.isFull && this.task.cover?.imgUrl) {
+        return 'no-padding'
+      }
+      return ''
+    },
     fetchBoardMembers() {
       const board = this.$store.getters.getCurrBoard
       this.boardMembers = board.members
@@ -237,7 +287,7 @@ export default {
 .label {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: start;
   width: 40px;
   height: 8px;
@@ -245,27 +295,30 @@ export default {
   margin-bottom: 4px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
+  overflow: hidden;
+  vertical-align: middle;
   color: black;
-  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+  font-size: 0; /* hide the text initially */
+  transition: all 0.5s; /* apply to all properties */
+  font-weight: 500;
 }
 
 .label.expanded {
-  min-width: 56px;
-  width: max-content;
+  width: fit-content;
   height: 16px;
   padding: 0 8px;
+  font-size: 12px; /* show the text when expanded */
 }
 
 .label-text {
   opacity: 0;
-  visibility: hidden;
-  font-weight: 500;
-  transition: opacity 2s, visibility 5s;
+  transition: opacity 0.5s, font-size 0.5s;
+  text-align: left;
+  margin-bottom: 0.2em;
 }
 
 .label.expanded .label-text {
   opacity: 1;
-  visibility: visible;
 }
 </style>

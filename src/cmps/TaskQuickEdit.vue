@@ -207,7 +207,7 @@ export default {
   },
   created() {
     this.localTask = { ...this.task }
-    this.setTask()
+    // this.setTask()
   },
   computed: {
     areLabelsVisible() {
