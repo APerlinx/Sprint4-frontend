@@ -1,6 +1,12 @@
 import { boardService } from '../services/board.service.local'
 // import { boardService } from '../services/board.service'
 import { utilService } from '../services/util.service.js'
+import {
+  socketService,
+  SOCKET_EVENT_ADD_MSG,
+  SOCKET_EMIT_SEND_MSG,
+} from "../services/socket.service.js";
+
 export function getActionRemoveBoard(boardId) {
   return {
     type: 'removeBoard',
@@ -281,7 +287,10 @@ export const boardStore = {
         const updatedBoard = { ...state.currentBoard, groups: newGroups }
 
         const savedBoard = await boardService.save(updatedBoard)
+
         commit({ type: 'addGroup', boardId: savedBoard._id, group })
+
+
         dispatch('addActivity', {
           activity: `Added ${group.title} to this board`,
         })

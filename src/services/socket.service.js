@@ -28,7 +28,7 @@ function createSocketService() {
   const socketService = {
     setup() {
       socket = io(baseUrl)
-      setTimeout(()=>{
+      setTimeout(() => {
         const user = userService.getLoggedinUser()
         if (user) this.login(user._id)
       }, 500)
@@ -70,9 +70,9 @@ function createDummySocketService() {
     terminate() {
       this.setup()
     },
-    login() {   
+    login() {
     },
-    logout() {   
+    logout() {
     },
     on(eventName, cb) {
       listenersMap[eventName] = [...(listenersMap[eventName]) || [], cb]
@@ -101,7 +101,7 @@ function createDummySocketService() {
       this.emit(SOCKET_EVENT_ADD_MSG, { from: 'Someone', txt: 'Aha it worked!' })
     },
     testUserUpdate() {
-      this.emit(SOCKET_EVENT_USER_UPDATED, {...userService.getLoggedinUser(), score: 555})
+      this.emit(SOCKET_EVENT_USER_UPDATED, { ...userService.getLoggedinUser(), score: 555 })
     },
   }
   window.listenersMap = listenersMap

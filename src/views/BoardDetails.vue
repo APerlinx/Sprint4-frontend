@@ -34,6 +34,7 @@ export default {
     await this.$store.dispatch('addBoardToRecent', { boardId })
     socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
   },
+
   computed: {
     board() {
       return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard))

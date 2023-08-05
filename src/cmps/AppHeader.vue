@@ -10,11 +10,8 @@
         </RouterLink>
 
         <div class="recent">
-          <div
-            @click="isPickerModalRecent = !isPickerModalRecent"
-            class="header-btn"
-            :class="{ checked: isPickerModalRecent }"
-          >
+          <div @click="isPickerModalRecent = !isPickerModalRecent" class="header-btn"
+            :class="{ checked: isPickerModalRecent }">
             Recent
             <i class="fa-solid fa-chevron-down"></i>
           </div>
@@ -24,11 +21,8 @@
         </div>
 
         <div class="starred">
-          <div
-            class="header-btn"
-            @click="isPickerModalStarred = !isPickerModalStarred"
-            :class="{ checked: isPickerModalStarred }"
-          >
+          <div class="header-btn" @click="isPickerModalStarred = !isPickerModalStarred"
+            :class="{ checked: isPickerModalStarred }">
             Starred
             <i class="fa-solid fa-chevron-down"></i>
           </div>
@@ -37,22 +31,11 @@
           </div>
         </div>
 
-        <div
-          class="create-btn"
-          :style="{ backgroundColor: isAddBoard ? '#e9f3ff' : '' }"
-        >
-          <button
-            @click="isAddBoard = !isAddBoard"
-            :style="{ color: isAddBoard ? '#0c66e4' : '' }"
-          >
+        <div class="create-btn" :style="{ backgroundColor: isAddBoard ? '#e9f3ff' : '' }">
+          <button @click="isAddBoard = !isAddBoard" :style="{ color: isAddBoard ? '#0c66e4' : '' }">
             Create
           </button>
-          <AddBoard
-            v-if="isAddBoard"
-            @save="saveBoard"
-            @closeModal="isAddBoard = false"
-            v-click-outside="closeModals"
-          />
+          <AddBoard v-if="isAddBoard" @save="saveBoard" @closeModal="isAddBoard = false" v-click-outside="closeModals" />
         </div>
       </div>
 
@@ -60,11 +43,7 @@
         <div class="filter-container">
           <BoardFilter @filterByTxt="filterByTxt" />
           <div class="search-icon">
-            <img
-              class="search-icon-img"
-              src="../assets/styles/img/search.svg"
-              alt=""
-            />
+            <img class="search-icon-img" src="../assets/styles/img/search.svg" alt="" />
           </div>
         </div>
 
@@ -139,7 +118,7 @@ export default {
   },
   computed: {
     loggedInUser() {
-      const user =  this.$store.getters.loggedinUser?.fullname;
+      const user = this.$store.getters.loggedinUser?.fullname;
       if (!user) return "";
       const names = user.split(" ");
       if (names.length === 1) {
