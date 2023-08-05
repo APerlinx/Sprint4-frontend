@@ -93,6 +93,8 @@
       v-show="isFilterOpen"
       :labels="board.labels"
       :members="board.members"
+      @searchTermChanged="handleSearchTermChange"
+      @checkboxChanged="handleCheckboxChangeEvent"
     />
   </div>
 </template>
@@ -137,10 +139,16 @@ export default {
   },
   mounted() {
     this.calculateAndApplyColor()
-    this.setPosition()
+    // this.setPosition()
     window.addEventListener('resize', this.setPosition)
   },
   methods: {
+    handleSearchTermChange(searchTerm) {
+      this.$emit('searchTermChanged', searchTerm)
+    },
+    handleCheckboxChangeEvent(checkboxEvent) {
+      this.$emit('checkboxChanged', checkboxEvent)
+    },
     setPosition() {
       const button = this.$refs.filterButton
       const rect = button.getBoundingClientRect()
@@ -176,7 +184,6 @@ export default {
         const fac = new FastAverageColor()
         const color = await fac.getColorAsync(img)
 
-        // Convert the rgb color to rgba with 0.2 transparency
         const rgbaColor = color.rgb
           .replace(')', ', 0.2)')
           .replace('rgb', 'rgba')

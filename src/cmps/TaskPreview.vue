@@ -1,7 +1,8 @@
 <template>
+ <!-- @coverFull="handleCoverFull" -->
   <TaskCover
     :task="task"
-    @coverFull="handleCoverFull"
+   
     v-if="!task.cover?.isFull"
   />
   <section
@@ -119,7 +120,6 @@
 
 <script>
 import { format } from 'date-fns'
-import Multiselect from 'vue-multiselect'
 
 import TaskCover from './TaskCover.vue'
 import TaskQuickEdit from './TaskQuickEdit.vue'

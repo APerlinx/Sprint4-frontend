@@ -1,17 +1,38 @@
 <template>
   <section class="group-list-section">
     <ul class="group-list">
-      <Container :get-child-payload="getGroupPayload" @drop="onDrop($event)" orientation="horizontal"
-        drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="upperDropPlaceholderOptions"
-        class="group-container" v-if="groups" group-name="col">
+      <Container
+        :get-child-payload="getGroupPayload"
+        @drop="onDrop($event)"
+        orientation="horizontal"
+        drag-class="card-ghost"
+        drop-class="card-ghost-drop"
+        :drop-placeholder="upperDropPlaceholderOptions"
+        class="group-container"
+        v-if="groups"
+        group-name="col"
+      >
         <Draggable v-for="group in groupList" :key="group._id">
-          <GroupPreview :group="group" :key="group.id" :showTaskForm="showTaskForm" :currentGroupId="currentGroupId"
-            @update-title="updateGroup" @removeGroup="removeGroup" @duplicateGroup="duplicateGroup" @watch="watchGroup"
-            @updateGroup="updateGroups" @addTask="addTask" @closeTaskForm="closeTaskForm">
+          <GroupPreview
+            :group="group"
+            :key="group.id"
+            :showTaskForm="showTaskForm"
+            :currentGroupId="currentGroupId"
+            @update-title="updateGroup"
+            @removeGroup="removeGroup"
+            @duplicateGroup="duplicateGroup"
+            @watch="watchGroup"
+            @updateGroup="updateGroups"
+            @addTask="addTask"
+            @closeTaskForm="closeTaskForm"
+          >
             <template #actions>
               <div class="group-actions">
-                <button v-if="!(showTaskForm && currentGroupId === group.id)" @click="showAddTaskForm(group.id)"
-                  class="group-btn">
+                <button
+                  v-if="!(showTaskForm && currentGroupId === group.id)"
+                  @click="showAddTaskForm(group.id)"
+                  class="group-btn"
+                >
                   <span class="icon"></span> Add a card
                 </button>
               </div>
@@ -20,12 +41,20 @@
         </Draggable>
       </Container>
 
-      <li class="list-btn-wrapper" v-if="!toggleAddForm" @click="toggleAddForm = !toggleAddForm">
+      <li
+        class="list-btn-wrapper"
+        v-if="!toggleAddForm"
+        @click="toggleAddForm = !toggleAddForm"
+      >
         <button class="list-btn">
           <span class="icon"></span> Add another list
         </button>
       </li>
-      <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
+      <li
+        class="open-form-wrapper"
+        v-if="toggleAddForm"
+        v-click-outside="handleCloseComponent"
+      >
         <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
       <button @click="saveMsg" style="padding: 0px">.</button>
@@ -34,54 +63,68 @@
 </template>
 
 <script>
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
-import { boardService } from "../services/board.service.local.js";
-import { clickOutsideDirective } from "../directives/index.js";
-import { Container, Draggable } from "vue3-smooth-dnd";
-import { scrollHorizontalDirective } from "../directives/index.js";
-import { applyDrag } from "../services/util.service.js";
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
+import { boardService } from '../services/board.service.local.js'
+import { clickOutsideDirective } from '../directives/index.js'
+import { Container, Draggable } from 'vue3-smooth-dnd'
+import { scrollHorizontalDirective } from '../directives/index.js'
+import { applyDrag } from '../services/util.service.js'
 // import {
 //   socketService,
 //   SOCKET_EVENT_ADD_MSG,
 //   SOCKET_EMIT_SEND_MSG,
 // } from "../services/socket.service.js";
 
-import GroupPreview from "./GroupPreview.vue";
-import AddGroup from "./AddGroup.vue";
-import AddTask from "./AddTask.vue";
+import GroupPreview from './GroupPreview.vue'
+import AddGroup from './AddGroup.vue'
+import AddTask from './AddTask.vue'
 
 export default {
-  name: "group-list",
+  name: 'group-list',
+  props: {
+    initialGroups: {
+      type: Array,
+    },
+  },
   data() {
     return {
-      title: "",
+      title: '',
       toggleAddForm: false,
       currentGroupId: null,
       showTaskForm: false,
-      groups: [],
+      groups: this.initialGroups || [],
       currBoard: {},
       groupsStack: [],
       upperDropPlaceholderOptions: {
-        className: "cards-drop-preview",
-        animationDuration: "0",
+        className: 'cards-drop-preview',
+        animationDuration: '0',
         showOnTop: false,
       },
-    };
+    }
   },
   computed: {
     loggedInUser() {
-      return this.$store.getters.loggedinUser;
+      return this.$store.getters.loggedinUser
     },
     groupList() {
-      const boardId = this.$route.params.boardId;
-      this.groups = this.$store.getters.getGroupsByBoardId(boardId);
-      this.groups = JSON.parse(JSON.stringify(this.groups));
-      return this.groups;
+      if (this.initialGroups && this.initialGroups.length > 0) {
+        return [...this.initialGroups]
+      }
+      const boardId = this.$route.params.boardId
+      this.groups = this.$store.getters.getGroupsByBoardId(boardId)
+      return this.groups
     },
   },
   created() {
-    this.groups = JSON.parse(JSON.stringify(this.groups));
-    this.currBoard = this.$store.getters.getCurrBoard;
+      console.log("Initial groups:", this.initialGroups);
+  const boardId = this.$route.params.boardId
+  if (!this.groups.length && boardId) {
+    this.groups = this.$store.getters.getGroupsByBoardId(boardId)
+  }
+  console.log("Computed groups:", this.groups);
+
+    this.groups = JSON.parse(JSON.stringify(this.groups))
+    this.currBoard = this.$store.getters.getCurrBoard
     // socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroupToArray);
   },
   methods: {
@@ -90,128 +133,128 @@ export default {
     // },
 
     getGroupPayload(index) {
-      return this.groups[index];
+      return this.groups[index]
     },
     onDrop(dropRes) {
-      this.groups = applyDrag(this.groups, dropRes);
+      const newGroups = applyDrag(this.groupList, dropRes)
       this.$store.dispatch({
-        type: "saveGroups",
-        groups: this.groups,
+        type: 'saveGroups',
+        groups: newGroups,
         currBoard: this.currBoard,
-      });
+      })
     },
+
     updateGroups({ info }) {
-      info.group.tasks = info.tasks;
-      this.groupsStack.push(info.group);
+      info.group.tasks = info.tasks
+      this.groupsStack.push(info.group)
 
       if (this.groupsStack.length === this.currBoard.groups.length) {
-        let boardToUpdate = JSON.parse(JSON.stringify(this.currBoard));
-        boardToUpdate.groups = this.groupsStack;
+        let boardToUpdate = JSON.parse(JSON.stringify(this.currBoard))
+        boardToUpdate.groups = this.groupsStack
 
         this.$store.dispatch({
-          type: "saveBoard",
+          type: 'saveBoard',
           board: boardToUpdate,
-        });
+        })
 
-        this.groupsStack = [];
+        this.groupsStack = []
       }
     },
 
     async addGroup(title) {
       try {
-        const groupToAdd = boardService.getEmptyGroup();
-        groupToAdd.title = title;
-        
+        const groupToAdd = boardService.getEmptyGroup()
+        groupToAdd.title = title
+
         await this.$store.dispatch({
-          type: "addGroup",
+          type: 'addGroup',
           group: groupToAdd,
-        });
-        
+        })
+
         // socketService.emit(SOCKET_EMIT_SEND_MSG, groupToAdd)
 
+        showSuccessMsg('Group added')
 
-        showSuccessMsg("Group added");
-
-        this.unscrollOnAction();
+        this.unscrollOnAction()
       } catch {
-        showErrorMsg("Cannot add group");
+        showErrorMsg('Cannot add group')
       }
     },
     async removeGroup(groupId) {
       try {
         await this.$store.dispatch({
-          type: "removeGroup",
+          type: 'removeGroup',
           groupId,
-        });
-        showSuccessMsg("Group removed");
-        this.unscrollOnAction();
+        })
+        showSuccessMsg('Group removed')
+        this.unscrollOnAction()
       } catch (err) {
-        console.log(err);
-        showErrorMsg("Cannot remove group");
+        console.log(err)
+        showErrorMsg('Cannot remove group')
       }
     },
     async updateGroup(group, changes) {
       try {
-        group = { ...group, ...changes };
-        await this.$store.dispatch(getActionUpdateGroup(group));
-        showSuccessMsg("Group updated");
+        group = { ...group, ...changes }
+        await this.$store.dispatch(getActionUpdateGroup(group))
+        showSuccessMsg('Group updated')
       } catch (err) {
-        console.log(err);
-        showErrorMsg("Cannot update group");
+        console.log(err)
+        showErrorMsg('Cannot update group')
       }
     },
     async addTask({ groupId, taskTitle, openedFromModal }) {
       try {
-        this.showTaskForm = true;
+        this.showTaskForm = true
         await this.$store.dispatch({
-          type: "addTask",
+          type: 'addTask',
           groupId,
           task: { title: taskTitle },
           board: this.currBoard,
           openedFromModal,
-        });
+        })
         // this.unscrollOnAction() // TODO : FIX JUMPING SCROLL
-        this.scrollToBottomOnAction();
+        this.scrollToBottomOnAction()
       } catch (err) {
-        console.log(err);
-        showErrorMsg("Cannot add task");
+        console.log(err)
+        showErrorMsg('Cannot add task')
       }
     },
     async duplicateGroup(groupId) {
       try {
-        this.$store.dispatch("duplicateGroup", { groupId });
-        showSuccessMsg("Group duplicated");
+        this.$store.dispatch('duplicateGroup', { groupId })
+        showSuccessMsg('Group duplicated')
       } catch {
-        showErrorMsg("Cannot duplicate Group ");
+        showErrorMsg('Cannot duplicate Group ')
       }
     },
     watchGroup(groupId) {
       try {
-        this.$store.dispatch("watchGroup", { groupId });
-      } catch { }
+        this.$store.dispatch('watchGroup', { groupId })
+      } catch {}
     },
     closeTaskForm() {
-      this.showTaskForm = false;
+      this.showTaskForm = false
     },
     handleCloseComponent() {
-      this.toggleAddForm = false;
+      this.toggleAddForm = false
     },
     showAddTaskForm(groupId) {
-      this.currentGroupId = groupId;
-      this.showTaskForm = true;
-      this.scrollToBottomOnAction();
+      this.currentGroupId = groupId
+      this.showTaskForm = true
+      this.scrollToBottomOnAction()
     },
     unscrollOnAction() {
       this.$nextTick(() => {
-        const container = document.querySelector(".group-list-section");
-        container.scrollLeft = container.scrollWidth;
-      });
+        const container = document.querySelector('.group-list-section')
+        container.scrollLeft = container.scrollWidth
+      })
     },
     scrollToBottomOnAction() {
       this.$nextTick(() => {
-        const container = document.getElementById(this.currentGroupId);
-        if (container) container.scrollTop = container.scrollHeight;
-      });
+        const container = document.getElementById(this.currentGroupId)
+        if (container) container.scrollTop = container.scrollHeight
+      })
     },
   },
   components: {
@@ -225,7 +268,7 @@ export default {
     clickOutside: clickOutsideDirective,
     scrollHorizontal: scrollHorizontalDirective,
   },
-};
+}
 </script>
 
 <style>

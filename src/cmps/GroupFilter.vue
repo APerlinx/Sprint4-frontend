@@ -1,5 +1,6 @@
 <template>
-  <section class="filter" :style="filterStyle">
+  <!-- :style="filterStyle" -->
+  <section class="filter">
     <header class="group-filter-header">
       <span style="color: white">.</span>
       <span class="title">Filter</span>
@@ -12,13 +13,19 @@
         type="text"
         v-model="searchTerm"
         placeholder="Enter a keyword..."
+        @input="emitSearchTerm"
       />
       <p class="input-text">Search cards, members, labels, and more.</p>
       <!-- Members section -->
       <section class="filter-section">
         <p class="section-label">Members</p>
         <label class="button">
-          <input type="checkbox" v-model="noMembers" class="hidden-checkbox" />
+          <input
+            type="checkbox"
+            v-model="noMembers"
+            class="hidden-checkbox"
+            @click="emitCheckboxEvent('noMembers')"
+          />
           <span class="icon-checkbox">
             <span class="icon-empty-checked"></span>
             <span class="icon-full-checked"> </span>
@@ -36,12 +43,14 @@
             type="checkbox"
             v-model="assignedToMe"
             class="hidden-checkbox"
+            @click="emitCheckboxEvent('assignedToMe')"
           />
+
           <span class="icon-checkbox">
             <span class="icon-empty-checked"></span>
             <span class="icon-full-checked"></span>
           </span>
-          <div class="flex-container">
+          <div class="flex-container button-wrapper">
             <img
               src="https://trello-members.s3.amazonaws.com/64b55a9abb6b91d763eca936/30b05cbe63e8f05a17f831c0a551765f/50.png"
               class="avatar-filter"
@@ -64,7 +73,13 @@
       <section class="filter-section">
         <p class="section-label">Due date</p>
         <label>
-          <input type="checkbox" v-model="noDate" class="hidden-checkbox" />
+          <input
+            type="checkbox"
+            :checked="checkboxValues.noDate"
+            class="hidden-checkbox"
+            @change="emitCheckboxEvent('noDate', $event.target.checked)"
+          />
+
           <span class="icon-checkbox">
             <span class="icon-empty-checked"></span>
             <span class="icon-full-checked"></span>
@@ -92,7 +107,12 @@
         </label>
 
         <label>
-          <input type="checkbox" v-model="overdue" class="hidden-checkbox" />
+          <input
+            type="checkbox"
+            :checked="checkboxValues.overdue"
+            class="hidden-checkbox"
+            @change="emitCheckboxEvent('overdue', $event.target.checked)"
+          />
           <span class="icon-checkbox">
             <span class="icon-empty-checked"></span>
             <span class="icon-full-checked"></span>
@@ -108,9 +128,11 @@
         <label>
           <input
             type="checkbox"
-            v-model="dueInNextDay"
+            :checked="checkboxValues.dueToday"
             class="hidden-checkbox"
+            @change="emitCheckboxEvent('dueInNextDay', $event.target.checked)"
           />
+
           <span class="icon-checkbox">
             <span class="icon-empty-checked"></span>
             <span class="icon-full-checked"></span>
@@ -181,8 +203,6 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect'
-
 export default {
   props: {
     members: {
@@ -207,6 +227,11 @@ export default {
       noLabels: false,
       selectedMembers: [],
       selectedLabels: null,
+      checkboxValues: {
+        noDate: false,
+        overdue: false,
+        dueInNextDay: false,
+      },
     }
   },
   created() {
@@ -227,10 +252,17 @@ export default {
     toggleLabel(label) {
       label.selected = !label.selected
     },
+    emitSearchTerm() {
+      this.$emit('searchTermChanged', this.searchTerm)
+    },
+    emitCheckboxEvent(checkboxName, value) {
+      this.$emit('checkboxChanged', {
+        name: checkboxName,
+        value,
+      })
+    },
   },
-  components: {
-    Multiselect,
-  },
+  components: {},
 }
 </script>
 
@@ -351,10 +383,11 @@ input::placeholder {
 
 .btn-txt {
   margin-inline-start: 3em;
-  align-self: center; /* This will vertically align the text in the middle */
+  align-self: center;
 }
 
 .icon-checkbox:before {
+  margin-top: 0.2em;
   content: '';
   position: absolute;
   left: 0;
@@ -362,29 +395,36 @@ input::placeholder {
   width: 12px;
   height: 12px;
   border: 2px solid rgb(228, 228, 228);
-  border-radius: 4px;
+  border-radius: 2px;
   background: white;
-  transition: background 0.2s ease-in-out, border 0.1s ease-in-out; /* Adjust this line */
+  transition: background 0.2s ease-in-out, border 0.1s ease-in-out;
 }
 .hidden-checkbox:focus:not(:checked) + .icon-checkbox:before {
+  margin-top: 0.2em;
   border: 2px solid black;
 }
 
 .hidden-checkbox:active + .icon-checkbox:before {
+  margin-top: 0.2em;
   background: #0c66e4;
   border: 1px solid #0c66e4;
 }
 
 .hidden-checkbox:checked + .icon-checkbox:before {
+  margin-top: 0.2em;
   background: #0c66e4;
   border: 2px solid black;
 }
 
 .hidden-checkbox:checked:focus + .icon-checkbox:before {
+  margin-top: 0.2em;
+
   border: 2px solid black;
 }
 
 .hidden-checkbox:checked:not(:focus) + .icon-checkbox:before {
+  margin-top: 0.2em;
+
   border: none;
   border: 2px solid #0c66e4;
   border-radius: 2px;
@@ -397,7 +437,7 @@ input::placeholder {
   font-size: 0.8rem;
   position: absolute;
   left: 2px;
-  top: -2px;
+  top: -0.5px;
   width: 12px;
   height: 12px;
   text-align: center;
@@ -407,6 +447,8 @@ input::placeholder {
 }
 
 .hidden-checkbox:checked + .icon-checkbox:after {
+  margin-top: 0.2em;
+
   opacity: 1;
 }
 
