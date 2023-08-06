@@ -245,7 +245,6 @@
 
 .member-pic {
     position: relative;
-
     height: 32px;
     width: 32px;
     border-radius: 50%;
@@ -253,9 +252,6 @@
     background-color: rgb(168, 164, 164);
     aspect-ratio: auto 30/30;
 }
-
-
-
 
 ///////////////////////   LABELS    ///////////////////////
 .label-wrapper {
@@ -404,12 +400,44 @@
 }
 
 .due-date-status {
-    border: 1px solid red;
+    // border: 1px solid red;
 
-    .completed {
+    .done {
         // background-color: red;
     }
 }
+
+.status {
+    align-items: center;
+    padding: 2px 4px 2px 4px;
+}
+
+.overdue-long {
+    background-color: #ffedeb;
+    color: #ae2a19;
+    border-radius: 3px;
+    padding: 2px 4px 2px 4px;
+}
+
+.overdue-short {
+    background-color: red;
+    color: white;
+    border-radius: 3px;
+    padding: 2px 4px 2px 4px;
+}
+
+.due-soon {
+    background-color: #e2b203;
+    color: #172b4d;
+    border-radius: 3px;
+    padding: 2px 4px 2px 4px;
+}
+
+.done {
+    background-color: #1f845a;
+    color: white;
+}
+
 
 //////////////////////   DESCRIPTION   //////////////////////
 .icon-title-container-activity,
@@ -739,34 +767,54 @@
         }
 
         .action-btns-container {
-            // .btn {
-            //     display: inline-block;
-            //     margin-right: 8px;
-            //     width: calc(50% - 8px);
+            margin-left: -15px;
+            display: flex;
+            flex-direction: column;
 
-            //     background-color: var(--ds-background-neutral, #091e420f);
-            //     border: none;
-            //     border-radius: 3px;
-            //     box-shadow: none;
-            //     box-sizing: border-box;
-            //     color: var(--ds-text, #172b4d);
-            //     cursor: pointer;
-            //     display: block;
-            //     height: 32px;
-            //     margin-top: 8px;
-            //     max-width: 300px;
-            //     overflow: hidden;
-            //     padding: 6px 12px;
-            //     position: relative;
-            //     text-decoration: none;
-            //     text-overflow: ellipsis;
-            //     transition-duration: 85ms;
-            //     transition-property: background-color, border-color, box-shadow;
-            //     transition-timing-function: ease;
-            //     -webkit-user-select: none;
-            //     user-select: none;
-            //     white-space: nowrap;
-            // }
+            .suggested-container {
+
+
+                .btn {
+                    width: 168px;
+                }
+            }
+
+            &Popper {}
+
+            .btn {
+                // display: inline-block;
+                // margin-right: 8px;
+                // width: calc(50% - 8px);
+
+                // background-color: var(--ds-background-neutral, #091e420f);
+                // border: none;
+                // border-radius: 3px;
+                // box-shadow: none;
+                // box-sizing: border-box;
+                // color: var(--ds-text, #172b4d);
+                // cursor: pointer;
+                // display: block;
+                // height: 32px;
+                // margin-top: 8px;
+                // max-width: 300px;
+                // overflow: hidden;
+                // padding: 6px 12px;
+                // position: relative;
+                // text-decoration: none;
+                // text-overflow: ellipsis;
+                // transition-duration: 85ms;
+                // transition-property: background-color, border-color, box-shadow;
+                // transition-timing-function: ease;
+                // -webkit-user-select: none;
+                // user-select: none;
+                // white-space: nowrap;
+            }
+
+            .action-btns-in-btns {
+                .btn {
+                    width: 168px;
+                }
+            }
 
             &>div {
                 // display: flex;
@@ -780,7 +828,7 @@
 
                 &>* {
                     margin-right: 8px;
-                    width: calc(50% - 8px);
+                    width: calc(50%);
                 }
             }
         }
@@ -792,12 +840,13 @@
 
 
 
+
 .icon {
     &.member {
         @include trello-icon($content: "\e946", $type: sm, $color: #626f86);
     }
 
-    &.label {
+    &.label-details {
         @include trello-icon($content: "\e93f", $type: sm, $color: #626f86);
     }
 

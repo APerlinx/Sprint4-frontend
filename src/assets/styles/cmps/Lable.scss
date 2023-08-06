@@ -12,13 +12,10 @@
         flex-direction: column;
         flex-wrap: wrap;
         gap: 0.25em;
-        // margin: rem(-16px) rem(-17px) rem(0px) rem(0px);
-        // h5 {
-        //     margin-left: rem(12px);
-        // }
+       
     }
 
-    .labels {
+    .labels-details {
         display: flex;
         flex-direction: row;
         white-space: nowrap;
@@ -27,17 +24,16 @@
         height: rem(32px);
         border-radius: 0.25em;
         min-width: rem(48px);
-        // padding: 1em;
-        // margin-bottom: rem(5px);
         margin: rem(5px) rem(4px) rem(0px) rem(0px);
 
-        // margin: rem(4px) rem(5px) rem(0px) rem(0px);
-        .label {
+        .label-details {
             text-overflow: clip;
             margin-right: 7px;
             margin: 0px 7px 0 1px;
             text-align: center;
             justify-content: center;
+            padding: 0.64em;
+            border-radius: 0.2em;
         }
 
         .add-label {

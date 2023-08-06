@@ -1,11 +1,11 @@
 // import { boardService } from '../services/board.service.local'
 import { boardService } from '../services/board.service'
 import { utilService } from '../services/util.service.js'
-// import {
-//   socketService,
-//   SOCKET_EVENT_ADD_MSG,
-//   SOCKET_EMIT_SEND_MSG,
-// } from '../services/socket.service.js'
+import {
+  socketService,
+  SOCKET_EVENT_ADD_MSG,
+  SOCKET_EMIT_SEND_MSG,
+} from '../services/socket.service.js'
 
 export function getActionRemoveBoard(boardId) {
   return {
@@ -59,48 +59,48 @@ export const boardStore = {
   getters: {
     getFilteredGroups:
       (state) =>
-      (dueDateFilters = {}, boardId) => {
-        let currentTime = new Date().getTime()
-        let twentyFourHours = 24 * 60 * 60 * 1000 // representing one day in milliseconds
+        (dueDateFilters = {}, boardId) => {
+          let currentTime = new Date().getTime()
+          let twentyFourHours = 24 * 60 * 60 * 1000 // representing one day in milliseconds
 
-        const board = state.boards.find((board) => board._id === boardId)
-        if (!board) {
-          console.error('No board found with ID:', boardId)
-          return []
-        }
-
-        // Check if any filters are true
-        let isFilterSelected = Object.values(dueDateFilters).some(
-          (value) => value === true
-        )
-
-        // If no filter is true, return a copy of all the groups without any filtering
-        if (!isFilterSelected) {
-          return [...board.groups]
-        }
-
-        return board.groups.map((group) => {
-          return {
-            ...group,
-            tasks: group.tasks.filter((t) => {
-              let matchesDueDateFilters = false
-
-              if (dueDateFilters.noDate) {
-                matchesDueDateFilters = !t.dueDate // task has no due date
-              } else if (dueDateFilters.overdue) {
-                matchesDueDateFilters = t.dueDate && currentTime - t.dueDate > 0 // task is overdue
-              } else if (dueDateFilters.dueInNextDay) {
-                let startOfNextDay = currentTime
-                let endOfNextDay = currentTime + twentyFourHours
-                matchesDueDateFilters =
-                  t.dueDate >= startOfNextDay && t.dueDate <= endOfNextDay // task is due within next day (24 hours)
-              }
-
-              return matchesDueDateFilters
-            }),
+          const board = state.boards.find((board) => board._id === boardId)
+          if (!board) {
+            console.error('No board found with ID:', boardId)
+            return []
           }
-        }) // Don't remove any groups, even if they have no tasks left after filtering
-      },
+
+          // Check if any filters are true
+          let isFilterSelected = Object.values(dueDateFilters).some(
+            (value) => value === true
+          )
+
+          // If no filter is true, return a copy of all the groups without any filtering
+          if (!isFilterSelected) {
+            return [...board.groups]
+          }
+
+          return board.groups.map((group) => {
+            return {
+              ...group,
+              tasks: group.tasks.filter((t) => {
+                let matchesDueDateFilters = false
+
+                if (dueDateFilters.noDate) {
+                  matchesDueDateFilters = !t.dueDate // task has no due date
+                } else if (dueDateFilters.overdue) {
+                  matchesDueDateFilters = t.dueDate && currentTime - t.dueDate > 0 // task is overdue
+                } else if (dueDateFilters.dueInNextDay) {
+                  let startOfNextDay = currentTime
+                  let endOfNextDay = currentTime + twentyFourHours
+                  matchesDueDateFilters =
+                    t.dueDate >= startOfNextDay && t.dueDate <= endOfNextDay // task is due within next day (24 hours)
+                }
+
+                return matchesDueDateFilters
+              }),
+            }
+          }) // Don't remove any groups, even if they have no tasks left after filtering
+        },
 
     boards({ boards }) {
       return boards
@@ -287,7 +287,7 @@ export const boardStore = {
         if (taskToUpdate) {
           taskToUpdate.title = task.title; // If you're trying to update the title
         }
-        
+
       }
     },
   },
@@ -316,6 +316,7 @@ export const boardStore = {
       try {
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))
+        socketService.emit("board-update", board)
         return board
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)
@@ -545,7 +546,7 @@ export const boardStore = {
       try {
         commit('setBoardBgClr', payload)
         await boardService.save(state.currentBoard)
-      } catch (err) {}
+      } catch (err) { }
     },
     async changeBoardBgGrad({ state, commit }, payload) {
       try {

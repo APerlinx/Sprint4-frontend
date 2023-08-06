@@ -1,18 +1,18 @@
 <template>
     <div class="task-back-drop">
         <div class="task-details-container">
-            <!-- <section v-if="taskToEdit" class="task-details"> -->
-            <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
+            <section v-if="taskToEdit" class="task-details">
+                <!-- <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
                 closeModal()
                 editTask()
-            }">
+            }"> -->
                 <!-- <section v-if="taskToEdit" class="task-details"> -->
                 <section class="task-details-header">
 
 
                     <div class="task-details-cover" v-if="taskToEdit.cover?.color"
                         :style="{ backgroundColor: taskToEdit.cover?.color }">
-                        <p v-if="haveCover" class="task-details-cover-menu" @click="togglecover()">Cover</p>
+                        <!-- <p v-if="haveCover" class="task-details-cover-menu" @click="togglecover()">Cover</p> -->
                     </div>
 
                     <div class="icon-title-container">
@@ -64,6 +64,7 @@
                         </div>
 
                         <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatusBySocket" />
+                        <!-- <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatus" /> -->
                     </div>
 
                     <div class="details-description-container">
@@ -190,7 +191,7 @@ export default {
             actionCmpName: null,
             isCover: false,
             dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachment", "Cover", "Custom Fields"],
-            dynamicIcons: ["member", "label", "checklist", "date", "attachment", "cover", "date"],
+            dynamicIcons: ["member", "label-details", "checklist", "date", "attachment", "cover", "date"],
             coverColor: '',
             currColor: '',
         };
@@ -293,6 +294,7 @@ export default {
                 this.editTask();
 
             }
+            this.editTask()
         },
         updateUserNot(notification) {
             console.log('happen');
@@ -325,7 +327,7 @@ export default {
                 this.group = this.board.groups.find((group) => group.id === groupId);
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
 
-                socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskToEdit.id);
+                // socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskToEdit.id);
 
             } catch (err) {
                 console.log("error in setTask");
