@@ -61,7 +61,7 @@
                   ></path>
                 </svg>
               </span>
-              Filter
+              <span class="filter-text">Filter</span>
             </button>
 
             <span class="line text-item"></span>
@@ -268,5 +268,15 @@ export default {
 <style scoped>
 #popper-1 {
   z-index: 999;
+}
+.filter-text {
+  margin-inline-start: 0.6em;
+  vertical-align: text-bottom;
+  align-self: center;
+}
+@media only screen and (max-width: 400px) {
+  .filter-text {
+    display: none;
+  }
 }
 </style>
