@@ -20,6 +20,15 @@
           </div>
         </div>
 
+        <div class="middle">
+          <div class="more">
+            <p>More</p> <i class="fa-solid fa-chevron-down"></i>
+          </div>
+            <div class="plus-btn">
+            <span class="plus-icon"></span>
+          </div>
+        </div>
+
         <div class="starred">
           <div class="header-btn" @click="isPickerModalStarred = !isPickerModalStarred"
             :class="{ checked: isPickerModalStarred }">
@@ -48,10 +57,11 @@
 
         </div>
 
+        <img class="mobile-search-icon" src="../assets/styles/img/search.svg" alt="" />
         <div class="notifiction-icon" @click="isNotifiction = !isNotifiction">
           <i class="fa-regular fa-bell fa-lg"></i>
         </div>
-          <Notification v-if="isNotifiction" />
+        <Notification v-if="isNotifiction" />
 
 
         <img class="mode" src="../assets/styles/img/contrast.png" alt="" />
