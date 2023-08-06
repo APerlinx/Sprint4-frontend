@@ -1,8 +1,9 @@
 <template>
     <div class="date-picker">
-        <VDatePicker locale="en" v-model="date" mode="dateTime" is24hr hide-time-header />
+        <VDatePicker expanded locale="en" v-model="date" mode="dateTime" is24hr hide-time-header />
     </div>
-    <button @click="saveDueDate" class="btn-date-save">save</button>
+    <button @click="saveDueDate" class="btn-date-save">Save</button>
+    <button @click="removeDueDate" class="btn-date-remove">Remove</button>
 </template>
 
 <script>
