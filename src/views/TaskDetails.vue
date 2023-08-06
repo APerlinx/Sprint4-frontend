@@ -12,7 +12,7 @@
 
                     <div class="task-details-cover" v-if="taskToEdit.cover?.color"
                         :style="{ backgroundColor: taskToEdit.cover?.color }">
-                        <p v-if="haveCover" class="task-details-cover-menu" @click="togglecover()">Cover</p>
+                        <!-- <p v-if="haveCover" class="task-details-cover-menu" @click="togglecover()">Cover</p> -->
                     </div>
 
                     <div class="icon-title-container">
@@ -190,7 +190,7 @@ export default {
             actionCmpName: null,
             isCover: false,
             dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachment", "Cover", "Custom Fields"],
-            dynamicIcons: ["member", "label", "checklist", "date", "attachment", "cover", "date"],
+            dynamicIcons: ["member", "label-details", "checklist", "date", "attachment", "cover", "date"],
             coverColor: '',
             currColor: '',
         };
