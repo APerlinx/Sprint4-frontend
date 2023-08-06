@@ -437,7 +437,7 @@ input::placeholder {
   font-size: 0.8rem;
   position: absolute;
   left: 2px;
-  top: -0.5px;
+  top: -0.1px;
   width: 12px;
   height: 12px;
   text-align: center;
