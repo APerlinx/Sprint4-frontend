@@ -1,19 +1,11 @@
 <template>
   <section class="board-details" v-if="!isLoadingBoard && board" :style="this.boardStyle">
-    <BoardHeader
-      :board="board"
-      @searchTermChanged="handleSearchTermChange"
-      @checkboxChanged="handleCheckboxChangeEvent"
-    />
-    <GroupList
-      v-if="boardsLoaded && groups && groups.length > 0"
-      :initialGroups="groups"
-      :key="groups"
-    />
+    <BoardHeader :board="board" @searchTermChanged="handleSearchTermChange"
+      @checkboxChanged="handleCheckboxChangeEvent" />
+    <GroupList v-if="boardsLoaded && groups && groups.length > 0" :initialGroups="groups" :key="groups" />
     <RouterView />
   </section>
-    <div v-if="isLoadingBoard">Loading...</div>
-
+  <div v-if="isLoadingBoard">Loading...</div>
 </template>
 
 <script>
@@ -49,9 +41,9 @@ export default {
   },
 
   computed: {
-      isLoadingBoard() {
-    return this.$store.getters.isLoadingBoard
-  },
+    isLoadingBoard() {
+      return this.$store.getters.isLoadingBoard
+    },
     board() {
       return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard))
     },
@@ -69,7 +61,9 @@ export default {
       const { boardId } = this.$route.params
       await this.$store.dispatch('loadCurrentBoard', { boardId })
       await this.$store.dispatch('addBoardToRecent', { boardId })
-      this.boardsLoaded = true 
+      this.boardsLoaded = true
+      socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId);
+      socketService.on("on-board-update", () => this.$store.commit(getActionUpdateBoard(board)));
     },
     handleSearchTermChange(searchTerm) {
       this.searchTerm = searchTerm
@@ -77,6 +71,9 @@ export default {
     handleCheckboxChangeEvent(checkboxEvent) {
       this.checkboxValues[checkboxEvent.name] = checkboxEvent.value
     },
+  },
+  unmounted() {
+
   },
   watch: {
     'board.style': {
@@ -92,7 +89,7 @@ export default {
       },
     },
     '$route.params.boardId': {
-      immediate: true, 
+      immediate: true,
       handler: 'loadBoardData',
     },
   },

@@ -1,11 +1,11 @@
 // import { boardService } from '../services/board.service.local'
 import { boardService } from '../services/board.service'
 import { utilService } from '../services/util.service.js'
-// import {
-//   socketService,
-//   SOCKET_EVENT_ADD_MSG,
-//   SOCKET_EMIT_SEND_MSG,
-// } from '../services/socket.service.js'
+import {
+  socketService,
+  SOCKET_EVENT_ADD_MSG,
+  SOCKET_EMIT_SEND_MSG,
+} from '../services/socket.service.js'
 
 export function getActionRemoveBoard(boardId) {
   return {
@@ -316,6 +316,7 @@ export const boardStore = {
       try {
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))
+        socketService.emit("board-update", board)
         return board
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)

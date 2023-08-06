@@ -325,7 +325,7 @@ export default {
                 this.group = this.board.groups.find((group) => group.id === groupId);
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
 
-                socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskToEdit.id);
+                // socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskToEdit.id);
 
             } catch (err) {
                 console.log("error in setTask");
