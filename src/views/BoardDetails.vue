@@ -1,23 +1,45 @@
 <template>
-  <section class="board-details" v-if="!isLoadingBoard && board" :style="this.boardStyle">
-    <BoardHeader :board="board" @searchTermChanged="handleSearchTermChange"
-      @checkboxChanged="handleCheckboxChangeEvent" />
-    <GroupList v-if="boardsLoaded && groups && groups.length > 0" :initialGroups="groups" :key="groups" />
+  <section
+    class="board-details"
+    v-if="!isLoadingBoard && board"
+    :style="this.boardStyle"
+  >
+
+      <div class="sidebar" :class="{ 'show-sidebar': showSidebar }">
+      <span class="sidebar-close-btn" @click="toggleSidebar">×</span>
+      <!-- Add content to your sidebar here -->
+    </div>
+
+    <BoardHeader
+      :board="board"
+      @searchTermChanged="handleSearchTermChange"
+      @checkboxChanged="handleCheckboxChangeEvent"
+    />
+    <GroupList
+      v-if="boardsLoaded && groups && groups.length > 0"
+      :initialGroups="groups"
+      :key="groups"
+    />
     <RouterView />
+
   </section>
-  <div v-if="isLoadingBoard">Loading...</div>
+
+  <div v-if="isLoadingBoard"><Loader /></div>
 </template>
 
 <script>
 import GroupList from '../cmps/GroupList.vue'
 import BoardHeader from '../cmps/BoardHeader.vue'
+import Loader from '../cmps/Loader.vue'
+
 import {
   socketService,
   SOCKET_EMIT_SET_TOPIC,
 } from '../services/socket.service.js'
 
 export default {
-  components: { GroupList, BoardHeader },
+  emits: ['changeHeaderClr'],
+  components: { GroupList, BoardHeader, Loader },
   data() {
     return {
       boardStyle: {
@@ -34,14 +56,21 @@ export default {
         dueInNextDay: false,
       },
       boardsLoaded: false,
+          showSidebar: false,
+
     }
   },
   async created() {
     this.loadBoardData()
-      socketService.on("on-board-update", (board) => this.$store.commit({ type: 'updateBoard', board }))
+    socketService.on('on-board-update', (board) =>
+      this.$store.commit({ type: 'updateBoard', board })
+    )
+    this.$store.commit('setChangeClr', true)
   },
-
   computed: {
+      toggleSidebar() {
+    this.showSidebar = !this.showSidebar;
+  },
     isLoadingBoard() {
       return this.$store.getters.isLoadingBoard
     },
@@ -63,7 +92,7 @@ export default {
       await this.$store.dispatch('loadCurrentBoard', { boardId })
       await this.$store.dispatch('addBoardToRecent', { boardId })
       this.boardsLoaded = true
-      socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId);
+      socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
     },
     handleSearchTermChange(searchTerm) {
       this.searchTerm = searchTerm
@@ -72,9 +101,7 @@ export default {
       this.checkboxValues[checkboxEvent.name] = checkboxEvent.value
     },
   },
-  unmounted() {
-
-  },
+  unmounted() {},
   watch: {
     'board.style': {
       deep: true,
@@ -82,9 +109,9 @@ export default {
         this.boardStyle = {
           backgroundImage: newVal.backgroundImage || '',
           backgroundColor: newVal.backgroundColor || '',
-          backgroundSize: 'cover',
+          backgroundSize: '100%',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
+          backgroundPosition: 'cover',
         }
       },
     },
