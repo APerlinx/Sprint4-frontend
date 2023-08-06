@@ -59,6 +59,7 @@ export const boardStore = {
   getters: {
     getFilteredGroups:
       (state) =>
+<<<<<<< HEAD
         (dueDateFilters = {}, boardId) => {
           let currentTime = new Date().getTime();
           let twentyFourHours = 24 * 60 * 60 * 1000; // representing one day in milliseconds
@@ -103,6 +104,50 @@ export const boardStore = {
 
 
 
+=======
+      (dueDateFilters = {}, boardId) => {
+        let currentTime = new Date().getTime()
+        let twentyFourHours = 24 * 60 * 60 * 1000 // representing one day in milliseconds
+
+        const board = state.boards.find((board) => board._id === boardId)
+        if (!board) {
+          console.error('No board found with ID:', boardId)
+          return []
+        }
+
+        // Check if any filters are true
+        let isFilterSelected = Object.values(dueDateFilters).some(
+          (value) => value === true
+        )
+
+        // If no filter is true, return a copy of all the groups without any filtering
+        if (!isFilterSelected) {
+          return [...board.groups]
+        }
+
+        return board.groups.map((group) => {
+          return {
+            ...group,
+            tasks: group.tasks.filter((t) => {
+              let matchesDueDateFilters = false
+
+              if (dueDateFilters.noDate) {
+                matchesDueDateFilters = !t.dueDate // task has no due date
+              } else if (dueDateFilters.overdue) {
+                matchesDueDateFilters = t.dueDate && currentTime - t.dueDate > 0 // task is overdue
+              } else if (dueDateFilters.dueInNextDay) {
+                let startOfNextDay = currentTime
+                let endOfNextDay = currentTime + twentyFourHours
+                matchesDueDateFilters =
+                  t.dueDate >= startOfNextDay && t.dueDate <= endOfNextDay // task is due within next day (24 hours)
+              }
+
+              return matchesDueDateFilters
+            }),
+          }
+        }) // Don't remove any groups, even if they have no tasks left after filtering
+      },
+>>>>>>> 747f8cba385a628572b19f99491f1c775cf0c147
 
     boards({ boards }) {
       return boards
@@ -278,6 +323,19 @@ export const boardStore = {
     },
     addActivity(state, { newActivity }) {
       state.currentBoard.activities.push(newActivity)
+    },
+    saveTaskTitle(state, { task, groupId }) {
+      const group = state.currentBoard.groups.find(
+        (group) => group.id === groupId
+      )
+      if (group) {
+        const taskToUpdate = group.tasks.find((t) => t.id === task.id)
+
+        if (taskToUpdate) {
+          taskToUpdate.title = task.title; // If you're trying to update the title
+        }
+        
+      }
     },
   },
   actions: {
@@ -559,6 +617,15 @@ export const boardStore = {
         commit('saveTitle', title)
         await boardService.save(state.currentBoard)
         dispatch('addActivity', { activity: 'Changed board title' })
+      } catch (err) {
+        throw err
+      }
+    },
+    async saveTaskTitle({ commit, state, dispatch }, { task, groupId }) {
+      try {
+        commit('saveTaskTitle', { task, groupId })
+        await boardService.save(state.currentBoard)
+        dispatch('addActivity', { activity: 'Changed title to task', task })
       } catch (err) {
         throw err
       }

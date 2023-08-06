@@ -1,6 +1,11 @@
 <template>
   <div>
-    <header class="board-header text-item" v-if="board" ref="header">
+    <header
+      :style="headerStyle"
+      class="board-header text-item"
+      v-if="board"
+      ref="header"
+    >
       <nav class="nav-bar text-item">
         <div class="title-container">
           <div class="title-tool-tip text-item">
@@ -122,7 +127,7 @@ export default {
   data() {
     return {
       isEditingTitle: false,
-      boardTitle: 'Trello dev team',
+      boardTitle: 'WEB DEVELOPMENT',
       inputWidth: 0,
       isStarred: false,
       menuOpen: false,
@@ -230,6 +235,9 @@ export default {
   computed: {
     icon() {
       return this.isStarred ? 'full-star' : 'star'
+    },
+    headerStyle() {
+      return this.menuOpen ? { width: '1251px' } : {}
     },
   },
   watch: {

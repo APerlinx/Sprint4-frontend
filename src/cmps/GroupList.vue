@@ -90,12 +90,19 @@ export default {
     },
   },
   created() {
+<<<<<<< HEAD
     // console.log("Initial groups:", this.initialGroups);
     const boardId = this.$route.params.boardId
     if (!this.groups.length && boardId) {
       this.groups = this.$store.getters.getGroupsByBoardId(boardId)
     }
     // console.log("Computed groups:", this.groups);
+=======
+  const boardId = this.$route.params.boardId
+  if (!this.groups.length && boardId) {
+    this.groups = this.$store.getters.getGroupsByBoardId(boardId)
+  }
+>>>>>>> 747f8cba385a628572b19f99491f1c775cf0c147
 
     this.groups = JSON.parse(JSON.stringify(this.groups))
     this.currBoard = this.$store.getters.getCurrBoard

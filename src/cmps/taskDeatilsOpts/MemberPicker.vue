@@ -59,8 +59,6 @@ export default {
                 imgUrl,
                 backgroundColor,
             }
-            console.log("🚀 ~ file: MemberPicker.vue:51 ~ data ~ taskMembers:", this.taskMembers)
-            console.log('member:', member)
             this.$emit('toggleMember', member);
 
         },

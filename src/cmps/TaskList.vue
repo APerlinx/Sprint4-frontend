@@ -50,7 +50,11 @@ export default {
     tasks: {
       immediate: true,
       handler(newVal) {
+<<<<<<< HEAD
         if (!newVal) return
+=======
+        // if(!newVal) return
+>>>>>>> 747f8cba385a628572b19f99491f1c775cf0c147
         this.items = JSON.parse(JSON.stringify(newVal))
       },
     },

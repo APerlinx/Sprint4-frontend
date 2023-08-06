@@ -6,7 +6,7 @@
         <h1>Change background</h1>
         <span class="close-icon" @click="this.$emit('closeMenu')"></span>
       </div>
-      <hr />
+      <hr class="hr"/>
     </header>
     <div class="bg-nav">
       <div class="bg-option" @click="photoSection">
@@ -18,7 +18,7 @@
           />
         </div>
 
-        <button class="bg-text">Photos</button>
+        <button class="bg-text" style="color: #172b4d">Photos</button>
       </div>
       <div class="bg-option" @click="colorSection">
         <div class="bg-img-wrapper">
@@ -29,7 +29,7 @@
           />
         </div>
 
-        <button class="bg-text">Colors</button>
+        <button class="bg-text" style="color: #172b4d">Colors</button>
       </div>
     </div>
     <hr />
@@ -86,7 +86,7 @@
     <header class="unsplash-header">
       <div>
         <span class="back-icon" @click="this.$emit('close')"></span>
-        <h1>Photos by <a href="#">Unsplash</a></h1>
+        <h3>Photos by <a href="#">Unsplash</a></h3>
         <span class="close-icon" @click="this.$emit('closeMenu')"></span>
       </div>
       <hr />
@@ -138,14 +138,14 @@ export default {
     async fetchListOfPhotos(query = this.query || 'nature view') {
       try {
         const response = await fetch(
-          `https://api.unsplash.com/search/photos?client_id=${this.accesKey}&query=${query}`
+          `https://api.unsplash.com/search/photos?client_id=${this.accesKey}&query=${query}&per_page=16`
         )
         const json = await response.json()
 
         const imageUrls = json.results.map((img) => img.urls.regular)
 
-        if (imageUrls.length > 12) {
-          this.imageUrls = imageUrls.slice(0, 12)
+        if (imageUrls.length > 25) {
+          this.imageUrls = imageUrls.slice(0, 25)
         } else {
           this.imageUrls = imageUrls
         }

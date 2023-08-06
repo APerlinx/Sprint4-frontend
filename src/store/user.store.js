@@ -17,6 +17,9 @@ export const userStore = {
         },
         usersIsLoading({ isLoading }) {
             return isLoading
+        },
+        notifications({loggedinUser}) {
+            return loggedinUser.notifications
         }
     },
     mutations: {
@@ -40,13 +43,13 @@ export const userStore = {
             const userId = savedUser._id
             const idx = state.users.findIndex(user => user._id === userId)
             state.users.splice(idx, 1, savedUser)
+            // state.user = savedUser
         },
     },
     actions: {
         async login({ commit }, { userCred }) {
             try {
                 const user = await userService.login(userCred)
-                console.log(user);
                 commit({ type: 'setLoggedinUser', user })
                 return user
             } catch (err) {
@@ -121,7 +124,6 @@ export const userStore = {
                 const userCopy = JSON.parse(JSON.stringify(user))
                 userCopy.notifications.push(notification)
 
-
                 const savedUser = await userService.update(userCopy)
 
                 commit({ type: 'setUser', savedUser })
@@ -130,6 +132,7 @@ export const userStore = {
                 throw err
             }
         }
+
 
     }
 }

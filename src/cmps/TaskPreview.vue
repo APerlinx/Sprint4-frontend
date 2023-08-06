@@ -1,10 +1,13 @@
 <template>
- <!-- @coverFull="handleCoverFull" -->
+  <!-- @coverFull="handleCoverFull" -->
   <TaskCover
     :task="task"
     v-if="!task.cover?.isFull"
-    />
-    <!-- @coverFull="handleCoverFull" -->
+    :showEditIcon="showEditIcon"
+    @mouseover="showEditIcon = true"
+    @mouseleave="showEditIcon = false"
+    @openQuickEdit="quickEditDisplay = true"
+  />
   <section
     class="task-preview"
     :class="[
@@ -39,12 +42,13 @@
         class="task-header"
         :class="['task-header', getTaskTextStyleClass()]"
       >
-        <p>{{ task.title }}</p>
         <i
           class="icon-pencil"
           v-show="showEditIcon"
           @click.stop="openQuickEdit"
+          v-if="!task.cover"
         ></i>
+        <p>{{ task.title }}</p>
       </div>
 
       <div class="tool-tip" v-if="!task.cover?.isFull">
@@ -278,7 +282,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .labels {
   display: flex;
   flex-wrap: wrap;

@@ -53,7 +53,10 @@ export default {
         this.checkboxValues,
         boardId
       )
+<<<<<<< HEAD
       // console.log('newGroups', newGroups)
+=======
+>>>>>>> 747f8cba385a628572b19f99491f1c775cf0c147
       return newGroups
     },
   },
@@ -62,7 +65,7 @@ export default {
       const { boardId } = this.$route.params
       await this.$store.dispatch('loadCurrentBoard', { boardId })
       await this.$store.dispatch('addBoardToRecent', { boardId })
-      this.boardsLoaded = true // Set to true after loading
+      this.boardsLoaded = true 
     },
     handleSearchTermChange(searchTerm) {
       this.searchTerm = searchTerm
@@ -84,13 +87,16 @@ export default {
         }
       },
     },
+<<<<<<< HEAD
     groups(newGroups, oldGroups) {
       // console.log('groups updated in GroupList')
       // console.log('newGroups: ', newGroups)
       // console.log('oldGroups: ', oldGroups)
     },
+=======
+>>>>>>> 747f8cba385a628572b19f99491f1c775cf0c147
     '$route.params.boardId': {
-      immediate: true, // also run the watcher when the component is created
+      immediate: true, 
       handler: 'loadBoardData',
     },
   },
