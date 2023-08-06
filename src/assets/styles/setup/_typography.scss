@@ -33,21 +33,24 @@ $icon-board: '\e943';
 
 @font-face {
   font-family: trellicons;
-  src: url(./fonts/trellicons.ttf);
+  src: url(/trellicons.ttf);
 }
 
 @font-face {
   font-family: charlie;
   src: url(../fonts/Charlie/charlie-display.ttf);
 }
+
 @font-face {
   font-family: charlie-light;
   src: url(../fonts/Charlie/charlie-display-light.ttf);
 }
+
 @font-face {
   font-family: charlie-bold;
   src: url(../fonts/Charlie/charlie-display-bold.ttf);
 }
+
 @font-face {
   font-family: charlie-semi;
   src: url(../fonts/Charlie/charlie-display-semibold.ttf);
