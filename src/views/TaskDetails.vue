@@ -1,11 +1,11 @@
 <template>
     <div class="task-back-drop">
         <div class="task-details-container">
-            <!-- <section v-if="taskToEdit" class="task-details"> -->
-            <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
+            <section v-if="taskToEdit" class="task-details">
+                <!-- <section v-if="taskToEdit" class="task-details" v-click-outside="() => {
                 closeModal()
                 editTask()
-            }">
+            }"> -->
                 <!-- <section v-if="taskToEdit" class="task-details"> -->
                 <section class="task-details-header">
 
@@ -64,6 +64,7 @@
                         </div>
 
                         <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatusBySocket" />
+                        <!-- <Dates :task="taskToEdit" @updateTaskStatus="updateTaskStatus" /> -->
                     </div>
 
                     <div class="details-description-container">
@@ -293,6 +294,7 @@ export default {
                 this.editTask();
 
             }
+            this.editTask()
         },
         updateUserNot(notification) {
             console.log('happen');

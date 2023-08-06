@@ -31,6 +31,12 @@
     letter-spacing: -0.005rem;
 }
 
+.icon-title-container-checklist {
+    textarea {
+        margin: 0;
+    }
+}
+
 .hide-add-todo-btns {
     position: relative;
     display: flex;
@@ -377,7 +383,10 @@
         .btns-hide-delete-container {
             right: 0;
         }
+    }
 
+    .new-todo-title {
+        margin-left: -20px;
     }
 }
 

@@ -90,10 +90,10 @@ export default {
     },
   },
   created() {
-  const boardId = this.$route.params.boardId
-  if (!this.groups.length && boardId) {
-    this.groups = this.$store.getters.getGroupsByBoardId(boardId)
-  }
+    const boardId = this.$route.params.boardId
+    if (!this.groups.length && boardId) {
+      this.groups = this.$store.getters.getGroupsByBoardId(boardId)
+    }
 
     this.groups = JSON.parse(JSON.stringify(this.groups))
     this.currBoard = this.$store.getters.getCurrBoard
