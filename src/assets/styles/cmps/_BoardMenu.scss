@@ -6,15 +6,16 @@
     justify-content: flex-start;
     position: fixed;
     right: 0;
-    top: rem(48px);
+    top: rem(48.5px);
     bottom: 0;
-    width: rem(339px);
+    width: 305px;
     background: #f4f5f7;
     box-shadow: $shadow-overlay;
     z-index: 10;
-    padding: rem(10px);
+    padding: 1px 10px 10px 10px;
     transform: translateX(100%);
     transition: transform 0.1s ease-in;
+    // height: 820px;
 
     .background-preview {
         width: 20px;
@@ -37,6 +38,7 @@
 
     .menu-header {
         padding: 0 rem(6px) 0 rem(12px);
+        margin-top: 0.3em;
         > div {
             display: flex;
             align-items: center;
@@ -49,7 +51,7 @@
                 margin: 7px 28px;
                 margin-inline-end: 7rem;
                 margin-inline-start: 8em;
-                font-size: em(18.3px);
+                font-size: 14px;
                 font-weight: 550;
             }
         }
@@ -59,7 +61,7 @@
         width: 100%;
         height: 100%;
         padding: rem(12px) rem(0px) em(8px);
-
+        // overflow-y: auto;
         margin-inline-start: 0.2em;
         margin-block-start: -0.7em;
         transition-duration: 0.12s;
@@ -72,6 +74,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            margin-top: 0.2em;
 
             .menu-item.preview {
                 display: flex;
@@ -148,7 +151,7 @@
                 cursor: pointer;
             }
             > .back-icon {
-                @include trello-icon($content: "\e906", $type: md, $color: $ds-icon);
+                @include trello-icon($content: "\e90a", $type: md, $color: $ds-icon);
                 cursor: pointer;
             }
         }
@@ -209,9 +212,10 @@
 
 hr {
     border: none;
-    height: 1px;
+    height: 0.95px;
     background: $border;
     width: 100%;
+    margin: 6px;
 }
 
 /* ... */
@@ -257,12 +261,13 @@ hr {
             align-items: center;
             justify-content: center;
             flex: 1;
-            > h1 {
-                margin: 10px 28px;
-                margin-inline: 3em;
-                font-size: em(18.286px);
+            > h3 {
+                margin: 9px 28px;
+                margin-top: 14px;
+                margin-inline: 3.5em;
+                font-size: 14px;
                 font-weight: 550;
-
+                color: rgb(23, 43, 77);
                 > a {
                     color: $link;
 
@@ -273,10 +278,13 @@ hr {
             }
             > .close-icon {
                 @include trello-icon($content: "\e91c", $type: md, $color: $ds-icon);
+                font-size: 18px;
                 cursor: pointer;
             }
             > .back-icon {
-                @include trello-icon($content: "\e906", $type: md, $color: $ds-icon);
+                @include trello-icon($content: "\e90a", $type: md, $color: $ds-icon);
+                font-size: 18px;
+
                 cursor: pointer;
             }
         }
@@ -289,23 +297,30 @@ hr {
     }
 
     .search-icon {
-        @include trello-icon($content: "\e94a", $type: sm, $color: $ds-icon);
+        @include trello-icon($content: "\e960", $type: sm, $color: $ds-icon);
+        font-size: 14.5px;
+        font-weight: 550;
         position: absolute;
-        top: 50%;
-        left: 15px;
+        top: 48%;
+        left: 16px;
         transform: translate(0, -50%);
     }
 
     input[type="text"] {
         display: block;
         width: 97%;
-        height: 30px;
-        margin: 12px auto;
-        margin-bottom: 12px;
-        border: 1px solid #ccc;
+        height: 32px;
+        margin: 8px auto;
+        margin-bottom: 7px;
+        margin-top: 7px;
+        border: 0px solid #ccc;
         padding: 8px 12px 8px 32px;
-        font-size: 16px;
+        font-size: 13px;
         box-shadow: inset 0 0 0 2px #091e4224;
+
+        &::placeholder {
+            color: rgb(23, 43, 77); 
+        }
 
         &:focus {
             box-shadow: inset 0 0 0 2px $border-focused;
@@ -322,8 +337,8 @@ hr {
 }
 
 .unsplash-image {
-    width: 149px;
-    height: 96px;
+    width: 132px;
+    height: 89px;
     margin: 5px;
     overflow: hidden;
     border-radius: 8px;
@@ -364,9 +379,10 @@ hr {
             justify-content: center;
             flex: 1;
             > h1 {
-                margin: 10px 28px;
-                margin-inline: 3em;
-                font-size: em(18.286px);
+                margin: 9px 28px;
+                margin-top: 12px;
+                margin-inline: 3.5em;
+                font-size: 14px;
                 font-weight: 550;
                 > a {
                     color: $link;
@@ -381,7 +397,7 @@ hr {
                 cursor: pointer;
             }
             > .back-icon {
-                @include trello-icon($content: "\e906", $type: md, $color: $ds-icon);
+                @include trello-icon($content: "\e90a", $type: md, $color: $ds-icon);
                 cursor: pointer;
             }
         }
@@ -403,8 +419,8 @@ hr {
 
             > .bg-img-wrapper {
                 position: relative;
-                width: 149.5px;
-                height: 96px;
+                width: 135px;
+                height: 89px;
                 border-radius: 8px;
                 margin-bottom: 0.5em;
 
@@ -436,6 +452,7 @@ hr {
                 text-align: center;
                 width: 100%;
                 font-weight: 400;
+                font-size: 13px;
             }
         }
     }
@@ -444,15 +461,16 @@ hr {
         display: flex;
         justify-content: center;
         cursor: pointer;
-        width: 149.5px;
-        height: 96px;
+        width: 135px;
+        height: 88px;
         border-radius: 8px;
         padding: 0 4px 8px;
         z-index: 1;
         margin-inline-start: 0.5rem;
         background-color: rgba(220, 219, 224, 0.418);
         > .bg-icon {
-            @include trello-icon($content: "\e901", $type: lg, $color: $ds-icon);
+            @include trello-icon($content: "\e901", $type: md, $color: $ds-icon);
+            font-size: 22px;
         }
 
         &:hover {
@@ -461,8 +479,8 @@ hr {
     }
 
     h2 {
-        font-size: rem(19px);
-        font-weight: 600;
+        font-size: 17px;
+        font-weight: 550;
         margin-bottom: rem(8px);
         margin-top: rem(20px);
     }
@@ -488,7 +506,7 @@ hr {
                 cursor: pointer;
             }
             > .back-icon {
-                @include trello-icon($content: "\e906", $type: md, $color: $ds-icon);
+                @include trello-icon($content: "\e90a", $type: md, $color: $ds-icon);
                 cursor: pointer;
             }
         }
@@ -564,4 +582,15 @@ hr {
             }
         }
     }
+}
+// .menu-content {
+//     overflow-y: auto !important;
+// }
+
+.hr {
+    border: none;
+    height: 0.5px;
+    background: $border;
+    width: 100%;
+    margin: 6px;
 }

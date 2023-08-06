@@ -22,7 +22,12 @@
         </div>
 
         <div class="title-edit">
-          <textarea v-model="localTask.title" autofocus  ref="titleInput"></textarea>
+          <textarea
+            v-model="localTask.title"
+            autofocus
+            ref="titleInput"
+            @change="saveTitle"
+          ></textarea>
         </div>
 
         <div class="tool-tip-edit">
@@ -218,6 +223,12 @@ export default {
     },
   },
   methods: {
+    saveTitle() {
+      this.$store.dispatch('saveTaskTitle', {
+        task: this.localTask,
+        groupId: this.groupId,
+      })
+    },
     set(cmp, idx) {
       this.isDynamicModal = true
       this.actionCmpType = cmp
@@ -363,9 +374,10 @@ export default {
         this.$emit('close')
       }
     },
-    goToTaskDetails() {
+    openTaskDetails() {
+      const boardId = this.$route.params.boardId
       this.$router.push(
-        `/details/${this.board}/group/${this.groupId}/task/${this.task.id}`
+        `/details/${boardId}/group/${this.groupId}/task/${this.task.id}`
       )
     },
   },
@@ -387,8 +399,8 @@ export default {
             const isNearRight = distanceFromRight < 200
             this.actionButtonsClass = isNearRight ? 'modal-left' : 'modal-right'
             const adjustedTop = this.rect.top - 100
-            this.$refs.titleInput.focus();
-            this.$refs.titleInput.select();
+            this.$refs.titleInput.focus()
+            this.$refs.titleInput.select()
             if (this.isNearBottom && isNearRight) {
               this.buttonPosition = {
                 position: 'fixed',

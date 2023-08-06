@@ -1,4 +1,5 @@
 .app-header {
+    max-height: 48px;
     nav {
         display: flex;
         justify-content: space-between;
@@ -119,3 +120,12 @@
         }
     }
 }
+
+@media only screen and (max-width: 400px) {
+    .app-header {
+      margin-bottom: 1.4em;
+      max-height: 48px;
+      /* other styles remain the same */
+    }
+  }
+  

@@ -7,6 +7,8 @@
   box-shadow: $task-shadow-raised;
   border: 0.1px solid rgb(212, 212, 212);
   background-color: $task-bg-clr;
+  position: relative;
+
   cursor: pointer;
   &.with-cover {
     border-radius: 0 0 8px 8px;
@@ -269,15 +271,35 @@
 
 .icon-pencil {
   position: absolute;
-  top: 8%;
-  right: -3%;
-  transform: translateY(-65%) translateX(-3%) scale(0.9);
+  top: -30%;
+  right: 1%;
+  transform: scale(0.9);
   font-size: 0.8em;
   padding: 6px 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   @include trello-icon($content: "\e928", $type: sm, $color: #626f86);
 
   &:hover {
     background-color: darken($dynamic-button-highlighted, 2.5%);
   }
+}
+
+.icon-pencil-cover {
+  margin-left: 220px;
+  transform:  scale(0.9);
+  font-size: 0.8em;
+  padding: 6px 8px;
+  border-radius: 8px;
+  @include trello-icon($content: "\e928", $type: sm, $color: #626f86);
+  $color: darken($dynamic-button-highlighted, 2.5%);
+  background-color: rgba($color, 0.9);
+    &:hover {
+    background-color: darken($dynamic-button-highlighted, 4%);
+  }
+}
+
+.task-cover{
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }

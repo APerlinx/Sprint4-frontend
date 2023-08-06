@@ -1,6 +1,13 @@
 <template>
   <!-- @coverFull="handleCoverFull" -->
-  <TaskCover :task="task" v-if="!task.cover?.isFull" />
+  <TaskCover
+    :task="task"
+    v-if="!task.cover?.isFull"
+    :showEditIcon="showEditIcon"
+    @mouseover="showEditIcon = true"
+    @mouseleave="showEditIcon = false"
+    @openQuickEdit="quickEditDisplay = true"
+  />
   <section
     class="task-preview"
     :class="[
@@ -39,6 +46,7 @@
           class="icon-pencil"
           v-show="showEditIcon"
           @click.stop="openQuickEdit"
+          v-if="!task.cover"
         ></i>
         <p>{{ task.title }}</p>
       </div>
@@ -274,7 +282,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .labels {
   display: flex;
   flex-wrap: wrap;
