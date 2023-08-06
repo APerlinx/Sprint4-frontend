@@ -20,6 +20,9 @@ export const userStore = {
         },
         notifications({loggedinUser}) {
             return loggedinUser.notifications
+        },
+        loggedinUserByUserName ({loggedinUser, users}) {
+            return users.find(user => user.fullname === loggedinUser.fullname).username
         }
     },
     mutations: {
@@ -43,7 +46,8 @@ export const userStore = {
             const userId = savedUser._id
             const idx = state.users.findIndex(user => user._id === userId)
             state.users.splice(idx, 1, savedUser)
-            // state.user = savedUser
+
+            console.log(state.users);
         },
     },
     actions: {
@@ -116,19 +120,14 @@ export const userStore = {
                 throw err
             }
         },
-        async updateUserNot({ commit, state }, { notification }) {
+        async addNotifcation({ commit, state }, { notification }) {
             try {
-
                 const user = state.users.find(user => user.fullname === notification.toUser)
                 const userCopy = JSON.parse(JSON.stringify(user))
-                console.log(userCopy);
-                // userCopy.notifications.push(notification)
-                // console.log(userCopy);
+                userCopy.notifications.push(notification)
+                const savedUser = await userService.update(userCopy)
 
-                // const savedUser = await userService.update(userCopy)
-                // console.log(savedUser);
-
-                // commit({ type: 'setUser', savedUser })
+                this.commit({ type: 'setUser', savedUser })
             } catch (err) {
                 console.log('userStore: Error in increaseScore', err)
                 throw err

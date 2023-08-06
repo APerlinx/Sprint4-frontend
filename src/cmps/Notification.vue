@@ -2,19 +2,20 @@
     <div class="notifiction-menu">
         <div class="not-title">
             <h2>Notifications</h2>
-            <pre>{{ connectedUser.fullname }}</pre>
             <div class="filter-btn">button</div>
         </div>
+
 
         <div class="not-line"></div>
 
         <div class="notification-container">
-            <div v-for="not in connectedUser.notifications" :key="not.id" class="not">
+            <div v-for="not in fullUser.notifications" :key="not.id" class="not">
+                <pre>{{ not }}</pre>
                 <div class="not-top">
                     <div class="not-preview">
                         <p>{{ not.task }}</p>
-                        <div class="date">
-                            <span class="time-icon"></span> <span class="not-date">{{ not.dueDate }}</span>
+                        <div v-if="not.duedate" class="date">
+                            <span class="time-icon"></span> <span class="not-date">{{ not.date }}</span>
                         </div>
                     </div>
                     <div class="board-title">
@@ -44,8 +45,6 @@
 export default {
     data() {
         return {
-            user: null
-
         }
     },
     components: {
@@ -55,16 +54,6 @@ export default {
     methods: {
     },
     computed: {
-        getImageStyle() {
-            return {
-                backgroundImage: "url('https://images.unsplash.com/photo-1690207714547-6e76b0e61b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60')",
-                backgroundSize: "35% auto",
-                backgroundPosition: "center",
-                height: "110px",
-                width: "100%",
-                borderRadius: "0.5em"
-            }
-        },
         loggedinUser() {
             return this.$store.getters.loggedinUser
         },
@@ -83,8 +72,8 @@ export default {
         users() {
             return this.$store.getters.users
         },
-        connectedUser() {
-            return this.users.find(user => user.fullname === this.loggedinUser.fullname)
+        fullUser() {
+            return this.users.find(user => user._id === this.loggedinUser._id)
         }
     }
 }

@@ -27,9 +27,15 @@ export default {
 
     const user = userService.getLoggedinUser();
     if (user) store.commit({ type: "setLoggedinUser", user });
+    socketService.on('on-notifcation-push', this.addNotifcation)
   },
   mounted() {
     this.appHeader = true;
+  },
+  methods: {
+    addNotifcation({ notification }) {
+      this.$store.dispatch({ type: 'addNotifcation', notification })
+    }
   },
   components: {
     UserMsg,

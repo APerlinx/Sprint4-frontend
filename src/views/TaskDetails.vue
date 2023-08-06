@@ -112,6 +112,8 @@
                     <!-- v-model="taskToEdit.description" -->
                 </section>
 
+                <!-- <pre>{{ this.taskToEdit }}</pre> -->
+
                 <section class="action-btns-container">
                     <div class="suggested-container">
                         <h3 class="details-title-small">Suggested</h3>
@@ -197,11 +199,8 @@ export default {
         };
     },
     created() {
-        // socketService.on(SOCKET_EVENT_MEMBER_MSG, this.toggleMember);
-        // socketService.on(SOCKET_EVENT_STATUS_MSG, this.updateTaskStatus);
-        // socketService.on(SOCKET_EVENT_NOTIFICATIONS_MSG, this.updateUserNot);
-        socketService.on('on-update-task', (task)=> this.taskToEdit=task);
-        
+        socketService.on('on-update-task', (task) => this.taskToEdit = task);
+
         this.setTask();
     },
     methods: {
@@ -268,14 +267,15 @@ export default {
         },
         toggleMember(clickedMember) {
 
+
             const notification = {
-                byUser: this.loggedinUser?.fullname,
+                byUser: this.loggedinUser.fullname,
                 toUser: clickedMember.fullname,
                 createdAt: Date.now(),
                 action: '',
                 task: this.taskToEdit.title,
                 board: this.board.title,
-                date: this.task?.dueDate
+                date: this.taskToEdit?.dueDate
             };
 
             if (!this.taskToEdit.members) {
@@ -295,13 +295,12 @@ export default {
 
             }
             // socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'notification', payload: notification })
-            this.$store.dispatch({ type: "updateUserNot", notification });
-            this.editTask();
+            // this.$store.dispatch({ type: "updateUserNot", notification });
+            this.editTask(notification);
         },
-        updateUserNot(notification) {
-            console.log('happen');
-            this.$store.dispatch({ type: "updateUserNot", notification });
-        },
+        // updateUserNot(notification) {
+        //     this.$store.dispatch({ type: "updateUserNot", notification });
+        // },
 
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)
@@ -358,8 +357,10 @@ export default {
                 task => task.id === this.taskToEdit.id
             );
             this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
+
             socketService.emit('update-task', this.taskToEdit)
-            socketService.emit('notification-push', {notification,members:this.board.members})
+
+            socketService.emit('notification-push', { notification, members: this.board.members })
 
             this.$store.dispatch({ type: "updateBoard", board: this.board });
         },

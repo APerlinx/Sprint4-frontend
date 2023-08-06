@@ -27,7 +27,7 @@
         background-color: lightgray;
         margin-block-start: rem(20px);
     }
-    
+
     .not {
         margin-block-start: rem(20px);
         background-color: #f1f2f4;
@@ -37,7 +37,8 @@
 
         .not-top {
             position: relative;
-            background-image: url("https://images.unsplash.com/photo-1591431460096-123d6a59d58c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80");
+            background-image: linear-gradient(0deg, rgba(196, 232, 240, 0.7) 50%, rgba(196, 232, 240, 0.7) 0%),
+                url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/360x480/77de935d0cfd54507c9776cf821cf0eb/photo-1690692322953-fb0f543c6658.jpg");
             background-position: center;
             height: 110px;
             width: 100%;
@@ -49,9 +50,9 @@
                 background-color: white;
                 border-radius: 0.5em;
                 box-shadow: 0.4px 0.4px 0.1px rgb(155, 155, 155);
-                position: relative; 
+                position: relative;
                 top: 0.5em;
-                width: 95%; 
+                width: 95%;
                 margin: auto;
 
                 p {

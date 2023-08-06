@@ -38,9 +38,7 @@ export default {
   },
   async created() {
     this.loadBoardData()
-    // socketService.on("on-board-update", (board) => console.log('tetststtsttsts',board))
       socketService.on("on-board-update", (board) => this.$store.commit({ type: 'updateBoard', board }))
-
   },
 
   computed: {

@@ -316,7 +316,6 @@ export const boardStore = {
       try {
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))
-        console.log('happen');
         return board
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)
