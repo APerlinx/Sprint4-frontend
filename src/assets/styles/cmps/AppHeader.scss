@@ -74,6 +74,9 @@
             }
         }
     }
+    .middle {
+        display: none;
+    }
 
     .right {
         position: relative;
@@ -96,6 +99,9 @@
                 }
             }
         }
+        .mobile-search-icon {
+            display: none;
+        }
         .notifiction-icon {
             width: max-content;
             rotate: (50deg);
@@ -110,7 +116,6 @@
         .mode {
             height: rem(18px);
             margin-block-start: 0.15em;
-
         }
         .user {
             display: flex;
@@ -124,19 +129,87 @@
             font-size: 0.7em;
             font-weight: 700;
 
-
             h2 {
                 margin: 0;
             }
+            
         }
     }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 500px) {
     .app-header {
-      margin-bottom: 1.4em;
-      max-height: 48px;
-      /* other styles remain the same */
+        margin-bottom: 1.4em;
+        nav {
+            padding: 0;
+            position: fixed;
+            width: 100%;
+            height: 48px;
+            padding: 8px 16.5px;
+
+            .left {
+                .recent {
+                    display: none;
+                }
+                .starred {
+                    display: none;
+                }
+                .logo {
+                    padding: 0;
+                    margin-inline-start: 0;
+                    & :nth-child(1) {
+                        padding-inline-start: 0;
+                    }
+                }
+                .create-btn {
+                    display: none;
+                }
+            }
+        }
+
+        .middle {
+            display: flex;
+            align-items: center;
+            margin-inline-start: 5em;
+            gap: 1.4em;
+
+            .more {
+                display: flex;
+                align-items: center;
+                gap: 0.3em;
+                p {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
+                        "Droid Sans", "Helvetica Neue", sans-serif;
+                    font-weight: 500;
+                }
+            }
+            .plus-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 30px;
+                width: 30px;
+                background-color: rgba(0, 0, 0, 0.137);
+
+                .plus-icon {
+                    @include trello-icon($content: $icon-plus, $type: sm, $color: $textClr);
+                    font-size: 1.3em;
+                }
+            }
+        }
     }
-  }
-  
+    .right {
+        display: flex;
+        align-items: baseline;
+        .filter-container {
+            display: none;
+        }
+
+        .mode {
+            display: none;
+        }
+        .mobile-search-icon {
+            height: 20px;
+        }
+    }
+}

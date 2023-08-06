@@ -846,7 +846,7 @@
         @include trello-icon($content: "\e946", $type: sm, $color: #626f86);
     }
 
-    &.label {
+    &.label-details {
         @include trello-icon($content: "\e93f", $type: sm, $color: #626f86);
     }
 

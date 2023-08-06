@@ -62,6 +62,8 @@ export default {
       await this.$store.dispatch('loadCurrentBoard', { boardId })
       await this.$store.dispatch('addBoardToRecent', { boardId })
       this.boardsLoaded = true
+      socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId);
+      socketService.on("on-board-update", () => this.$store.commit(getActionUpdateBoard(board)));
     },
     handleSearchTermChange(searchTerm) {
       this.searchTerm = searchTerm
@@ -69,6 +71,9 @@ export default {
     handleCheckboxChangeEvent(checkboxEvent) {
       this.checkboxValues[checkboxEvent.name] = checkboxEvent.value
     },
+  },
+  unmounted() {
+
   },
   watch: {
     'board.style': {
