@@ -289,12 +289,7 @@ export default {
                     this.taskToEdit.members.push(clickedMember);
                     notification.action = "Added you"
                 }
-<<<<<<< HEAD
-
-                this.$store.dispatch({ type: "updateUserNot", notification });
-=======
                 socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'notification', payload: notification })
->>>>>>> 747f8cba385a628572b19f99491f1c775cf0c147
 
                 this.editTask();
 
