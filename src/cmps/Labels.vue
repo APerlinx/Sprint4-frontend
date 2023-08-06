@@ -3,7 +3,7 @@
     <h5>Labels</h5>
     <div class="labels-details">
       <div v-for="labelId in task.labels" :key="labelId">
-        <div class="label" :style="{ backgroundColor: getLabelColor(labelId) }">
+        <div class="label-details" :style="{ backgroundColor: getLabelColor(labelId) }">
           <h6 :style="{
             color: isDarkColor(getLabelColor(labelId)) ? 'white' : '',
           }">
