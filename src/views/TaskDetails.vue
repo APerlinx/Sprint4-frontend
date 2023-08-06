@@ -9,6 +9,7 @@
                 <!-- <section v-if="taskToEdit" class="task-details"> -->
                 <section class="task-details-header">
 
+
                     <div class="task-details-cover" v-if="taskToEdit.cover?.color"
                         :style="{ backgroundColor: taskToEdit.cover?.color }">
                         <p v-if="haveCover" class="task-details-cover-menu" @click="togglecover()">Cover</p>
@@ -110,35 +111,35 @@
                     <!-- v-model="taskToEdit.description" -->
                 </section>
 
-            <section class="action-btns-container">
-                <div class="suggested-container">
-                    <h3 class="details-title-small">Suggested</h3>
-                    <button class="btn"><span class="icon member"></span>Join</button>
-                </div>
-                <h3 class="details-title-small">Add to card</h3>
-                <Popper arrow placement="right" v-for="( cmp, idx ) in  cmpOrder " :key="idx">
-                    <div>
-                        <button class="btn" @click="set(cmp, idx)"> <span class="icon"
-                                :class="`icon ${dynamicIcons[idx]}`"></span>
-                            {{ dynamicNames[idx] }} </button>
+                <section class="action-btns-container">
+                    <div class="suggested-container">
+                        <h3 class="details-title-small">Suggested</h3>
+                        <button class="btn"><span class="icon member"></span>Join</button>
                     </div>
-                    <template #content>
-                        <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
-                            :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
-                            @toggleMember="toggleMemberBySocket" @saveLabel="saveLabel" @checklist="addChecklist"
-                            @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
-                            @attachment="addAttachment" @setCover="setCover" />
-                    </template>
-                </Popper>
-                <div class="action-btns-in-btns">
-                    <h3 class="details-title-small">Actions</h3>
-                    <button class="btn"><span class="icon arrow-right"></span>Move</button>
-                    <!-- <button class="btn"><span class="icon copy"></span>Copy</button> -->
-                    <!-- <button class="btn"><span class="icon card"></span>Make template</button> -->
-                    <button class="btn"><span class="icon archive"></span>Archive</button>
-                    <!-- <button class="btn"><span class="icon share"></span>Share</button> -->
-                </div>
-                <!-- <pre>{{ isCover }}</pre> -->
+                    <h3 class="details-title-small">Add to card</h3>
+                    <Popper arrow placement="right" v-for="( cmp, idx ) in  cmpOrder " :key="idx">
+                        <div>
+                            <button class="btn" @click="set(cmp, idx)"> <span class="icon"
+                                    :class="`icon ${dynamicIcons[idx]}`"></span>
+                                {{ dynamicNames[idx] }} </button>
+                        </div>
+                        <template #content>
+                            <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                                :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
+                                @toggleMember="toggleMemberBySocket" @saveLabel="saveLabel" @checklist="addChecklist"
+                                @removeLabel="removeLabel" @updateLable="updateLable" @DueDate="addDueDate"
+                                @attachment="addAttachment" @setCover="setCover" />
+                        </template>
+                    </Popper>
+                    <div class="action-btns-in-btns">
+                        <h3 class="details-title-small">Actions</h3>
+                        <button class="btn"><span class="icon arrow-right"></span>Move</button>
+                        <!-- <button class="btn"><span class="icon copy"></span>Copy</button> -->
+                        <!-- <button class="btn"><span class="icon card"></span>Make template</button> -->
+                        <button class="btn"><span class="icon archive"></span>Archive</button>
+                        <!-- <button class="btn"><span class="icon share"></span>Share</button> -->
+                    </div>
+                    <!-- <pre>{{ isCover }}</pre> -->
 
                 </section>
                 <!-- </section> -->
@@ -163,12 +164,14 @@ import {
     SOCKET_EMIT_SET_TOPIC,
     SOCKET_EVENT_MEMBER_MSG,
     SOCKET_EVENT_STATUS_MSG,
+    SOCKET_EVENT_NOTIFICATIONS_MSG,
     SOCKET_EMIT_SEND_MSG,
 
 } from "../services/socket.service.js";
 
 // import { boardService } from "../services/board.service.local.js";
 import { boardService } from "../services/board.service.js";
+import { userService } from "../services/user.service";
 
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";
@@ -195,15 +198,16 @@ export default {
     created() {
         socketService.on(SOCKET_EVENT_MEMBER_MSG, this.toggleMember);
         socketService.on(SOCKET_EVENT_STATUS_MSG, this.updateTaskStatus);
+        socketService.on(SOCKET_EVENT_NOTIFICATIONS_MSG, this.updateUserNot);
         this.setTask();
     },
     methods: {
         toggleMemberBySocket(clickedMember) {
-        socketService.emit(SOCKET_EMIT_SEND_MSG,{action: 'member', payload: clickedMember})
+            socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'member', payload: clickedMember })
         },
 
         updateTaskStatusBySocket(isCompleted) {
-        socketService.emit(SOCKET_EMIT_SEND_MSG,{action: 'status', payload: isCompleted})
+            socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'status', payload: isCompleted })
         },
 
         updateTaskStatus(isCompleted) {
@@ -260,19 +264,41 @@ export default {
             this.editTask()
         },
         toggleMember(clickedMember) {
+
+            const notification = {
+                byUser: this.loggedinUser.fullname,
+                toUser: clickedMember.fullname,
+                createdAt: Date.now(),
+                action: '',
+                task: this.taskToEdit.title,
+                board: this.board.title,
+                date: this.task?.dueDate
+            };
+
             if (!this.taskToEdit.members) {
-                this.taskToEdit.members = []
-                this.taskToEdit.members.push(clickedMember)
+                this.taskToEdit.members = [];
+                this.taskToEdit.members.push(clickedMember);
+                notification.action = "Added you"
             } else {
                 if (this.taskToEdit.members.some(member => member.id === clickedMember.id)) {
                     const idx = this.taskToEdit.members.findIndex(member => member.id === clickedMember.id);
-                    this.taskToEdit.members.splice(idx, 1);
+                    this.taskToEdit.members.splice(idx, 1)
+                    notification.action = "Removed you"
                 } else {
                     this.taskToEdit.members.push(clickedMember);
+                    notification.action = "Added you"
                 }
-                this.editTask()
+                socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'notification', payload: notification })
+
+                this.editTask();
+
             }
         },
+        updateUserNot(notification) {
+            console.log('happen');
+            this.$store.dispatch({ type: "updateUserNot", notification });
+        },
+
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)
             const checklists = this.taskToEdit.checklists;
@@ -300,7 +326,7 @@ export default {
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
 
                 socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskToEdit.id);
-                
+
             } catch (err) {
                 console.log("error in setTask");
             }
@@ -338,6 +364,12 @@ export default {
     computed: {
         cmpOrder() {
             return this.$store.getters.cmpsOrder;
+        },
+        loggedinUser() {
+            return this.$store.getters.loggedinUser;
+        },
+        users() {
+            return this.$store.getters.users;
         },
         haveCover() {
             if (this.taskToEdit.cover?.color) {
