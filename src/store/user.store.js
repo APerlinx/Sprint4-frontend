@@ -118,15 +118,17 @@ export const userStore = {
         },
         async updateUserNot({ commit, state }, { notification }) {
             try {
-                console.log('note', notification);
 
                 const user = state.users.find(user => user.fullname === notification.toUser)
                 const userCopy = JSON.parse(JSON.stringify(user))
-                userCopy.notifications.push(notification)
+                console.log(userCopy);
+                // userCopy.notifications.push(notification)
+                // console.log(userCopy);
 
-                const savedUser = await userService.update(userCopy)
+                // const savedUser = await userService.update(userCopy)
+                // console.log(savedUser);
 
-                commit({ type: 'setUser', savedUser })
+                // commit({ type: 'setUser', savedUser })
             } catch (err) {
                 console.log('userStore: Error in increaseScore', err)
                 throw err

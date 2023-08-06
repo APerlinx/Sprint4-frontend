@@ -33,7 +33,7 @@ function createSocketService() {
       socket = io(baseUrl)
       setTimeout(() => {
         const user = userService.getLoggedinUser()
-        if (user) this.login(user._id)
+        if (user) this.login(user._id,username)
       }, 500)
     },
     on(eventName, cb) {
@@ -49,8 +49,8 @@ function createSocketService() {
       data = JSON.parse(JSON.stringify(data))
       socket.emit(eventName, data)
     },
-    login(userId) {
-      socket.emit(SOCKET_EMIT_LOGIN, userId)
+    login(userId,username) {
+      socket.emit(SOCKET_EMIT_LOGIN, {userId,username})
     },
     logout() {
       socket.emit(SOCKET_EMIT_LOGOUT)
