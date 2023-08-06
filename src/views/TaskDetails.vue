@@ -267,7 +267,7 @@ export default {
         toggleMember(clickedMember) {
 
             const notification = {
-                byUser: this.loggedinUser.fullname,
+                byUser: this.loggedinUser?.fullname,
                 toUser: clickedMember.fullname,
                 createdAt: Date.now(),
                 action: '',
