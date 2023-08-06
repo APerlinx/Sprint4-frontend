@@ -121,6 +121,7 @@ export default {
       return this.groups[index]
     },
     onDrop(dropRes) {
+      console.log("🚀 ~ file: GroupList.vue:124 ~ onDrop ~ dropRes:", dropRes)
       const newGroups = applyDrag(this.groupList, dropRes)
       this.$store.dispatch({
         type: 'saveGroups',

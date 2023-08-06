@@ -38,6 +38,9 @@ export default {
   },
   async created() {
     this.loadBoardData()
+    // socketService.on("on-board-update", (board) => console.log('tetststtsttsts',board))
+      socketService.on("on-board-update", (board) => this.$store.commit({ type: 'updateBoard', board }))
+
   },
 
   computed: {
@@ -63,7 +66,6 @@ export default {
       await this.$store.dispatch('addBoardToRecent', { boardId })
       this.boardsLoaded = true
       socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId);
-      socketService.on("on-board-update", () => this.$store.commit(getActionUpdateBoard(board)));
     },
     handleSearchTermChange(searchTerm) {
       this.searchTerm = searchTerm
