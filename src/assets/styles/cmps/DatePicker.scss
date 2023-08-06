@@ -88,6 +88,7 @@
     justify-content: center;
 }
 
+.btn-date-remove,
 .btn-date-save {
     display: flex;
     text-align: center;
@@ -113,14 +114,25 @@
     user-select: none;
     font-size: 14px;
     font-weight: 400;
-    background-color: #e4e6ea;
-    color: #172b4d;
     text-align: left;
     cursor: pointer;
-    background-color: #0c66e4;
-    color: white;
 
     &:hover {
         background-color: #05c;
     }
+}
+
+.btn-date-save {
+    background-color: #0c66e4;
+    color: white;
+}
+
+.btn-date-remove {
+    background-color: #e4e6ea;
+    color: #172b4d;
+    margin-bottom: 5px;
+}
+
+.vc-container {
+    border: 0;
 }

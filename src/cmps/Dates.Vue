@@ -11,8 +11,9 @@
                     @click.stop="toggleStatus">
                     <!-- <span class="icon date"></span> -->
                     <!-- <span class="date-counter"></span> -->
-                    <span class="status" :class="{ done: task.status === 'done', overdue: task.status === 'overdue' }">{{
-                        dueDateStatus }}</span>
+                    <span class="status"
+                        :class="{ done: task.status === 'done', overdue: task.status === 'overdue-long' }">{{
+                            dueDateStatus }}</span>
                 </div>
             </button>
 
@@ -74,9 +75,12 @@ export default {
             const dueDate = new Date(this.task.dueDate).getTime()
             const diffHours = (dueDate - now) / 1000 / 60 / 60
 
-            if (diffHours < -48) return 'Overdue-long'
+            if (diffHours < -48) {
+                this.task.status === 'overdue-long'
+                return 'Overdue-long'
+            }
             if (diffHours < 0) return 'Overdue'
-            if (diffHours < 24) return 'DueSoon'
+            if (diffHours < 24) return 'Due-Soon'
             return 'normal'
         },
     }
