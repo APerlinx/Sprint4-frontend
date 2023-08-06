@@ -164,6 +164,7 @@ import {
     SOCKET_EMIT_SET_TOPIC,
     SOCKET_EVENT_MEMBER_MSG,
     SOCKET_EVENT_STATUS_MSG,
+    SOCKET_EVENT_NOTIFICATIONS_MSG,
     SOCKET_EMIT_SEND_MSG,
 
 } from "../services/socket.service.js";
@@ -197,6 +198,7 @@ export default {
     created() {
         socketService.on(SOCKET_EVENT_MEMBER_MSG, this.toggleMember);
         socketService.on(SOCKET_EVENT_STATUS_MSG, this.updateTaskStatus);
+        socketService.on(SOCKET_EVENT_NOTIFICATIONS_MSG, this.updateUserNot);
         this.setTask();
     },
     methods: {
@@ -269,28 +271,34 @@ export default {
                 createdAt: Date.now(),
                 action: '',
                 task: this.taskToEdit.title,
-                board: this.board.title
+                board: this.board.title,
+                date: this.task?.dueDate
             };
-            
+
             if (!this.taskToEdit.members) {
                 this.taskToEdit.members = [];
                 this.taskToEdit.members.push(clickedMember);
-                notification.action = "added you"
+                notification.action = "Added you"
             } else {
                 if (this.taskToEdit.members.some(member => member.id === clickedMember.id)) {
                     const idx = this.taskToEdit.members.findIndex(member => member.id === clickedMember.id);
                     this.taskToEdit.members.splice(idx, 1)
-                    notification.action = "removed you"
+                    notification.action = "Removed you"
                 } else {
                     this.taskToEdit.members.push(clickedMember);
-                    notification.action = "added you"
+                    notification.action = "Added you"
                 }
-                
-                this.$store.dispatch({ type: "updateUserNot", notification });
+                socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'notification', payload: notification })
 
                 this.editTask();
+
             }
         },
+        updateUserNot(notification) {
+            console.log('happen');
+            this.$store.dispatch({ type: "updateUserNot", notification });
+        },
+
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)
             const checklists = this.taskToEdit.checklists;

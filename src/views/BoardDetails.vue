@@ -61,7 +61,7 @@ export default {
         this.checkboxValues,
         boardId
       )
-      console.log('newGroups', newGroups)
+      // console.log('newGroups', newGroups)
       return newGroups
     },
   },
@@ -93,9 +93,9 @@ export default {
       },
     },
     groups(newGroups, oldGroups) {
-      console.log('groups updated in GroupList')
-      console.log('newGroups: ', newGroups)
-      console.log('oldGroups: ', oldGroups)
+      // console.log('groups updated in GroupList')
+      // console.log('newGroups: ', newGroups)
+      // console.log('oldGroups: ', oldGroups)
     },
     '$route.params.boardId': {
       immediate: true, // also run the watcher when the component is created

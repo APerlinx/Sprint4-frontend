@@ -2,33 +2,34 @@
     <div class="notifiction-menu">
         <div class="not-title">
             <h2>Notifications</h2>
+            <pre>{{ connectedUser.fullname }}</pre>
             <div class="filter-btn">button</div>
         </div>
 
         <div class="not-line"></div>
 
         <div class="notification-container">
-            <div v-for="not in loggedinUser.notifications" class="not">
+            <div v-for="not in connectedUser.notifications" :key="not.id" class="not">
                 <div class="not-top">
                     <div class="not-preview">
-                        <p>avarag color</p>
+                        <p>{{ not.task }}</p>
                         <div class="date">
-                            <span class="time-icon"></span> <span class="not-date">Aug 25</span>
+                            <span class="time-icon"></span> <span class="not-date">{{ not.dueDate }}</span>
                         </div>
                     </div>
                     <div class="board-title">
-                        <p>board title</p>
+                        <p>{{ not.board }}</p>
                     </div>
                 </div>
                 <div class="not-bottom">
 
                     <div class="not-user">
-                        <div class="user-avatar">SZ</div>
-                        <div class="user-name">Shay Z</div>
+                        <div class="user-avatar">{{ userAvatar(not.byUser) }}</div>
+                        <div class="user-name">{{ not.byUser }}</div>
                     </div>
 
                     <div class="not-actions">
-                        <p> Added a dur date of Aug 25 at 11:43 <span>aug 3 at 1:43 pm</span></p>
+                        <p> {{ not.action }} <span> {{ not.createdAt }}</span></p>
                     </div>
                 </div>
             </div>
@@ -41,7 +42,17 @@
   
 <script>
 export default {
+    data() {
+        return {
+            user: null
+
+        }
+    },
     components: {
+    },
+    created() {
+    },
+    methods: {
     },
     computed: {
         getImageStyle() {
@@ -56,6 +67,24 @@ export default {
         },
         loggedinUser() {
             return this.$store.getters.loggedinUser
+        },
+        userAvatar() {
+            return user => {
+                if (!user) return "";
+
+                const names = user.split(" ");
+                if (names.length === 1) {
+                    return names[0].charAt(0);
+                } else {
+                    return `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}`;
+                }
+            }
+        },
+        users() {
+            return this.$store.getters.users
+        },
+        connectedUser() {
+            return this.users.find(user => user.fullname === this.loggedinUser.fullname)
         }
     }
 }

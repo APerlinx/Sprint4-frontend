@@ -1,38 +1,17 @@
 <template>
   <section class="group-list-section">
     <ul class="group-list">
-      <Container
-        :get-child-payload="getGroupPayload"
-        @drop="onDrop($event)"
-        orientation="horizontal"
-        drag-class="card-ghost"
-        drop-class="card-ghost-drop"
-        :drop-placeholder="upperDropPlaceholderOptions"
-        class="group-container"
-        v-if="groups"
-        group-name="col"
-      >
+      <Container :get-child-payload="getGroupPayload" @drop="onDrop($event)" orientation="horizontal"
+        drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="upperDropPlaceholderOptions"
+        class="group-container" v-if="groups" group-name="col">
         <Draggable v-for="group in groupList" :key="group._id">
-          <GroupPreview
-            :group="group"
-            :key="group.id"
-            :showTaskForm="showTaskForm"
-            :currentGroupId="currentGroupId"
-            @update-title="updateGroup"
-            @removeGroup="removeGroup"
-            @duplicateGroup="duplicateGroup"
-            @watch="watchGroup"
-            @updateGroup="updateGroups"
-            @addTask="addTask"
-            @closeTaskForm="closeTaskForm"
-          >
+          <GroupPreview :group="group" :key="group.id" :showTaskForm="showTaskForm" :currentGroupId="currentGroupId"
+            @update-title="updateGroup" @removeGroup="removeGroup" @duplicateGroup="duplicateGroup" @watch="watchGroup"
+            @updateGroup="updateGroups" @addTask="addTask" @closeTaskForm="closeTaskForm">
             <template #actions>
               <div class="group-actions">
-                <button
-                  v-if="!(showTaskForm && currentGroupId === group.id)"
-                  @click="showAddTaskForm(group.id)"
-                  class="group-btn"
-                >
+                <button v-if="!(showTaskForm && currentGroupId === group.id)" @click="showAddTaskForm(group.id)"
+                  class="group-btn">
                   <span class="icon"></span> Add a card
                 </button>
               </div>
@@ -41,20 +20,12 @@
         </Draggable>
       </Container>
 
-      <li
-        class="list-btn-wrapper"
-        v-if="!toggleAddForm"
-        @click="toggleAddForm = !toggleAddForm"
-      >
+      <li class="list-btn-wrapper" v-if="!toggleAddForm" @click="toggleAddForm = !toggleAddForm">
         <button class="list-btn">
           <span class="icon"></span> Add another list
         </button>
       </li>
-      <li
-        class="open-form-wrapper"
-        v-if="toggleAddForm"
-        v-click-outside="handleCloseComponent"
-      >
+      <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
         <AddGroup @addGroup="addGroupBySocket" @close="handleCloseComponent" />
       </li>
       <button @click="saveMsg" style="padding: 0px">.</button>
@@ -119,16 +90,14 @@ export default {
     },
   },
   created() {
-      console.log("Initial groups:", this.initialGroups);
-  const boardId = this.$route.params.boardId
-  if (!this.groups.length && boardId) {
-    this.groups = this.$store.getters.getGroupsByBoardId(boardId)
-  }
-  console.log("Computed groups:", this.groups);
+    const boardId = this.$route.params.boardId
+    if (!this.groups.length && boardId) {
+      this.groups = this.$store.getters.getGroupsByBoardId(boardId)
+    }
 
     this.groups = JSON.parse(JSON.stringify(this.groups))
     this.currBoard = this.$store.getters.getCurrBoard
-        socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroup);
+    socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroup);
     socketService.on(SOCKET_EVENT_REMOVE_MSG, this.removeGroup);
     socketService.on(SOCKET_EVENT_ADDTASK_MSG, this.addTask);
   },
@@ -142,9 +111,9 @@ export default {
     removeGroupBySocket(groupId) {
       socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'remove', payload: groupId })
     },
-    addTaskBySocket({groupId, taskTitle, openedFromModal}) {
+    addTaskBySocket({ groupId, taskTitle, openedFromModal }) {
       this.showTaskForm = true;
-      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'addtask', payload: {groupId, taskTitle, openedFromModal} })
+      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'addtask', payload: { groupId, taskTitle, openedFromModal } })
     },
 
 
@@ -246,7 +215,7 @@ export default {
     watchGroup(groupId) {
       try {
         this.$store.dispatch('watchGroup', { groupId })
-      } catch {}
+      } catch { }
     },
     closeTaskForm() {
       this.showTaskForm = false
