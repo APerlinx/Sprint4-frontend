@@ -81,6 +81,10 @@ export const boardStore = {
           return {
             ...group,
             tasks: group.tasks.filter((t) => {
+              if (t.status === 'done') {
+                return false
+              }
+
               let matchesDueDateFilters = false
 
               if (dueDateFilters.noDate) {
@@ -99,7 +103,6 @@ export const boardStore = {
           }
         })
       },
-
     boards({ boards }) {
       return boards
     },

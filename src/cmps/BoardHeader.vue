@@ -237,7 +237,7 @@ export default {
       return this.isStarred ? 'full-star' : 'star'
     },
     headerStyle() {
-      return this.menuOpen ? { width: '1485px' } : {}
+      return this.menuOpen ? { width: '1600px' } : {}
     },
   },
   watch: {

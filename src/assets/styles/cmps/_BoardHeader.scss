@@ -45,6 +45,7 @@
         transition-duration: 85ms;
         transition-timing-function: ease;
         border-radius: 3px;
+        margin-top: 0.2em;
         &:hover {
           background-color: $dynamic-button-hovered;
         }

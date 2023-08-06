@@ -34,7 +34,7 @@
           }"
           @click.stop="toggleLabel(labelId)"
         >
-          <span v-if="areLabelsVisible">{{ getLabel(labelId).title }}</span>
+          <span v-if="areLabelsVisible" class="label-content">{{ getLabel(labelId).title }}</span>
         </div>
       </div>
 
@@ -290,36 +290,37 @@ export default {
 
 .label {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: start;
+  align-items: center; /* This takes care of vertical centering */
+  justify-content: center;
   width: 40px;
-  height: 8px;
+  min-height: 8px;
   margin-right: 4px;
   margin-bottom: 4px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
   overflow: hidden;
-  vertical-align: middle;
   color: black;
-  font-size: 0; /* hide the text initially */
-  transition: all 0.5s; /* apply to all properties */
-  font-weight: 500;
+  transition: all 0.5s; 
+  font-weight: 450;
+  line-height: 1.2;
 }
 
 .label.expanded {
   width: fit-content;
   height: 16px;
   padding: 0 8px;
-  font-size: 12px; /* show the text when expanded */
+  font-size: 12px; 
 }
 
 .label-text {
   opacity: 0;
   transition: opacity 0.5s, font-size 0.5s;
   text-align: left;
-  margin-bottom: 0.2em;
+}
+
+.label-content {
+ 
 }
 
 .label.expanded .label-text {
