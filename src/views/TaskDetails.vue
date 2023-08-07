@@ -114,7 +114,6 @@
 
                 <!-- <pre>{{ this.taskToEdit }}</pre> -->
 
-                <pre>{{ this.brd }}</pre>
 
                 <section class="action-btns-container">
                     <div class="suggested-container">

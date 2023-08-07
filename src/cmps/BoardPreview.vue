@@ -33,7 +33,7 @@ export default {
   computed: {
     imgUrl() {
       if (this.board.style.backgroundImage) {
-        return `url(${this.board.style.backgroundImage})`;
+        return `${this.board.style.backgroundImage}`;
       } else {
         return this.board.style.backgroundColor;
       }
