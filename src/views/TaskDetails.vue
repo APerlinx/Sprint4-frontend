@@ -114,6 +114,8 @@
 
                 <!-- <pre>{{ this.taskToEdit }}</pre> -->
 
+                <pre>{{ this.brd }}</pre>
+
                 <section class="action-btns-container">
                     <div class="suggested-container">
                         <h3 class="details-title-small">Suggested</h3>
@@ -266,41 +268,37 @@ export default {
             this.editTask()
         },
         toggleMember(clickedMember) {
+            const taskMembers = this.taskToEdit.members || [];
+            const memberIndex = taskMembers.findIndex(member => member.id === clickedMember.id);
 
+            let action;
+            if (memberIndex !== -1) {
+                taskMembers.splice(memberIndex, 1);
+                action = "Removed you";
+            } else {
+                taskMembers.push(clickedMember);
+                action = "Added you";
+            }
 
-            const notification = {
+            this.createAndEditNotification(clickedMember, action)
+        },
+
+        createAndEditNotification(member, action) {
+            const notification = this.createNotification(member, action);
+            this.editTask(notification);
+        },
+
+        createNotification(member, action) {
+            return {
                 byUser: this.loggedinUser.fullname,
-                toUser: clickedMember.fullname,
+                toUser: member.fullname,
                 createdAt: Date.now(),
-                action: '',
+                action: action,
                 task: this.taskToEdit.title,
                 board: this.board.title,
                 date: this.taskToEdit?.dueDate
             };
-
-            if (!this.taskToEdit.members) {
-                this.taskToEdit.members = [];
-                this.taskToEdit.members.push(clickedMember);
-                notification.action = "Added you"
-            } else {
-                if (this.taskToEdit.members.some(member => member.id === clickedMember.id)) {
-                    const idx = this.taskToEdit.members.findIndex(member => member.id === clickedMember.id);
-                    this.taskToEdit.members.splice(idx, 1)
-                    notification.action = "Removed you"
-                } else {
-                    this.taskToEdit.members.push(clickedMember);
-                    notification.action = "Added you"
-                }
-
-
-            }
-            // socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'notification', payload: notification })
-            // this.$store.dispatch({ type: "updateUserNot", notification });
-            this.editTask(notification);
         },
-        // updateUserNot(notification) {
-        //     this.$store.dispatch({ type: "updateUserNot", notification });
-        // },
 
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)

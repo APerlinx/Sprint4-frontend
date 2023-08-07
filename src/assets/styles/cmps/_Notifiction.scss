@@ -40,13 +40,12 @@
             background-image: linear-gradient(0deg, rgba(196, 232, 240, 0.7) 50%, rgba(196, 232, 240, 0.7) 0%),
                 url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/360x480/77de935d0cfd54507c9776cf821cf0eb/photo-1690692322953-fb0f543c6658.jpg");
             background-position: center;
-            height: 110px;
+            min-height: 90px;
             width: 100%;
             border-radius: 0.5em 0.5em 0 0;
 
             .not-preview {
                 padding: 1em;
-                height: rem(70px);
                 background-color: white;
                 border-radius: 0.5em;
                 box-shadow: 0.4px 0.4px 0.1px rgb(155, 155, 155);
