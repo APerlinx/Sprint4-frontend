@@ -11,11 +11,8 @@
 
 
         <div class="recent">
-          <div
-            @click="isPickerModalRecent = !isPickerModalRecent"
-            class="header-btn"
-            :class="{ checked: isPickerModalRecent }"
-          >
+          <div @click="isPickerModalRecent = !isPickerModalRecent" class="header-btn"
+            :class="{ checked: isPickerModalRecent }">
             Recent
             <i class="fa-solid fa-chevron-down"></i>
           </div>
@@ -35,11 +32,8 @@
         </div>
 
         <div class="starred">
-          <div
-            class="header-btn"
-            @click="isPickerModalStarred = !isPickerModalStarred"
-            :class="{ checked: isPickerModalStarred }"
-          >
+          <div class="header-btn" @click="isPickerModalStarred = !isPickerModalStarred"
+            :class="{ checked: isPickerModalStarred }">
             Starred
             <i class="fa-solid fa-chevron-down"></i>
           </div>
@@ -48,22 +42,11 @@
           </div>
         </div>
 
-        <div
-          class="create-btn"
-          :style="{ backgroundColor: isAddBoard ? '#e9f3ff' : '' }"
-        >
-          <button
-            @click="isAddBoard = !isAddBoard"
-            :style="{ color: isAddBoard ? '#0c66e4' : '' }"
-          >
+        <div class="create-btn" :style="{ backgroundColor: isAddBoard ? '#e9f3ff' : '' }">
+          <button @click="isAddBoard = !isAddBoard" :style="{ color: isAddBoard ? '#0c66e4' : '' }">
             Create
           </button>
-          <AddBoard
-            v-if="isAddBoard"
-            @save="saveBoard"
-            @closeModal="isAddBoard = false"
-            v-click-outside="closeModals"
-          />
+          <AddBoard v-if="isAddBoard" @save="saveBoard" @closeModal="isAddBoard = false" v-click-outside="closeModals" />
         </div>
       </div>
 
@@ -71,33 +54,24 @@
         <div class="filter-container">
           <BoardFilter @filterByTxt="filterByTxt" />
           <div class="search-icon">
-            <img
-              class="search-icon-img"
-              src="../assets/styles/img/search.svg"
-              alt=""
-            />
+            <img class="search-icon-img" src="../assets/styles/img/search.svg" alt="" />
           </div>
         </div>
 
-        <img
-          class="mobile-search-icon"
-          src="../assets/styles/img/search.svg"
-          alt=""
-        />
+        <img class="mobile-search-icon" src="../assets/styles/img/search.svg" alt="" />
         <div class="notifiction-icon" @click="isNotifiction = !isNotifiction">
           <i class="fa-regular fa-bell fa-lg"></i>
-          <div class="notifiction-dot" v-if="!fullUser?.isUserReadNotifications"></div>
+          <div class="notifiction-dot" v-if="!fullUser?.isUserReadNotifications"> <p>{{ fullUser?.notifications.length }}</p> </div>
         </div>
 
 
-        <img class="mode" src="../assets/styles/img/contrast.png" alt="" />
-        <span class="user">{{ loggedInUser }}</span>
+        <!-- <img class="mode" src="../assets/styles/img/contrast.png" alt="" /> -->
+        <span class="user" :class="{ 'user-changed': changeClr }" >{{ loggedInUser }}</span>
       </div>
     </nav>
   </header>
-  
-  <Notification @setReadNotifications="setUserRead" v-if="isNotifiction" />
 
+  <Notification @setReadNotifications="setUserRead" v-if="isNotifiction" />
 </template>
 
 <script>
@@ -176,6 +150,7 @@ export default {
     filterByTxt(filterBy) {
       this.$store.commit({ type: 'setFilterBy', filterBy })
     },
+    
   },
   computed: {
     changeClr() {
@@ -194,10 +169,14 @@ export default {
     fullUser() {
       return this.$store.getters.fullUser
     },
+    userNotifications() {
+      return this.fullUser?.notifications
+    },
 
     savedBoard() {
       return this.$store.getters.savedBoard
     },
+
   },
   watch: {
     changeClr(newVal) {

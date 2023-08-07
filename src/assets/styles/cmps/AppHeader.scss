@@ -7,7 +7,7 @@
         justify-content: space-between;
         padding: rem(7px);
         position: relative;
-        background-color: #FFFFFF;
+        background-color: #ffffff;
         color: $textClr;
         border-bottom: 0.5px solid rgba(128, 128, 128, 0.466);
 
@@ -16,13 +16,13 @@
         }
 
         &.header-changed * {
-            color: #FFFFFF;
+            color: #ffffff;
         }
-        
+
         &.header-changed .header-btn {
-            color: #FFFFFF !important;
+            color: #ffffff !important;
         }
-        
+
         .left {
             display: flex;
             justify-content: space-between;
@@ -127,15 +127,20 @@
                 align-items: center;
                 top: -6px;
                 right: 4px;
-                width: 11px;
+                width: 13px;
                 position: absolute;
-                height: 11px;
+                height: 13px;
                 background-color: #ca3521;
                 border-radius: 50%;
                 color: white;
 
+                p {
+                    rotate: (-50deg);
+                    font-size: 0.8em;
+                    margin-block-end: 0.1em;
+                    margin-inline-end: 0.1em;
+                }
             }
-            
 
             .fa-regular .fa-bell {
                 height: 16px;
@@ -158,6 +163,11 @@
             padding: 0.8em;
             font-size: 0.7em;
             font-weight: 700;
+
+            &.user-changed {
+                color: hsl(208, 34.3%, 21.9%) ;
+
+            }
 
             h2 {
                 margin: 0;
@@ -242,5 +252,3 @@
         }
     }
 }
-
-
