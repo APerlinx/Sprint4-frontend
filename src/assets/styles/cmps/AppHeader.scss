@@ -1,13 +1,27 @@
 .app-header {
+    z-index: 10;
     max-height: 48px;
     nav {
         display: flex;
         justify-content: space-between;
         padding: rem(7px);
         position: relative;
-        background-color: white;
+        background-color: #FFFFFF;
         color: $textClr;
         border-bottom: 0.5px solid rgba(128, 128, 128, 0.466);
+
+        &.header-changed {
+            background-color: hsl(208, 34.3%, 21.9%);
+        }
+
+        &.header-changed * {
+            color: #FFFFFF;
+        }
+        
+        &.header-changed .header-btn {
+            color: #FFFFFF !important;
+        }
+        
         .left {
             display: flex;
             justify-content: space-between;
@@ -148,7 +162,6 @@
             h2 {
                 margin: 0;
             }
-            
         }
     }
 }
@@ -229,3 +242,5 @@
         }
     }
 }
+
+
