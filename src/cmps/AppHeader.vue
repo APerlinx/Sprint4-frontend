@@ -9,6 +9,7 @@
           </div>
         </RouterLink>
 
+
         <div class="recent">
           <div @click="isPickerModalRecent = !isPickerModalRecent" class="header-btn"
             :class="{ checked: isPickerModalRecent }">
@@ -24,7 +25,7 @@
           <div class="more">
             <p>More</p> <i class="fa-solid fa-chevron-down"></i>
           </div>
-            <div class="plus-btn">
+          <div class="plus-btn">
             <span class="plus-icon"></span>
           </div>
         </div>
@@ -54,15 +55,15 @@
           <div class="search-icon">
             <img class="search-icon-img" src="../assets/styles/img/search.svg" alt="" />
           </div>
-
         </div>
 
         <img class="mobile-search-icon" src="../assets/styles/img/search.svg" alt="" />
         <div class="notifiction-icon" @click="isNotifiction = !isNotifiction">
           <i class="fa-regular fa-bell fa-lg"></i>
+          <div class="notifiction-dot" v-if="!fullUser?.isUserReadNotifications"></div>
         </div>
-        <Notification v-if="isNotifiction" />
 
+        <Notification @setReadNotifications="setUserRead" v-if="isNotifiction" />
 
         <img class="mode" src="../assets/styles/img/contrast.png" alt="" />
         <span class="user">{{ loggedInUser }}</span>
@@ -90,10 +91,18 @@ export default {
       isPickerModalStarred: false,
       isPickerModalRecent: false,
       isAddBoard: false,
-      isNotifiction: false
+      isNotifiction: false,
+      isUserRead: false
     };
   },
+  created() {
+  },
+
   methods: {
+    isUnreadNotifiction() {
+      return this.fullUser.notifications.some(notification => !notification.isRead);
+    },
+
     async saveBoard(board) {
       try {
         await this.$store.dispatch({
@@ -146,6 +155,10 @@ export default {
         return `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}`;
       }
     },
+    fullUser() {
+      return this.$store.getters.fullUser
+    },
+
     savedBoard() {
       return this.$store.getters.savedBoard;
     },

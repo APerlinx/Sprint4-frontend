@@ -2,14 +2,17 @@
     <div class="notifiction-menu">
         <div class="not-title">
             <h2>Notifications</h2>
-            <div class="filter-btn">button</div>
+            <div class="filter-btn" @click="toggleFilter">button</div>
+            <pre>{{ isFilterByAll }}</pre>
         </div>
 
 
         <div class="not-line"></div>
 
-        <div class="notification-container">
-            <div v-for="not in fullUser.notifications" :key="not.id" class="not">
+        <div v-for="not in fillterdNotification" :key="not.id" class="notification-container">
+            <div class="not-read-icon" @click="toggleNotification(not)">X</div>
+            <!-- <pre>{{ not }}</pre> -->
+            <div class="not">
                 <div class="not-top">
                     <div class="not-preview">
                         <p>{{ not.task }}</p>
@@ -18,7 +21,6 @@
                         </div>
                     </div>
                     <div class="board-title">
-                        <pre>{{ not }}</pre>
                         <p>{{ not.board }}</p>
                     </div>
                 </div>
@@ -45,18 +47,33 @@
 export default {
     data() {
         return {
+            isFilterByAll: false
         }
     },
     components: {
     },
     created() {
+        this.removeNotifications()
     },
     methods: {
+        toggleNotification(notification) {
+            this.$store.dispatch({ type: 'toggleNotification', notification })
+
+        },
+        toggleFilter() {
+            this.isFilterByAll = !this.isFilterByAll
+        },
+        isUserRead() {
+            this.$emit('setReadNotifications')
+        },
+        removeNotifications() {
+            this.$store.dispatch({ type: 'removeNotifications'})
+        }
     },
     computed: {
-        loggedinUser() {
-            return this.$store.getters.loggedinUser
-        },
+        // loggedinUser() {
+        //     return this.$store.getters.loggedinUser
+        // },
         userAvatar() {
             return user => {
                 if (!user) return "";
@@ -69,11 +86,21 @@ export default {
                 }
             }
         },
-        users() {
-            return this.$store.getters.users
-        },
+        // users() {
+        //     return this.$store.getters.users
+        // },
         fullUser() {
-            return this.users.find(user => user._id === this.loggedinUser._id)
+            return this.$store.getters.fullUser
+        },
+        fillterdNotification() {
+            const filterBy = this.isFilterByAll
+
+            if (filterBy) {
+                return this.fullUser?.notifications
+            } else {
+                return this.fullUser?.notifications.filter(notification => notification.isRead === false)
+            }
+
         }
     }
 }

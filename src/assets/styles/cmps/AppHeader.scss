@@ -103,9 +103,25 @@
             display: none;
         }
         .notifiction-icon {
+            position: relative;
             width: max-content;
             rotate: (50deg);
             cursor: pointer;
+            .notifiction-dot {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                top: -6px;
+                right: 4px;
+                width: 11px;
+                position: absolute;
+                height: 11px;
+                background-color: #ca3521;
+                border-radius: 50%;
+                color: white;
+
+            }
+            
 
             .fa-regular .fa-bell {
                 height: 16px;

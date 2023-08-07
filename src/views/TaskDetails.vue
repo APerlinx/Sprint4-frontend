@@ -296,7 +296,8 @@ export default {
                 action: action,
                 task: this.taskToEdit.title,
                 board: this.board.title,
-                date: this.taskToEdit?.dueDate
+                date: this.taskToEdit?.dueDate,
+                isRead: false
             };
         },
 
