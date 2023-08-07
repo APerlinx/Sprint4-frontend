@@ -750,88 +750,88 @@
     margin: 0;
 }
 
-@media (max-width: 768px) {
-    .task-details {
-        margin: 0 0 0 2%;
-        padding-left: 26px;
-        width: 96%;
-        display: flex;
-        flex-direction: column;
-        overflow-x: hidden;
+// @media (max-width: 768px) {
+//     .task-details {
+//         margin: 0 0 0 2%;
+//         padding-left: 26px;
+//         width: 96%;
+//         display: flex;
+//         flex-direction: column;
+//         overflow-x: hidden;
 
-        .task-details-cover {
-            margin: 0 0px 0 -36px;
-        }
+//         .task-details-cover {
+//             margin: 0 0px 0 -36px;
+//         }
 
-        .action-btns-container {
-            margin-left: -15px;
-            display: flex;
-            flex-direction: column;
+//         .action-btns-container {
+//             margin-left: -15px;
+//             display: flex;
+//             flex-direction: column;
 
-            .suggested-container {
+//             .suggested-container {
 
 
-                .btn {
-                    width: 168px;
-                }
-            }
+//                 .btn {
+//                     width: 168px;
+//                 }
+//             }
 
-            &Popper {}
+//             &Popper {}
 
-            .btn {
-                // display: inline-block;
-                // margin-right: 8px;
-                // width: calc(50% - 8px);
+//             .btn {
+//                 // display: inline-block;
+//                 // margin-right: 8px;
+//                 // width: calc(50% - 8px);
 
-                // background-color: var(--ds-background-neutral, #091e420f);
-                // border: none;
-                // border-radius: 3px;
-                // box-shadow: none;
-                // box-sizing: border-box;
-                // color: var(--ds-text, #172b4d);
-                // cursor: pointer;
-                // display: block;
-                // height: 32px;
-                // margin-top: 8px;
-                // max-width: 300px;
-                // overflow: hidden;
-                // padding: 6px 12px;
-                // position: relative;
-                // text-decoration: none;
-                // text-overflow: ellipsis;
-                // transition-duration: 85ms;
-                // transition-property: background-color, border-color, box-shadow;
-                // transition-timing-function: ease;
-                // -webkit-user-select: none;
-                // user-select: none;
-                // white-space: nowrap;
-            }
+//                 // background-color: var(--ds-background-neutral, #091e420f);
+//                 // border: none;
+//                 // border-radius: 3px;
+//                 // box-shadow: none;
+//                 // box-sizing: border-box;
+//                 // color: var(--ds-text, #172b4d);
+//                 // cursor: pointer;
+//                 // display: block;
+//                 // height: 32px;
+//                 // margin-top: 8px;
+//                 // max-width: 300px;
+//                 // overflow: hidden;
+//                 // padding: 6px 12px;
+//                 // position: relative;
+//                 // text-decoration: none;
+//                 // text-overflow: ellipsis;
+//                 // transition-duration: 85ms;
+//                 // transition-property: background-color, border-color, box-shadow;
+//                 // transition-timing-function: ease;
+//                 // -webkit-user-select: none;
+//                 // user-select: none;
+//                 // white-space: nowrap;
+//             }
 
-            .action-btns-in-btns {
-                .btn {
-                    width: 168px;
-                }
-            }
+//             .action-btns-in-btns {
+//                 .btn {
+//                     width: 168px;
+//                 }
+//             }
 
-            &>div {
-                // display: flex;
-                flex-wrap: wrap;
-                // max-width: 300px;
+//             &>div {
+//                 // display: flex;
+//                 flex-wrap: wrap;
+//                 // max-width: 300px;
 
-                //   gap: 3px;
-                &>h3 {
-                    width: 100%;
-                }
+//                 //   gap: 3px;
+//                 &>h3 {
+//                     width: 100%;
+//                 }
 
-                &>* {
-                    margin-right: 8px;
-                    width: calc(50%);
-                }
-            }
-        }
+//                 &>* {
+//                     margin-right: 8px;
+//                     width: calc(50%);
+//                 }
+//             }
+//         }
 
-    }
-}
+//     }
+// }
 
 
 
