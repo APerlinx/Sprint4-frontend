@@ -16,6 +16,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+
     .group-actions {
       display: flex;
     }
@@ -129,4 +130,48 @@
 
 .smooth-dnd-container.horizontal {
   // position: static;
+}
+
+.zoomed-out {
+  transform: scale(0.8); /* Adjust as needed */
+  width: calc(100% * 0.6); /* Adjust to match the scale factor */
+  transform-origin: top left;
+  transition: transform 0.3s ease;
+
+}
+
+
+
+@media (max-width: 600px) {
+  .zoom-btn {
+    position: fixed;
+    right: 10px;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #188745; 
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000; 
+}
+
+  .zoom-btn .icon {
+    background-image: url('path-to-your-icon.png'); 
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .zoom-btn .fas {
+    color: white;
+  }
+
+  .zoom-btn:hover {
+    background-color: #50a941; 
+  }
 }

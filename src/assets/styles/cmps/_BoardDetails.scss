@@ -66,4 +66,10 @@
     fill: #000; 
   }
   
-  
+  @media (max-width: 520px) {
+    .sidebar-toggle {
+      top: 10%; 
+      left: 0.2%; 
+
+    }
+  }

@@ -15,9 +15,13 @@
         padding-right: 0;
         width: 272px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        // @include responsive-max-height();
         max-height: calc(100vh - em(190px));
         min-height: 100%;
+        // transition: transform 0.3s ease;
+
+        &.zoomed-out {
+            margin-inline-end: -100px;
+        }
 
         .scroll-container {
             overflow-y: auto;
@@ -50,7 +54,6 @@
             width: 100%;
             margin-bottom: 0.5em;
             > div > .watch {
-
                 @include trello-icon($content: "\e969", $type: sm, $color: #626f86);
             }
         }
@@ -158,5 +161,11 @@
 
         width: rem(304px);
         border-radius: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .group-card {
+        border-radius: 6px !important;
     }
 }
