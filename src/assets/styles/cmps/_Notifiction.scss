@@ -8,7 +8,6 @@
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.148);
     border: 1px solid lightgray;
     padding: 1.8em 1.4em;
-    color: #172b4d;
     z-index: 999;
 
     .not-title {
@@ -18,6 +17,7 @@
         h2 {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans";
             font-weight: 600;
+            color: #172b4d;
         }
     }
 
@@ -56,6 +56,7 @@
 
                     p {
                         padding-inline-start: 0.2em;
+                        color: #172b4d;
                     }
                     .date {
                         padding-inline-start: 1em;
@@ -110,10 +111,18 @@
                         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
                             "Droid Sans";
                         font-weight: 700;
+                        color: #172b4d;
                     }
                 }
                 .not-actions {
                     padding: 0.8em 3.4em;
+                    p {
+                    color: #172b4d;
+                    span {
+                    color: #172b4d;
+                    }
+
+                    }
                 }
             }
         }

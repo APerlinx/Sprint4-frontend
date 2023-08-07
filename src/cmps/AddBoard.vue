@@ -66,7 +66,7 @@ export default {
       this.boardToEdit.style.backgroundColor = color;
     },
     setBgImg(img) {
-      this.preview = `url(${img})`;
+      this.preview = img;
       this.boardToEdit.style.backgroundImage = img;
     },
   },
