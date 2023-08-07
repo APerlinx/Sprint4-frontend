@@ -1,17 +1,43 @@
 <template>
   <section class="group-list-section">
     <ul class="group-list">
-      <Container :get-child-payload="getGroupPayload" @drop="onDrop($event)" orientation="horizontal"
-        drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="upperDropPlaceholderOptions"
-        class="group-container" v-if="groups" group-name="col">
-        <Draggable v-for="group in groupList" :key="group._id">
-          <GroupPreview :group="group" :key="group.id" :showTaskForm="showTaskForm" :currentGroupId="currentGroupId"
-            @update-title="updateGroup" @removeGroup="removeGroup" @duplicateGroup="duplicateGroup" @watch="watchGroup"
-            @updateGroup="updateGroups" @addTask="addTask" @closeTaskForm="closeTaskForm">
+      <Container
+        :get-child-payload="getGroupPayload"
+        @drop="onDrop($event)"
+        orientation="horizontal"
+        drag-class="card-ghost"
+        drop-class="card-ghost-drop"
+        :drop-placeholder="upperDropPlaceholderOptions"
+        class="group-container"
+        v-if="groups"
+        group-name="col"
+      >
+        <Draggable
+          v-for="group in groupList"
+          :key="group._id"
+          :class="{ 'zoomed-out': isZoomedOut }"
+        >
+          <GroupPreview
+            :group="group"
+            :key="group.id"
+            :showTaskForm="showTaskForm"
+            :currentGroupId="currentGroupId"
+            :isZoomedOut="isZoomedOut"
+            @update-title="updateGroup"
+            @removeGroup="removeGroup"
+            @duplicateGroup="duplicateGroup"
+            @watch="watchGroup"
+            @updateGroup="updateGroups"
+            @addTask="addTask"
+            @closeTaskForm="closeTaskForm"
+          >
             <template #actions>
               <div class="group-actions">
-                <button v-if="!(showTaskForm && currentGroupId === group.id)" @click="showAddTaskForm(group.id)"
-                  class="group-btn">
+                <button
+                  v-if="!(showTaskForm && currentGroupId === group.id)"
+                  @click="showAddTaskForm(group.id)"
+                  class="group-btn"
+                >
                   <span class="icon"></span> Add a card
                 </button>
               </div>
@@ -20,34 +46,95 @@
         </Draggable>
       </Container>
 
-      <li class="list-btn-wrapper" v-if="!toggleAddForm" @click="toggleAddForm = !toggleAddForm">
+      <li
+        class="list-btn-wrapper"
+        v-if="!toggleAddForm"
+        @click="toggleAddForm = !toggleAddForm"
+      >
         <button class="list-btn">
           <span class="icon"></span> Add another list
         </button>
       </li>
       <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
-        <AddGroup @addGroup="addGroupBySocket" @close="handleCloseComponent" />
+        <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
       <button @click="saveMsg" style="padding: 0px">.</button>
     </ul>
+    <button @click="toggleZoom" class="zoom-btn">
+      <template v-if="isZoomedOut">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          class="bi bi-zoom-in"
+          width="16"
+          height="16"
+        >
+          <circle
+            cx="6"
+            cy="6"
+            r="5"
+            stroke="#ffffff"
+            fill="none"
+            stroke-width="2"
+          />
+          <line x1="6" y1="4" x2="6" y2="8" stroke="#ffffff" stroke-width="2" />
+          <line x1="4" y1="6" x2="8" y2="6" stroke="#ffffff" stroke-width="2" />
+          <line
+            x1="11"
+            y1="11"
+            x2="14"
+            y2="14"
+            stroke="#ffffff"
+            stroke-width="2"
+          />
+        </svg>
+      </template>
+      <template v-else>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          class="bi bi-zoom-out"
+          width="16"
+          height="16"
+        >
+          <circle
+            cx="6"
+            cy="6"
+            r="5"
+            stroke="#ffffff"
+            fill="none"
+            stroke-width="2"
+          />
+          <line x1="4" y1="6" x2="8" y2="6" stroke="#ffffff" stroke-width="2" />
+          <line
+            x1="11"
+            y1="11"
+            x2="14"
+            y2="14"
+            stroke="#ffffff"
+            stroke-width="2"
+          />
+        </svg>
+      </template>
+    </button>
   </section>
 </template>
 
 <script>
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js";
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 // import { boardService } from "../services/board.service.local.js";
-import { boardService } from "../services/board.service.js";
-import { clickOutsideDirective } from "../directives/index.js";
-import { Container, Draggable } from "vue3-smooth-dnd";
-import { scrollHorizontalDirective } from "../directives/index.js";
-import { applyDrag } from "../services/util.service.js";
+import { boardService } from '../services/board.service.js'
+import { clickOutsideDirective } from '../directives/index.js'
+import { Container, Draggable } from 'vue3-smooth-dnd'
+import { scrollHorizontalDirective } from '../directives/index.js'
+import { applyDrag } from '../services/util.service.js'
 import {
   socketService,
   SOCKET_EVENT_ADD_MSG,
   SOCKET_EMIT_SEND_MSG,
   SOCKET_EVENT_REMOVE_MSG,
-  SOCKET_EVENT_ADDTASK_MSG
-} from "../services/socket.service.js";
+  SOCKET_EVENT_ADDTASK_MSG,
+} from '../services/socket.service.js'
 
 import GroupPreview from './GroupPreview.vue'
 import AddGroup from './AddGroup.vue'
@@ -74,7 +161,11 @@ export default {
         animationDuration: '0',
         showOnTop: false,
       },
+      isZoomedOut: false,
     }
+  },
+  updated() {
+    // console.log('this.isZoomedOut', this.isZoomedOut);
   },
   computed: {
     loggedInUser() {
@@ -97,31 +188,31 @@ export default {
 
     this.groups = JSON.parse(JSON.stringify(this.groups))
     this.currBoard = this.$store.getters.getCurrBoard
-    socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroup);
-    socketService.on(SOCKET_EVENT_REMOVE_MSG, this.removeGroup);
-    socketService.on(SOCKET_EVENT_ADDTASK_MSG, this.addTask);
+    // socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroup);
+    // socketService.on(SOCKET_EVENT_REMOVE_MSG, this.removeGroup);
+    // socketService.on(SOCKET_EVENT_ADDTASK_MSG, this.addTask);
   },
   methods: {
 
-    addGroupBySocket(title) {
-      const groupToAdd = boardService.getEmptyGroup();
-      groupToAdd.title = title;
-      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'add', payload: groupToAdd })
-    },
-    removeGroupBySocket(groupId) {
-      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'remove', payload: groupId })
-    },
-    addTaskBySocket({ groupId, taskTitle, openedFromModal }) {
-      this.showTaskForm = true;
-      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'addtask', payload: { groupId, taskTitle, openedFromModal } })
-    },
+    // addGroupBySocket(title) {
+    //   // const groupToAdd = boardService.getEmptyGroup();
+    //   // groupToAdd.title = title;
+    //   // socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'add', payload: groupToAdd })
+    // },
+    // removeGroupBySocket(groupId) {
+    //   socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'remove', payload: groupId })
+    // },
+    // addTaskBySocket({ groupId, taskTitle, openedFromModal }) {
+    //   this.showTaskForm = true;
+    //   socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'addtask', payload: { groupId, taskTitle, openedFromModal } })
+    // },
 
 
     getGroupPayload(index) {
       return this.groups[index]
     },
     onDrop(dropRes) {
-      console.log("🚀 ~ file: GroupList.vue:124 ~ onDrop ~ dropRes:", dropRes)
+      console.log('🚀 ~ file: GroupList.vue:124 ~ onDrop ~ dropRes:', dropRes)
       const newGroups = applyDrag(this.groupList, dropRes)
       this.$store.dispatch({
         type: 'saveGroups',
@@ -147,25 +238,25 @@ export default {
       }
     },
 
-    async addGroup(groupToAdd) {
+    async addGroup(groupTitle) {
       try {
-        // const groupToAdd = boardService.getEmptyGroup()
-        // groupToAdd.title = title
+        const groupToAdd = boardService.getEmptyGroup()
+        groupToAdd.title = groupTitle
 
         await this.$store.dispatch({
           type: 'addGroup',
           group: groupToAdd,
-        });
+        })
 
-        this.unscrollOnAction();
+        this.unscrollOnAction()
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     },
 
     async removeGroup(groupId) {
       try {
-        console.log('happen');
+        console.log('happen')
         await this.$store.dispatch({
           type: 'removeGroup',
           groupId,
@@ -216,7 +307,7 @@ export default {
     watchGroup(groupId) {
       try {
         this.$store.dispatch('watchGroup', { groupId })
-      } catch { }
+      } catch {}
     },
     closeTaskForm() {
       this.showTaskForm = false

@@ -114,6 +114,7 @@
 
                 <!-- <pre>{{ this.taskToEdit }}</pre> -->
 
+
                 <section class="action-btns-container">
                     <div class="suggested-container">
                         <h3 class="details-title-small">Suggested</h3>
@@ -266,41 +267,38 @@ export default {
             this.editTask()
         },
         toggleMember(clickedMember) {
+            const taskMembers = this.taskToEdit.members || [];
+            const memberIndex = taskMembers.findIndex(member => member.id === clickedMember.id);
 
-
-            const notification = {
-                byUser: this.loggedinUser.fullname,
-                toUser: clickedMember.fullname,
-                createdAt: Date.now(),
-                action: '',
-                task: this.taskToEdit.title,
-                board: this.board.title,
-                date: this.taskToEdit?.dueDate
-            };
-
-            if (!this.taskToEdit.members) {
-                this.taskToEdit.members = [];
-                this.taskToEdit.members.push(clickedMember);
-                notification.action = "Added you"
+            let action;
+            if (memberIndex !== -1) {
+                taskMembers.splice(memberIndex, 1);
+                action = "removed you from";
             } else {
-                if (this.taskToEdit.members.some(member => member.id === clickedMember.id)) {
-                    const idx = this.taskToEdit.members.findIndex(member => member.id === clickedMember.id);
-                    this.taskToEdit.members.splice(idx, 1)
-                    notification.action = "Removed you"
-                } else {
-                    this.taskToEdit.members.push(clickedMember);
-                    notification.action = "Added you"
-                }
-
-
+                taskMembers.push(clickedMember);
+                action = "added you to";
             }
-            // socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'notification', payload: notification })
-            // this.$store.dispatch({ type: "updateUserNot", notification });
+
+            this.createAndEditNotification(clickedMember, action)
+        },
+
+        createAndEditNotification(member, action) {
+            const notification = this.createNotification(member, action);
             this.editTask(notification);
         },
-        // updateUserNot(notification) {
-        //     this.$store.dispatch({ type: "updateUserNot", notification });
-        // },
+
+        createNotification(member, action) {
+            return {
+                byUser: this.loggedinUser.fullname,
+                toUser: member.fullname,
+                createdAt: Date.now(),
+                action: action,
+                task: this.taskToEdit.title,
+                board: this.board.title,
+                date: this.taskToEdit?.dueDate,
+                isRead: false
+            };
+        },
 
         updateChecklist({ type, newChecklist }) {
             // console.log('111111111Checklist:', Checklist)

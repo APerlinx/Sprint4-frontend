@@ -45,6 +45,7 @@ export const boardStore = {
     dropResults: [],
     areLabelsVisible: false,
     loadingBoard: false,
+    changeClr: false,
 
     cmpsOrder: [
       'MemberPicker',
@@ -150,6 +151,10 @@ export const boardStore = {
     },
   },
   mutations: {
+    setChangeClr(state, value) {
+      state.changeClr = value;
+      console.log('state.changeClr', state.changeClr);
+    },
     setLoadingBoard(state, isLoading) {
       state.loadingBoard = isLoading
     },
@@ -403,6 +408,7 @@ export const boardStore = {
 
         const board = await boardService.getById(boardId)
         commit({ type: 'saveBoardToRecent', board })
+        console.log('happen');
       } catch (err) {
         console.log(err)
       }

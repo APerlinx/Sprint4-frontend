@@ -10,7 +10,7 @@
   .nav-bar {
     display: flex;
     justify-content: space-between; 
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
 
     .title-container {
       flex: 1 1 auto;
@@ -19,7 +19,7 @@
       align-items: center;
       justify-content: start;
       text-align: start;
-      
+      margin-inline-start: 1.3em;
       .title-tool-tip {
         display: flex;
         justify-content: start;
@@ -156,7 +156,7 @@
 
 @media (max-width: 520px) {
   .board-header {
-    height: auto;
+    // height: auto;
     margin-block-start: 2.1em;
 
     // .nav-bar {
@@ -165,6 +165,10 @@
     //     justify-content: center;
     //   }
     // }
+  }
+
+  div > .board-title {
+    font-weight: 500;
   }
 }
 

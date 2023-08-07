@@ -5,7 +5,7 @@
       <h5>Trio</h5>
     </div>
 
-    <div class="user">
+    <div class="user-section">
       <router-link :to="'./login'" >
         <div class="btn-header">Log in</div>
       </router-link>

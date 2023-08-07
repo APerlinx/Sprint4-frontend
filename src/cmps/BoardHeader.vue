@@ -110,8 +110,6 @@ import { Draggable, Container } from 'vue3-smooth-dnd'
 import { FastAverageColor } from 'fast-average-color'
 import { defineComponent } from 'vue'
 
-import Popper from 'vue3-popper'
-
 import BoardMenu from './BoardMenu.vue'
 import GroupFilter from './GroupFilter.vue'
 
@@ -155,16 +153,14 @@ export default {
       this.$emit('checkboxChanged', checkboxEvent)
     },
     setPosition() {
-      const button = this.$refs.filterButton
-      const rect = button.getBoundingClientRect()
-
-      const maxHeight = window.innerHeight - rect.bottom - 20
-
-      this.filterStyle = {
-        top: `${rect.bottom}px`,
-        left: `${rect.left}px`,
-        maxHeight: `${maxHeight}px`,
-      }
+      // const button = this.$refs.filterButton
+      // const rect = button.getBoundingClientRect()
+      // const maxHeight = window.innerHeight - rect.bottom - 20
+      // this.filterStyle = {
+      //   top: `${rect.bottom}px`,
+      //   left: `${rect.left}px`,
+      //   maxHeight: `${maxHeight}px`,
+      // }
     },
     toggleFilter() {
       this.isFilterOpen = !this.isFilterOpen
@@ -189,13 +185,23 @@ export default {
         const fac = new FastAverageColor()
         const color = await fac.getColorAsync(img)
 
-        const rgbaColor = color.rgb
+        let backgroundColor = color.rgb
           .replace(')', ', 0.2)')
           .replace('rgb', 'rgba')
 
-        this.$refs.header.style.backgroundColor = rgbaColor
-        this.$refs.header.style.backdropFilter = 'blur(2px)'
+        // Extract the r, g, b values to check darkness
+        const [r, g, b] = backgroundColor.match(/\d+/g).map(Number)
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000
 
+        // If the color is dark, set to specific value
+        if (brightness < 128) {
+          backgroundColor = '#0000003d'
+        }
+
+        this.$refs.header.style.backgroundColor = backgroundColor
+        this.$refs.header.style.backdropFilter = 'blur(5px)'
+
+        // Determine text color based on background
         const textColor = color.isLight ? this.darkClr : this.LightClr
         const textItems = document.querySelectorAll('.text-item')
         textItems.forEach((item) => {
@@ -255,7 +261,6 @@ export default {
     BoardMenu,
     Draggable,
     Container,
-    Popper,
     GroupFilter,
     defineComponent,
   },
@@ -266,17 +271,21 @@ export default {
 </script>
 
 <style scoped>
-#popper-1 {
-  z-index: 999;
-}
 .filter-text {
   margin-inline-start: 0.6em;
   vertical-align: text-bottom;
   align-self: center;
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 600px) {
   .filter-text {
     display: none;
+  }
+  .members {
+    display: none;
+  }
+
+  h1.board-title {
+    font-size: 16px !important;
   }
 }
 </style>

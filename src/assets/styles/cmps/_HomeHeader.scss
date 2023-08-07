@@ -1,15 +1,17 @@
 .home-header {
     display: grid;
-    grid-template-columns:1fr rem(700px) 1.6fr;
+    grid-template-columns:1fr rem(500px) 1fr;
+    height: 60px;
    
     .logo {
         display: flex;
         align-items: baseline;
         justify-self: end;
+        align-self: center;
         gap: rem(6px);
         font-size: 3em;
-        padding: 0.5em;
         grid-column: 1;
+        width: 500px;
 
         h5 {
             font-family: charlie-semi;
@@ -21,7 +23,7 @@
         }
     }
 
-    .user {
+    .user-section {
         grid-column: 3;
         justify-self: start;
         display: flex;

@@ -18,11 +18,14 @@ export const userStore = {
         usersIsLoading({ isLoading }) {
             return isLoading
         },
-        notifications({loggedinUser}) {
+        notifications({ loggedinUser }) {
             return loggedinUser.notifications
         },
-        loggedinUserByUserName ({loggedinUser, users}) {
+        loggedinUserByUserName({ loggedinUser, users }) {
             return users.find(user => user.fullname === loggedinUser.fullname).username
+        },
+        fullUser({ loggedinUser, users }) {
+            return users.find(user => user.fullname === loggedinUser?.fullname)
         }
     },
     mutations: {
@@ -46,8 +49,6 @@ export const userStore = {
             const userId = savedUser._id
             const idx = state.users.findIndex(user => user._id === userId)
             state.users.splice(idx, 1, savedUser)
-
-            console.log(state.users);
         },
     },
     actions: {
@@ -125,15 +126,45 @@ export const userStore = {
                 const user = state.users.find(user => user.fullname === notification.toUser)
                 const userCopy = JSON.parse(JSON.stringify(user))
                 userCopy.notifications.push(notification)
+                userCopy.isUserReadNotifications = false
+                const savedUser = await userService.update(userCopy)
+
+                commit({ type: 'setUser', savedUser })
+            } catch (err) {
+                console.log(err)
+                throw err
+            }
+        },
+        async removeNotifications ({ commit, state, getters }) {
+            try {
+                const user = getters.fullUser
+                const userCopy = JSON.parse(JSON.stringify(user))
+                userCopy.isUserReadNotifications = true
+                const savedUser = await userService.update(userCopy)
+                console.log(savedUser.isUserReadNotifications);
+
+                commit({ type: 'setUser', savedUser })
+            } catch (err) {
+                console.log(err)
+                throw err
+            }
+        },
+
+        async toggleNotification({ commit, state }, { notification }) {
+            try {
+                const user = state.users.find(user => user.fullname === notification.toUser);
+                const idx = user.notifications.findIndex(not => not.createdAt === notification.createdAt);
+
+                const userCopy = JSON.parse(JSON.stringify(user));
+                userCopy.notifications[idx].isRead = !userCopy.notifications[idx].isRead
+
                 const savedUser = await userService.update(userCopy)
 
                 this.commit({ type: 'setUser', savedUser })
             } catch (err) {
-                console.log('userStore: Error in increaseScore', err)
+                console.log(err)
                 throw err
             }
-        }
-
-
+        },
     }
 }

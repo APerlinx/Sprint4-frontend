@@ -12,7 +12,7 @@
         <BoardList @star="starBoard" :boards="starredBoards" />
       </div>
 
-      <div v-if="recentBoards.length > 0" class="recent">
+      <!-- <div v-if="recentBoards.length > 0" class="recent">
         <div class="recently">
           <div class="recently-title">
             <span class="recently-icon"></span>
@@ -20,7 +20,8 @@
           </div>
         </div>
         <BoardList @star="starBoard" :boards="recentBoards" />
-      </div>
+      </div> -->
+
       <div class="workspace-title">
         <div class="sub-workspace">
           <div class="user-title">{{ loggedInUser }}</div>
@@ -77,9 +78,7 @@ export default {
         showErrorMsg("Cant delete borad");
       }
     },
-    // closeModal() {
-    //   this.isAddBoard = false;
-    // },
+
 
     async starBoard(board) {
       try {
