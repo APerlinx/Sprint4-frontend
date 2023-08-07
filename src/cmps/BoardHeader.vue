@@ -110,8 +110,6 @@ import { Draggable, Container } from 'vue3-smooth-dnd'
 import { FastAverageColor } from 'fast-average-color'
 import { defineComponent } from 'vue'
 
-import Popper from 'vue3-popper'
-
 import BoardMenu from './BoardMenu.vue'
 import GroupFilter from './GroupFilter.vue'
 
@@ -263,7 +261,6 @@ export default {
     BoardMenu,
     Draggable,
     Container,
-    Popper,
     GroupFilter,
     defineComponent,
   },
@@ -274,17 +271,21 @@ export default {
 </script>
 
 <style scoped>
-#popper-1 {
-  z-index: 999;
-}
 .filter-text {
   margin-inline-start: 0.6em;
   vertical-align: text-bottom;
   align-self: center;
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 600px) {
   .filter-text {
     display: none;
+  }
+  .members {
+    display: none;
+  }
+
+  h1.board-title {
+    font-size: 16px !important;
   }
 }
 </style>

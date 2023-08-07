@@ -286,20 +286,67 @@
 
 .icon-pencil-cover {
   margin-left: 220px;
-  transform:  scale(0.9);
+  transform: scale(0.9);
   font-size: 0.8em;
   padding: 6px 8px;
   border-radius: 8px;
   @include trello-icon($content: "\e928", $type: sm, $color: #626f86);
   $color: darken($dynamic-button-highlighted, 2.5%);
   background-color: rgba($color, 0.9);
-    &:hover {
+  &:hover {
     background-color: darken($dynamic-button-highlighted, 4%);
   }
 }
 
-.task-cover{
+.task-cover {
   display: flex;
   align-items: center;
   justify-content: end;
+}
+
+@media (max-width: 600px) {
+  .task-preview {
+    border-radius: 4px !important;
+  }
+
+  .label {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    width: 40px;
+    min-height: 14px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    border-radius: 2px !important;
+    cursor: pointer;
+    font-size: 12px;
+    overflow: hidden;
+    color: black;
+    transition: all 0.5s;
+    font-weight: 450;
+    line-height: 1.2;
+  }
+
+  .avatar-container {
+    display: flex;
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    justify-content: flex-end;
+    .member-avatar {
+      display: flex;
+      flex-direction: row;
+      cursor: pointer;
+      margin-right: -1.2px;
+      margin-bottom: 4px;
+      gap: 2px;
+      .avatar {
+        width: 32px !important;
+        height: 32px !important;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 2px;
+      }
+    }
+  }
 }

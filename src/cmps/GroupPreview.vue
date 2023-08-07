@@ -1,6 +1,6 @@
 <template>
   <li class="group-preview">
-    <div class="group-card">
+    <div :class="{ 'group-card': true, 'zoomed-out': isZoomedOut }">
       <div class="group-header">
         <input
           class="group-title"
@@ -79,6 +79,10 @@ export default {
     currentGroupId: {
       type: String,
       default: '',
+    },
+    isZoomedOut: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

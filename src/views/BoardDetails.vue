@@ -121,9 +121,9 @@ export default {
         this.boardStyle = {
           backgroundImage: newVal.backgroundImage || '',
           backgroundColor: newVal.backgroundColor || '',
-          backgroundSize: '100%',
+          backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'cover',
+          backgroundPosition: 'center',
         }
       },
     },
