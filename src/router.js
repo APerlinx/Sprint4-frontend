@@ -34,7 +34,7 @@ const routes = [
   {
     path: '/review',
     name: 'ReviewIndex',
-    component: TaskDetails //check for now
+    component: TaskDetails 
   },
   {
     path: '/chat',

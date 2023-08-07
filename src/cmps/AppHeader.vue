@@ -89,13 +89,15 @@
           <div class="notifiction-dot" v-if="!fullUser?.isUserReadNotifications"></div>
         </div>
 
-        <Notification @setReadNotifications="setUserRead" v-if="isNotifiction" />
 
         <img class="mode" src="../assets/styles/img/contrast.png" alt="" />
         <span class="user">{{ loggedInUser }}</span>
       </div>
     </nav>
   </header>
+  
+  <Notification @setReadNotifications="setUserRead" v-if="isNotifiction" />
+
 </template>
 
 <script>

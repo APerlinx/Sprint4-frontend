@@ -26,7 +26,7 @@
         </button>
       </li>
       <li class="open-form-wrapper" v-if="toggleAddForm" v-click-outside="handleCloseComponent">
-        <AddGroup @addGroup="addGroupBySocket" @close="handleCloseComponent" />
+        <AddGroup @addGroup="addGroup" @close="handleCloseComponent" />
       </li>
       <button @click="saveMsg" style="padding: 0px">.</button>
     </ul>
@@ -97,24 +97,24 @@ export default {
 
     this.groups = JSON.parse(JSON.stringify(this.groups))
     this.currBoard = this.$store.getters.getCurrBoard
-    socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroup);
-    socketService.on(SOCKET_EVENT_REMOVE_MSG, this.removeGroup);
-    socketService.on(SOCKET_EVENT_ADDTASK_MSG, this.addTask);
+    // socketService.on(SOCKET_EVENT_ADD_MSG, this.addGroup);
+    // socketService.on(SOCKET_EVENT_REMOVE_MSG, this.removeGroup);
+    // socketService.on(SOCKET_EVENT_ADDTASK_MSG, this.addTask);
   },
   methods: {
 
-    addGroupBySocket(title) {
-      const groupToAdd = boardService.getEmptyGroup();
-      groupToAdd.title = title;
-      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'add', payload: groupToAdd })
-    },
-    removeGroupBySocket(groupId) {
-      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'remove', payload: groupId })
-    },
-    addTaskBySocket({ groupId, taskTitle, openedFromModal }) {
-      this.showTaskForm = true;
-      socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'addtask', payload: { groupId, taskTitle, openedFromModal } })
-    },
+    // addGroupBySocket(title) {
+    //   // const groupToAdd = boardService.getEmptyGroup();
+    //   // groupToAdd.title = title;
+    //   // socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'add', payload: groupToAdd })
+    // },
+    // removeGroupBySocket(groupId) {
+    //   socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'remove', payload: groupId })
+    // },
+    // addTaskBySocket({ groupId, taskTitle, openedFromModal }) {
+    //   this.showTaskForm = true;
+    //   socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'addtask', payload: { groupId, taskTitle, openedFromModal } })
+    // },
 
 
     getGroupPayload(index) {
@@ -147,10 +147,10 @@ export default {
       }
     },
 
-    async addGroup(groupToAdd) {
+    async addGroup(groupTitle) {
       try {
-        // const groupToAdd = boardService.getEmptyGroup()
-        // groupToAdd.title = title
+        const groupToAdd = boardService.getEmptyGroup()
+        groupToAdd.title = groupTitle
 
         await this.$store.dispatch({
           type: 'addGroup',
