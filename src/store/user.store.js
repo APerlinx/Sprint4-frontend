@@ -46,8 +46,6 @@ export const userStore = {
             const userId = savedUser._id
             const idx = state.users.findIndex(user => user._id === userId)
             state.users.splice(idx, 1, savedUser)
-
-            console.log(state.users);
         },
     },
     actions: {

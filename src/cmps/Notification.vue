@@ -10,7 +10,6 @@
 
         <div class="notification-container">
             <div v-for="not in fullUser.notifications" :key="not.id" class="not">
-                <pre>{{ not }}</pre>
                 <div class="not-top">
                     <div class="not-preview">
                         <p>{{ not.task }}</p>
@@ -19,6 +18,7 @@
                         </div>
                     </div>
                     <div class="board-title">
+                        <pre>{{ not }}</pre>
                         <p>{{ not.board }}</p>
                     </div>
                 </div>
