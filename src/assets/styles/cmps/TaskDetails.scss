@@ -399,42 +399,49 @@
     }
 }
 
+
 .due-date-status {
     // border: 1px solid red;
-
 }
 
-.status {
-    align-items: center;
-    padding: 2px 4px 2px 4px;
-}
+.due-date-status {
+    .status {
+        align-items: center;
+        padding: 0px 4px 0px 4px;
+        border-radius: 3px;
+        font-size: 12px;
+        margin-left: 8px;
+        line-height: 16px;
 
-.overdue-long {
-    background-color: #ffedeb;
-    color: #ae2a19;
-    border-radius: 3px;
-    padding: 2px 4px 2px 4px;
-}
 
-.overdue-short {
-    background-color: red;
-    color: white;
-    border-radius: 3px;
-    padding: 2px 4px 2px 4px;
-}
+        &.done1 {
+            background-color: #1f845a;
+            color: white;
+        }
 
-.due-soon {
-    background-color: #e2b203;
-    color: #172b4d;
-    border-radius: 3px;
-    padding: 2px 4px 2px 4px;
-}
+        &.overduelong {
+            background-color: #ffedeb;
+            color: #ae2a19;
+            border-radius: 3px;
+            padding: 2px 4px 2px 4px;
 
-.done {
-    background-color: #1f845a;
-    color: white;
-}
+        }
 
+        &.overdueshort {
+            background-color: red;
+            color: white;
+            border-radius: 3px;
+            padding: 2px 4px 2px 4px;
+        }
+
+        &.duesoon {
+            background-color: #e2b203;
+            color: #172b4d;
+            border-radius: 3px;
+            padding: 2px 4px 2px 4px;
+        }
+    }
+}
 
 //////////////////////   DESCRIPTION   //////////////////////
 .icon-title-container-activity,

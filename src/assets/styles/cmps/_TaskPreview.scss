@@ -10,11 +10,12 @@
   position: relative;
 
   cursor: pointer;
+
   &.with-cover {
     border-radius: 0 0 8px 8px;
   }
 
-  > li {
+  >li {
     width: 100%;
 
     .tool-tip {
@@ -29,7 +30,7 @@
         margin-bottom: 0.33em;
         flex-grow: 1;
 
-        > div {
+        >div {
           display: flex;
           margin-right: 1em;
           align-items: center;
@@ -37,20 +38,23 @@
 
           .checklist-counter {
             margin-top: -0.05rem;
+
             // vertical-align: middle;
-            > .slash {
+            >.slash {
               scale: (1.1);
             }
           }
         }
 
-        > div > .icon {
+        >div>.icon {
           display: flex;
           align-items: center;
+
           &.member {
             margin-right: auto;
           }
-          & + span {
+
+          &+span {
             font-size: rem(12px);
             vertical-align: middle;
             margin-left: 0.3em;
@@ -67,13 +71,17 @@
             color: $dynamic-text;
           }
 
-          > .checklist-counter {
+          >.checklist-counter {
             color: $dynamic-text;
           }
         }
 
         .due-date {
           align-self: center;
+
+          .date-counter {
+            // color: blue;
+          }
 
           &.overdue-long {
             background-color: $background-danger;
@@ -90,6 +98,7 @@
 
             &:hover {
               background-color: $ds-background-danger-hovered;
+
               .icon.date {
                 @include trello-icon($content: "\e919", $type: sm, $color: $ds-icon-danger);
               }
@@ -112,6 +121,7 @@
 
             &:hover {
               background-color: $ds-background-danger-bold-hovered;
+
               .icon.date {
                 @include trello-icon($content: "\e919", $type: sm, $color: $dynamic-text);
               }
@@ -132,8 +142,10 @@
               color: $ds-text-warning-inverse;
               margin-top: 0.021rem;
             }
+
             &:hover {
               background-color: $ds-background-warning-bold-hovered;
+
               .icon.date {
                 @include trello-icon($content: "\e919", $type: sm, $color: $ds-text-warning-inverse);
               }
@@ -142,8 +154,18 @@
 
           &.done {
             background-color: $background-success-bold;
+
+            .date-counter {
+              color: $dynamic-text;
+            }
+
+            .icon.date {
+              color: $dynamic-text;
+            }
+
             &:hover {
               background-color: $background-success-bold-hovered;
+
               .icon.date {
                 @include trello-icon($content: "\e918", $type: sm, $color: $dynamic-text);
               }
@@ -158,6 +180,7 @@
         flex-grow: 1;
         flex-shrink: 1;
         justify-content: flex-end;
+
         .member-avatar {
           display: flex;
           flex-direction: row;
@@ -165,6 +188,7 @@
           margin-right: -1.2px;
           margin-bottom: 4px;
           gap: 2px;
+
           .avatar {
             width: 24px;
             height: 24px;
@@ -179,18 +203,23 @@
         &.watch {
           @include trello-icon($content: "\e969", $type: sm, $color: #626f86);
         }
+
         &.desc {
           @include trello-icon($content: "\e922", $type: sm, $color: #626f86);
         }
+
         &.checklist {
           @include trello-icon($content: "\e918", $type: sm, $color: #626f86);
         }
+
         &.comment {
           @include trello-icon($content: "\e91e", $type: md, $color: #626f86);
         }
+
         &.date {
           @include trello-icon($content: "\e91b", $type: sm, $color: #626f86);
         }
+
         &.attach {
           @include trello-icon($content: "\e908", $type: sm, $color: #626f86);
         }
@@ -198,12 +227,12 @@
     }
   }
 
-  > li > .task-header {
+  >li>.task-header {
     display: flex;
     justify-content: space-between;
     position: relative;
 
-    > p {
+    >p {
       margin: 0 0 4px;
       padding-inline-end: 1em;
       overflow: hidden;
@@ -222,7 +251,7 @@
   .task-header.full-cover-task {
     margin-top: 1.3em;
 
-    > p {
+    >p {
       font-weight: 500;
       font-size: 16px;
       color: rgb(23, 43, 77);
@@ -234,7 +263,7 @@
   .task-header.full-cover-image-task {
     margin-top: 15.7em;
 
-    > p {
+    >p {
       font-weight: 500;
       font-size: 16px;
       color: rgb(23, 43, 77);
@@ -286,19 +315,20 @@
 
 .icon-pencil-cover {
   margin-left: 220px;
-  transform:  scale(0.9);
+  transform: scale(0.9);
   font-size: 0.8em;
   padding: 6px 8px;
   border-radius: 8px;
   @include trello-icon($content: "\e928", $type: sm, $color: #626f86);
   $color: darken($dynamic-button-highlighted, 2.5%);
   background-color: rgba($color, 0.9);
-    &:hover {
+
+  &:hover {
     background-color: darken($dynamic-button-highlighted, 4%);
   }
 }
 
-.task-cover{
+.task-cover {
   display: flex;
   align-items: center;
   justify-content: end;
