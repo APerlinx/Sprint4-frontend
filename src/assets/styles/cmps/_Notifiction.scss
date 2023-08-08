@@ -1,130 +1,210 @@
-.notifiction-menu {
+.notification-menu {
     position: absolute;
-    top: 45px;
-    right: 1%;
-    background-color: rgb(255, 255, 255);
-    width: rem(400px);
-    border-radius: 0.8em;
+    right: 0;
+    top: 2.2%;
+    left: 0;
+    bottom: 0;
+    padding-block-start: 2em;
+    background-color: rgb(0, 0, 0);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.148);
-    border: 1px solid lightgray;
-    padding: 1.8em 1.4em;
-    z-index: 999;
+    z-index: 998;
 
     .not-title {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
+        background-color: rgb(37, 37, 37);
+        padding: 1em 0;
         h2 {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans";
             font-weight: 600;
-            color: #172b4d;
+            font-size: 14px;
+            color: rgb(201, 201, 201);
+        }
+    }
+    .filter-btn {
+        display: flex;
+        justify-content: space-evenly;
+        margin-block-start: 1em;
+        margin-inline-start: 0.8em;
+        width: 105px;
+        height: 35px;
+        border-radius: 30px;
+        background-color: rgb(21, 20, 36);
+        border: 1px solid #626ed9;
+        color: rgb(98, 110, 217);
+        .filter-title {
+            margin-block-start: 0.4em;
+            font-weight: 600;
+        }
+        .check {
+            margin-block-start: 0.75em;
+            height: 12px;
         }
     }
 
-    .not-line {
-        height: 1px;
-        width: 100%;
-        background-color: lightgray;
-        margin-block-start: rem(20px);
+   
+
+    .day-title {
+        margin-block-start: 1em;
+        margin-inline-start: 0.8em;
+        color: grey;
+        font-weight: 600;
+        font-size: 1.1em;
     }
-    .notification-container {
+    .not-container {
+        margin-block: 1em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+
         .not {
-            margin-block-start: rem(20px);
-            background-color: #f1f2f4;
-            border: 0.5px solid rgb(225, 224, 224);
-            border-radius: 0.8em;
-            box-shadow: 0.4px 0.4px 0.1px rgb(155, 155, 155);
+            display: flex;
+            align-items: center;
+            gap: 1em;
+            margin-inline-start: 0.8em;
+            color: #808080;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans";
+            font-weight: 500;
 
-            .not-top {
-                position: relative;
-                background-image: linear-gradient(0deg, rgba(196, 232, 240, 0.7) 50%, rgba(196, 232, 240, 0.7) 0%),
-                    url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/360x480/77de935d0cfd54507c9776cf821cf0eb/photo-1690692322953-fb0f543c6658.jpg");
-                background-position: center;
-                min-height: 90px;
-                width: 100%;
-                border-radius: 0.5em 0.5em 0 0;
-
-                .not-preview {
-                    padding: 1em;
-                    background-color: white;
-                    border-radius: 0.5em;
-                    box-shadow: 0.4px 0.4px 0.1px rgb(155, 155, 155);
-                    position: relative;
-                    top: 0.5em;
-                    width: 95%;
-                    margin: auto;
-
-                    p {
-                        padding-inline-start: 0.2em;
-                        color: #172b4d;
-                    }
-                    .date {
-                        padding-inline-start: 1em;
-                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
-                            "Droid Sans";
-                        @include trello-icon($content: $icon-clock, $type: sm, $color: rgb(110, 110, 110));
-                        display: flex;
-                        align-items: baseline;
-                        gap: 0.2em;
-                    }
-                }
-                .board-title {
-                    p {
-                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
-                            "Droid Sans";
-                        color: #172b4d;
-                        font-weight: 700;
-                        position: absolute;
-                        bottom: 10%;
-                        left: 3.2%;
-                    }
+            .not-icon {
+                align-self: start;
+                margin-block-start: 0.85em;
+                img {
+                    height: 16px;
                 }
             }
-            .not-bottom {
+
+            .not-text {
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
-                .not-user {
+                gap: 0.3em;
+
+                .action {
                     display: flex;
-                    align-items: center;
-                    gap: 0.6em;
-                    padding-inline-start: 0.8em;
-                    margin-block-start: 1.2em;
+                    flex-direction: column;
+                    // align-items: center;
 
-                    .user-avatar {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        background-color: rgb(255, 162, 0);
-                        color: darl darkblue;
-                        border-radius: 50%;
-                        padding: 0.2em;
-                        height: 25px;
-                        width: 25px;
-                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
-                            "Droid Sans";
+                    .the-board-title {
+                        text-decoration: underline;
                         font-weight: 600;
-                        font-size: 0.9em;
-                    }
-
-                    .user-name {
-                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
-                            "Droid Sans";
-                        font-weight: 700;
-                        color: #172b4d;
                     }
                 }
-                .not-actions {
-                    padding: 0.8em 3.4em;
-                    p {
-                    color: #172b4d;
-                    span {
-                    color: #172b4d;
-                    }
 
-                    }
+                .not-time {
+                    font-weight: 100;
+                    font-size: 0.8em;
                 }
             }
         }
     }
 }
+
+// }
+// }
+
+//   .not-line {
+//         height: 1px;
+//         width: 100%;
+//         background-color: lightgray;
+//         margin-block-start: rem(20px);
+//     }
+//     .notification-container {
+//         .not {
+//             margin-block-start: rem(20px);
+//             background-color: #f1f2f4;
+//             border: 0.5px solid rgb(225, 224, 224);
+//             border-radius: 0.8em;
+//             box-shadow: 0.4px 0.4px 0.1px rgb(155, 155, 155);
+
+//             .not-top {
+//                 position: relative;
+//                 background-image: linear-gradient(0deg, rgba(196, 232, 240, 0.7) 50%, rgba(196, 232, 240, 0.7) 0%),
+//                     url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/360x480/77de935d0cfd54507c9776cf821cf0eb/photo-1690692322953-fb0f543c6658.jpg");
+//                 background-position: center;
+//                 min-height: 90px;
+//                 width: 100%;
+//                 border-radius: 0.5em 0.5em 0 0;
+
+//                 .not-preview {
+//                     padding: 1em;
+//                     background-color: white;
+//                     border-radius: 0.5em;
+//                     box-shadow: 0.4px 0.4px 0.1px rgb(155, 155, 155);
+//                     position: relative;
+//                     top: 0.5em;
+//                     width: 95%;
+//                     margin: auto;
+
+//                     p {
+//                         padding-inline-start: 0.2em;
+//                         color: #172b4d;
+//                     }
+//                     .date {
+//                         padding-inline-start: 1em;
+//                         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
+//                             "Droid Sans";
+//                         @include trello-icon($content: $icon-clock, $type: sm, $color: rgb(110, 110, 110));
+//                         display: flex;
+//                         align-items: baseline;
+//                         gap: 0.2em;
+//                     }
+//                 }
+//                 .board-title {
+//                     p {
+//                         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
+//                             "Droid Sans";
+//                         color: #172b4d;
+//                         font-weight: 700;
+//                         position: absolute;
+//                         bottom: 10%;
+//                         left: 3.2%;
+//                     }
+//                 }
+//             }
+//             .not-bottom {
+//                 display: flex;
+//                 flex-direction: column;
+//                 justify-content: center;
+//                 .not-user {
+//                     display: flex;
+//                     align-items: center;
+//                     gap: 0.6em;
+//                     padding-inline-start: 0.8em;
+//                     margin-block-start: 1.2em;
+
+//                     .user-avatar {
+//                         display: flex;
+//                         justify-content: center;
+//                         align-items: center;
+//                         background-color: rgb(255, 162, 0);
+//                         color: darl darkblue;
+//                         border-radius: 50%;
+//                         padding: 0.2em;
+//                         height: 25px;
+//                         width: 25px;
+//                         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
+//                             "Droid Sans";
+//                         font-weight: 600;
+//                         font-size: 0.9em;
+//                     }
+
+//                     .user-name {
+//                         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu",
+//                             "Droid Sans";
+//                         font-weight: 700;
+//                         color: #172b4d;
+//                     }
+//                 }
+//                 .not-actions {
+//                     padding: 0.8em 3.4em;
+//                     p {
+//                     color: #172b4d;
+//                     span {
+//                     color: #172b4d;
+//                     }
+
+//                     }
+//                 }
+//             }
+//         }

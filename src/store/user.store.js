@@ -125,7 +125,7 @@ export const userStore = {
             try {
                 const user = state.users.find(user => user.fullname === notification.toUser)
                 const userCopy = JSON.parse(JSON.stringify(user))
-                userCopy.notifications.push(notification)
+                userCopy.notifications.unshift(notification)
                 userCopy.isUserReadNotifications = false
                 const savedUser = await userService.update(userCopy)
 

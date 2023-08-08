@@ -102,7 +102,7 @@ export default {
     async loadBoardData() {
       const { boardId } = this.$route.params
       await this.$store.dispatch('loadCurrentBoard', { boardId })
-      await this.$store.dispatch('addBoardToRecent', { boardId })
+      // await this.$store.commit('addBoardToRecent', { boardId })
       this.boardsLoaded = true
       socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
     },

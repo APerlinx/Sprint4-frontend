@@ -273,10 +273,10 @@ export default {
             let action;
             if (memberIndex !== -1) {
                 taskMembers.splice(memberIndex, 1);
-                action = "Removed you";
+                action = "removed you from";
             } else {
                 taskMembers.push(clickedMember);
-                action = "Added you";
+                action = "added you to";
             }
 
             this.createAndEditNotification(clickedMember, action)

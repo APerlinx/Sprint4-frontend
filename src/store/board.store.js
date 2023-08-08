@@ -408,6 +408,7 @@ export const boardStore = {
 
         const board = await boardService.getById(boardId)
         commit({ type: 'saveBoardToRecent', board })
+        console.log('happen');
       } catch (err) {
         console.log(err)
       }
