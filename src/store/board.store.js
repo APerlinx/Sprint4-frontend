@@ -457,7 +457,7 @@ export const boardStore = {
         const savedBoard = await boardService.save(currBoard)
       } catch (err) {
         console.log('Cannot save group', err)
-        commit({ type: 'updateBoard', board: prevBoard })
+        commit({ type: 'updateBoard', board: prevBoard }) // TODO: Check if needed or causing bugs
         throw err
       }
     },
