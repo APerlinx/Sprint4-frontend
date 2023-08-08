@@ -100,7 +100,6 @@
       :members="board.members"
       @searchTermChanged="handleSearchTermChange"
       @checkboxChanged="handleCheckboxChangeEvent"
-      v-click-outside="closeFilter"
     />
   </div>
 </template>
