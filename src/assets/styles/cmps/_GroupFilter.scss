@@ -128,6 +128,7 @@ label {
 .avatar-filter {
     width: 24px;
     margin-left: 2em;
+    border-radius: 50%;
 }
 
 .expan-options-dropdown {
@@ -151,7 +152,7 @@ label {
         margin-inline-start: 3em;
         max-width: 315.2px;
         border: 2px solid #ddd;
-        margin-top: -0.4em;
+        margin-top: -0.1em;
         height: 36px;
     }
 }

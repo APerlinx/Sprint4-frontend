@@ -152,8 +152,8 @@ export const boardStore = {
   },
   mutations: {
     setChangeClr(state, value) {
-      state.changeClr = value;
-      console.log('state.changeClr', state.changeClr);
+      state.changeClr = value
+      console.log('state.changeClr', state.changeClr)
     },
     setLoadingBoard(state, isLoading) {
       state.loadingBoard = isLoading
@@ -447,17 +447,21 @@ export const boardStore = {
       }
     },
     async saveGroups({ commit, state, dispatch }, { groups, currBoard }) {
+      const prevBoard = JSON.parse(JSON.stringify(state.currentBoard))
+
       try {
         currBoard = JSON.parse(JSON.stringify(currBoard))
         currBoard.groups = groups
+        commit({ type: 'updateBoard', board: currBoard })
+
         const savedBoard = await boardService.save(currBoard)
-        commit({ type: 'updateBoard', board: savedBoard })
-        dispatch({ type: 'loadBoards' })
       } catch (err) {
         console.log('Cannot save group', err)
+        commit({ type: 'updateBoard', board: prevBoard })
         throw err
       }
     },
+
     async saveBoard({ commit, dispatch }, { board }) {
       try {
         const savedBoard = await boardService.save(board)

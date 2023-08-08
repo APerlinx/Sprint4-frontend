@@ -23,7 +23,12 @@
     :style="getTaskPreviewStyle()"
   >
     <li v-if="task">
-      <div class="labels" @click.stop v-if="!task.cover?.isFull">
+      <div
+        class="labels"
+        @click.stop
+        v-if="!task.cover?.isFull"
+        ref="labelContainer"
+      >
         <div
           v-for="labelId in task.labels"
           :key="labelId"
@@ -34,7 +39,9 @@
           }"
           @click.stop="toggleLabel(labelId)"
         >
-          <span v-if="areLabelsVisible" class="label-content">{{ getLabel(labelId).title }}</span>
+          <span v-if="areLabelsVisible" class="label-content">{{
+            getLabel(labelId).title
+          }}</span>
         </div>
       </div>
 
@@ -201,6 +208,35 @@ export default {
     },
   },
   methods: {
+    calculateAndApplyColor() {
+      const labelContainer = this.$refs.labelContainer
+      if (!labelContainer) return // Ensure labelContainer exists
+
+      const labels = labelContainer.querySelectorAll('.label')
+      if (!labels) return // Ensure labels exist
+
+      labels.forEach((label) => {
+        const backgroundColor = label.style.backgroundColor || 'defaultColor'
+        const rgbMatch = backgroundColor.match(/\d+/g)
+
+        if (rgbMatch) {
+          // Ensure rgbMatch is not null
+          const [r, g, b] = rgbMatch.map(Number)
+          const brightness = (r * 299 + g * 587 + b * 114) / 1000
+          const labelContent = label.querySelector('.label-content')
+
+          if (labelContent) {
+            // Ensure labelContent exists
+            if (brightness < 128) {
+              labelContent.style.color = 'white'
+            } else {
+              labelContent.style.color = 'black'
+            }
+          }
+        }
+      })
+    },
+
     getTaskPreviewStyle() {
       if (this.task.cover?.isFull) {
         if (this.task.cover.imgUrl) {
@@ -271,9 +307,17 @@ export default {
     board() {
       this.fetchBoardMembers()
     },
+    areLabelsVisible() {
+      this.$nextTick(() => {
+        this.calculateAndApplyColor()
+      })
+    },
   },
   mounted() {
     this.fetchBoardMembers()
+    this.$nextTick(() => {
+      this.calculateAndApplyColor()
+    })
   },
   components: {
     TaskCover,
@@ -301,8 +345,8 @@ export default {
   font-size: 12px;
   overflow: hidden;
   color: black;
-  transition: all 0.5s; 
-  font-weight: 450;
+  transition: all 0.5s;
+  font-weight: 500;
   line-height: 1.2;
 }
 
@@ -310,7 +354,7 @@ export default {
   width: fit-content;
   height: 16px;
   padding: 0 8px;
-  font-size: 12px; 
+  font-size: 12px;
 }
 
 .label-text {
@@ -320,7 +364,6 @@ export default {
 }
 
 .label-content {
- 
 }
 
 .label.expanded .label-text {

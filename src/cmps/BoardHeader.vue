@@ -100,6 +100,7 @@
       :members="board.members"
       @searchTermChanged="handleSearchTermChange"
       @checkboxChanged="handleCheckboxChangeEvent"
+      v-click-outside="closeFilter"
     />
   </div>
 </template>
@@ -146,6 +147,9 @@ export default {
     window.addEventListener('resize', this.setPosition)
   },
   methods: {
+    closeFilter() {
+      this.isFilterOpen = false
+    },
     handleSearchTermChange(searchTerm) {
       this.$emit('searchTermChanged', searchTerm)
     },
