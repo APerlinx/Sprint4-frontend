@@ -1,2 +1,2 @@
-# Coding Academy
-## Vue Frontend Starter
+Trio : Your Ultimate Project Management Solution
+
