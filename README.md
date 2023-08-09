@@ -1,2 +1,2 @@
-Trio : Your Ultimate Project Management Solution
+# Trio : Your Ultimate Project Management Solution
 
