@@ -1,3 +1,6 @@
+// This is a code snippet from the project, which handle adding and removing members from tasks
+in real-time using sockets.
+
 
 <template>
     <component :board="boardToUpdate" :is="actionCmpType" :taskToEdit="taskToEdit" @toggleMember="toggleMember">
