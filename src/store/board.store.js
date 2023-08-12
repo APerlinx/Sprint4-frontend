@@ -60,15 +60,15 @@ export const boardStore = {
   getters: {
     getFilteredGroups:
       (state) =>
-      (dueDateFilters = {}, boardId) => {
-        let currentTime = new Date().getTime()
-        let twentyFourHours = 24 * 60 * 60 * 1000
+        (dueDateFilters = {}, boardId) => {
+          let currentTime = new Date().getTime()
+          let twentyFourHours = 24 * 60 * 60 * 1000
 
-        const board = state.boards.find((board) => board._id === boardId)
-        if (!board) {
-          console.error('No board found with ID:', boardId) // TODO : Why i get error ?
-          return []
-        }
+          const board = state.boards.find((board) => board._id === boardId)
+          if (!board) {
+            console.error('No board found with ID:', boardId)
+            return []
+          }
 
         let isFilterSelected = Object.values(dueDateFilters).some(
           (value) => value === true
@@ -114,8 +114,10 @@ export const boardStore = {
       const byName = new RegExp(filterBy, 'i')
       return boards.filter((board) => byName.test(board.title))
     },
-    recentBoards({ recentBoards }) {
-      return recentBoards
+    recentBoards({ boards }) {
+      return boards.filter((board) => board.isRecent)
+        .sort((a, b) => a.recentAt - b.recentAt)
+        .slice(-4);
     },
     savedBoard({ savedBoard }) {
       return savedBoard
@@ -317,6 +319,7 @@ export const boardStore = {
       }
     },
     async updateBoard(context, { board }) {
+      console.log('board', board);
       try {
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))

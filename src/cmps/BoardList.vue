@@ -6,6 +6,7 @@
         :board="board"
         @remove="$emit('remove', board._id)"
         @star="star"
+        @recent="recent"
         />
       </li>
     </ul>
@@ -23,6 +24,9 @@ export default {
   methods: {
     star(board) {
       this.$emit("star", board);
+    },
+    recent(board) {
+      this.$emit("recent", board);
     },
   },
   components: {

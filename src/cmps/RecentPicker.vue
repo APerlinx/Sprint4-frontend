@@ -5,7 +5,11 @@
         <li v-for="board in recentBoards">
           <RouterLink @click="closeModal" :to="'/details/' + board._id">
             <div class="row">
-              <img :src="board.imgUrl" />
+              <div v-if="board.style.backgroundImage" class="imgPreview"
+                :style="{ background: board.style.backgroundImage, 'background-size': 'cover', 'background-position': 'center' }">
+              </div>
+              <div v-else class="colorPreview" :style="{ background: board.style.backgroundColor }">
+              </div>
               <div class="text">
                 <h2>{{ board.title }}</h2>
                 <p>User Workspace</p>

@@ -1,7 +1,8 @@
 <template>
   <section class="filter">
     <Popper arrow placement="bottom">
-      <input class="search-bar" v-model="filterBy" @input="onSetFilterBy" type="text" placeholder="Search" v-focus />
+      <input class="search-bar" :class="{ 'search-changed': changeClr }" v-model="filterBy" @input="onSetFilterBy"
+        type="text" placeholder="Search" v-focus />
 
       <template #content>
         <div class="open">
@@ -12,8 +13,13 @@
               <li v-for="board in  filteredBoards " :key="board._id">
                 <RouterLink :to="'/details/' + board._id">
                   <div class="board-select">
-                    <img v-if="board.imgUrl" :src="board.imgUrl" alt="B" />
-                    <div v-else class="color" :style="{ background: board.bgColor }"></div>
+                    <div v-if="board.style.backgroundImage" class="imgPreview"
+                      :style="{ background: board.style.backgroundImage, 'background-size': 'cover', 'background-position': 'center' }">
+                    </div>
+                    <div v-else class="colorPreview" :style="{ background: board.style.backgroundColor }">
+                    </div>
+                    <!-- <img v-if="board.style" :src="board.imgUrl" alt="B" /> -->
+                    <!-- <div v-else class="color" :style="{ background: board.bgColor }"></div> -->
                     <h2>{{ board.title }}</h2>
                   </div>
                 </RouterLink>
@@ -43,7 +49,11 @@ export default {
   },
   computed: {
     filteredBoards() {
-      return this.$store.getters.filteredBoards;
+     const boards =  this.$store.getters.filteredBoards;
+     return boards.splice(0, 10)
+    },
+    changeClr() {
+      return this.$store.state.boardStore.changeClr
     },
   },
   components: {

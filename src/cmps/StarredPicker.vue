@@ -6,17 +6,17 @@
           <RouterLink @click="closeModal" :to="'/details/' + board._id">
             <div class="row">
               <div class="board-recent">
-                <img :src="board.imgUrl" />
+                <div v-if="board.style.backgroundImage" class="imgPreview"
+                  :style="{ background: board.style.backgroundImage, 'background-size': 'cover', 'background-position': 'center' }">
+                </div>
+                <div v-else class="colorPreview" :style="{ background: board.style.backgroundColor }">
+                </div>
                 <div class="info">
                   <h2 class="board-title">{{ board.title }}</h2>
-                  <p>User work space</p>
+                  <p>{{loggedinUser.fullname}} work space</p>
                 </div>
               </div>
-              <div
-                @click.stop.prevent="toggleStar(board)"
-                class="btn-star"
-                :class="boardClass"
-              ></div>
+              <div @click.stop.prevent="toggleStar(board)" class="btn-star" :class="boardClass"></div>
             </div>
           </RouterLink>
         </li>
@@ -59,6 +59,10 @@ export default {
         starred: this.isFull,
       };
     },
+    loggedinUser() {
+      return this.$store.getters.loggedinUser
+    }
+
   },
 };
 </script>

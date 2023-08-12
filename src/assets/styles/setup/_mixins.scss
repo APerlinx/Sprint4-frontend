@@ -40,6 +40,19 @@
     padding: 0;
 }
 
+@mixin bg-preview {
+    .imgPreview {
+        height: rem(30px);
+        width: rem(38px);
+        border-radius: 0.3em;
+    }
+    .colorPreview {
+        height: rem(30px);
+        width: rem(38px);
+        border-radius: 0.3em;
+    }
+}
+
 @mixin header-btn {
     .header-btn {
         cursor: pointer;

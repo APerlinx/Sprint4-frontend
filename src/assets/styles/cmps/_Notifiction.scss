@@ -1,7 +1,8 @@
+
 .notification-menu {
     position: absolute;
     right: 0;
-    top: 2.2%;
+    top: 2.75%;
     left: 0;
     bottom: 0;
     padding-block-start: 2em;
@@ -13,8 +14,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: rgb(37, 37, 37);
-        padding: 1em 0;
+        background-color: #272727;
+        padding: 0.7em 0;
         h2 {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans";
             font-weight: 600;
@@ -82,7 +83,9 @@
 
                 .action {
                     display: flex;
-                    flex-direction: column;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    // flex-direction: column;
                     // align-items: center;
 
                     .the-board-title {
