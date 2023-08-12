@@ -1,12 +1,22 @@
-
 <template>
-    <component :board="boardToUpdate" :is="actionCmpType" :taskToEdit="taskToEdit" @toggleMember="toggleMember">
-    </component>
+  <component
+    :board="boardToUpdate"
+    :is="actionCmpType"
+    :taskToEdit="taskToEdit"
+    @toggleMember="toggleMember"
+  >
+  </component>
 
-    <DynamicModal v-if="actionCmpType" :actionCmpType="actionCmpType" :taskToEdit="taskToEdit" :board="board"
-        :actionCmpName="actionCmpName" @toggleMember="toggleMember" />
+  <DynamicModal
+    v-if="actionCmpType"
+    :actionCmpType="actionCmpType"
+    :taskToEdit="taskToEdit"
+    :board="board"
+    :actionCmpName="actionCmpName"
+    @toggleMember="toggleMember"
+  />
 </template>
-  
+
 <script>
 export default {
     methods: {
@@ -72,9 +82,7 @@ export default {
 
         socketService.on('on-notifcation-push', this.addNotifcation)
 
- 
 
-      
 
         addNotifcation({ notification }) {
             this.$store.dispatch({ type: 'addNotifcation', notification })
@@ -101,10 +109,6 @@ export default {
             const idx = state.users.findIndex(user => user._id === userId)
             state.users.splice(idx, 1, savedUser)
         },
-
-
-
     },
 }
 </script>
-  

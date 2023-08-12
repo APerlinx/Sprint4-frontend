@@ -31,11 +31,6 @@
         </div>
 
         <div class="tool-tip-edit">
-          <div v-if="task.members && task.members.length > 0">
-            <span class="icon member"></span>
-            <span class="member-counter">{{ task.members.length }}</span>
-          </div>
-
           <div
             class="date"
             :class="`due-date ${dueDateStatus} ${task.status}`"
@@ -72,6 +67,17 @@
               >{{ doneChecklists }}<span class="slash">/</span
               >{{ totalChecklists }}</span
             >
+          </div>
+        </div>
+        <div class="avatar-container">
+          <div class="member-avatar" v-if="task.members">
+            <img
+              v-for="member in task.members"
+              :key="member.id"
+              :src="member.imgUrl"
+              class="avatar"
+              alt="Avatar"
+            />
           </div>
         </div>
       </div>
@@ -122,14 +128,10 @@
 </template>
 
 <script>
+import { watch } from 'vue'
+
 import DynamicModal from '../views/DynamicModal.vue'
 import TaskCover from './TaskCover.vue'
-
-// import { utilService } from '../../services/util-service.js'
-// import { socketService, SOCKET_EMIT_MEMBER_ACTION } from '../../services/socket.service'
-// import { userService } from '../../services/user-service'
-import { watch } from 'vue'
-import { eventBus } from '../services/event-bus.service'
 
 import Popper from 'vue3-popper'
 

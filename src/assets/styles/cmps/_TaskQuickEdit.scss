@@ -28,6 +28,32 @@
         border-radius: 8px;
         position: fixed;
         padding: 8px 8px 4px 12px;
+
+        .avatar-container {
+            display: flex;
+            flex-basis: auto;
+            flex-grow: 1;
+            flex-shrink: 1;
+            justify-content: flex-end;
+
+            .member-avatar {
+                display: flex;
+                flex-direction: row;
+                cursor: pointer;
+                margin-right: -1.2px;
+                margin-bottom: 4px;
+                gap: 2px;
+
+                .avatar {
+                    width: 24px;
+                    height: 24px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    margin-right: 2px;
+                }
+            }
+        }
+
         .title-edit {
             border-radius: 5px;
             height: fit-content;
@@ -356,6 +382,14 @@
 
         &.done {
             background-color: $background-success-bold;
+
+            .date-counter {
+                color: $dynamic-text;
+            }
+
+            .icon.date {
+                color: $dynamic-text;
+            }
             &:hover {
                 background-color: $background-success-bold-hovered;
                 .icon.date {
