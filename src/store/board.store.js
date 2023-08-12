@@ -66,7 +66,7 @@ export const boardStore = {
 
         const board = state.boards.find((board) => board._id === boardId)
         if (!board) {
-          console.error('No board found with ID:', boardId)
+          console.error('No board found with ID:', boardId) // TODO : Why i get error ?
           return []
         }
 
@@ -153,7 +153,6 @@ export const boardStore = {
   mutations: {
     setChangeClr(state, value) {
       state.changeClr = value
-      console.log('state.changeClr', state.changeClr)
     },
     setLoadingBoard(state, isLoading) {
       state.loadingBoard = isLoading
@@ -291,7 +290,7 @@ export const boardStore = {
         const taskToUpdate = group.tasks.find((t) => t.id === task.id)
 
         if (taskToUpdate) {
-          taskToUpdate.title = task.title // If you're trying to update the title
+          taskToUpdate.title = task.title 
         }
       }
     },
@@ -318,6 +317,7 @@ export const boardStore = {
       }
     },
     async updateBoard(context, { board }) {
+      console.log('board', board);
       try {
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))
@@ -448,6 +448,9 @@ export const boardStore = {
       }
     },
     async saveGroups({ commit, state, dispatch }, { groups, currBoard }) {
+      // TODO : Optimistic implemntation of dnd, need to find a better solution 
+      // the size of the board object cause the dnd to look bugy
+      // probably need to save not the whole board but only groups
       const prevBoard = JSON.parse(JSON.stringify(state.currentBoard))
 
       try {
@@ -457,7 +460,6 @@ export const boardStore = {
 
         const savedBoard = await boardService.save(currBoard)
       } catch (err) {
-        console.log('Cannot save group', err)
         commit({ type: 'updateBoard', board: prevBoard }) // TODO: Check if needed or causing bugs
         throw err
       }

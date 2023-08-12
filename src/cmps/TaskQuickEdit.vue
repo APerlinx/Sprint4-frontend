@@ -72,7 +72,7 @@
         <div class="avatar-container">
           <div class="member-avatar" v-if="task.members">
             <img
-              v-for="member in task.members"
+              v-for="member in taskToEdit.members"
               :key="member.id"
               :src="member.imgUrl"
               class="avatar"
@@ -115,11 +115,9 @@
           @closeDynamicModal="closeDynamicModal"
           @toggleMember="toggleMember"
           @saveLabel="saveLabel"
-          @checklist="addChecklist"
           @removeLabel="removeLabel"
           @updateLable="updateLable"
           @DueDate="addDueDate"
-          @attachment="addAttachment"
           @setCover="setCover"
         />
       </div>
@@ -214,7 +212,7 @@ export default {
   },
   created() {
     this.localTask = { ...this.task }
-    // this.setTask()
+    this.setTask()
   },
   computed: {
     areLabelsVisible() {
@@ -269,26 +267,13 @@ export default {
       }
       this.$store.dispatch({ type: 'updateBoard', board: this.board })
     },
-    addAttachment(newAttachment) {
-      if (!this.taskToEdit.attachments) this.taskToEdit.attachments = []
-      this.taskToEdit.attachments.push(newAttachment)
-      this.onTaskEdit()
-    },
-    addChecklist(newChecklist) {
-      if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
-      this.taskToEdit.checklists.push(newChecklist)
-      this.editTask()
-    },
     toggleMember(clickedMember) {
       if (!this.taskToEdit.members) {
         this.taskToEdit.members = []
         this.taskToEdit.members.push(clickedMember)
       } else {
-        if (
-          this.taskToEdit.members.some(
-            (member) => member.id === clickedMember.id
-          )
-        ) {
+        if (this.taskToEdit.members.some((member) => member.id === clickedMember.id)) {
+
           const idx = this.taskToEdit.members.findIndex(
             (member) => member.id === clickedMember.id
           )
@@ -297,20 +282,23 @@ export default {
           this.taskToEdit.members.push(clickedMember)
         }
       }
+      this.editTask()
     },
-    async setTask() {
+    setTask() {
       try {
-        const boardId = this.$route.params.boardId
-        const board = await boardService.getById(boardId)
-        const taskId = this.$route.params.taskId
-        const groupId = this.$route.params.groupId
-        // console.log("groupId:", groupId);
 
-        this.board = JSON.parse(JSON.stringify(board))
+        if (!this.board) { // TODO : find a way to fetch the board only once probably using an action
+          const board = this.$store.getters.getCurrBoard
+          this.board = JSON.parse(JSON.stringify(board))
+        }
+
+        const taskId = this.task.id
+        const groupId = this.groupId
+
         this.group = this.board.groups.find((group) => group.id === groupId)
         this.taskToEdit = this.group.tasks.find((task) => task.id === taskId)
       } catch (err) {
-        console.log('error in setTask')
+        console.log('error in setTask',err)
       }
     },
     togglecover() {
@@ -323,14 +311,12 @@ export default {
       this.$router.back()
     },
     editTask() {
-      console.log('edit task:')
       const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
-      // console.log("editedTask:", editedTask)
       const taskIdx = this.group.tasks.findIndex(
         (task) => task.id === this.taskToEdit.id
       )
-      // replace task with editTask
       this.group.tasks.splice(taskIdx, 1, this.taskToEdit)
+      
       this.$store.dispatch({ type: 'updateBoard', board: this.board })
     },
     closeComponent() {
@@ -360,7 +346,6 @@ export default {
           break
         default:
           this.cmpType = null
-          // handle the archive action or other actions that do not correspond to a modal.
           break
       }
     },
@@ -371,7 +356,6 @@ export default {
       this.$store.commit('toggleLabelsVisibility')
     },
     closeQuickEdit(e) {
-      console.log('closeQuickEdit was called')
       if (e.target.classList.contains('quickEditScreen')) {
         this.$emit('close')
       }
@@ -401,8 +385,10 @@ export default {
             const isNearRight = distanceFromRight < 200
             this.actionButtonsClass = isNearRight ? 'modal-left' : 'modal-right'
             const adjustedTop = this.rect.top - 100
+
             this.$refs.titleInput.focus()
             this.$refs.titleInput.select()
+
             if (this.isNearBottom && isNearRight) {
               this.buttonPosition = {
                 position: 'fixed',
@@ -447,5 +433,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss"></style>
