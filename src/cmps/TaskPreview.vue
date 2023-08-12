@@ -236,7 +236,6 @@ export default {
         }
       })
     },
-
     getTaskPreviewStyle() {
       if (this.task.cover?.isFull) {
         if (this.task.cover.imgUrl) {

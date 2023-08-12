@@ -302,7 +302,7 @@ export default {
           this.taskToEdit.members.push(clickedMember)
         }
       }
-      this.editTask()
+      // this.editTask()
     },
     setTask() {
       try {

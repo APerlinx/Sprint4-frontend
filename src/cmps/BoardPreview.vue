@@ -31,7 +31,6 @@ export default {
       const board = JSON.parse(JSON.stringify(this.board));
       board.isRecent = true;
       board.recentAt = Date.now();
-      console.log(board);
       this.$emit("recent", board);
       this.$router.push(`/details/${this.board._id}`);
     },

@@ -69,13 +69,19 @@ function getEmptyBoard(title = '', imgUrl = '') {
         },
         style: {
             backgroundImage: '',
-            backgroundColor:'',
+            backgroundColor: '',
         },
         labels: _labelOptions(),
         members: _membersOptions(),
         cover: coverOptions(),
         backGround: backgroundOptions(),
-        groups: [],
+        groups: [
+            {
+                id: utilService.makeId(),
+                title: "Your first group!",
+                tasks: []
+            }
+        ],
         activities: [],
     }
 }

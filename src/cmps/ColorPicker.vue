@@ -1,10 +1,7 @@
 <template>
   <section class="color-pallte">
-    <div
-      v-for="(color, index) in colorOptions"
-      :key="index"
-      @click="setBgColor(color)"
-      :class="colorClass[index]"
+    <div v-for="(img, index) in imgOptions" :key="index" @click="setBg(img)" 
+    :style="{ backgroundImage: `url('${img}')` }"
     ></div>
   </section>
 </template>
@@ -13,39 +10,24 @@
 export default {
   data() {
     return {
-      colorOptions: [
-        //green
-        "linear-gradient(328deg, rgba(9, 55, 118, 1) 0%, rgba(159, 226, 17, 1) 100%)", 
+      imgOptions: [
+        "https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/snow.svg",
+
+        "https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/ocean.svg",
+
+        "https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/crystal.svg",
+
+        "https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/rainbow.svg",
+
+        "https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/peach.svg",
         
-        //blue
-            "linear-gradient(328deg, rgba(9, 55, 118, 1) 0%, rgba(17, 107, 226, 1) 100%)",
-
-        //dark-blue
-
-            "linear-gradient(328deg, rgba(11, 97, 216, 1) 0%, rgba(9, 55, 118, 1) 100%)",
-        //dark-purple
-
-            "linear-gradient(328deg, rgba(121, 96, 196, 1) 0%, rgba(25, 52, 111, 1) 100%)",
-        //purple
-
-            "linear-gradient(328deg, rgba(121, 96, 196, 1) 0%, rgba(219, 115, 189, 1) 100%)",
-        //orange
-
-            "linear-gradient(328, rgba(230, 85, 55, 1) 0%, rgba(247, 154, 60, 1) 100%)",
-      ],
-      colorClass: [
-        "green",
-        "blue",
-        "dark-blue",
-        "dark-purple",
-        "purple",
-        "unique",
+        "https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/flower.svg",
       ],
     };
   },
   methods: {
-    setBgColor(color) {
-      this.$emit("setBgColor", color)
+    setBg(img) {
+      this.$emit("setBg", img)
     },
   },
 };
