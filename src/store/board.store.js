@@ -317,7 +317,6 @@ export const boardStore = {
       }
     },
     async updateBoard(context, { board }) {
-      console.log('board', board);
       try {
         board = await boardService.save(board)
         context.commit(getActionUpdateBoard(board))

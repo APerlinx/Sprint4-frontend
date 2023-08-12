@@ -1,7 +1,7 @@
 <template>
   <div v-if="quickEditDisplay">
-    <section class="task-preview-container">
-      <div @click.stop="closeQuickEdit" class="quickEditScreen"></div>
+    <section class="task-preview-container" @click="closeQuickEdit">
+      <div class="quickEditScreen"></div>
       <div class="quickEdit" ref="quickEdit" :style="quickEditPosition">
         <TaskCover :task="task" />
 
@@ -101,18 +101,19 @@
           :key="btn.type"
           @click.stop="openModal(btn.type)"
         >
+        
           <span :class="btn.icon"></span>
           {{ btn.txt }}
         </button>
         <div @click.stop="removeTask">
           <span class="archive-icon"></span>
         </div>
+
         <DynamicModal
           v-if="cmpType"
           :actionCmpType="cmpType"
           :taskToEdit="localTask"
           :actionCmpName="CmpName"
-          @closeDynamicModal="closeDynamicModal"
           @toggleMember="toggleMember"
           @saveLabel="saveLabel"
           @removeLabel="removeLabel"
@@ -120,6 +121,7 @@
           @DueDate="addDueDate"
           @setCover="setCover"
         />
+
       </div>
     </section>
   </div>
@@ -130,15 +132,14 @@ import { watch } from 'vue'
 
 import DynamicModal from '../views/DynamicModal.vue'
 import TaskCover from './TaskCover.vue'
-
-import Popper from 'vue3-popper'
+import Popper from "vue3-popper";
 
 export default {
   name: 'task-preview',
   components: {
     DynamicModal,
-    Popper,
     TaskCover,
+    Popper,
   },
   props: {
     task: {
@@ -146,10 +147,6 @@ export default {
     },
     groupId: {
       type: String,
-    },
-    quickEditDisplay: {
-      type: Boolean,
-      required: true,
     },
     quickEditDisplay: {
       type: Boolean,
@@ -214,6 +211,12 @@ export default {
     this.localTask = { ...this.task }
     this.setTask()
   },
+  mounted() {
+    document.addEventListener('click', this.onClickOutside)
+  },
+  beforeDestroy() {
+    document.removeEventListener('click', this.onClickOutside)
+  },
   computed: {
     areLabelsVisible() {
       return this.$store.getters.areLabelsVisible
@@ -223,6 +226,20 @@ export default {
     },
   },
   methods: {
+    closeQuickEdit() {
+      // this.$emit('close')
+    },
+
+    onClickOutside(event) {
+      // console.log('event', event)
+      // if (
+      //   this.$refs.quickEdit &&
+      //   !this.$refs.quickEdit.contains(event.target) &&
+      //   (!this.cmpType || !this.$refs.dynamicModal.$el.contains(event.target))
+      // ) {
+      //   this.closeQuickEdit()
+      // }
+    },
     saveTitle() {
       this.$store.dispatch('saveTaskTitle', {
         task: this.localTask,
@@ -272,8 +289,11 @@ export default {
         this.taskToEdit.members = []
         this.taskToEdit.members.push(clickedMember)
       } else {
-        if (this.taskToEdit.members.some((member) => member.id === clickedMember.id)) {
-
+        if (
+          this.taskToEdit.members.some(
+            (member) => member.id === clickedMember.id
+          )
+        ) {
           const idx = this.taskToEdit.members.findIndex(
             (member) => member.id === clickedMember.id
           )
@@ -286,8 +306,8 @@ export default {
     },
     setTask() {
       try {
-
-        if (!this.board) { // TODO : find a way to fetch the board only once probably using an action
+        if (!this.board) {
+          // TODO : find a way to fetch the board only once probably using an action
           const board = this.$store.getters.getCurrBoard
           this.board = JSON.parse(JSON.stringify(board))
         }
@@ -298,17 +318,14 @@ export default {
         this.group = this.board.groups.find((group) => group.id === groupId)
         this.taskToEdit = this.group.tasks.find((task) => task.id === taskId)
       } catch (err) {
-        console.log('error in setTask',err)
+        console.log('error in setTask', err)
       }
     },
     togglecover() {
       this.isCoverActive = !this.isCoverActive
     },
     closeDynamicModal() {
-      this.isDynamicModal = false
-    },
-    closeModal() {
-      this.$router.back()
+      // this.isDynamicModal = false
     },
     editTask() {
       const editedTask = JSON.parse(JSON.stringify(this.taskToEdit))
@@ -316,12 +333,12 @@ export default {
         (task) => task.id === this.taskToEdit.id
       )
       this.group.tasks.splice(taskIdx, 1, this.taskToEdit)
-      
+
       this.$store.dispatch({ type: 'updateBoard', board: this.board })
     },
     closeComponent() {
       this.taskTitle = ''
-      this.$emit('close')
+      // this.$emit('close')
     },
     openModal(type) {
       switch (type) {
@@ -354,11 +371,6 @@ export default {
     },
     toggleLabel() {
       this.$store.commit('toggleLabelsVisibility')
-    },
-    closeQuickEdit(e) {
-      if (e.target.classList.contains('quickEditScreen')) {
-        this.$emit('close')
-      }
     },
     openTaskDetails() {
       const boardId = this.$route.params.boardId

@@ -4,7 +4,7 @@
         <div class="members-container">
             <h3>Board members</h3>
             <ul>
-                <li v-for="member in filteredMembers" :key="member.id" @click="toggleMember(member)" class="list">
+                <li v-for="member in filteredMembers" :key="member.id" @click.stop="toggleMember(member)" class="list">
                     <div class="single-member-container">
                         <div class="member-pic">
                             <img :src="member.imgUrl" defult />

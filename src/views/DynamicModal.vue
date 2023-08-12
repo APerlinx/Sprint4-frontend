@@ -2,7 +2,7 @@
   <div class="dynamic-modal-container">
     <section class="dynamic-modal-header">
       <h4 class="dynamic-modal-title">{{ actionCmpName }}</h4>
-      <span class="dynamic-modal-close" @click="closeDynamicModal"></span>
+      <span class="dynamic-modal-close" @click.stop="closeDynamicModal"></span>
     </section>
     <section>
       <component :board="boardToUpdate" :is="actionCmpType" :taskToEdit="taskToEdit" @updateLable="updateLable"
@@ -63,7 +63,6 @@ export default {
     },
     addDueDate(newDueDate) {
       this.$emit('dueDate', newDueDate)
-      console.log('modal2 - date:', newDueDate)
     },
     updateLable(label) {
       this.$emit('updateLable', label)
