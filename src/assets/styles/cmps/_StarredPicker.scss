@@ -35,12 +35,8 @@
                         align-items: center;
                         gap: rem(7px);
                         padding: 0;
-                        img {
-                            height: rem(30px);
-                            width: rem(38px);
-                            border-radius: 0.3em;
-                            margin-block-start: -0.3em;
-                        }
+
+                        @include bg-preview;
 
                         .info {
                             display: flex;
@@ -61,7 +57,6 @@
                                 color: rgb(106, 106, 106);
                             }
                         }
-                        
                     }
 
                     .btn-star {

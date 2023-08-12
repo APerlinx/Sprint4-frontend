@@ -9,18 +9,18 @@
             <h2>Starred boards</h2>
           </div>
         </div>
-        <BoardList @star="starBoard" :boards="starredBoards" />
+        <BoardList @star="updateBoard" @recent="updateBoard" :boards="starredBoards" />
       </div>
 
-      <!-- <div v-if="recentBoards.length > 0" class="recent">
+      <div v-if="recentBoards.length > 0" class="recent">
         <div class="recently">
           <div class="recently-title">
             <span class="recently-icon"></span>
             <h2>Recently viewed</h2>
           </div>
         </div>
-        <BoardList @star="starBoard" :boards="recentBoards" />
-      </div> -->
+        <BoardList :boards="recentBoards" @star="updateBoard" @recent="updateBoard" />
+      </div>
 
       <div class="workspace-title">
         <div class="sub-workspace">
@@ -30,7 +30,7 @@
       </div>
       <div class="workspace">
         <div>
-          <BoardList :boards="boards" @remove="removeBoard" @star="starBoard" />
+          <BoardList :boards="boards" @remove="removeBoard" @star="updateBoard" @recent="updateBoard" />
         </div>
 
         <div class="index-create-board">
@@ -38,10 +38,7 @@
             <div class="board-title">Create new board</div>
             <template #content>
               <div class="index-container">
-                <AddBoard
-                  @close="scrollWindowToIndexLayout()"
-                  @save="saveBoard"
-                />
+                <AddBoard @close="scrollWindowToIndexLayout()" @save="saveBoard" />
               </div>
             </template>
           </Popper>
@@ -65,10 +62,9 @@ export default {
   data() {
     return {};
   },
-
   created() {
+    this.$store.commit('setChangeClr', false)
   },
-
   methods: {
     async removeBoard(boardId) {
       try {
@@ -78,18 +74,14 @@ export default {
         showErrorMsg("Cant delete borad");
       }
     },
-
-
-    async starBoard(board) {
+    async updateBoard(board) {
       try {
-        console.log(board.isStarred);
         await this.$store.dispatch({ type: "updateBoard", board });
       } catch (err) {
         console.log(err);
         showErrorMsg("Cant star board");
       }
     },
-
     async saveBoard(board) {
       try {
         await this.$store.dispatch({
@@ -117,7 +109,6 @@ export default {
       }
     },
   },
-
   computed: {
     boards() {
       return this.$store.getters.boards;

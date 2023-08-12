@@ -1,3 +1,4 @@
+
 .app-header {
     z-index: 10;
     max-height: 48px;
@@ -47,7 +48,7 @@
                 border-radius: 0.3em;
                 transition: 0.5s;
                 height: 100%;
-                padding: 0.5em 0em;
+                padding: 0.5em;
 
                 &:hover {
                     background-color: darken(white, 8%);
@@ -104,9 +105,9 @@
 
             .search-icon {
                 position: absolute;
-                left: 3%;
+                left: 4.5%;
                 top: 50%;
-                transform: translateY(-50%);
+                transform: translateY(-40.5%);
 
                 .search-icon-img {
                     height: 13px;
@@ -117,10 +118,30 @@
             display: none;
         }
         .notifiction-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: relative;
             width: max-content;
             rotate: (50deg);
+            height: rem(22px);
+            width: 22px;
+            border-radius: 50%;
             cursor: pointer;
+            transition: 0.2s;
+
+            &.clicked-not {
+                background-color: #3a4b63;
+            }
+
+            & :nth-child(1) {
+                font-size: 14px;
+                margin-block-end: 0.1em;
+                margin-inline-end: 0.09em;
+
+                
+            }
+
             .notifiction-dot {
                 display: flex;
                 justify-content: center;
@@ -141,11 +162,6 @@
                     margin-inline-end: 0.1em;
                 }
             }
-
-            .fa-regular .fa-bell {
-                height: 16px;
-                font-size: 100px;
-            }
         }
 
         .mode {
@@ -165,8 +181,7 @@
             font-weight: 700;
 
             &.user-changed {
-                color: hsl(208, 34.3%, 21.9%) ;
-
+                color: hsl(208, 34.3%, 21.9%);
             }
 
             h2 {
@@ -185,6 +200,7 @@
             width: 100%;
             height: 48px;
             padding: 8px 16.5px;
+            border-bottom: none;
 
             .left {
                 .recent {
@@ -198,6 +214,10 @@
                     margin-inline-start: 0;
                     & :nth-child(1) {
                         padding-inline-start: 0;
+                        font-size: 18px;
+                    }
+                    & :nth-child(2) {
+                        font-size: 18px;
                     }
                 }
                 .create-btn {

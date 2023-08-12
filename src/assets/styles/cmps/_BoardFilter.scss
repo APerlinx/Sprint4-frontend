@@ -4,11 +4,21 @@
         justify-self: end;
 
         .search-bar {
-            width: rem(200px);
+            width: rem(190px);
             padding: 0.5em 2em;
             border-radius: 0.35em;
             border: 1px solid lightgrey;
             height: rem(32px);
+
+            &.search-changed {
+                background-color: hsl(207, 29%, 30%);
+                color: #ffffff;
+                border: 1px solid rgba(197, 197, 197, 0.377);
+
+                &::placeholder {
+                    color: #ffffff;
+                }
+            }
 
             &:focus {
                 width: rem(500px);
@@ -60,18 +70,8 @@
                         gap: 0.5em;
                         padding-inline-start: 1em;
                         padding-block: 0.4em;
-
-                        img {
-                            height: rem(25px);
-                            width: rem(25px);
-                            border-radius: 0.2em;
-                        }
-
-                        .color {
-                            height: rem(25px);
-                            width: rem(25px);
-                            border-radius: 0.2em;
-                        }
+                        
+                        @include bg-preview;
 
                         h2 {
                             font-weight: 300;

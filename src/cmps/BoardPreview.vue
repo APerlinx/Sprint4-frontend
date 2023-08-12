@@ -1,12 +1,10 @@
 <template>
-  <RouterLink :to="'/details/' + board._id">
-    <div class="board">
+    <div class="board" @click="goToDetails()">
       <div class="drop">
         <div @click.stop.prevent="toggleStar" class="btn-star" :class="boardClass"></div>
         <h2>{{ board.title.toUpperCase() }}</h2>
       </div>
     </div>
-  </RouterLink>
 
   <!-- <button @click="removeBoard(board._id)">X</button> -->
 </template>
@@ -28,6 +26,14 @@ export default {
       const board = JSON.parse(JSON.stringify(this.board));
       board.isStarred = !board.isStarred;
       this.$emit("star", board);
+    },
+    goToDetails() {
+      const board = JSON.parse(JSON.stringify(this.board));
+      board.isRecent = true;
+      board.recentAt = Date.now();
+      console.log(board);
+      this.$emit("recent", board);
+      this.$router.push(`/details/${this.board._id}`);
     },
   },
   computed: {

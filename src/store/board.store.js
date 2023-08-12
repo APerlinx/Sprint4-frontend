@@ -60,50 +60,50 @@ export const boardStore = {
   getters: {
     getFilteredGroups:
       (state) =>
-      (dueDateFilters = {}, boardId) => {
-        let currentTime = new Date().getTime()
-        let twentyFourHours = 24 * 60 * 60 * 1000
+        (dueDateFilters = {}, boardId) => {
+          let currentTime = new Date().getTime()
+          let twentyFourHours = 24 * 60 * 60 * 1000
 
-        const board = state.boards.find((board) => board._id === boardId)
-        if (!board) {
-          console.error('No board found with ID:', boardId)
-          return []
-        }
-
-        let isFilterSelected = Object.values(dueDateFilters).some(
-          (value) => value === true
-        )
-
-        if (!isFilterSelected) {
-          return [...board.groups]
-        }
-
-        return board.groups.map((group) => {
-          return {
-            ...group,
-            tasks: group.tasks.filter((t) => {
-              if (t.status === 'done') {
-                return false
-              }
-
-              let matchesDueDateFilters = false
-
-              if (dueDateFilters.noDate) {
-                matchesDueDateFilters = !t.dueDate
-              } else if (dueDateFilters.overdue) {
-                matchesDueDateFilters = t.dueDate && currentTime - t.dueDate > 0
-              } else if (dueDateFilters.dueInNextDay) {
-                let startOfNextDay = currentTime
-                let endOfNextDay = currentTime + twentyFourHours
-                matchesDueDateFilters =
-                  t.dueDate >= startOfNextDay && t.dueDate <= endOfNextDay
-              }
-
-              return matchesDueDateFilters
-            }),
+          const board = state.boards.find((board) => board._id === boardId)
+          if (!board) {
+            console.error('No board found with ID:', boardId)
+            return []
           }
-        })
-      },
+
+          let isFilterSelected = Object.values(dueDateFilters).some(
+            (value) => value === true
+          )
+
+          if (!isFilterSelected) {
+            return [...board.groups]
+          }
+
+          return board.groups.map((group) => {
+            return {
+              ...group,
+              tasks: group.tasks.filter((t) => {
+                if (t.status === 'done') {
+                  return false
+                }
+
+                let matchesDueDateFilters = false
+
+                if (dueDateFilters.noDate) {
+                  matchesDueDateFilters = !t.dueDate
+                } else if (dueDateFilters.overdue) {
+                  matchesDueDateFilters = t.dueDate && currentTime - t.dueDate > 0
+                } else if (dueDateFilters.dueInNextDay) {
+                  let startOfNextDay = currentTime
+                  let endOfNextDay = currentTime + twentyFourHours
+                  matchesDueDateFilters =
+                    t.dueDate >= startOfNextDay && t.dueDate <= endOfNextDay
+                }
+
+                return matchesDueDateFilters
+              }),
+            }
+          })
+        },
     boards({ boards }) {
       return boards
     },
@@ -114,8 +114,10 @@ export const boardStore = {
       const byName = new RegExp(filterBy, 'i')
       return boards.filter((board) => byName.test(board.title))
     },
-    recentBoards({ recentBoards }) {
-      return recentBoards
+    recentBoards({ boards }) {
+      return boards.filter((board) => board.isRecent)
+        .sort((a, b) => a.recentAt - b.recentAt)
+        .slice(-4);
     },
     savedBoard({ savedBoard }) {
       return savedBoard
@@ -153,7 +155,6 @@ export const boardStore = {
   mutations: {
     setChangeClr(state, value) {
       state.changeClr = value
-      console.log('state.changeClr', state.changeClr)
     },
     setLoadingBoard(state, isLoading) {
       state.loadingBoard = isLoading
@@ -555,7 +556,7 @@ export const boardStore = {
       try {
         commit('setBoardBgClr', payload)
         await boardService.save(state.currentBoard)
-      } catch (err) {}
+      } catch (err) { }
     },
     async changeBoardBgGrad({ state, commit }, payload) {
       try {
