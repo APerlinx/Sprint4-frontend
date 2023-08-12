@@ -1,3 +1,4 @@
+
 <template>
   <component
     :board="boardToUpdate"
@@ -112,3 +113,4 @@ export default {
     },
 }
 </script>
+  
