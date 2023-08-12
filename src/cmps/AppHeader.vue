@@ -65,7 +65,6 @@
         </div>
 
 
-        <img class="mode" src="../assets/styles/img/contrast.png" alt="" />
         <span class="user" :class="{ 'user-changed': changeClr }">{{ loggedInUser }}</span>
       </div>
     </nav>

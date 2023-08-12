@@ -194,20 +194,6 @@ export default {
   },
   methods: {
 
-    // addGroupBySocket(title) {
-    //   // const groupToAdd = boardService.getEmptyGroup();
-    //   // groupToAdd.title = title;
-    //   // socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'add', payload: groupToAdd })
-    // },
-    // removeGroupBySocket(groupId) {
-    //   socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'remove', payload: groupId })
-    // },
-    // addTaskBySocket({ groupId, taskTitle, openedFromModal }) {
-    //   this.showTaskForm = true;
-    //   socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'addtask', payload: { groupId, taskTitle, openedFromModal } })
-    // },
-
-
     getGroupPayload(index) {
       return this.groups[index]
     },
@@ -219,7 +205,6 @@ export default {
         currBoard: this.currBoard,
       })
     },
-
     updateGroups({ info }) {
       info.group.tasks = info.tasks
       this.groupsStack.push(info.group)
@@ -236,7 +221,6 @@ export default {
         this.groupsStack = []
       }
     },
-
     async addGroup(groupTitle) {
       try {
         const groupToAdd = boardService.getEmptyGroup()
@@ -252,7 +236,6 @@ export default {
         console.log(err)
       }
     },
-
     async removeGroup(groupId) {
       try {
         console.log('happen')
@@ -267,7 +250,6 @@ export default {
         showErrorMsg('Cannot remove group')
       }
     },
-
     async updateGroup(group, changes) {
       try {
         group = { ...group, ...changes }

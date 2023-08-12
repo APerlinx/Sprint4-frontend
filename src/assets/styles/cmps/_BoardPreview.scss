@@ -3,11 +3,11 @@
   height: 100px;
   width: 200px;
   padding: 1em;
-  // background-size: cover;
   text-shadow: 0 0 0.5px rgba(0, 0, 0, 0);
   border-radius: em(5, 14);
   overflow: hidden;
   box-shadow: 5px 5px–––– 10px rgba(128, 128, 128, 0.13);
+  cursor: pointer;
 
   .drop {
     position: absolute;

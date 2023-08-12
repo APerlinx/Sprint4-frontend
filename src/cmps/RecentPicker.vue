@@ -12,7 +12,7 @@
               </div>
               <div class="text">
                 <h2>{{ board.title }}</h2>
-                <p>User Workspace</p>
+                <p>{{loggedinUser.fullname}} work space</p>
               </div>
             </div>
           </RouterLink>
@@ -31,6 +31,9 @@ export default {
     recentBoards() {
       return this.$store.getters.recentBoards;
     },
+    loggedinUser() {
+      return this.$store.getters.loggedinUser
+    }
   },
   methods: {
     closeModal() {

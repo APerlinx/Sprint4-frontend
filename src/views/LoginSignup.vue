@@ -60,7 +60,7 @@ export default {
     return {
       msg: '',
       loginCred: { username: 'user1', password: '123' },
-      signupCred: { username: '', password: '', fullname: '', imgUrl : '' },
+      signupCred: { username: '', password: '', fullname: '', imgUrl: '' },
     }
   },
   computed: {

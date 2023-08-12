@@ -14,7 +14,7 @@ export const boardService = {
     getEmptyActivity
 }
 
-window.cs = boardService // for console usage
+window.cs = boardService 
 
 async function query() {
     return httpService.get('board')

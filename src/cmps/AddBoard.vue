@@ -26,6 +26,7 @@
       <form @submit.prevent="saveBoard">
         <input autofocus type="text" v-model="boardToEdit.title" />
         <p v-if="!boardToEdit.title">👋 Board title is required</p>
+        <button></button>
         <div @click="saveBoard" class="save-btn" :class="{ check: titleLength }">
           Create
         </div>
@@ -56,13 +57,6 @@ export default {
       this.boardToEdit.createdBy = this.getLoggendInUser
       this.$emit("save", this.boardToEdit);
     },
-    // setBgColor(color) {
-    //   this.preview = `url(${color})`;
-    //   this.boardToEdit.style.backgroundImage = `url(${color})`;
-    //   // this.boardToEdit.style.backgroundImage = color;
-    //   // this.preview = color;
-    //   // this.boardToEdit.style.backgroundColor = color;
-    // },
     setBg(img) {
       this.preview = `url(${img})`;
       this.boardToEdit.style.backgroundImage = `url(${img})`;

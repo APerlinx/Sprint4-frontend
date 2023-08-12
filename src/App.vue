@@ -24,29 +24,31 @@ export default {
   created() {
     this.$store.dispatch({ type: 'loadBoards' })
     this.$store.dispatch({ type: 'loadUsers' })
+    this.$store.dispatch({ type: "login", userCred: { username: 'Guest', password: '123' } })
 
-    const user = userService.getLoggedinUser()
-    if (user) store.commit({ type: 'setLoggedinUser', user })
+
+  const user = userService.getLoggedinUser()
+    if(user) store.commit({ type: 'setLoggedinUser', user })
     socketService.on('on-notifcation-push', this.addNotifcation)
+},
+mounted() {
+  // TODO : Possibly related to the error cannot read proprties of undefind reading 'component'
+  this.appHeader = true
+},
+methods: {
+  addNotifcation({ notification }) {
+    this.$store.dispatch({ type: 'addNotifcation', notification })
   },
-  mounted() {
-    // TODO : Possibly related to the error cannot read proprties of undefind reading 'component'
-    this.appHeader = true
-  },
-  methods: {
-    addNotifcation({ notification }) {
-      this.$store.dispatch({ type: 'addNotifcation', notification })
-    },
-  },
-  components: {
-    UserMsg,
+},
+components: {
+  UserMsg,
     AppHeader,
     HomeHeader,
   },
-  watch: {
-    $route(to, from) {
-      this.showHomeHeader = to.name === 'Home'
-    },
+watch: {
+  $route(to, from) {
+    this.showHomeHeader = to.name === 'Home'
   },
+},
 }
 </script>

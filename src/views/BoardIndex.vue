@@ -96,6 +96,7 @@ export default {
       }
     },
     scrollWindowToIndexLayout() {
+      console.log('happen');
       const indexLayoutElement = this.$refs.indexLayout;
 
       if (indexLayoutElement) {
