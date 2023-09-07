@@ -32,7 +32,6 @@ export default {
     socketService.on('on-notifcation-push', this.addNotifcation)
 },
 mounted() {
-  // TODO : Possibly related to the error cannot read proprties of undefind reading 'component'
   this.appHeader = true
 },
 methods: {
