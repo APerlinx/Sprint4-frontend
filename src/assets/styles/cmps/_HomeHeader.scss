@@ -1,8 +1,14 @@
 .home-header {
     display: grid;
-    grid-template-columns:1fr rem(500px) 1fr;
+    grid-template-columns: 1fr rem(500px) 1fr;
     height: 60px;
-   
+    background-color: rgb(255, 255, 255);
+    z-index: 999;
+
+    .mobile-menu {
+        display: none;
+    }
+
     .logo {
         display: flex;
         align-items: baseline;
@@ -12,6 +18,10 @@
         font-size: 3em;
         grid-column: 1;
         width: 500px;
+
+        i {
+            display: none;
+        }
 
         h5 {
             font-family: charlie-semi;
@@ -47,7 +57,95 @@
             color: darkblue;
         }
         & :nth-child(2):hover {
-            background-color:  darken(#0065ff, 8%);
+            background-color: darken(#0065ff, 8%);
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .v-enter-active,
+    .v-leave-active {
+        transition: opacity 0.5s ease;
+    }
+
+    .v-enter-from,
+    .v-leave-to {
+        opacity: 0;
+    }
+
+    .home-header {
+        position: absolute;
+        top: 0%;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: rem(100px);
+
+        .logo {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            background-color: rgb(255, 255, 255);
+            z-index: 999;
+            border-bottom: 1px solid lightgray;
+
+            & span {
+                padding-inline-start: 0.5em;
+            }
+
+            i {
+                display: block;
+                position: absolute;
+                top: 40%;
+                right: 5%;
+                font-size: rem(30px);
+            }
+
+            h5 {
+                font-size: 0.5em;
+            }
+        }
+        .user-section {
+            display: none;
+        }
+
+        .mobile-menu {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-130%);
+            width: 100%;
+            background-color: rgb(255, 255, 255);
+            height: 100vh;
+            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1em;
+            transition: transform 1s;
+            padding-block-start: 8em;
+
+            & > * {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-block: 1.05em;
+                width: 80%;
+                font-size: 1.35em;
+                font-family: charlie-semi;
+                cursor: pointer;
+            }
+
+            & > :first-child {
+                background-color: #0065ff;
+                color: white;
+            }
+            & > :nth-child(2) {
+                border: 1px solid #0065ff;
+            }
+
+            &.open {
+                transform: translateY(0);
+            }
         }
     }
 }

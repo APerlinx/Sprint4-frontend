@@ -1,10 +1,11 @@
 .homepage {
     height: 720px;
+    width: 100%;
     background-image: url(../cmps/images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266e…/white-wave-bg.svg),
         linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
     background-position-x: center, 0px;
     background-position-y: bottom -0.5px, 0px;
-    // background-size: 100% 14%, auto;
+    background-size: 100% 14%, auto;
     background-repeat: no-repeat, repeat;
     background-attachment: scroll, scroll;
     background-origin: padding-box, padding-box;
@@ -55,9 +56,8 @@
                 transition: 0.3s;
 
                 &:hover {
-                    background-color:  darken(#0065ff, 8%)
+                    background-color: darken(#0065ff, 8%);
                 }
-
             }
         }
         .right-hero-container {
@@ -115,7 +115,7 @@
                 & > * > :first-child {
                     margin-block-end: 0.8em;
                     font-family: charlie-semi;
-                    font-size:1rem ;
+                    font-size: 1rem;
                 }
 
                 .card-1 {
@@ -172,3 +172,52 @@
     }
 }
 
+@media (max-width: 600px) {
+    .homepage {
+        .main-layout {
+            grid-template-columns: 30px 1fr 30px;
+
+            .demo {
+                grid-column: 2;
+                justify-self: center;
+                margin-block-start: 1em;
+
+                h2 {
+                    // font-size: rem(120px);
+                    font-weight: 400;
+                    line-height: 1em;
+                    font-family: charlie-semi;
+                }
+                // h6 {
+                //     padding-block-start: 2em;
+                //     color: white;
+                //     font-size: rem(20px);
+                //     font-weight: 200;
+                //     font-family: charlie-semi;
+                // }
+
+                // button {
+                //     display: flex;
+                //     justify-content: center;
+                //     align-items: center;
+                //     width: rem(185px);
+                //     height: rem(45px);
+                //     background-color: #0065ff;
+                //     color: white;
+                //     padding: 0.7em 2.1em;
+                //     font-size: 1rem;
+                //     border-radius: 0.3em;
+                //     margin: 0;
+                //     margin-block-start: rem(24px);
+                //     margin-block-end: rem(30px);
+                //     font-family: charlie;
+                //     transition: 0.3s;
+
+                //     &:hover {
+                //         background-color: darken(#0065ff, 8%);
+                //     }
+                // }
+            }
+        }
+    }
+}

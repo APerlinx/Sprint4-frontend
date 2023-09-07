@@ -1,7 +1,7 @@
 <template>
   <div class="homepage">
     <div class="main-layout">
-      <div class="demo">
+      <!-- <div class="demo">
         <h2>
           Trio brings all your <br />
           tasks, teammates, and <br />
@@ -14,23 +14,23 @@
         <RouterLink to="/board">
           <button>Let's Trio</button>
         </RouterLink>
-      </div>
+      </div> -->
 
-      <div class="right-hero-container">
+      <!-- <div class="right-hero-container">
         <img
           src="https://images.ctfassets.net/rz1oowkt5gyp/75rDABL8fyMtNLlUAtBxrg/c5e145977a86c41c47e17c69410c64f7/TrelloUICollage_4x.png?w=2280&fm=webp"
           alt=""
         />
-      </div>
+      </div> -->
 
-      <div class="wave">
+      <!-- <div class="wave">
         <img
           class="wave"
           src="../assets/styles/img/white-wave-mobile.svg"
           alt=""
         />
-      </div>
-
+      </div> -->
+<!-- 
       <div class="buttom-layout">
         <h4 class="trio">TRIO 101</h4>
         <div class="sub-header">
@@ -75,22 +75,16 @@
             alt=""
           />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
-  <div class="bg"></div>
+  <!-- <div class="bg"></div> -->
 </template>
 
 <script>
 import HomeHeader from "../cmps/HomeHeader.vue";
 export default {
   name: "home",
-  data() {
-    return {};
-  },
-  computed: {},
-  created() {},
-  methods: {},
   components: {
     HomeHeader,
   },
