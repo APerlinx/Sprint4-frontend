@@ -1,7 +1,7 @@
 <template>
-  <div class="index-layout" ref="indexLayout"></div>
   <div class="index-layout">
     <section class="board-container">
+
       <div v-if="starredBoards.length > 0" class="starred">
         <div class="starred">
           <div class="starred-title">
@@ -34,14 +34,10 @@
         </div>
 
         <div class="index-create-board">
-          <Popper arrow placement="right">
-            <div class="board-title">Create new board</div>
-            <template #content>
-              <div class="index-container">
-                <AddBoard @close="scrollWindowToIndexLayout()" @save="saveBoard" />
-              </div>
-            </template>
-          </Popper>
+          <div class="board-title" @click="isAddBoard = !isAddBoard">Create new board</div>
+          <div class="add-board-container" v-if="isAddBoard">
+            <AddBoard @close="scrollWindowToIndexLayout()" @save="saveBoard" v-click-outside="toggleIsAddBoard" />
+          </div>
         </div>
       </div>
     </section>
@@ -55,17 +51,26 @@ import AddBoard from "../cmps/addboard.vue";
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";
 
+import { clickOutsideDirective } from '../directives/index.js'
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
 
 export default {
   data() {
-    return {};
+    return {
+      isAddBoard: false
+    };
   },
+
   created() {
     this.$store.commit('setChangeClr', false)
   },
+
   methods: {
+
+    toggleIsAddBoard() {
+      this.isAddBoard = !this.isAddBoard
+    },
     async removeBoard(boardId) {
       try {
         await this.$store.dispatch({ type: "removeBoard", boardId });
@@ -96,20 +101,19 @@ export default {
       }
     },
     scrollWindowToIndexLayout() {
-      console.log('happen');
       const indexLayoutElement = this.$refs.indexLayout;
 
       if (indexLayoutElement) {
         const scrollOptions = {
           top: indexLayoutElement.offsetTop,
-          behavior: "smooth", // Use "auto" for immediate scroll
+          behavior: "smooth",
         };
 
-        // Scroll the window to the index layout element
         window.scrollTo(scrollOptions);
       }
     },
   },
+
   computed: {
     boards() {
       return this.$store.getters.boards;
@@ -130,11 +134,16 @@ export default {
       return this.$store.getters.loggedinUser?.fullname.charAt(0);
     },
   },
+
   components: {
     BoardList,
     AddBoard,
     Popper,
     defineComponent,
+  },
+
+  directives: {
+    clickOutside: clickOutsideDirective,
   },
 };
 </script>

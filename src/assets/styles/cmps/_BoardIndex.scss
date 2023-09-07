@@ -104,14 +104,35 @@
       background-color: #f1f2f4;
       cursor: pointer;
 
-      .index-container {
+      .add-board-container {
         transform: translate(35px, -60px);
-
       }
 
       .board-title {
         font-weight: 200;
         font-size: rem(14px);
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .index-layout {
+    margin-block-start: 3em;
+    grid-template-columns: 10px 1fr 10px;
+
+    .board-container {
+      grid-column: 2;
+
+      .index-create-board {
+        width: rem(189px);
+        
+        .add-board-container {
+          position: absolute;
+          left: 28%;
+          bottom: 500%;
+          z-index: 999;
+        }
       }
     }
   }

@@ -1,5 +1,8 @@
 <template>
   <header class="app-header" v-click-outside="closeModals">
+    <div class="add-board-container">
+      <AddBoard v-if="isAddBoardTop" @save="saveBoard" @closeModal="toggleAddBord" v-click-outside="closeAddBoardTop" />
+    </div>
     <nav :class="{ 'header-changed': changeClr }">
       <div class="left">
         <RouterLink to="/board">
@@ -8,7 +11,6 @@
             <h2>Trio</h2>
           </div>
         </RouterLink>
-
 
         <div class="recent">
           <div @click="toggleRecentModal" class="header-btn" :class="{ checked: isPickerModalRecent }">
@@ -25,7 +27,8 @@
             <p>More</p>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
-          <div class="plus-btn">
+
+          <div class="plus-btn" @click="isAddBoardTop = !isAddBoardTop">
             <span class="plus-icon"></span>
           </div>
         </div>
@@ -40,11 +43,12 @@
           </div>
         </div>
 
-        <div class="create-btn" :style="{ backgroundColor: isAddBoard ? '#e9f3ff' : '' }">
-          <button @click="toggleAddBord" :style="{ color: isAddBoard ? '#0c66e4' : '' }">
+        <div class="create-btn" :style="{ backgroundColor: isAddBoardDesktop ? '#e9f3ff' : '' }">
+          <button @click="toggleAddBordDestktop" :style="{ color: isAddBoardDesktop ? '#0c66e4' : '' }">
             Create
           </button>
-          <AddBoard v-if="isAddBoard" @save="saveBoard" @closeModal="toggleAddBord"  v-click-outside="toggleAddBord" />
+          <AddBoard v-if="isAddBoardDesktop" @save="saveBoard" @closeModal="toggleAddBordDestktop"
+            v-click-outside="toggleAddBordDestktop" />
         </div>
       </div>
 
@@ -92,31 +96,42 @@ export default {
       type: Boolean
     }
   },
+
   data() {
     return {
       isPickerModalStarred: false,
       isPickerModalRecent: false,
-      isAddBoard: false,
+      isAddBoardBottom: false,
+      isAddBoardTop: false,
+      isAddBoardDesktop: false,
       isNotifiction: false,
       isUserRead: false
     };
   },
+
   created() {
   },
+
   methods: {
-   
-    toggleAddBord() {
+    closeAddBoardTop() {
+      this.isAddBoardTop = false
+    },
+    toggleAddBordBottom() {
       this.closeModals()
-      this.isAddBoard = !this.isAddBoard
+      this.isAddBoardBottom = !this.isAddBoardBottom
+    },
+    toggleAddBordDestktop() {
+      this.closeModals()
+      this.isAddBoardDesktop = !this.isAddBoardDesktop
     },
     toggleRecentModal() {
       this.isPickerModalStarred = false
-      this.isAddBoard = false
+      this.isAddBoardDesktop = false
       this.isPickerModalRecent ? this.closeModals() : this.isPickerModalRecent = true
     },
     toggleStarredModal() {
       this.isPickerModalRecent = false
-      this.isAddBoard = false
+      this.isAddBoardDesktop = false
       this.isPickerModalStarred ? this.closeModals() : this.isPickerModalStarred = true
     },
 
@@ -130,7 +145,7 @@ export default {
           type: 'addBoard',
           board,
         })
-        this.isAddBoard = false
+        this.isAddBoardDesktop = false
         this.closeModal()
         // this.$router.push("/details/" + this.savedBoard._id);
       } catch (err) {
@@ -157,6 +172,7 @@ export default {
     },
 
   },
+
   computed: {
     changeClr() {
       return this.$store.state.boardStore.changeClr
@@ -183,6 +199,7 @@ export default {
     },
 
   },
+
   watch: {
     changeClr(newVal) {
       // console.log('changeClr updated to:', newVal)
@@ -192,6 +209,7 @@ export default {
   directives: {
     clickOutside: clickOutsideDirective,
   },
+
   components: {
     AddBoard,
     BoardFilter,
