@@ -74,12 +74,12 @@
     }
 
     .home-header {
-        position: absolute;
+        position: fixed;
         top: 0%;
         display: flex;
         align-items: center;
         width: 100%;
-        height: rem(100px);
+        height: rem(70px);
 
         .logo {
             display: flex;
@@ -96,9 +96,9 @@
             i {
                 display: block;
                 position: absolute;
-                top: 40%;
+                top: 32.5%;
                 right: 5%;
-                font-size: rem(30px);
+                font-size: rem(25px);
             }
 
             h5 {

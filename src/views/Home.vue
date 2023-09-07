@@ -1,45 +1,36 @@
 <template>
   <div class="homepage">
     <div class="main-layout">
-      <!-- <div class="demo">
-        <h2>
-          Trio brings all your <br />
-          tasks, teammates, and <br />
-          tools together
-        </h2>
-        <h6>
-          Keep everything in the same place even if your team <br />
-          isn’t.
-        </h6>
+      <div class="demo">
+        <h2> Trio brings all your tasks, teammates, and tools together</h2>
+        <h6> Keep everything in the same place even if your team isn’t.</h6>
         <RouterLink to="/board">
           <button>Let's Trio</button>
         </RouterLink>
-      </div> -->
+      </div>
 
-      <!-- <div class="right-hero-container">
+      <div class="right-hero-container">
         <img
           src="https://images.ctfassets.net/rz1oowkt5gyp/75rDABL8fyMtNLlUAtBxrg/c5e145977a86c41c47e17c69410c64f7/TrelloUICollage_4x.png?w=2280&fm=webp"
           alt=""
         />
-      </div> -->
+      </div>
 
-      <!-- <div class="wave">
+      <div class="wave">
         <img
           class="wave"
           src="../assets/styles/img/white-wave-mobile.svg"
           alt=""
         />
-      </div> -->
-<!-- 
+      </div>
+      
       <div class="buttom-layout">
         <h4 class="trio">TRIO 101</h4>
         <div class="sub-header">
           <h1>A productivity powerhouse</h1>
           <h5>
             Simple, flexible, and powerful. All it takes are boards, lists, and
-            <br />
             cards to get a clear view of who`s doing what and what needs to
-            <br />
             get done. Learn more in our guide for getting started.
           </h5>
         </div>
@@ -75,10 +66,9 @@
             alt=""
           />
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
-  <!-- <div class="bg"></div> -->
 </template>
 
 <script>

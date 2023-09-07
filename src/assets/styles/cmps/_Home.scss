@@ -60,15 +60,16 @@
                 }
             }
         }
+
         .right-hero-container {
             grid-column: 3;
             margin-block-start: 5em;
             align-self: center;
-            z-index: 999;
+            z-index: 998;
 
             img {
                 width: 105%;
-                z-index: 999;
+                z-index: 998;
             }
         }
 
@@ -152,17 +153,10 @@
                     grid-column: 2;
                     grid-row: 4/1;
                 }
-                // .bg {
-                //     position: fixed;
-                //     width: 100%;
-                //     bottom: 0;
-                //     height: 200px;
-                //     background: rgb(231 252 254);
-                //     background: linear-gradient(0deg, rgb(213, 234, 250) 0%, rgba(255, 255, 255, 0.12292677993527512) 100%);
-                // }
             }
         }
     }
+    
     .wave {
         grid-column: 1 / -1;
         align-self: end;
@@ -176,48 +170,75 @@
     .homepage {
         .main-layout {
             grid-template-columns: 30px 1fr 30px;
+            margin-block-start: 2.5em;
 
             .demo {
                 grid-column: 2;
                 justify-self: center;
-                margin-block-start: 1em;
-
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                margin-block-start: 5em;
                 h2 {
-                    // font-size: rem(120px);
-                    font-weight: 400;
                     line-height: 1em;
-                    font-family: charlie-semi;
+                    font-size: 2.6em;
                 }
-                // h6 {
-                //     padding-block-start: 2em;
-                //     color: white;
-                //     font-size: rem(20px);
-                //     font-weight: 200;
-                //     font-family: charlie-semi;
-                // }
+                h6 {
+                    font-family: charlie;
+                }
 
-                // button {
-                //     display: flex;
-                //     justify-content: center;
-                //     align-items: center;
-                //     width: rem(185px);
-                //     height: rem(45px);
-                //     background-color: #0065ff;
-                //     color: white;
-                //     padding: 0.7em 2.1em;
-                //     font-size: 1rem;
-                //     border-radius: 0.3em;
-                //     margin: 0;
-                //     margin-block-start: rem(24px);
-                //     margin-block-end: rem(30px);
-                //     font-family: charlie;
-                //     transition: 0.3s;
-
-                //     &:hover {
-                //         background-color: darken(#0065ff, 8%);
-                //     }
-                // }
+                button {
+                    width: rem(300px);
+                    font-family: charlie-semi;
+                    margin: rem(15px);
+                }
             }
+
+            .right-hero-container {
+                grid-column: 2;
+                img {
+                    width: 100%;
+                }
+            }
+
+            .buttom-layout {
+                grid-row: 3;
+                grid-column: 2;
+                margin: 0;
+                z-index: 998;
+
+                .trio {
+                    margin: 0;
+                    margin-block-start: 2em;
+                    font-size: rem(14px);
+                }
+
+                .sub-header {
+                    margin-block-start: 0.5em;
+                    grid-column: 2;
+                    h1 {
+                        margin-block-end: 1em;
+                        font-size: 1.6em;
+                    }
+
+                    h5 {
+                        font-family: charlie-light;
+                    }
+                }
+
+                .cards-container {
+                    grid-column: 2;
+                    grid-row: 4;
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+        }
+        .wave {
+            position: absolute;
+            top: 15%;
+            grid-row: 2;
         }
     }
 }

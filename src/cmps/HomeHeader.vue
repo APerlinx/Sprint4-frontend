@@ -18,7 +18,9 @@
 
     <div class="mobile-menu" :class="{ 'open': isNavOpen }">
       <div class="btn-get">Get Trio for free</div>
-      <div class="btn-login">Login</div>
+      <router-link :to="'./login'">
+        <div class="btn-login">Login</div>
+      </router-link>
     </div>
 
   </div>
