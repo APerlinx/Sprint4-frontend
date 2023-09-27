@@ -116,19 +116,23 @@ export default {
     closeAddBoardTop() {
       this.isAddBoardTop = false
     },
+
     toggleAddBordBottom() {
       this.closeModals()
       this.isAddBoardBottom = !this.isAddBoardBottom
     },
+
     toggleAddBordDestktop() {
       this.closeModals()
       this.isAddBoardDesktop = !this.isAddBoardDesktop
     },
+
     toggleRecentModal() {
       this.isPickerModalStarred = false
       this.isAddBoardDesktop = false
       this.isPickerModalRecent ? this.closeModals() : this.isPickerModalRecent = true
     },
+
     toggleStarredModal() {
       this.isPickerModalRecent = false
       this.isAddBoardDesktop = false
@@ -177,6 +181,7 @@ export default {
     changeClr() {
       return this.$store.state.boardStore.changeClr
     },
+
     loggedInUser() {
       const user = this.$store.getters.loggedinUser?.fullname
       if (!user) return ''
@@ -187,9 +192,11 @@ export default {
         return `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}`
       }
     },
+
     fullUser() {
       return this.$store.getters.fullUser
     },
+
     userNotifications() {
       return this.fullUser?.notifications
     },
@@ -198,12 +205,6 @@ export default {
       return this.$store.getters.savedBoard
     },
 
-  },
-
-  watch: {
-    changeClr(newVal) {
-      // console.log('changeClr updated to:', newVal)
-    },
   },
 
   directives: {

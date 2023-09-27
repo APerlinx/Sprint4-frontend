@@ -1,14 +1,13 @@
 // import { userService } from '../services/user.service.local'
 import { userService } from '../services/user.service'
 
-
 export const userStore = {
     state: {
         loggedinUser: null,
         users: [],
         isLoading: false,
-
     },
+
     getters: {
         users({ users }) { return users },
         loggedinUser({ loggedinUser }) { return loggedinUser },
@@ -28,9 +27,9 @@ export const userStore = {
             return users.find(user => user.fullname === loggedinUser?.fullname)
         }
     },
+
     mutations: {
         setLoggedinUser(state, { user }) {
-            // Yaron: needed this workaround as score not reactive from birth
             state.loggedinUser = (user) ? { ...user } : null
         },
         setUsers(state, { users }) {
@@ -51,6 +50,7 @@ export const userStore = {
             state.users.splice(idx, 1, savedUser)
         },
     },
+
     actions: {
         async login({ commit }, { userCred }) {
             try {
@@ -110,7 +110,6 @@ export const userStore = {
                 console.log('userStore: Error in updateUser', err)
                 throw err
             }
-
         },
         async increaseScore({ commit }) {
             try {
@@ -121,21 +120,20 @@ export const userStore = {
                 throw err
             }
         },
-        async addNotifcation({ commit, state }, { notification }) {
+        async addNotifcation({ commit, dispatch, state }, { notification }) {
             try {
                 const user = state.users.find(user => user.fullname === notification.toUser)
-                const userCopy = JSON.parse(JSON.stringify(user))
-                userCopy.notifications.unshift(notification)
-                userCopy.isUserReadNotifications = false
-                const savedUser = await userService.update(userCopy)
-
+                const updatedUser = JSON.parse(JSON.stringify(user))
+                updatedUser.notifications.unshift(notification)
+                updatedUser.isUserReadNotifications = false
+                const savedUser = await userService.update(updatedUser)
                 commit({ type: 'setUser', savedUser })
             } catch (err) {
                 console.log(err)
                 throw err
             }
         },
-        async removeNotifications ({ commit, state, getters }) {
+        async removeNotifications({ commit, state, getters }) {
             try {
                 const user = getters.fullUser
                 const userCopy = JSON.parse(JSON.stringify(user))
@@ -149,7 +147,6 @@ export const userStore = {
                 throw err
             }
         },
-
         async toggleNotification({ commit, state }, { notification }) {
             try {
                 const user = state.users.find(user => user.fullname === notification.toUser);

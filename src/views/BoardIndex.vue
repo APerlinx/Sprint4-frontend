@@ -67,10 +67,10 @@ export default {
   },
 
   methods: {
-
     toggleIsAddBoard() {
       this.isAddBoard = !this.isAddBoard
     },
+
     async removeBoard(boardId) {
       try {
         await this.$store.dispatch({ type: "removeBoard", boardId });
@@ -79,6 +79,7 @@ export default {
         showErrorMsg("Cant delete borad");
       }
     },
+
     async updateBoard(board) {
       try {
         await this.$store.dispatch({ type: "updateBoard", board });
@@ -87,6 +88,7 @@ export default {
         showErrorMsg("Cant star board");
       }
     },
+
     async saveBoard(board) {
       try {
         await this.$store.dispatch({
@@ -100,6 +102,7 @@ export default {
         showErrorMsg("Cant add board");
       }
     },
+
     scrollWindowToIndexLayout() {
       const indexLayoutElement = this.$refs.indexLayout;
 

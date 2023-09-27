@@ -34,7 +34,6 @@ export default {
             height: 500,
             width: 500,
             isUploading: false,
-
             isLoading: false,
             isDragOver: false,
             attachment: {

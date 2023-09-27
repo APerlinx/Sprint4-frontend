@@ -46,7 +46,6 @@ export const boardStore = {
     areLabelsVisible: false,
     loadingBoard: false,
     changeClr: false,
-
     cmpsOrder: [
       'MemberPicker',
       'LabelsPicker',
@@ -57,102 +56,11 @@ export const boardStore = {
       'Custom Fields',
     ],
   },
-  getters: {
-    getFilteredGroups:
-      (state) =>
-        (dueDateFilters = {}, boardId) => {
-          let currentTime = new Date().getTime()
-          let twentyFourHours = 24 * 60 * 60 * 1000
 
-          const board = state.boards.find((board) => board._id === boardId)
-          if (!board) {
-            console.error('No board found with ID:', boardId)
-            return []
-          }
-
-        let isFilterSelected = Object.values(dueDateFilters).some(
-          (value) => value === true
-        )
-
-        if (!isFilterSelected) {
-          return [...board.groups]
-        }
-
-        return board.groups.map((group) => {
-          return {
-            ...group,
-            tasks: group.tasks.filter((t) => {
-              if (t.status === 'done') {
-                return false
-              }
-
-              let matchesDueDateFilters = false
-
-              if (dueDateFilters.noDate) {
-                matchesDueDateFilters = !t.dueDate
-              } else if (dueDateFilters.overdue) {
-                matchesDueDateFilters = t.dueDate && currentTime - t.dueDate > 0
-              } else if (dueDateFilters.dueInNextDay) {
-                let startOfNextDay = currentTime
-                let endOfNextDay = currentTime + twentyFourHours
-                matchesDueDateFilters =
-                  t.dueDate >= startOfNextDay && t.dueDate <= endOfNextDay
-              }
-
-              return matchesDueDateFilters
-            }),
-          }
-        })
-      },
-    boards({ boards }) {
-      return boards
-    },
-    starredBoards({ boards }) {
-      return boards.filter((board) => board.isStarred)
-    },
-    filteredBoards({ boards, filterBy }) {
-      const byName = new RegExp(filterBy, 'i')
-      return boards.filter((board) => byName.test(board.title))
-    },
-    recentBoards({ boards }) {
-      return boards.filter((board) => board.isRecent)
-        .sort((a, b) => a.recentAt - b.recentAt)
-        .slice(-4);
-    },
-    savedBoard({ savedBoard }) {
-      return savedBoard
-    },
-    getGroupsByBoardId: (state) => (boardId) => {
-      const board = state.boards.find((board) => board._id === boardId)
-      return board ? board.groups : []
-    },
-    getCurrenBoard({ currentBoard }) {
-      const board = currentBoard
-      return board
-    },
-    getCurrBoard({ currentBoard }) {
-      const board = currentBoard
-      return board
-    },
-    getCurrTask({ currentTask }) {
-      return currentTask
-    },
-    cmpsOrder({ cmpsOrder }) {
-      return cmpsOrder
-    },
-    getLabelById: (state) => (id) => {
-      const board = state.currentBoard
-      if (board && board.labels) {
-        return board.labels.find((label) => label.id === id)
-      }
-      return null
-    },
-    areLabelsVisible: (state) => state.areLabelsVisible,
-    isLoadingBoard(state) {
-      return state.loadingBoard
-    },
-  },
   mutations: {
+    setBoards(state, { boards }) {
+      state.boards = boards
+    },
     setChangeClr(state, value) {
       state.changeClr = value
     },
@@ -161,9 +69,6 @@ export const boardStore = {
     },
     saveTitle(state, { title }) {
       state.currentBoard.title = title
-    },
-    setBoards(state, { boards }) {
-      state.boards = boards
     },
     setCurrentBoard(state, board) {
       state.currentBoard = board
@@ -292,16 +197,26 @@ export const boardStore = {
         const taskToUpdate = group.tasks.find((t) => t.id === task.id)
 
         if (taskToUpdate) {
-          taskToUpdate.title = task.title 
+          taskToUpdate.title = task.title
         }
       }
     },
   },
+
   actions: {
-    async addBoard(context, { board }) {
+    async loadBoards({ commit }) {
+      try {
+        const boards = await boardService.query()
+        commit({ type: 'setBoards', boards })
+      } catch (err) {
+        console.log('boardStore: Error in loadBoards', err)
+        throw err
+      }
+    },
+    async addBoard({ commit }, { board }) {
       try {
         board = await boardService.save(board)
-        context.commit(getActionAddBoard(board))
+        commit(getActionAddBoard(board))
         return board
       } catch (err) {
         console.log('boardStore: Error in addBoard', err)
@@ -318,23 +233,14 @@ export const boardStore = {
         throw err
       }
     },
-    async updateBoard(context, { board }) {
+    async updateBoard({ commit }, { board }) {
       console.log('board', board);
       try {
         board = await boardService.save(board)
-        context.commit(getActionUpdateBoard(board))
+        commit(getActionUpdateBoard(board))
         return board
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)
-        throw err
-      }
-    },
-    async loadBoards(context) {
-      try {
-        const boards = await boardService.query()
-        context.commit({ type: 'setBoards', boards })
-      } catch (err) {
-        console.log('boardStore: Error in loadBoards', err)
         throw err
       }
     },
@@ -368,9 +274,7 @@ export const boardStore = {
 
         commit({ type: 'addGroup', boardId: savedBoard._id, group })
 
-        dispatch('addActivity', {
-          activity: `Added ${group.title} to this board`,
-        })
+        dispatch('addActivity', { activity: `Added ${group.title} to this board`,})
       } catch (err) {
         console.log('boardStore: Error in addGroup', err)
         throw err
@@ -466,7 +370,6 @@ export const boardStore = {
         throw err
       }
     },
-
     async saveBoard({ commit, dispatch }, { board }) {
       try {
         const savedBoard = await boardService.save(board)
@@ -559,7 +462,7 @@ export const boardStore = {
       try {
         commit('setBoardBgClr', payload)
         await boardService.save(state.currentBoard)
-      } catch (err) {}
+      } catch (err) { }
     },
     async changeBoardBgGrad({ state, commit }, payload) {
       try {
@@ -596,6 +499,102 @@ export const boardStore = {
       } catch (err) {
         throw err
       }
+    },
+  },
+
+  getters: {
+    getFilteredGroups:
+      (state) =>
+        (dueDateFilters = {}, boardId) => {
+          let currentTime = new Date().getTime()
+          let twentyFourHours = 24 * 60 * 60 * 1000
+
+          const board = state.boards.find((board) => board._id === boardId)
+          if (!board) {
+            console.error('No board found with ID:', boardId)
+            return []
+          }
+
+          let isFilterSelected = Object.values(dueDateFilters).some(
+            (value) => value === true
+          )
+
+          if (!isFilterSelected) {
+            return [...board.groups]
+          }
+
+          return board.groups.map((group) => {
+            return {
+              ...group,
+              tasks: group.tasks.filter((t) => {
+                if (t.status === 'done') {
+                  return false
+                }
+
+                let matchesDueDateFilters = false
+
+                if (dueDateFilters.noDate) {
+                  matchesDueDateFilters = !t.dueDate
+                } else if (dueDateFilters.overdue) {
+                  matchesDueDateFilters = t.dueDate && currentTime - t.dueDate > 0
+                } else if (dueDateFilters.dueInNextDay) {
+                  let startOfNextDay = currentTime
+                  let endOfNextDay = currentTime + twentyFourHours
+                  matchesDueDateFilters =
+                    t.dueDate >= startOfNextDay && t.dueDate <= endOfNextDay
+                }
+
+                return matchesDueDateFilters
+              }),
+            }
+          })
+        },
+    boards({ boards }) {
+      return boards
+    },
+    starredBoards({ boards }) {
+      return boards.filter((board) => board.isStarred)
+    },
+    filteredBoards({ boards, filterBy }) {
+      const byName = new RegExp(filterBy, 'i')
+      return boards.filter((board) => byName.test(board.title))
+    },
+    recentBoards({ boards }) {
+      return boards.filter((board) => board.isRecent)
+        .sort((a, b) => a.recentAt - b.recentAt)
+        .slice(-4);
+    },
+    savedBoard({ savedBoard }) {
+      return savedBoard
+    },
+    getGroupsByBoardId: (state) => (boardId) => {
+      const board = state.boards.find((board) => board._id === boardId)
+      return board ? board.groups : []
+    },
+    getCurrenBoard({ currentBoard }) {
+      const board = currentBoard
+      return board
+    },
+    getCurrBoard({ currentBoard }) {
+      const board = currentBoard
+      return board
+    },
+    getCurrTask({ currentTask }) {
+      return currentTask
+    },
+    cmpsOrder({ cmpsOrder }) {
+      return cmpsOrder
+    },
+    getLabelById: (state) => (id) => {
+      const board = state.currentBoard
+      if (board && board.labels) {
+        return board.labels.find((label) => label.id === id)
+      }
+      return null
+    },
+    areLabelsVisible: (state) => state.areLabelsVisible,
+    isLoadingBoard(state) {
+      return state.loadingBoard
     },
   },
 }

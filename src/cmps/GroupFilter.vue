@@ -237,7 +237,7 @@ export default {
   created() {
     document.body.style.overflow = 'hidden'
   },
-  destroyed() {
+  unmounted() {
     document.body.style.overflow = 'auto'
   },
   computed: {

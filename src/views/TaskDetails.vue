@@ -201,18 +201,16 @@ export default {
     },
     created() {
         socketService.on('on-update-task', (task) => this.taskToEdit = task);
-
         this.setTask();
     },
+
     methods: {
         toggleMemberBySocket(clickedMember) {
             socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'member', payload: clickedMember })
         },
-
         updateTaskStatusBySocket(isCompleted) {
             socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'status', payload: isCompleted })
         },
-
         updateTaskStatus(isCompleted) {
             if (isCompleted) this.taskToEdit.status = 'done'
             else this.taskToEdit.status = ''
@@ -278,55 +276,43 @@ export default {
                 taskMembers.push(clickedMember);
                 action = "added you to";
             }
-
             this.createAndEditNotification(clickedMember, action)
         },
-
         createAndEditNotification(member, action) {
             const notification = this.createNotification(member, action);
             this.editTask(notification);
         },
-
         createNotification(member, action) {
             return {
                 byUser: this.loggedinUser.fullname,
                 toUser: member.fullname,
                 createdAt: Date.now(),
-                action: action,
+                action: action ,
                 task: this.taskToEdit.title,
                 board: this.board.title,
                 date: this.taskToEdit?.dueDate,
                 isRead: false
             };
         },
-
         updateChecklist({ type, newChecklist }) {
-            // console.log('111111111Checklist:', Checklist)
             const checklists = this.taskToEdit.checklists;
             const idx = checklists.findIndex(
                 (checklist) => checklist._id === newChecklist._id
             );
-            // console.log('idx:', idx)
-            // console.log('newChecklist.title:', newChecklist.title)
             if (type === "editChecklist") checklists.splice(idx, 1, newChecklist);
-            // if (newChecklist.title) checklists.splice(idx, 1, newChecklist)
             else checklists.splice(idx, 1);
             this.editTask()
         },
         async setTask() {
             try {
                 const boardId = this.$route.params.boardId;
-
                 const board = await boardService.getById(boardId);
-
                 const taskId = this.$route.params.taskId;
                 const groupId = this.$route.params.groupId;
 
                 this.board = JSON.parse(JSON.stringify(board));
                 this.group = this.board.groups.find((group) => group.id === groupId);
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
-
-                // socketService.emit(SOCKET_EMIT_SET_TOPIC, this.taskToEdit.id);
 
             } catch (err) {
                 console.log("error in setTask");
@@ -367,6 +353,7 @@ export default {
             this.$emit('close')
         },
     },
+
     computed: {
         cmpOrder() {
             return this.$store.getters.cmpsOrder;
@@ -389,9 +376,7 @@ export default {
             });
         },
     },
-    unmounted() {
-        // this.$store.commit({ type: 'setCurrTask', task: null })
-    },
+
     components: {
         DynamicModal,
         Checklist,
@@ -403,19 +388,10 @@ export default {
         Dates,
         Comments,
     },
+
     directives: {
         focus: focusDirective,
         clickOutside: clickOutsideDirective,
     },
 };
 </script>
-
-<style>
-/* .task-details-container {
-    transform: translate(-50%, -50%);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 10;
-} */
-</style>

@@ -69,7 +69,6 @@ async function changeScore(by) {
     return user.score
 }
 
-
 function saveLocalUser(user) {
     user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl, notifications: user.notifications }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
