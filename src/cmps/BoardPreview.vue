@@ -2,10 +2,9 @@
     <div class="board" @click="goToDetails()">
       <div class="drop">
         <div @click.stop.prevent="toggleStar" class="btn-star" :class="boardClass"></div>
-        <h2>{{ board.title.toUpperCase() }}</h2>
+        <h2>{{ board.title?.toUpperCase() }}</h2>
       </div>
     </div>
-
   <!-- <button @click="removeBoard(board._id)">X</button> -->
 </template>
 

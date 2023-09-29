@@ -119,17 +119,18 @@
 @media (max-width: 600px) {
   .index-layout {
     margin-block-start: 3em;
-    grid-template-columns: 10px 1fr 10px;
+    grid-template-columns: minmax(10px, 1fr) auto minmax(10px, 1fr);
 
     .board-container {
       grid-column: 2;
+      justify-self: center;
 
       .index-create-board {
         width: rem(189px);
-        
+
         .add-board-container {
           position: absolute;
-          left: 28%;
+          left: -49%;
           bottom: 500%;
           z-index: 999;
         }

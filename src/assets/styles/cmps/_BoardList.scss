@@ -8,3 +8,27 @@
     margin: 0;
     padding: 0;
 }
+
+@media (max-width: 600px) {
+    .recently {
+        display: flex;
+        justify-content: start;
+    }
+    .board-list {
+        display: flex;
+        justify-content: center;
+    }
+    .board-list ul {
+        gap: rem(6px);
+        flex-wrap: nowrap;
+        flex-direction: column;
+        justify-self: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .workspace {
+        display: flex;
+        justify-content: center;
+    }
+}
