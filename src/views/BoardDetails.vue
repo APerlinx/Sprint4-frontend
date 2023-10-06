@@ -4,7 +4,6 @@
     v-if="!isLoadingBoard && board"
     :style="this.boardStyle"
   >
-
         <div class="sidebar-toggle" @click="toggleSidebar">
         <svg
           width="26"
@@ -124,6 +123,7 @@ export default {
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
+          height: '100vh'
         }
       },
     },

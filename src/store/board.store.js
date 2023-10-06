@@ -234,7 +234,6 @@ export const boardStore = {
       }
     },
     async updateBoard({ commit }, { board }) {
-      console.log('board', board);
       try {
         board = await boardService.save(board)
         commit(getActionUpdateBoard(board))
@@ -274,7 +273,7 @@ export const boardStore = {
 
         commit({ type: 'addGroup', boardId: savedBoard._id, group })
 
-        dispatch('addActivity', { activity: `Added ${group.title} to this board`,})
+        dispatch('addActivity', { activity: `Added ${group.title} to this board`, })
       } catch (err) {
         console.log('boardStore: Error in addGroup', err)
         throw err
@@ -484,8 +483,9 @@ export const boardStore = {
     },
     async saveTitle({ commit, state, dispatch }, title) {
       try {
-        commit('saveTitle', title)
-        await boardService.save(state.currentBoard)
+        // commit('saveTitle', title)
+        console.log('title', title)
+        // await boardService.save(state.currentBoard)
         dispatch('addActivity', { activity: 'Changed board title' })
       } catch (err) {
         throw err

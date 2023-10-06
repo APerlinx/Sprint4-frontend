@@ -137,7 +137,7 @@
       vertical-align: middle;
       border-radius: 3px;
       &.full-star {
-        @include trello-icon($content: "\e967", $type: sm, $color: #fff);
+        @include trello-icon($content: "\e967", $type: sm, $color: #ff0000);
       }
       &.full-star:hover {
         @include trello-icon($content: "\e966", $type: sm, $color: #fff);

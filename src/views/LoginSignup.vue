@@ -1,52 +1,37 @@
 <template>
-  <div class="container about">
-    <p>{{ msg }}</p>
+  <div class="login-container">
+    <div class="logo">
+      <i class="fa fa-trello"></i>
+      <h2>Trio</h2>
+    </div>
+    <h5 class="continue">Log in to continue</h5>
 
-    <div v-if="loggedinUser">
-      <h3>
-        Loggedin User:
-        {{ loggedinUser.fullname }}
-        <button @click="doLogout">Logout</button>
-      </h3>
+    <form class="form-login" @submit.prevent="doLogin">
+      <select v-model="loginCred.username">
+        <option value="" disabled selected>Select User</option>
+        <option v-for="user in users" :key="user._id" :value="user.username">{{ user.fullname }}</option>
+      </select>
+      <button>Continue</button>
+    </form>
+
+    <p class="sub-login-topic">OR</p>
+    <div class="login"> 
+      <img src="https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.499/google-logo.5867462c.svg" alt="">
+      <span>Continue with Google</span>
     </div>
-    <div v-else>
-      <h2>Login</h2>
-      <form @submit.prevent="doLogin">
-        <select v-model="loginCred.username">
-          <option value="">Select User</option>
-          <option v-for="user in users" :key="user._id" :value="user.username">{{ user.fullname }}</option>
-        </select>
-        <!-- <input type="text" v-model="loginCred.username" placeholder="User name" />
-        <input
-          type="text"
-          v-model="loginCred.password"
-          placeholder="Password"
-        /> -->
-        <button>Login</button>
-      </form>
-      <p class="mute">user1 or admin, pass:123 </p>
-      <form @submit.prevent="doSignup">
-        <h2>Signup</h2>
-        <input type="text" v-model="signupCred.fullname" placeholder="Your full name" />
-        <input type="text" v-model="signupCred.username" placeholder="Username" />
-        <input type="password" v-model="signupCred.password" placeholder="Password" />
-        <ImgUploader @uploaded="onUploaded" />
-        <button>Signup</button>
-      </form>
+    <div class="login">
+      <img src="https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.499/apple-logo.54e0d711.svg" alt="">
+      <span> Continue with Apple</span></div>
+
+    <div class="sign-up">Create an acount</div>
+
+    <hr>
+
+    <div class="more">One account for Trio, Jora, Conf and more.</div>
+    <div class="privacy">
+      <p>Privacy Policy</p> •
+      <p>User Notice</p>
     </div>
-    <hr />
-    <details>
-      <summary>
-        Admin Section
-      </summary>
-      <h3 v-if="isLoading">Loading...</h3>
-      <ul v-else>
-        <li v-for="user in users" :key="user._id">
-          <pre>{{ user }}</pre>
-          <button @click="removeUser(user._id)">x</button>
-        </li>
-      </ul>
-    </details>
   </div>
 </template>
 
@@ -124,3 +109,36 @@ export default {
   }
 }
 </script>
+
+
+<!-- <input type="text" v-model="loginCred.username" placeholder="User name" />
+<input
+  type="text"
+  v-model="loginCred.password"
+  placeholder="Password"
+/> -->
+
+<!-- <div class="container about">
+    <div v-if="loggedinUser">
+      <h3>
+        Loggedin User:
+        {{ loggedinUser.fullname }}
+        <button @click="doLogout">Logout</button>
+      </h3>
+    </div>
+
+    <div v-else>
+      <h2>Login</h2>
+     
+      <p class="mute">user1 or admin, pass:123 </p>
+      <form @submit.prevent="doSignup">
+        <h2>Signup</h2>
+        <input type="text" v-model="signupCred.fullname" placeholder="Your full name" />
+        <input type="text" v-model="signupCred.username" placeholder="Username" />
+        <input type="password" v-model="signupCred.password" placeholder="Password" />
+        <ImgUploader @uploaded="onUploaded" />
+        <button>Signup</button>
+      </form>
+
+    </div>
+  </div> -->
