@@ -32,7 +32,9 @@
                     <div class="task-alerts">
                         <!-- <Members /> -->
                         <!-- <Members v-for="member in taskToEdit.members" :key="member.id" :member="member" /> -->
+
                         <Members :task="taskToEdit" :board="board" />
+
                         <Labels :task="taskToEdit" :board="board" @saveLabel="saveLabel" @removeLabel="removeLabel"
                             @updateLable="updateLable" />
                         <div class="notifications-container">

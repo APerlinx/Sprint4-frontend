@@ -1,7 +1,6 @@
 <template>
   <div class="index-layout">
     <section class="board-container">
-
       <div v-if="starredBoards.length > 0" class="starred">
         <div class="starred">
           <div class="starred-title">
@@ -9,7 +8,11 @@
             <h2>Starred boards</h2>
           </div>
         </div>
-        <BoardList @star="updateBoard" @recent="updateBoard" :boards="starredBoards" />
+        <BoardList
+          @star="updateBoard"
+          @recent="updateBoard"
+          :boards="starredBoards"
+        />
       </div>
 
       <div v-if="recentBoards.length > 0" class="recent">
@@ -19,7 +22,11 @@
             <h2>Recently viewed</h2>
           </div>
         </div>
-        <BoardList :boards="recentBoards" @star="updateBoard" @recent="updateBoard" />
+        <BoardList
+          :boards="recentBoards"
+          @star="updateBoard"
+          @recent="updateBoard"
+        />
       </div>
 
       <div class="workspace-title">
@@ -30,13 +37,24 @@
       </div>
       <div class="workspace">
         <div>
-          <BoardList :boards="boards" @remove="removeBoard" @star="updateBoard" @recent="updateBoard" />
+          <BoardList
+            :boards="boards"
+            @remove="removeBoard"
+            @star="updateBoard"
+            @recent="updateBoard"
+          />
         </div>
 
         <div class="index-create-board">
-          <div class="board-title" @click="isAddBoard = !isAddBoard">Create new board</div>
+          <div class="board-title" @click="isAddBoard = !isAddBoard">
+            Create new board
+          </div>
           <div class="add-board-container" v-if="isAddBoard">
-            <AddBoard @close="scrollWindowToIndexLayout()" @save="saveBoard" v-click-outside="toggleIsAddBoard" />
+            <AddBoard
+              @close="scrollWindowToIndexLayout()"
+              @save="saveBoard"
+              v-click-outside="toggleIsAddBoard"
+            />
           </div>
         </div>
       </div>
@@ -51,24 +69,23 @@ import AddBoard from "../cmps/addboard.vue";
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";
 
-import { clickOutsideDirective } from '../directives/index.js'
+import { clickOutsideDirective } from "../directives/index.js";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
-
 
 export default {
   data() {
     return {
-      isAddBoard: false
+      isAddBoard: false,
     };
   },
 
   created() {
-    this.$store.commit('setChangeClr', false)
+    this.$store.commit("setChangeClr", false);
   },
 
   methods: {
     toggleIsAddBoard() {
-      this.isAddBoard = !this.isAddBoard
+      this.isAddBoard = !this.isAddBoard;
     },
 
     async removeBoard(boardId) {

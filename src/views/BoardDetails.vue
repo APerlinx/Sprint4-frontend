@@ -100,6 +100,7 @@ export default {
   methods: {
     async loadBoardData() {
       const { boardId } = this.$route.params
+      if (!boardId) return
       await this.$store.dispatch('loadCurrentBoard', { boardId })
       // await this.$store.commit('addBoardToRecent', { boardId })
       this.boardsLoaded = true
@@ -112,7 +113,6 @@ export default {
       this.checkboxValues[checkboxEvent.name] = checkboxEvent.value
     },
   },
-  unmounted() {},
   watch: {
     'board.style': {
       deep: true,

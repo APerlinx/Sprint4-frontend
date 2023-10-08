@@ -9,7 +9,7 @@
         position: relative;
         background-color: #ffffff;
         color: $textClr;
-        border-bottom: 0.5px solid rgba(128, 128, 128, 0.466);
+        border-bottom: 0.5px solid rgba(128, 128, 128, 0.242);
 
         &.header-changed {
             background-color: hsl(208, 34.3%, 21.9%);
@@ -96,21 +96,14 @@
         position: relative;
         display: flex;
         align-items: center;
-        gap: rem(15px);
+        gap: rem(5px);
 
         .filter-container {
             position: relative;
             width: max-content;
 
-            .search-icon {
-                position: absolute;
-                left: 4.5%;
-                top: 50%;
-                transform: translateY(-40.5%);
-
-                .search-icon-img {
-                    height: 13px;
-                }
+            .search-icon-img {
+                height: 13px;
             }
         }
         .mobile-search-icon {
@@ -121,20 +114,23 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            width: max-content;
+            height: rem(30px);
+            width: rem(30px);
             rotate: (50deg);
-            height: rem(22px);
-            width: 22px;
             border-radius: 50%;
-            cursor: pointer;
             transition: 0.2s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgb(218, 218, 218);
+            }
 
             &.clicked-not {
                 background-color: #3a4b63;
             }
 
             & :nth-child(1) {
-                font-size: 14px;
+                font-size: 16px;
                 margin-block-end: 0.1em;
                 margin-inline-end: 0.09em;
             }
@@ -165,24 +161,39 @@
             height: rem(18px);
             margin-block-start: 0.15em;
         }
-        .user {
+        .user-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: rem(22px);
-            width: rem(22px);
-            background-color: rgb(240, 172, 0);
+            height: rem(30px);
+            width: rem(30px);
             border-radius: 50%;
-            padding: 0.8em;
-            font-size: 0.7em;
-            font-weight: 700;
+            transition: 0.2s;
 
-            &.user-changed {
-                color: hsl(208, 34.3%, 21.9%);
+            &:hover {
+                background-color: rgb(218, 218, 218);
             }
 
-            h2 {
-                margin: 0;
+            .user {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: rem(22px);
+                width: rem(22px);
+                background-color: rgb(240, 172, 0);
+                border-radius: 50%;
+                padding: 0.8em;
+                font-size: 0.7em;
+                font-weight: 700;
+                cursor: pointer;
+
+                &.user-changed {
+                    color: hsl(208, 34.3%, 21.9%);
+                }
+
+                h2 {
+                    margin: 0;
+                }
             }
         }
     }

@@ -17,7 +17,7 @@ export const SOCKET_EMIT_USER_IS_TYPING = 'chat-set-user-is-typing'
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 
-const baseUrl = process.env.NODE_ENV === 'production' ? '' : '//localhost:3031'
+const baseUrl = process.env.NODE_ENV === 'production' ? '' : '//localhost:3032'
 export const socketService = createSocketService()
 // export const socketService = createDummySocketService()
 
@@ -37,7 +37,6 @@ function createSocketService() {
       }, 500)
     },
     on(eventName, cb) {
-      // console.log(socket)
       socket.on(eventName, cb)
     },
     off(eventName, cb = null) {

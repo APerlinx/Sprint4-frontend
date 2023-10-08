@@ -596,5 +596,8 @@ export const boardStore = {
     isLoadingBoard(state) {
       return state.loadingBoard
     },
+    changeClr({ changeClr }) {
+      return changeClr
+    }
   },
 }

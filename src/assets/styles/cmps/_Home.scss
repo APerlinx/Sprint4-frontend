@@ -1,7 +1,7 @@
 .homepage {
     height: 720px;
     width: 100%;
-    background-image: url(../cmps/images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266e…/white-wave-bg.svg),
+    background-image: url(../../../assets/styles/img/white-wave-mobile.svg),
         linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
     background-position-x: center, 0px;
     background-position-y: bottom -0.5px, 0px;
@@ -119,9 +119,13 @@
                     font-size: 1rem;
                 }
 
-                .card-1 {
-                    grid-column: 1;
-                    grid-row: 1;
+                & > * {
+                    transition: 0.2s;
+                    padding: rem(16px);
+                    cursor: pointer;
+                }
+
+                & > *.clicked {
                     align-self: start;
                     background-color: white;
                     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.077);
@@ -130,6 +134,16 @@
                     border-radius: 0.3em;
                     font-size: rem(16px);
                     font-family: charlie;
+                }
+
+                .card-1 {
+                    grid-column: 1;
+                    grid-row: 1;
+                    align-self: center;
+                    font-size: rem(16px);
+                    font-family: charlie;
+                    margin-inline-start: 1.7em;
+
                 }
                 .card-2 {
                     align-self: center;
@@ -156,7 +170,7 @@
             }
         }
     }
-    
+
     .wave {
         grid-column: 1 / -1;
         align-self: end;

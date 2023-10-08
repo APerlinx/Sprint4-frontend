@@ -1,28 +1,37 @@
 .filter-container {
     .filter {
+        position: relative;
         color: #627086;
         justify-self: end;
 
         .search-bar {
-            width: rem(190px);
-            padding: 0.5em 2em;
-            border-radius: 0.35em;
-            border: 1px solid lightgrey;
-            height: rem(32px);
+            position: relative;
+            display: flex;
+            align-items: center;
 
-            &.search-changed {
-                background-color: hsl(207, 29%, 30%);
-                color: #ffffff;
-                border: 1px solid rgba(197, 197, 197, 0.377);
-
-                &::placeholder {
-                    color: #ffffff;
-                }
+            .search-icon {
+                position: absolute;
+                left: rem(-10px);
+                height: rem(13px);
+                margin-inline-start: 20px;
             }
 
-            &:focus {
-                width: rem(500px);
-                padding: 0.5em 2.6em;
+            input {
+                width: rem(190px);
+                padding: 0.5em 2em;
+                border-radius: 0.35em;
+                border: 1px solid lightgrey;
+                height: rem(32px);
+
+                &.search-changed {
+                    background-color: hsl(207, 29%, 30%);
+                    color: #ffffff;
+                    border: 1px solid rgba(197, 197, 197, 0.377);
+
+                    &::placeholder {
+                        color: #ffffff;
+                    }
+                }
             }
         }
 
@@ -33,18 +42,35 @@
         }
 
         .open {
+            position: absolute;
+            top: 130%;
+            z-index: 999;
             input {
                 width: 700px;
                 border-radius: 0.2em;
                 padding: 0.4em;
-                border: 0.5px solid rgb(173, 173, 173);
+                border: 3.5px solid rgb(64, 0, 255);
             }
 
             .search-output {
                 background-color: white;
-                width: rem(508px);
+                width: rem(700px);
                 border-radius: 0.2em;
                 box-shadow: 0 0 3px lightgray;
+
+                .help-us {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: rgba(238, 238, 238, 0.595);
+                    padding: rem(12px);
+                    border-bottom-left-radius: rem(3px);
+                    border-bottom-right-radius: rem(3px);
+                    font-weight: 600;
+                    text-decoration: underline;
+                    color: $forms-txt;
+                    font-size: rem(14px);
+                }
 
                 & > * :hover {
                     background-color: rgb(244, 244, 244);
@@ -62,7 +88,6 @@
                     flex-direction: column;
                     list-style: none;
                     padding: 0;
-                    padding-block-end: 1.5em;
 
                     .board-select {
                         display: flex;
@@ -70,13 +95,14 @@
                         gap: 0.5em;
                         padding-inline-start: 1em;
                         padding-block: 0.4em;
-                        
+
                         @include bg-preview;
 
                         h2 {
-                            font-weight: 300;
+                            font-weight: 500;
                             font-size: 1em;
-                            color: #182b4d;
+                            color: $forms-txt;
+                            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
                         }
                     }
                 }

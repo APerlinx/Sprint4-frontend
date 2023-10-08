@@ -38,7 +38,6 @@ export default {
     methods: {
         toggleMemberInfo() {
             this.isShowen = !this.isShowen
-            console.log('this.isShowen:', this.isShowen)
         },
         onclose() {
 

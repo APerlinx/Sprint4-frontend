@@ -2,8 +2,8 @@
   <div class="homepage">
     <div class="main-layout">
       <div class="demo">
-        <h2> Trio brings all your tasks, teammates, and tools together</h2>
-        <h6> Keep everything in the same place even if your team isn’t.</h6>
+        <h2>Trio brings all your tasks, teammates, and tools together</h2>
+        <h6>Keep everything in the same place even if your team isn’t.</h6>
         <RouterLink to="/board">
           <button>Let's Trio</button>
         </RouterLink>
@@ -23,20 +23,24 @@
           alt=""
         />
       </div>
-      
+
       <div class="buttom-layout">
         <h4 class="trio">TRIO 101</h4>
         <div class="sub-header">
           <h1>A productivity powerhouse</h1>
           <h5>
             Simple, flexible, and powerful. All it takes are boards, lists, and
-            cards to get a clear view of who`s doing what and what needs to
-            get done. Learn more in our guide for getting started.
+            cards to get a clear view of who`s doing what and what needs to get
+            done. Learn more in our guide for getting started.
           </h5>
         </div>
 
         <div class="cards-container">
-          <div class="card-1">
+          <div
+            @click="activateCard(1)"
+            class="card-1"
+            :class="{ clicked: activeCard === 1 }"
+          >
             <h5>Boards</h5>
             <p>
               Trio boards keep tasks organized and work moving forward. In a
@@ -44,7 +48,11 @@
               it!”
             </p>
           </div>
-          <div class="card-2">
+          <div
+            @click="activateCard(2)"
+            class="card-2"
+            :class="{ clicked: activeCard === 2 }"
+          >
             <h5>Lists</h5>
             <p>
               The different stages of a task. Start as simple as To Do, Doing or
@@ -52,7 +60,11 @@
               no wrong way to Trio.
             </p>
           </div>
-          <div class="card-3">
+          <div
+            @click="activateCard(3)"
+            class="card-3"
+            :class="{ clicked: activeCard === 3 }"
+          >
             <h5>Cards</h5>
             <p>
               Cards represent tasks and ideas and hold all the information to
@@ -72,11 +84,17 @@
 </template>
 
 <script>
-import HomeHeader from "../cmps/HomeHeader.vue";
 export default {
   name: "home",
-  components: {
-    HomeHeader,
+  data() {
+    return {
+      activeCard: null,
+    };
+  },
+  methods: {
+    activateCard(cardNumber) {
+      this.activeCard = cardNumber === this.activeCard ? null : cardNumber;
+    },
   },
 };
 </script>
