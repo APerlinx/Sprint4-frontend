@@ -1,7 +1,5 @@
 <template>
-
   <header class="app-header" v-click-outside="closeModals">
-
     <nav :class="{ 'header-changed': changeClr }">
       <div class="left">
         <RouterLink to="/board">
@@ -42,18 +40,28 @@
             <i class="fa-solid fa-chevron-down"></i>
           </div>
 
-          <div class="plus-btn" @click="isAddBoardTop = !isAddBoardTop">
-            <span class="plus-icon"></span>
+          <div class="plus-btn" >
+            <span @click="isAddBoardMobile = !isAddBoardMobile" class="plus-icon"></span>
+            <div class="mobile-add-board">
+              <AddBoard
+                v-if="isAddBoardMobile"
+                @save="saveBoard"
+                v-click-outside="closeMobileModal"
+                @closeModal="closeMobileModal"
+              />
+            </div>
           </div>
         </div>
         <!-- ---------------------- -->
 
         <div
           class="create-btn"
-          :style="{ backgroundColor: isAddBoardDesktop ? '#e9f3ff' : '' }" >
+          :style="{ backgroundColor: isAddBoardDesktop ? '#e9f3ff' : '' }"
+        >
           <button
             @click="toggleAddBordDestktop"
-            :style="{ color: isAddBoardDesktop ? '#0c66e4' : '' }" >
+            :style="{ color: isAddBoardDesktop ? '#0c66e4' : '' }"
+          >
             Create
           </button>
 
@@ -62,7 +70,8 @@
               v-if="isAddBoardDesktop"
               @save="saveBoard"
               @closeModal="toggleAddBordDestktop"
-              v-click-outside="toggleAddBordDestktop" />
+              v-click-outside="toggleAddBordDestktop"
+            />
           </div>
         </div>
       </div>
@@ -79,10 +88,10 @@
           </div>
         </div>
 
-        <div class="user-container" @click="isAccountOpen=!isAccountOpen">
-          <span class="user" :class="{ 'user-changed': changeClr }" >
+        <div class="user-container" @click="isAccountOpen = !isAccountOpen">
+          <span class="user" :class="{ 'user-changed': changeClr }">
             <p>{{ loggedInUser }}</p>
-            <Account v-if="isAccountOpen"/>
+            <Account v-if="isAccountOpen" />
           </span>
         </div>
       </div>
@@ -93,7 +102,7 @@
     <Notification @closeNotification="closeNotification" v-if="isNotifiction" />
   </div>
 
-
+  
 </template>
 
 <script>
@@ -115,16 +124,17 @@ export default {
     return {
       isPickerModalStarred: false,
       isPickerModalRecent: false,
-      isAddBoardBottom: false,
-      isAddBoardTop: false,
+      isAddBoardMobile: false,
       isAddBoardDesktop: false,
       isNotifiction: false,
-      isUserRead: false,
-      isAccountOpen: false
+      isAccountOpen: false,
     };
   },
 
   methods: {
+    closeMobileModal() {
+      this.isAddBoardMobile = false
+    },
     async readNotifications() {
       try {
         this.isNotifiction = !this.isNotifiction;
@@ -242,7 +252,7 @@ export default {
     RecentPicker,
     StarredPicker,
     Notification,
-    Account
+    Account,
   },
 };
 </script>

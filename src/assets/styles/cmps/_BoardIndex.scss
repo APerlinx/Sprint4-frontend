@@ -79,10 +79,6 @@
 
     .workspace {
       position: relative;
-      display: flex;
-      flex-wrap: wrap;
-      align-content: center;
-      gap: rem(16px);
     }
 
     h3 {
@@ -96,24 +92,7 @@
       font-weight: 600;
       margin: em(11, 14) 0;
     }
-    .index-create-board {
-      position: relative;
-      margin-block-end: 10em;
-      @include board;
-
-      button {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-      }
-
-      .index-add-board {
-        position: absolute;
-        bottom: 0%;
-        left: 100%;
-        z-index: 999;
-      }
-    }
+   
   }
 }
 
@@ -122,20 +101,14 @@
     margin-block-start: 3em;
     grid-template-columns: minmax(10px, 1fr) auto minmax(10px, 1fr);
 
-    .board-container {
-      grid-column: 2;
-      justify-self: center;
-
       .index-create-board {
         width: rem(189px);
 
-        .add-board-container {
+        .index-add-board {
           position: absolute;
-          left: -49%;
-          bottom: 500%;
+          transform: translate(-82%, -25%);
           z-index: 999;
         }
-      }
     }
   }
 }

@@ -87,3 +87,9 @@ textarea {
 section {
     padding: 0;
 }
+
+@media (max-width:600px) {
+    body {
+        overflow-y: none;
+    }
+}

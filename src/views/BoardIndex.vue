@@ -12,6 +12,7 @@
           @star="updateBoard"
           @recent="updateBoard"
           :boards="starredBoards"
+          :isYourWorkSpace="false"
         />
       </div>
 
@@ -26,6 +27,7 @@
           :boards="recentBoards"
           @star="updateBoard"
           @recent="updateBoard"
+          :isYourWorkSpace="false"
         />
       </div>
 
@@ -41,35 +43,20 @@
           @remove="removeBoard"
           @star="updateBoard"
           @recent="updateBoard"
+          @saveBoard="saveBoard"
+          :isYourWorkSpace="true"
         />
-
-        <div class="index-create-board">
-          <button @click="isAddBoard = !isAddBoard"></button>
-          <span>Create new board</span>
-
-          <div class="index-add-board">
-            <AddBoard
-              v-if="isAddBoard"
-              @save="saveBoard"
-              v-click-outside="toggleIsAddBoard"
-              @close="scrollWindowToIndexLayout()"
-            />
-          </div>
         </div>
-      </div>
     </section>
   </div>
 </template>
 
 <script>
 import BoardList from "../cmps/BoardList.vue";
-import AddBoard from "../cmps/addboard.vue";
-
 
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";
 
-import { clickOutsideDirective } from "../directives/index.js";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
 export default {
@@ -84,9 +71,6 @@ export default {
   },
 
   methods: {
-    toggleIsAddBoard() {
-      this.isAddBoard = !this.isAddBoard;
-    },
 
     async removeBoard(boardId) {
       try {
@@ -120,18 +104,7 @@ export default {
       }
     },
 
-    scrollWindowToIndexLayout() {
-      const indexLayoutElement = this.$refs.indexLayout;
-
-      if (indexLayoutElement) {
-        const scrollOptions = {
-          top: indexLayoutElement.offsetTop,
-          behavior: "smooth",
-        };
-
-        window.scrollTo(scrollOptions);
-      }
-    },
+    
   },
 
   computed: {
@@ -157,13 +130,10 @@ export default {
 
   components: {
     BoardList,
-    AddBoard,
     Popper,
     defineComponent,
   },
 
-  directives: {
-    clickOutside: clickOutsideDirective,
-  },
+  
 };
 </script>

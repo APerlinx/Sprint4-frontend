@@ -213,7 +213,8 @@
 
 @media only screen and (max-width: 500px) {
     .app-header {
-        margin-bottom: 1.4em;
+        margin-block-end: 4em;
+        // margin-bottom: 1.4em;
 
         .add-board-container {
             position: absolute;
@@ -230,6 +231,9 @@
             height: 48px;
             padding: 8px 16.5px;
             border-bottom: none;
+            background-color: rgb(255, 255, 255);
+            border-bottom: 0.5px solid rgba(128, 128, 128, 0.257);
+            z-index: 999;
 
             .left {
                 .recent {
@@ -278,6 +282,12 @@
                 height: 30px;
                 width: 30px;
                 background-color: rgba(0, 0, 0, 0.137);
+
+                .mobile-add-board {
+                    position: absolute;
+                    transform: translate(0%, 57%);
+                    
+                }
 
                 .plus-icon {
                     @include trello-icon($content: $icon-plus, $type: sm, $color: $textClr);

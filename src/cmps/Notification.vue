@@ -32,17 +32,19 @@
             </div>
         </div>
     </div>
+
     <!-- <div class="notification-menu">
         <div class="not-title">
             <h2>Notifications</h2>
-        </div>
-        <div class="filter-btn">
+        </div> -->
+        <!-- <div class="filter-btn">
             <img class="check" src="../assets/icon/checkmark.png" alt="">
             <div class="filter-title">Unread</div>
-        </div>
-        <div class="day-title" v-if="fillterdNotification.length > 0">Today</div>
-        <div class="not-container" v-for="not in fillterdNotification" :key="not.id">
-            <div class="not">
+        </div> -->
+        <!-- <div class="day-title" v-if="fillterdNotification.length > 0">Today</div> -->
+        <!-- <div class="not-container" v-for="not in fillterdNotification" :key="not.id"> -->
+            <!-- <pre>{{not}}</pre> -->
+            <!-- <div class="not">
                 <div class="not-icon"><img src="../assets/icon/gameboy.png" alt=""></div>
                 <div class="not-text">
                     <div class="action"> <span>{{ not.byUser + ' ' + not.action + ' ' + not.task }}</span>
@@ -52,10 +54,9 @@
                         <p>{{ timeFormat (not.createdAt) }}</p>
                     </div>
                 </div>
-            </div>
-
-        </div>
-    </div> -->
+            </div> -->
+        <!-- </div> -->
+    <!-- </div> -->
 </template>
   
 <script>

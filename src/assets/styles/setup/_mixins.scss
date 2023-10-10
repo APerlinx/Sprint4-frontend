@@ -98,7 +98,8 @@
 @mixin modal {
     display: flex;
     flex-direction: column;
-    width: em(304, 14);
+    width: rem(305px);
+    height: max-content;
     border-radius: em(8, 14);
     color: $clr2;
     background-color: white;

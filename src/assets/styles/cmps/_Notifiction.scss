@@ -1,109 +1,12 @@
-@media (max-width: 600px) {
-    .notification-menu {
-        position: absolute;
-        right: 0;
-        top: 2.75%;
-        left: 0;
-        bottom: 0;
-        padding-block-start: 2em;
-        background-color: rgb(0, 0, 0);
-        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.148);
-        z-index: 998;
-
-        h2 {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans";
-            font-weight: 600;
-            font-size: 14px;
-            color: rgb(201, 201, 201);
-        }
-    }
-    .filter-btn {
-        display: flex;
-        justify-content: space-evenly;
-        margin-block-start: 1em;
-        margin-inline-start: 0.8em;
-        width: 105px;
-        height: 35px;
-        border-radius: 30px;
-        background-color: rgb(21, 20, 36);
-        border: 1px solid #626ed9;
-        color: rgb(98, 110, 217);
-        .filter-title {
-            margin-block-start: 0.4em;
-            font-weight: 600;
-        }
-        .check {
-            margin-block-start: 0.75em;
-            height: 12px;
-        }
-    }
-
-    .day-title {
-        margin-block-start: 1em;
-        margin-inline-start: 0.8em;
-        color: grey;
-        font-weight: 600;
-        font-size: 1.1em;
-    }
-    .notification-container {
-        margin-block: 1em;
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-
-        .notification {
-            display: flex;
-            align-items: center;
-            gap: 1em;
-            margin-inline-start: 0.8em;
-            color: #808080;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans";
-            font-weight: 500;
-
-            .notification-icon {
-                align-self: start;
-                margin-block-start: 0.85em;
-                img {
-                    height: 16px;
-                }
-            }
-
-            .notification-text {
-                display: flex;
-                flex-direction: column;
-                gap: 0.3em;
-
-                .action {
-                    display: flex;
-                    align-items: center;
-                    flex-wrap: wrap;
-                    // flex-direction: column;
-                    // align-items: center;
-
-                    .the-board-title {
-                        text-decoration: underline;
-                        font-weight: 600;
-                    }
-                }
-
-                .notification-time {
-                    font-weight: 100;
-                    font-size: 0.8em;
-                }
-            }
-        }
-    }
-}
-
 .notification-container {
     position: absolute;
     z-index: 999;
-    right: rem(8px);
+    right: 0;
 
     .notification-menu {
         width: rem(400px);
         background-color: white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.096);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         padding: rem(16px);
         border-radius: rem(6px);
         max-height: calc(100vh - 100px);
@@ -222,6 +125,18 @@
                     }
                 }
             }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .notification-container {
+        height: 100%;
+        
+        .notification-menu {
+            width: 100%;
+            height: 100%;
+            max-height: 100vh;
         }
     }
 }

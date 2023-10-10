@@ -1,5 +1,4 @@
 .add-modal {
-   
     @include modal;
     padding-inline: rem(12px);
 
@@ -60,8 +59,10 @@
             color: #adb4c0;
             background-color: #f7f8f9;
             border-radius: 0.2em;
-            font-weight: 400;
+            font-weight: 500;
+            font-size: rem(12px);
             padding: 0.5em;
+            margin-block-start: rem(15px);
             cursor: pointer;
         }
         .check {
