@@ -235,9 +235,13 @@ export const boardStore = {
     },
     async updateBoard({ commit }, { board }) {
       try {
-        board = await boardService.save(board)
+        const updateBoard = JSON.parse(JSON.stringify(board));
+        updateBoard.isRecent = true;
+        updateBoard.recentAt = Date.now();
+        await boardService.save(updateBoard)
+        board = updateBoard
         commit(getActionUpdateBoard(board))
-        return board
+        return updateBoard
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)
         throw err

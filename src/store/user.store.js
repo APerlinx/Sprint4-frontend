@@ -142,10 +142,10 @@ export const userStore = {
                 userCopy.notifications = updatedNotifications;
 
                 const savedUser = await userService.update(userCopy);
-                console.log(savedUser);
+                const user = savedUser 
 
                 commit({ type: 'setUser', savedUser });
-                commit({ type: 'setLoggedinUser', savedUser });
+                commit({ type: 'setLoggedinUser', user });
 
             } catch (err) {
                 console.log(err);

@@ -1,6 +1,5 @@
 <template>
   <div class="starred-modal">
-    <div class="search-output">
       <ul class="output-list">
         <li v-if="starredBoards" v-for="board in starredBoards">
           <RouterLink @click="closeModal" :to="'/details/' + board._id">
@@ -26,7 +25,6 @@
         </div>
       </ul>
     </div>
-  </div>
 </template>
 
 <script>

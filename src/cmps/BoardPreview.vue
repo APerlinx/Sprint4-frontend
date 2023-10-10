@@ -10,7 +10,11 @@
 
 <script>
 export default {
-  props: ["board"],
+  props: {
+    board: {
+      type: Object,
+    },
+  },
 
   data() {
     return {
@@ -27,13 +31,11 @@ export default {
       this.$emit("star", board);
     },
     goToDetails() {
-      const board = JSON.parse(JSON.stringify(this.board));
-      board.isRecent = true;
-      board.recentAt = Date.now();
-      this.$emit("recent", board);
+      this.$emit("recent", this.board);
       this.$router.push(`/details/${this.board._id}`);
     },
   },
+  
   computed: {
     imgUrl() {
       if (this.board.style.backgroundImage) {

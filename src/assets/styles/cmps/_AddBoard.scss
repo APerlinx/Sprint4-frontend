@@ -1,9 +1,5 @@
 .add-modal {
-    position: absolute;
-    transform: translate(0, 8px);
-    top: 100%;
-    left: 0;
-    z-index: 999;
+   
     @include modal;
     padding-inline: rem(12px);
 
@@ -46,7 +42,7 @@
         }
         p {
             font-size: rem(12px);
-            font-weight: 100;
+            font-weight: 200;
             color: $lclr1;
             margin-block-start: 0.5em;
         }
@@ -64,7 +60,7 @@
             color: #adb4c0;
             background-color: #f7f8f9;
             border-radius: 0.2em;
-            font-weight: 200;
+            font-weight: 400;
             padding: 0.5em;
             cursor: pointer;
         }

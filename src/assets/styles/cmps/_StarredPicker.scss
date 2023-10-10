@@ -1,76 +1,65 @@
 .starred {
     .starred-modal {
-        position: absolute;
-        transform: translate(0, 6px);
-        z-index: 999;
-        .search-output {
-            background-color: white;
-            width: rem(304px);
-            height: max-content;
-            box-shadow: 5px 5px 11px rgba(0, 0, 0, 0.092);
-            border: 1px solid rgb(238, 236, 236);
-            border-radius: 0.7em;
+     @include headerBoardModal;
+
+        .output-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+            list-style: none;
+            padding: 0;
 
             & > * :hover {
                 background-color: rgb(244, 244, 244);
             }
 
-            .output-list {
+            .row {
                 display: flex;
-                flex-direction: column;
-                gap: 0.3em;
-                list-style: none;
-                padding: 0;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.6em;
+                padding-inline-start: 1em;
+                padding-block-start: 0.3em;
 
-                .row {
+                .board-recent {
                     display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    gap: 0.6em;
-                    padding-inline-start: 1em;
-                    padding-block-start: 0.3em;
+                    gap: rem(7px);
+                    padding: 0;
 
-                    .board-recent {
+                    @include bg-preview;
+
+                    .info {
                         display: flex;
-                        align-items: center;
-                        gap: rem(7px);
-                        padding: 0;
+                        flex-direction: column;
 
-                        @include bg-preview;
-
-                        .info {
-                            display: flex;
-                            flex-direction: column;
-
-                            .board-title {
-                                font-size: 1em;
-                                color: #182b4d;
-                                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu,
-                                    Droid Sans, Helvetica Neue, sans-serif;
-                                font-weight: 600;
-                                padding: 0;
-                            }
-                            p {
-                                font-size: 0.9em;
-                                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu,
-                                    Droid Sans, Helvetica Neue, sans-serif;
-                                color: rgb(106, 106, 106);
-                            }
+                        .board-title {
+                            font-size: 1em;
+                            color: #182b4d;
+                            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu,
+                                Droid Sans, Helvetica Neue, sans-serif;
+                            font-weight: 600;
+                            padding: 0;
+                        }
+                        p {
+                            font-size: 0.9em;
+                            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu,
+                                Droid Sans, Helvetica Neue, sans-serif;
+                            color: rgb(106, 106, 106);
                         }
                     }
+                }
 
-                    .btn-star {
-                        margin-inline-end: 1em;
-                        cursor: pointer;
+                .btn-star {
+                    margin-inline-end: 1em;
+                    cursor: pointer;
 
-                        &.unstarred {
-                            @include trello-icon($content: $icon-star, $type: lg, $color: gold);
-                            font-size: rem(14px);
-                        }
-                        &.starred {
-                            @include trello-icon($content: $icon-full-star, $type: lg, $color: gold);
-                            font-size: rem(14px);
-                        }
+                    &.unstarred {
+                        @include trello-icon($content: $icon-star, $type: lg, $color: gold);
+                        font-size: rem(14px);
+                    }
+                    &.starred {
+                        @include trello-icon($content: $icon-full-star, $type: lg, $color: gold);
+                        font-size: rem(14px);
                     }
                 }
             }

@@ -1,7 +1,7 @@
 <template>
   <div class="index-layout">
     <section class="board-container">
-      <div v-if="starredBoards.length > 0" class="starred">
+      <div v-if="starredBoards.length" class="starred">
         <div class="starred">
           <div class="starred-title">
             <span class="starred-icon"></span>
@@ -15,7 +15,7 @@
         />
       </div>
 
-      <div v-if="recentBoards.length > 0" class="recent">
+      <div v-if="recentBoards.length" class="recent">
         <div class="recently">
           <div class="recently-title">
             <span class="recently-icon"></span>
@@ -36,24 +36,23 @@
         </div>
       </div>
       <div class="workspace">
-        <div>
-          <BoardList
-            :boards="boards"
-            @remove="removeBoard"
-            @star="updateBoard"
-            @recent="updateBoard"
-          />
-        </div>
+        <BoardList
+          :boards="boards"
+          @remove="removeBoard"
+          @star="updateBoard"
+          @recent="updateBoard"
+        />
 
         <div class="index-create-board">
-          <div class="board-title" @click="isAddBoard = !isAddBoard">
-            Create new board
-          </div>
-          <div class="add-board-container" v-if="isAddBoard">
+          <button @click="isAddBoard = !isAddBoard"></button>
+          <span>Create new board</span>
+
+          <div class="index-add-board">
             <AddBoard
-              @close="scrollWindowToIndexLayout()"
+              v-if="isAddBoard"
               @save="saveBoard"
               v-click-outside="toggleIsAddBoard"
+              @close="scrollWindowToIndexLayout()"
             />
           </div>
         </div>
@@ -65,6 +64,7 @@
 <script>
 import BoardList from "../cmps/BoardList.vue";
 import AddBoard from "../cmps/addboard.vue";
+
 
 import { defineComponent } from "vue";
 import Popper from "vue3-popper";

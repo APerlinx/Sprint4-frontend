@@ -41,6 +41,7 @@ async function update(user) {
 
 async function login(userCred) {
     const user = await httpService.post('auth/login', userCred)
+    console.log('user',user);
     if (user) {
         socketService.login(user._id,user.username)
         return saveLocalUser(user)
@@ -70,7 +71,7 @@ async function changeScore(by) {
 }
 
 function saveLocalUser(user) {
-    user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl, notifications: user.notifications }
+    user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl, notifications: user.notifications, email: user.email }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
     return user
 }

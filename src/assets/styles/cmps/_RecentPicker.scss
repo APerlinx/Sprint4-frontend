@@ -1,32 +1,23 @@
 .recent {
   .recent-modal {
-    position: absolute;
-    transform: translate(-24px, 14px);
-    z-index: 999;
-    .search-output {
-      background-color: white;
-      width: rem(304px);
-      box-shadow: 5px 5px 11px rgba(0, 0, 0, 0.092);
-      border: 1px solid rgb(238, 236, 236);
-      border-radius: 0.7em;
-
-      & > * :hover {
-        background-color: rgb(244, 244, 244);
-      }
-
+    @include headerBoardModal;
+     
       .output-list {
         display: flex;
         flex-direction: column;
-        gap: 0.4em;
+        gap: 0.3em;
         list-style: none;
         padding: 0;
 
+        & > * :hover {
+          background-color: rgb(244, 244, 244);
+        }
+  
         .row {
           display: flex;
           align-items: center;
           gap: 0.6em;
           padding-inline-start: 1em;
-
           @include bg-preview;
 
           .text {
@@ -64,4 +55,3 @@
       }
     }
   }
-}
