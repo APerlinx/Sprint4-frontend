@@ -1,4 +1,4 @@
-import {focusDirective} from './directives.js'
+import { focusDirective } from './directives.js'
 import { createApp } from 'vue'
 
 import { router } from './router.js'
@@ -15,6 +15,7 @@ import './assets/styles/setup/_typography.scss'
 import App from './App.vue'
 
 const app = createApp(App)
+
 app.use(router)
 app.use(ElementPlus)
 app.use(store)

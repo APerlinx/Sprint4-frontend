@@ -52,8 +52,21 @@
   }
 }
 
-@media(max-width:600px) {
+@media (max-width: 600px) {
   .board {
-    width: 193px;
+    width: rem(188px);
+
+    .btn-star {
+      right: 2%;
+      bottom: 2%;
+      transform: translateX(0%);
+
+      &.starred {
+        font-size: 2em;
+      }
+      &.unstarred {
+        font-size: 2em;
+      }
+    }
   }
 }

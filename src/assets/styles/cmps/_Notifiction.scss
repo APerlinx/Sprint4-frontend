@@ -1,5 +1,7 @@
 .notification-container {
-    position: absolute;
+    position: fixed;
+    display: flex;
+    justify-content: center;
     z-index: 999;
     right: 0;
 
@@ -134,7 +136,7 @@
         height: 100%;
         
         .notification-menu {
-            width: 100%;
+            width: 95%;
             height: 100%;
             max-height: 100vh;
         }

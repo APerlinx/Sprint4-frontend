@@ -102,7 +102,6 @@
     <Notification @closeNotification="closeNotification" v-if="isNotifiction" />
   </div>
 
-  
 </template>
 
 <script>

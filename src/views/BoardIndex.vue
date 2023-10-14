@@ -1,43 +1,45 @@
 <template>
   <div class="index-layout">
     <section class="board-container">
-      <div v-if="starredBoards.length" class="starred">
-        <div class="starred">
+      <div class="starred-container">
+        <div v-if="starredBoards.length" class="starred">
           <div class="starred-title">
             <span class="starred-icon"></span>
             <h2>Starred boards</h2>
           </div>
+
+          <BoardList
+            @star="updateBoard"
+            @recent="updateBoard"
+            :boards="starredBoards"
+            :isYourWorkSpace="false"
+          />
         </div>
-        <BoardList
-          @star="updateBoard"
-          @recent="updateBoard"
-          :boards="starredBoards"
-          :isYourWorkSpace="false"
-        />
       </div>
 
-      <div v-if="recentBoards.length" class="recent">
-        <div class="recently">
-          <div class="recently-title">
-            <span class="recently-icon"></span>
+      <div class="recent-container">
+        <div v-if="recentBoards.length" class="recent">
+          <div class="recent-title">
+            <span class="recent-icon"></span>
             <h2>Recently viewed</h2>
           </div>
+
+          <BoardList
+            :boards="recentBoards"
+            @star="updateBoard"
+            @recent="updateBoard"
+            :isYourWorkSpace="false"
+          />
         </div>
-        <BoardList
-          :boards="recentBoards"
-          @star="updateBoard"
-          @recent="updateBoard"
-          :isYourWorkSpace="false"
-        />
       </div>
 
-      <div class="workspace-title">
-        <div class="sub-workspace">
-          <div class="user-title">{{ loggedInUser }}</div>
-          <h3>Your boards</h3>
-        </div>
-      </div>
       <div class="workspace">
+        <div class="workspace-title">
+          <div class="sub-workspace">
+            <div class="user-title">{{ loggedInUser }}</div>
+            <h3>Your boards</h3>
+          </div>
+        </div>
         <BoardList
           :boards="boards"
           @remove="removeBoard"
@@ -46,7 +48,7 @@
           @saveBoard="saveBoard"
           :isYourWorkSpace="true"
         />
-        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -71,7 +73,6 @@ export default {
   },
 
   methods: {
-
     async removeBoard(boardId) {
       try {
         await this.$store.dispatch({ type: "removeBoard", boardId });
@@ -103,8 +104,6 @@ export default {
         showErrorMsg("Cant add board");
       }
     },
-
-    
   },
 
   computed: {
@@ -133,7 +132,5 @@ export default {
     Popper,
     defineComponent,
   },
-
-  
 };
 </script>

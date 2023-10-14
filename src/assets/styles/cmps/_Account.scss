@@ -1,11 +1,12 @@
 .account-modal {
-    position: absolute;
-    top: 100%;
-    right: 0;
+    position: fixed;
+    top: 7%;
+    right: 2%;
     width: rem(224px);
     background-color: rgb(255, 255, 255);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 0.7em;
+    z-index: 999;
 
     .headline {
         text-transform: uppercase;
