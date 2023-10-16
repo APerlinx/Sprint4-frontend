@@ -5,7 +5,7 @@
       <span class="dynamic-modal-close" @click.stop="closeDynamicModal"></span>
     </section>
     <section>
-      <component :board="boardToUpdate" :is="actionCmpType" :taskToEdit="taskToEdit" @updateLable="updateLable"
+      <component :board="boardToUpdate" :is="actionCmpType" :taskToEdit="taskToEdit" @updateBoard="updateBoard"
         @toggleMember="toggleMember" @checklist="addChecklist" @saveLabel="saveLabel" @addDueDate="addDueDate"
         @removeLabel="removeLabel" @setCover="setCover" @closeEditModal="closeDynamicModal"
         @addAttachment="addAttachment">
@@ -55,17 +55,15 @@ export default {
     },
     addChecklist(newChecklist) {
       this.$emit('checklist', newChecklist)
-      // console.log("modal2 - newChecklist:", newChecklist);
     },
     addAttachment(newAttachment) {
       this.$emit('attachment', newAttachment)
-      // console.log("modal2 - newAttachment:", newAttachment);
     },
     addDueDate(newDueDate) {
       this.$emit('dueDate', newDueDate)
     },
-    updateLable(label) {
-      this.$emit('updateLable', label)
+    updateBoard(board) {
+      this.$emit('updateBoard', board)
     },
     removeLabel(label) {
       this.$emit('removeLabel', label)

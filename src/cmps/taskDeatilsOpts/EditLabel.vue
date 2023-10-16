@@ -5,7 +5,7 @@
     <h2 v-else>Create a label</h2>
     <span @click="closeEditModal" class="close-btn"></span>
   </div>
-
+  
   <div class="display">
     <div class="label" :style="{ backgroundColor: label.color }">
       <h2 :style="{color: isDarkColor(label.color) ? 'white' : ''}" >{{ label.title }}</h2>

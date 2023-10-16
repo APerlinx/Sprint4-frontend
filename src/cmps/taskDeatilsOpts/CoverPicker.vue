@@ -1,5 +1,4 @@
 <template>
-  <h2>{{ taskToEdit.cover.color }}</h2>
   <h6>Size</h6>
   <div class="layout">
     <div
