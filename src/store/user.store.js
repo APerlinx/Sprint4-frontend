@@ -50,6 +50,7 @@ export const userStore = {
         },
         setUser(state, { savedUser }) {
             const userId = savedUser?._id
+            console.log(userId);
             const idx = state.users?.findIndex(user => user._id === userId)
             state.users.splice(idx, 1, savedUser)
         },
@@ -117,12 +118,12 @@ export const userStore = {
         },
         async addNotifcation({ commit, state }, { notification }) {
             try {
-                var user = state.users.find(user => user.fullname === notification?.toUser)
+                let user = state.users.find(user => user.fullname === notification?.toUser)
                 const updatedUser = JSON.parse(JSON.stringify(user))
                 updatedUser.notifications.unshift(notification)
                 updatedUser.isUserReadNotifications = false
                 user = await userService.update(updatedUser)
-                commit({ type: 'setUser', user })
+                commit({ type: 'setUser', savedUser: user })
 
                 if (user.fullname === state.loggedinUser?.fullname) {
                     commit({ type: 'setLoggedinUser', user })

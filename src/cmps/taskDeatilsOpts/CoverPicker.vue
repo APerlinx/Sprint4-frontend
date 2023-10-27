@@ -4,7 +4,11 @@
     <div
       class="layout1"
       @click="setLayout(false)"
-      :style="{ background: hasCover ? taskToEdit.cover?.color : '#ececec' }"
+      :style="{
+        background: hasCover,
+        'background-size': 'cover',
+        'background-position': 'center',
+      }"
     >
       <div class="bottom-section">
         <div
@@ -35,7 +39,11 @@
     <div
       class="layout2"
       @click="setLayout(true)"
-      :style="{ background: hasCover ? taskToEdit.cover?.color : '#ececec' }"
+      :style="{
+        background: hasCover,
+        'background-size': 'cover',
+        'background-position': 'center',
+      }"
     >
       <div class="div"></div>
       <div class="bottom-section">
@@ -60,6 +68,7 @@
   </div>
 
   <h6 class="colors-title">Colors</h6>
+
   <section class="color-pallate-wide">
     <div
       v-for="(color, index) in colorOptions"
@@ -69,45 +78,59 @@
     ></div>
   </section>
 
-  <h6>Attachment</h6>
-
-  <button>Upload a cover image</button>
-
-  <p>Tip: choose the red one</p>
+  <div class="attachments">
+    <h6>Attachment</h6>
+    <ImgUploader @uploaded="onUploaded" />
+  </div>
 
   <h6>Photos from unsplash</h6>
 
-  <!-- <section class="img-pallte">
+  <div class="img-pallate-wide">
     <div
-      v-for="(imgUrl, index) in imgUrls"
+      class="imgDiv"
+      v-for="(img, index) in imgUrls"
       :key="index"
       @click="setBgImg(img)"
-      :class="imgClass[index]"
-    >
-   <pre>{{ imgUrl }}</pre>
+      :style="{
+        background: `url(${img})`,
+        'background-size': 'cover',
+        'background-position': 'center',
+      }"
+    ></div>
   </div>
-  </section> -->
 
+  <div class="search-container">
+    <input
+      class="img-input"
+      type="text"
+      v-model="query"
+      placeholder="Search for photos..."
+    />
+  </div>
 </template>
 
 <script>
+import ImgUploader from "../../cmps/ImgUploader.vue";
+import debounce from "lodash.debounce";
+
 export default {
   props: {
     taskToEdit: Object,
   },
   created() {
-    this.fetchListOfPhotos(this.query)
+    this.debouncedGetResult = debounce(this.fetchListOfPhotos, 1000);
+    this.fetchListOfPhotos(this.query);
   },
   data() {
     return {
       coverToEdit: {
-        color:'',
-        img:'',
-        isFull: false
+        color: "",
+        img: "",
+        isFull: false,
       },
-      accesKey: 'MW3WlTYHFpvQZJwkJp360WPZFpDiNui3_1sdi4VjuhY',
+      accesKey: "MW3WlTYHFpvQZJwkJp360WPZFpDiNui3_1sdi4VjuhY",
       imgUrls: [],
-      query: 'dogs',
+      query: "",
       isCover: false,
       lastPick: "",
       colorOptions: [
@@ -141,7 +164,6 @@ export default {
         //red
         "#e85151",
       ],
-
       colorClass: [
         "green",
         "gold",
@@ -154,65 +176,87 @@ export default {
         "grey",
         "red",
       ],
-
-      imgOptions: [
-        "https://images.unsplash.com/photo-1690207714547-6e76b0e61b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60",
-        "https://images.unsplash.com/photo-1690205074022-560b3587cbc4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60",
-        "https://images.unsplash.com/photo-1688902325269-8f4593b5d6a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
-        "https://images.unsplash.com/photo-1661956601030-fdfb9c7e9e2f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwzNnx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
-      ],
-      imgClass: ["img1", "img2", "img3", "img4"],
     };
   },
   methods: {
-    async fetchListOfPhotos(query = this.query) {
-      console.log(query);
-      // try {
-      //   const response = await fetch(
-      //     `https://api.unsplash.com/search/photos?client_id=${this.accesKey}&query=${query}`
-      //   )
-      //   const json = await response.json()
+    onUploaded(imgUrl) {
+      this.coverToEdit.color = "";
+      this.coverToEdit.img = imgUrl;
+      this.setCover();
+    },
+    async fetchListOfPhotos() {
+      try {
+        let query;
+        if (this.query) query = this.query
 
-      //   console.log(json);
+        const response = await fetch(
+          `https://api.unsplash.com/search/photos?client_id=${this.accesKey}&query=${query}`
+        );
+        const json = await response.json();
+        const imageUrls = json.results.map((img) => img.urls.regular);
 
-        // const imageUrls = json.results.map((img) => img.urls.regular)
-
-        // if (imageUrls.length > 12) {
-        //   this.imageUrls = imageUrls.slice(0, 12)
-        // } else {
-        //   this.imageUrls = imageUrls
-        // }
-      // } catch (err) {
-      //   console.log('Cannot load photos', err)
-      //   throw err
-      // }
+        const res = imageUrls.splice(0, 6);
+        this.imgUrls = res;
+      } catch (err) {
+        console.log("Cannot load photos", err);
+        throw err;
+      }
     },
     setBgColor(color) {
-    if (this.lastPick === color && this.isCover) {
-      this.isCover = false;
-      this.lastPick = "";
-      this.coverToEdit.color = "";
-    } else {
-      this.isCover = true;
-      this.lastPick = color;
-      this.coverToEdit.color = color;
-    }
-
-    this.setCover();
-  },
-    setLayout(state) {
-      this.coverToEdit.isFull = state
-      this.setCover()
+      if (this.lastPick === color && this.isCover) {
+        this.isCover = false;
+        this.lastPick = "";
+        this.coverToEdit.color = "";
+      } else {
+        this.coverToEdit.img = "";
+        this.isCover = true;
+        this.lastPick = color;
+        this.coverToEdit.color = color;
+      }
+      this.setCover();
     },
-
+    setBgImg(img) {
+      if (this.lastPick === img && this.isCover) {
+        this.isCover = false;
+        this.lastPick = "";
+        this.coverToEdit.img = "";
+      } else {
+        this.coverToEdit.color = "";
+        this.isCover = true;
+        this.lastPick = img;
+        this.coverToEdit.img = img;
+      }
+      this.setCover();
+    },
+    setLayout(state) {
+      this.coverToEdit.isFull = state;
+      this.setCover();
+    },
     setCover() {
       this.$emit("setCover", this.coverToEdit);
-    }
+    },
   },
-  computed:{
-    hasCover(){
-      return this.taskToEdit.cover?.color
-    }
-  }
+
+  computed: {
+    hasCover() {
+      if (this.taskToEdit.cover?.color) {
+        return this.taskToEdit.cover?.color;
+      } else if (this.taskToEdit.cover?.img) {
+        return `url(${this.taskToEdit.cover?.img})`;
+      } else {
+        return "";
+      }
+    },
+  },
+
+  watch: {
+    query() {
+      this.debouncedGetResult();
+    },
+  },
+
+  components: {
+    ImgUploader,
+  },
 };
 </script>

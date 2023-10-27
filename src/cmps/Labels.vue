@@ -11,13 +11,13 @@
           </h6>
         </div>
       </div>
-      <button @click="isLabelModal = !isLabelModal" class="add-label">
+      <button @click="toggleLabelModal" class="add-label">
         <span class="icon plus"> </span>
-        <div v-if="isLabelModal" class="label-modal">
+       <!-- <div v-if="isLabelModal" class="label-modal">
           <DynamicModal :actionCmpType="'LabelsPicker'" :actionCmpName="'Labels'" :taskToEdit="taskToEdit" :board="board"
             @saveLabel="saveLabel" @removeLabel="removeLabel" @updateLable="updateLable" />
-        </div>
-      </button>
+        </div> -->
+      </button> 
     </div>
   </div>
 </template>
@@ -56,6 +56,9 @@ export default {
     },
     removeLabel(board) {
       this.$emit("removeLabel", board);
+    },
+    toggleLabelModal() {
+      this.$emit("toggleLabelModal");
     },
   },
   computed: {

@@ -1,13 +1,16 @@
 <template>
-  <div className="upload-preview">
-    <img v-if="imgUrl" :src="imgUrl" :style="{ maxWidth: '200px', float: 'right' }" />
-    <label for="imgUpload">{{ uploadMsg }}</label>
-    <input type="file" @change="uploadImg" accept="img/*" id="imgUpload" />
-  </div>
+  <Loader v-if="isUploading"/>
+  <template v-else>
+    <input class="img-upload" type="file" @change="uploadImg" accept="img/*" id="imgUpload" />
+    <label for="imgUpload"> Upload a cover image</label>
+  </template>
+
+
 </template>
 
 <script>
-import { uploadService } from '../services/upload.service.js'
+import { uploadService } from "../services/upload.service.js";
+import Loader from "../cmps/Loader.vue";
 
 export default {
   data() {
@@ -15,25 +18,24 @@ export default {
       imgUrl: null,
       height: 500,
       width: 500,
-      isUploading: false
-    }
+      isUploading: false,
+    };
   },
   methods: {
     async uploadImg(ev) {
-      this.isUploading = true
-      const { secure_url, height, width } = await uploadService.uploadImg(ev)
-      this.isUploading = false
-      this.imgUrl = secure_url
-      this.height = height
-      this.width = width
-      this.$emit('uploaded', this.imgUrl)
-    }
+      this.isUploading = true;
+      this.$nextTick(async () => {
+        const { secure_url, height, width } = await uploadService.uploadImg(ev);
+        this.isUploading = false;
+        this.imgUrl = secure_url;
+        this.height = height;
+        this.width = width;
+        this.$emit("uploaded", this.imgUrl);
+      });
+    },
   },
-  computed: {
-    uploadMsg() {
-      if (this.imgUrl) return 'Upload Another?'
-      return this.isUploading ? 'Uploading....' : 'Upload Image'
-    }
-  }
-}
+  components: {
+    Loader,
+  },
+};
 </script>

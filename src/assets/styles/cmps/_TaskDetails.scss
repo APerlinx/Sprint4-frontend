@@ -56,6 +56,7 @@
 .task-details-header {
     grid-column: 1/3;
     grid-row: 1/2;
+
 }
 
 .task-details-main {
@@ -213,6 +214,20 @@
 
 ///////////////////////   ALL ALERTS    ///////////////////////
 .task-alerts {
+
+    .quick-menu-labels {
+        position: relative;
+        
+        .labels-picker-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 1px;
+            width: 1px;
+            z-index: 999;
+        }
+    }
+        
     display: flex;
     // width: calc();
     flex-direction: row;

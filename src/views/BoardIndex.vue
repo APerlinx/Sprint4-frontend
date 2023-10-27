@@ -9,8 +9,8 @@
           </div>
 
           <BoardList
-            @star="updateBoard"
-            @recent="updateBoard"
+            @star="starBoard"
+            @recent="recentBoard"
             :boards="starredBoards"
             :isYourWorkSpace="false"
           />
@@ -26,8 +26,8 @@
 
           <BoardList
             :boards="recentBoards"
-            @star="updateBoard"
-            @recent="updateBoard"
+            @star="starBoard"
+            @recent="recentBoard"
             :isYourWorkSpace="false"
           />
         </div>
@@ -43,8 +43,8 @@
         <BoardList
           :boards="boards"
           @remove="removeBoard"
-          @star="updateBoard"
-          @recent="updateBoard"
+          @star="starBoard"
+          @recent="recentBoard"
           @saveBoard="saveBoard"
           :isYourWorkSpace="true"
         />
@@ -55,11 +55,7 @@
 
 <script>
 import BoardList from "../cmps/BoardList.vue";
-
-import { defineComponent } from "vue";
 import Popper from "vue3-popper";
-
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 
 export default {
   data() {
@@ -73,6 +69,24 @@ export default {
   },
 
   methods: {
+    async starBoard(prvBoard) {
+      try {
+        const board = { ...prvBoard, isStarred: !prvBoard.isStarred };
+        this.$store.dispatch({ type: "updateBoard", board });
+      } catch (err) {
+        console.log(err);
+        showErrorMsg("Cant star board");
+      }
+    },
+    async recentBoard(prvBoard) {
+      try {
+        const board = { ...prvBoard, isRecent: true, recentAt: Date.now() };
+        this.$store.dispatch({ type: "updateBoard", board });
+      } catch (err) {
+        console.log(err);
+        showErrorMsg("Cant star board");
+      }
+    },
     async removeBoard(boardId) {
       try {
         await this.$store.dispatch({ type: "removeBoard", boardId });
@@ -81,16 +95,6 @@ export default {
         showErrorMsg("Cant delete borad");
       }
     },
-
-    async updateBoard(board) {
-      try {
-        await this.$store.dispatch({ type: "updateBoard", board });
-      } catch (err) {
-        console.log(err);
-        showErrorMsg("Cant star board");
-      }
-    },
-
     async saveBoard(board) {
       try {
         await this.$store.dispatch({
@@ -98,7 +102,7 @@ export default {
           board,
         });
         this.isAddBoard = false;
-        // this.$router.push("/details/" + this.savedBoard._id);
+        this.$router.push("/details/" + this.savedBoard._id);
       } catch (err) {
         console.log(err);
         showErrorMsg("Cant add board");
@@ -116,9 +120,6 @@ export default {
     starredBoards() {
       return this.$store.getters.starredBoards;
     },
-    filteredBoards() {
-      return this.$store.getters.filteredBoards;
-    },
     recentBoards() {
       return this.$store.getters.recentBoards;
     },
@@ -130,7 +131,6 @@ export default {
   components: {
     BoardList,
     Popper,
-    defineComponent,
   },
 };
 </script>

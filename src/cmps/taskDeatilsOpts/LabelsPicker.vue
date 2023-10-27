@@ -1,6 +1,5 @@
 <template>
   <div class="filter-label">
-
     <input
       type="text"
       @input="filterLabels"
@@ -100,7 +99,7 @@ export default {
       } else {
         this.board.labels.splice(labIdx, 1, label);
       }
-      this.$emit('updateBoard', this.board)
+      this.$emit("updateBoard", this.board);
       this.isEditModeModal = false;
     },
     removeLabel(lab) {
@@ -109,7 +108,7 @@ export default {
       );
 
       this.board.labels.splice(labIdx, 1);
-      this.$emit('updateBoard', this.board)
+      this.$emit("updateBoard", this.board);
       this.isEditModeModal = false;
     },
     closeEditMode() {

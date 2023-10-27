@@ -1,6 +1,7 @@
 <template>
   <div class="board-list">
     <ul v-if="boards.length">
+
       <li v-for="board in boards" :key="board._id">
         <BoardPreview
           :board="board"
@@ -12,7 +13,6 @@
 
       <div class="index-create-board" v-if="isYourWorkSpace">
         <Popper>
-          <button></button>
           <span>Create new board</span>
           <template #content>
             <div class="index-add-board">
@@ -21,13 +21,14 @@
           </template>
         </Popper>
       </div>
+      
     </ul>
   </div>
 </template>
 
 <script>
 import BoardPreview from "../cmps/BoardPreview.vue";
-import AddBoard from "../cmps/addboard.vue";
+import AddBoard from "../cmps/AddBoard.vue";
 import Popper from "vue3-popper";
 import { clickOutsideDirective } from "../directives/index.js";
 
@@ -54,21 +55,16 @@ export default {
     },
     saveBoard(board) {
       this.$emit("saveBoard", board);
-      this.toggleIsAddBoard();
-    },
-    toggleIsAddBoard() {
       this.isAddBoard = false;
     },
   },
+
   components: {
     BoardPreview,
     AddBoard,
     Popper,
   },
 
-  directives: {
-    clickOutside: clickOutsideDirective,
-  },
 };
 </script>
 

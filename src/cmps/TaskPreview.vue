@@ -8,13 +8,14 @@
     @mouseleave="showEditIcon = false"
     @openQuickEdit="quickEditDisplay = true"
   />
+
   <section
     class="task-preview"
     :class="[
       getTaskPreviewClass(),
       {
         'with-cover':
-          !task.cover?.isFull && (task.cover?.color || task.cover?.imgUrl),
+          !task.cover?.isFull && (task.cover?.color || task.cover?.img),
       },
     ]"
     @mouseover="showEditIcon = true"
@@ -238,9 +239,9 @@ export default {
     },
     getTaskPreviewStyle() {
       if (this.task.cover?.isFull) {
-        if (this.task.cover.imgUrl) {
+        if (this.task.cover.img) {
           return {
-            backgroundImage: `url(${this.task.cover.imgUrl})`,
+            backgroundImage: `url(${this.task.cover.img})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: '260px',
@@ -256,7 +257,7 @@ export default {
     },
     getTaskTextStyleClass() {
       if (this.task.cover?.isFull) {
-        if (this.task.cover.imgUrl) {
+        if (this.task.cover.img) {
           return 'full-cover-image-task'
         } else {
           return 'full-cover-task'
@@ -265,7 +266,7 @@ export default {
       return ''
     },
     getTaskPreviewClass() {
-      if (this.task.cover?.isFull && this.task.cover?.imgUrl) {
+      if (this.task.cover?.isFull && this.task.cover?.img) {
         return 'no-padding'
       }
       return ''

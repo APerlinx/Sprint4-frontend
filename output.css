@@ -1,4 +1,4 @@
-/*
+/* /*
 ! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
 */
 
@@ -185,7 +185,7 @@ table {
 */
 
 button,
-input,
+/* input, */
 optgroup,
 select,
 textarea {
@@ -532,4 +532,4 @@ video {
   --tw-backdrop-opacity:  ;
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
-}
+} */

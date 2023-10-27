@@ -23,6 +23,7 @@
 
     <div class="add-board-input">
       <h2>Board title <span>*</span></h2>
+
       <form @submit.prevent="saveBoard">
         <input autofocus type="text" v-model="boardToEdit.title" />
         <p v-if="!boardToEdit.title">👋 Board title is required</p>

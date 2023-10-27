@@ -1,9 +1,10 @@
 <template>
   <div
     class="task-cover"
-    v-if="task.cover"
+    v-if="task.cover?.img || task.cover?.color"
     :style="{ ...coverStyle, height: coverHeight }"
   >
+
     <i
       class="icon-pencil-cover"
       v-show="showEditIcon"
@@ -20,9 +21,9 @@ export default {
   },
   computed: {
     coverStyle() {
-      if (this.task.cover.imgUrl) {
+      if (this.task.cover.img) {
         return {
-          backgroundImage: `url('${this.task.cover.imgUrl}')`,
+          background: `url('${this.task.cover.img}')`,
           backgroundSize: this.task.cover.isFull === 'true' ? 'cover' : 'cover',
         }
       }
@@ -31,10 +32,10 @@ export default {
       }
     },
     coverHeight() {
-      if (!this.task.cover.imgUrl && !this.task.cover.color) {
+      if (!this.task.cover.img && !this.task.cover.color) {
         return '0'
       }
-      return this.task.cover.imgUrl ? '160px' : '32px'
+      return this.task.cover.img ? '160px' : '32px'
     },
   },
   methods: {

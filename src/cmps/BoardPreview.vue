@@ -16,19 +16,12 @@ export default {
     },
   },
 
-  data() {
-    return {
-    };
-  },
-
   methods: {
     removeBoard(boardId) {
       this.$emit("remove", boardId);
     },
     toggleStar() {
-      const board = JSON.parse(JSON.stringify(this.board));
-      board.isStarred = !board.isStarred;
-      this.$emit("star", board);
+      this.$emit("star", this.board);
     },
     goToDetails() {
       this.$emit("recent", this.board);

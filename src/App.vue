@@ -17,10 +17,10 @@ export default {
   created() {
     this.$store.dispatch({ type: "loadBoards" });
     this.$store.dispatch({ type: "loadUsers" });
-    this.$store.dispatch({
-      type: "login",
-      userCred: { username: "Shayzig", password: "123" },
-    });
+    // this.$store.dispatch({
+    //   type: "login",
+    //   userCred: { username: "Shayzig", password: "123" },
+    // });
 
     const user = userService.getLoggedinUser();
     if (user) store.commit({ type: "setLoggedinUser", user });

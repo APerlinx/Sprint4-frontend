@@ -65,8 +65,6 @@ export default {
       if (!this.isFilterOpen) return;
       this.isFilterOpen = false;
     },
-    onInputClick() {
-    },
     onSetFilterBy() {
       this.$emit("filterByTxt", this.filterBy);
     },

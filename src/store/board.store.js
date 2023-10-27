@@ -235,15 +235,40 @@ export const boardStore = {
     },
     async updateBoard({ commit }, { board }) {
       try {
-        const updateBoard = JSON.parse(JSON.stringify(board));
-        updateBoard.isRecent = true;
-        updateBoard.recentAt = Date.now();
-        await boardService.save(updateBoard)
-        board = updateBoard
-        commit(getActionUpdateBoard(board))
+        const updateBoard = await boardService.save(board)
+        commit(getActionUpdateBoard(updateBoard))
         return updateBoard
       } catch (err) {
         console.log('boardStore: Error in updateBoard', err)
+        throw err
+      }
+    },
+    async updateTask({ commit, state, dispatch }, { taskDetails }) {
+      try {
+        let board = state.boards.find(board => board._id === taskDetails.boardId)
+        const boardCopy = JSON.parse(JSON.stringify(board))
+
+        let group = boardCopy.groups.find(group => taskDetails.groupId === group.id)
+        let groupIdx = boardCopy.groups.findIndex(group => taskDetails.groupId === group.id)
+
+        const taskIdx = group.tasks.findIndex(task => task.id === taskDetails.task.id)
+
+        let updateGroup = group.tasks.splice(taskIdx, 1, taskDetails.task)
+
+        boardCopy.groups.splice(groupIdx, 1, updateGroup)
+
+        dispatch({ type: "updateBoard", board: boardCopy })
+
+        // commit({ type: 'updateBoard', board: boardCopy })
+
+        // const savedBoard = await boardService.save(boardCopy)
+        // console.log(savedBoard);
+
+
+        // return savedBoard
+        return taskDetails.task
+      } catch (err) {
+        console.log('boardStore: Error in updateTask', err)
         throw err
       }
     },
@@ -567,6 +592,11 @@ export const boardStore = {
       return boards.filter((board) => board.isRecent)
         .sort((a, b) => a.recentAt - b.recentAt)
         .slice(-4);
+    },
+    fullRecentBoards({ boards }) {
+      return boards.filter((board) => board.isRecent)
+        .sort((a, b) => a.recentAt - b.recentAt)
+        .slice(-8);
     },
     savedBoard({ savedBoard }) {
       return savedBoard

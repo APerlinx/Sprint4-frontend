@@ -3,10 +3,12 @@
         <div class="task-details-container">
             <section v-if="taskToEdit" class="task-details">
                 <section class="task-details-header">
-
-
-                    <div class="task-details-cover" v-if="taskToEdit.cover?.color"
-                        :style="{ backgroundColor: taskToEdit.cover?.color }">
+                    <div class="task-details-cover"
+                    v-if="taskToEdit.cover?.color || taskToEdit.cover?.img"
+                        :style="{
+                         background: hasCover,
+                        'background-size': 'cover',
+                        'background-position': 'center',}">
 
                         <Popper arrow placement="right" class="cover-container" @click="toggleCoverModal">
                         <div class="cover-title">
@@ -28,7 +30,7 @@
                     <div class="icon-title-container">
                         <span class="icon card-big"></span>
                         <input type="text" class="details-title" v-model="taskToEdit.title" />
-                        <span @click="closeModal(); editTask()" class="icon big-close close-task-details"></span>
+                        <span @click="closeModal();" class="icon big-close close-task-details"></span>
                     </div>
 
                     <span class="task-in-list">
@@ -42,9 +44,20 @@
                     <div class="task-alerts">
 
                         <Members :task="taskToEdit" :board="board" />
+                        
+                        <!---------Quick menu - LABELS--------->
+                        <div v-if="taskToEdit.labels.length" class="quick-menu-labels">
+                             <Labels :task="taskToEdit" :board="board" @saveLabel="saveLabel" @removeLabel="removeLabel"
+                                 @updateLable="updateLable" @toggleLabelModal="toggleLabelModal" />
 
-                        <Labels :task="taskToEdit" :board="board" @saveLabel="saveLabel" @removeLabel="removeLabel"
-                            @updateLable="updateLable" />
+                                <div class="labels-picker-container" v-if="actionCmpType === 'LabelsPicker' && isLabelModalSecondery">
+                                    <DynamicModal  :actionCmpType="actionCmpType" :taskToEdit="taskToEdit"
+                                        :board="board" :actionCmpName="actionCmpName" @closeDynamicModal="closeDynamicModal"
+                                        @saveLabel="saveLabel" @removeLabel="removeLabel" @updateBoard="updateBoard" />
+                                </div>
+                        </div>
+                        <!------------------------------------->
+
 
                         <div class="notifications-container">
                             <h5>Notifications</h5>
@@ -126,12 +139,12 @@
                     </div>
                     <h3 class="details-title-small">Add to card</h3>
 
-                    <Popper arrow placement="right" v-for="(cmp, idx) in  cmpOrder " :key="idx">
+                    <Popper arrow placement="right" v-for="(cmp, idx) in buttons " :key="idx">
                         <div>
-                                <button class="btn" @click="set(cmp, idx)">
-                                <span class="icon" :class="`icon ${dynamicIcons[idx]}`"></span>
-                                {{ dynamicNames[idx] }}
-                                </button>
+                            <button class="btn" @click="set(cmp, idx)">
+                            <span class="icon" :class="`icon ${dynamicIcons[idx]}`"></span>
+                            {{ dynamicNames[idx] }}
+                            </button>
                         </div>
 
                         <template #content>
@@ -146,7 +159,7 @@
                     <div class="action-btns-in-btns">
                         <h3 class="details-title-small">Actions</h3>
                         <button class="btn"><span class="icon arrow-right"></span>Move</button>
-                        <!-- <button class="btn"><span class="icon copy"></span>Copy</button> -->
+                        <button class="btn"><span class="icon copy"></span>Copy</button>
                         <!-- <button class="btn"><span class="icon card"></span>Make template</button> -->
                         <button class="btn"><span class="icon archive"></span>Archive</button>
                         <!-- <button class="btn"><span class="icon share"></span>Share</button> -->
@@ -190,6 +203,8 @@ import Popper from "vue3-popper";
 export default {
     data() {
         return {
+            groupIdx: null,
+            taskIdx: null,
             taskToEdit: null,
             group: null,
             board: null,
@@ -200,11 +215,20 @@ export default {
             actionCmpType: null,
             actionCmpName: null,
             isCover: false,
-            dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachment", "Cover", "Custom Fields"],
-            dynamicIcons: ["member", "label-details", "checklist", "date", "attachment", "cover", "date"],
+            dynamicNames: ["Members", "Labels", "Checklist", "Dates", "Attachment", "Custom Fields"],
+            dynamicIcons: ["member", "label-details", "checklist", "date", "attachment", "date"],
             coverColor: '',
             currColor: '',
-        };
+            isLabelModalSecondery: false,
+            cmpsOrder: [
+            'MemberPicker',
+            'LabelsPicker',
+            'ChecklistPicker',
+            'DueDatePicker',
+            'AttachmentPicker',
+            'Custom Fields',
+            ],
+        }
     },
 
     created() {
@@ -214,29 +238,27 @@ export default {
 
     methods: {
         toggleCoverModal() {
-
-            if (this.actionCmpType === "CoverPicker") {
-                console.log('here');
-                // this.isDynamicModal = false
-                // this.actionCmpType = null;
-                // this.actionCmpName = null;
-            } else {
-                console.log('there');
                 this.isDynamicModal = true
                 this.actionCmpType = "CoverPicker";
                 this.actionCmpName = "Cover";
+        },
+        toggleLabelModal() {
+            if (this.isDynamicModal) {
+                this.isDynamicModal = false
+                this.actionCmpType = null;
+                this.actionCmpName = '';
+                this.isLabelModalSecondery = false
+            } else if (!this.isDynamicModal){
+                this.isLabelModalSecondery = true
+                this.isDynamicModal = true
+                this.actionCmpType = "LabelsPicker";
+                this.actionCmpName = "Labels";
             }
-        },
-        toggleMemberBySocket(clickedMember) {
-            socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'member', payload: clickedMember })
-        },
-        updateTaskStatusBySocket(isCompleted) {
-            socketService.emit(SOCKET_EMIT_SEND_MSG, { action: 'status', payload: isCompleted })
         },
         updateTaskStatus(isCompleted) {
             if (isCompleted) this.taskToEdit.status = 'done'
             else this.taskToEdit.status = ''
-            this.editTask()
+            this.updateTask()
 
         },
         set(cmp, idx) {
@@ -245,12 +267,8 @@ export default {
             this.actionCmpName = this.dynamicNames[idx];
         },
         setCover(cover) {
-            if (this.taskToEdit.hasOwnProperty('cover')) {
-                this.taskToEdit.cover = cover
-            } else {
-                this.taskToEdit = { ...this.taskToEdit, cover: cover }
-            }
-            this.editTaskBySocket()
+           this.taskToEdit.cover = cover 
+           this.updateTask()
         },
         removeLabel(board) {
             this.board = board
@@ -258,11 +276,11 @@ export default {
         },
         updateBoard(board) {
             this.board = board
-            this.editTask()
+            this.updateTask()
         },
         addDueDate(date) {
             this.taskToEdit.dueDate = date
-            this.editTask()
+            this.updateTask()
         },
         saveLabel(labelId) {
             const idx = this.taskToEdit.labels?.findIndex(label => label === labelId);
@@ -272,19 +290,17 @@ export default {
             else {
                 this.taskToEdit.labels.push(labelId);
             }
-            this.$store.dispatch({ type: "updateBoard", board: this.board });
+            this.updateTask()
         },
         addAttachment(newAttachment) {
-            // console.log('newAttachment:', newAttachment)
             if (!this.taskToEdit.attachments) this.taskToEdit.attachments = [];
             this.taskToEdit.attachments.push(newAttachment);
-            this.editTask();
+            this.updateTask();
         },
         addChecklist(newChecklist) {
             if (!this.taskToEdit.checklists) this.taskToEdit.checklists = []
             this.taskToEdit.checklists.push(newChecklist)
-            // console.log("modal3 - newChecklist:", newChecklist)
-            this.editTask()
+            this.updateTask()
         },
         toggleMember(clickedMember) {
             const taskMembers = this.taskToEdit.members || [];
@@ -302,7 +318,7 @@ export default {
         },
         createAndEditNotification(member, action) {
             const notification = this.createNotification(member, action);
-            this.editTask(notification);
+            this.updateTask(notification);
         },
         createNotification(member, action) {
             return {
@@ -323,20 +339,24 @@ export default {
             );
             if (type === "editChecklist") checklists.splice(idx, 1, newChecklist);
             else checklists.splice(idx, 1);
-            this.editTask()
+            this.updateTask()
         },
         async setTask() {
             try {
                 const boardId = this.$route.params.boardId;
-                const board = await boardService.getById(boardId);
                 const taskId = this.$route.params.taskId;
                 const groupId = this.$route.params.groupId;
-
-                this.board = JSON.parse(JSON.stringify(board));
+                
+                this.board = await boardService.getById(boardId);
                 this.group = this.board.groups.find((group) => group.id === groupId);
                 this.taskToEdit = this.group.tasks.find((task) => task.id === taskId);
 
+                this.groupIdx = this.board.groups.findIndex((group) => group.id === groupId);
+                this.taskIdx = this.group.tasks.findIndex((task) => task.id === taskId);
+
+
             } catch (err) {
+                return false
                 console.log("error in setTask");
             }
         },
@@ -351,20 +371,14 @@ export default {
             this.isDynamicModal = false
         },
         closeModal() {
+            this.updateTask()
             this.$router.back();
         },
-        editTask(notification) {
-            const editedTask = JSON.parse(JSON.stringify(this.taskToEdit));
-            const taskIdx = this.group.tasks.findIndex(
-                task => task.id === this.taskToEdit.id
-            );
-            this.group.tasks.splice(taskIdx, 1, this.taskToEdit);
-
+        updateTask(notification) {
+            this.board.groups[this.groupIdx].tasks.splice(this.taskIdx, 1, this.taskToEdit)
+            this.$store.dispatch({ type: "updateBoard", board: this.board })
             socketService.emit('update-task', this.taskToEdit)
-
             socketService.emit('notification-push', { notification, members: this.board.members })
-
-            this.$store.dispatch({ type: "updateBoard", board: this.board });
         },
         closeComponent() {
             this.taskTitle = ''
@@ -373,9 +387,6 @@ export default {
     },
 
     computed: {
-        cmpOrder() {
-            return this.$store.getters.cmpsOrder;
-        },
         loggedinUser() {
             return this.$store.getters.loggedinUser;
         },
@@ -393,6 +404,18 @@ export default {
                 return !cmp.isCover;
             });
         },
+        buttons() {
+            return this.cmpsOrder.filter(cmp => cmp)
+        },
+        hasCover() {
+        if (this.taskToEdit.cover?.color) {
+            return this.taskToEdit.cover?.color;
+        } else if (this.taskToEdit.cover?.img) {
+            return `url(${this.taskToEdit.cover?.img})`;
+        } else {
+            return "";
+        }
+    }
     },
 
     components: {
@@ -408,9 +431,25 @@ export default {
         CoverPicker,
     },
 
+    watch: {
+        'taskToEdit.cover.color': function (newColor) {
+            if (!newColor) {
+                this.cmpsOrder.splice(5,0,"CoverPicker")
+                this.dynamicNames.splice(5,0,"Cover")
+                this.dynamicIcons.splice(5,0,"cover")
+            } else if (newColor) {
+                this.cmpsOrder.splice(4,5)
+                this.dynamicNames.splice(4,5)
+                this.dynamicIcons.splice(4,5)
+            }
+        }
+    },
+
     directives: {
         focus: focusDirective,
         clickOutside: clickOutsideDirective,
     },
 };
 </script>
+
+
